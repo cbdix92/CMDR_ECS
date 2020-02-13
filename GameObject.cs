@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CMDR
 {
-    public struct GameObject
+    public class GameObject
     {
         public int Handle;
         public Dictionary<Type, int> Components;

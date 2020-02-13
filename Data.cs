@@ -1,63 +1,112 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using CMDR.Components;
 
 namespace CMDR
 {
-    internal static class Data
+    public static class Data
     {
         public static GameObjectCollection GameObjects = new GameObjectCollection();
         public static Dictionary<Type, List<IComponent>> Components = new Dictionary<Type, List<IComponent>>();
 
         private static object _threadLock = new object();
-        internal static void CreateGameObject()
+        public static GameObject CreateGameObject()
         {
             // Creates a new instance of GameObject
             lock(_threadLock)
             {
-                GameObjects.Add(new GameObject(GameObjects.Count));
+                return GameObjects.Generate();
             }
         }
-        internal static void Destroy(Type target, int handle)
+        public static void Destroy(GameObject target)
         {
-            if(target == typeof(GameObject))
+            // Destroy all IComponents attached to GameObject
+            foreach(IComponent component in target.Components.Keys)
             {
-                // Destroy GameObjects and all its components
-                foreach (Type component in GameObjects[handle].Components.Keys)
-                {
-                    int c_index = GameObjects[handle].Components[component];
-                    Components[component].RemoveAt(c_index);
-                }
-                return;
+                Destroy(Data.Components[component.ID][component.Handle]);
             }
-            if (Components.ContainsKey(target))
-            {
-                Components[target].RemoveAt(handle);
-            }
+            GameObjects.Destroy(target);
+        }
+        public static void Destroy(IComponent target)
+        {
+            // To Do ... 
+
+            // Update parent object of the removal
+
+            // remove the component from the collection
         }
     }
     public class GameObjectCollection
     {
-        private List<GameObject> _data = new List<GameObject>();
+        private GameObject[] _data = new GameObject[5];
 
-        private object _threadLockDestroy = new object();
-        private object _threadLockGenerate = new object();
-        public GameObjectCollection() { }
-        public int Generate()
+        private int _count;
+        public int Count { get; private set; }
+
+        public GameObject Generate()
         {
-            lock(_threadLockGenerate)
+            for (int i = 0; i < _data.Length; i++)
             {
-                _data.Add(new GameObject(_data.Count));
-                return _data.Count - 1;
+                if (_data[i] == null)
+                {
+                    _data[i] = new GameObject(i);
+                    Count++;
+                    return _data[i];
+                }
             }
+            // No empty space encountered. Array needs to be resized.
+            GameObject[] newArray = new GameObject[_data.Length + 5];
+            _data.CopyTo(newArray, 0);
+            _data = newArray;
+            return Generate();
         }
         public void Destroy(GameObject target)
         {
-            lock(_threadLockDestroy)
+            int targetIndex = target.Handle;
+            Count--;
+            if (Count == 0)
             {
-                _data.RemoveAt(target.Handle);
-                _data.Insert(target.Handle, _data[_data.Count - 1]);
+                _data[targetIndex] = null;
+                return;
+            }
+            // Place last object in the array in the targets index, and adjust the objects handle
+            _data.SetValue(_data[Count], targetIndex);
+            _data[targetIndex].Handle = targetIndex;
+
+            _data[Count] = null;
+
+        }
+        public class ComponentData<T>
+            where T : IComponent, new()
+        {
+            private T[] _data;
+
+            private int _count;
+            public int Count { get; private set; }
+            public ComponentData(int initialSize)
+            {
+                _data = new T[initialSize];
+            }
+            public T Generate()
+            {
+                for (int i = 0; i < _data.Length; i++)
+                {
+                    if (_data[i] == null)
+                    {
+                        _data[i] = new T();
+                        Count++;
+                        return _data[i];
+                    }
+                }
+                // No empty space encountered. Array needs to be resized.
+                T[] newArray = new T[_data.Length + 10];
+                _data.CopyTo(newArray, 0);
+                _data = newArray;
+                return Generate();
+            }
+            public void Destroy(T target)
+            {
+
             }
         }
     }
