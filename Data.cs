@@ -87,13 +87,15 @@ namespace CMDR
             {
                 _data = new T[initialSize];
             }
-            public T Generate()
+            public T Generate(ComponentProfiler profiler = null)
             {
                 for (int i = 0; i < _data.Length; i++)
                 {
                     if (_data[i] == null)
                     {
                         _data[i] = new T();
+                        if (profiler != null)
+                            profiler.Profile(_data[i]);
                         Count++;
                         return _data[i];
                     }
