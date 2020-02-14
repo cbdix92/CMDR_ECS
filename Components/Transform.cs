@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMDR.Components
 {
-    public struct Transform : IComponent
+    public class Transform : IComponent
     {
         #region IComponent
         public int Parent { get; set; }
@@ -54,4 +54,5 @@ namespace CMDR.Components
             Y = y;
         }
     }
+    
 }

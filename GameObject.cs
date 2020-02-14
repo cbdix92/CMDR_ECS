@@ -20,7 +20,7 @@ namespace CMDR
 
             if (Components.ContainsKey(component.ID))
             {
-                Data.Destroy(component.ID, Components[component.ID]);
+                Components.Remove(component.ID);
             }
             Components.Add(component.ID, component.Handle);
         }

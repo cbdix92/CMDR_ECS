@@ -42,12 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitCollider.cs" />
+    <Compile Include="ComponentCollection.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\IComponent.cs" />
-    <Compile Include="Components\ComponentProfiler.cs" />
+    <Compile Include="Components\IProfiler.cs" />
     <Compile Include="Components\Transform.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameObjectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
