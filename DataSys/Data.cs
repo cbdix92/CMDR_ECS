@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CMDR.Components;
+using System.Reflection;
 
 namespace CMDR
 {
@@ -51,5 +52,13 @@ namespace CMDR
             if (Components[type][handle].Parents.Remove(parent.Handle))
                 Components[type].FinalDestroy(Components[type][handle]);
         }
+		internal static void Init()
+		{
+			foreach (Type type in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
+			{
+				Components.Add(type, new ComponentCollection(type));
+			}
+			
+		}
     }
 }
