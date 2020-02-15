@@ -9,9 +9,9 @@ namespace CMDR.Components
     public class Transform : IComponent
     {
         #region IComponent
-        public int Parent { get; set; }
         public int Handle { get; set; }
         public Type ID { get; set; }
+        public ParentList Parents { get; set; }
         #endregion
 
         #region POSITION_PROPERTIES
@@ -23,20 +23,6 @@ namespace CMDR.Components
         public float Xvel { get; set; }
         public float Yvel { get; set; }
 
-        public Transform(int parent, int handle, float initialX, float initialY, int initialZ)
-        {
-            // IComponent
-            Parent = parent;
-            Handle = handle;
-            ID = typeof(Transform);
-
-            X = initialX;
-            Y = initialY;
-            Z = initialZ;
-
-            Xvel = 0;
-            Yvel = 0;
-        }
         public void Move()
         {
             // Move transform based on velocity

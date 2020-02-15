@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CMDR
 {
     internal static class BitCollider
     {
+        // BitCollider is responsible for generating collison data from images, 
+        // and detecting collisions between two pairs of collision data.
         internal static bool[,] GenerateColData(int gameObject)
         {
             return new bool[1, 1];
