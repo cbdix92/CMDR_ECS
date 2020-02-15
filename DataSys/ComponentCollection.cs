@@ -15,6 +15,10 @@ namespace CMDR
         {
             get => _data[index];
         }
+        public IComponent[] Get()
+        {
+            return _data;
+        }
 
         public ComponentCollection(Type type)
         {

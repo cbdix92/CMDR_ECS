@@ -2,7 +2,7 @@
 
 namespace CMDR.Components
 {
-    public struct Collider : IComponent
+    public class Collider : IComponent
     {
         #region IComponent
         public int Handle { get; set; }
@@ -10,6 +10,6 @@ namespace CMDR.Components
         public ParentList Parents { get; set; }
         #endregion
 
-        public bool[,] ColData { get; set; }
+        public bool[,] ColData;
     }
 }

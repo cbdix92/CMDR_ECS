@@ -4,13 +4,17 @@ namespace CMDR
 {
     public class GameObjectCollection
     {
-        private GameObject[] _data = new GameObject[5];
+        private GameObject[] _data = new GameObject[Data.SizeStep];
 
         public int Count { get; private set; }
 
         public GameObject this[int index]
         {
             get => _data[index];
+        }
+        public GameObject[] Get()
+        {
+            return _data;
         }
         public GameObject Generate()
         {
@@ -25,9 +29,7 @@ namespace CMDR
                 }
             }
             // No empty space encountered. Array needs to be resized.
-            GameObject[] newArray = new GameObject[_data.Length + 5];
-            _data.CopyTo(newArray, 0);
-            _data = newArray;
+            Array.Resize(ref _data, Data.SizeStep);
             return Generate();
         }
         public void Destroy(GameObject target)
