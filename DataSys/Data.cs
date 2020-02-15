@@ -7,7 +7,7 @@ namespace CMDR
 {
     public static class Data
     {
-        public static int SizeStep = 10;
+        public static ubyte SizeStep = 256;
 
         public static GameObjectCollection GameObjects = new GameObjectCollection();
         public static Dictionary<Type, ComponentCollection> Components = new Dictionary<Type, ComponentCollection>();

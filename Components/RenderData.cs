@@ -22,7 +22,7 @@ namespace CMDR.Components
             }
             catch (FileNotFoundException)
             {
-                throw new FileNotFoundException($"The file: '{src}' Could not be found!");
+                throw new FileNotFoundException($"'{src}', RenderData");
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace CMDR.Components
 {
@@ -10,6 +11,6 @@ namespace CMDR.Components
         public ParentList Parents { get; set; }
         #endregion
 
-        public bool[,] ColData;
+        public bool[,] Data;
     }
 }
