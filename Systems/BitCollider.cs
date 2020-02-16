@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
+using CMDR.Components;
 
 namespace CMDR
 {
@@ -10,25 +12,27 @@ namespace CMDR
 		
 		public static byte AlphaThreshold = 60;
 		
-		internal static bool BitColliderCheck(Transform t1, Transform, t2, Collider c1, Collider c2)
+		internal static bool BitColliderCheck(Transform t1, Transform t2, Collider c1, Collider c2)
 		{
 			bool result = false;
+
+			// Prevent int casting during iteration
+			(int X, int Y) t1p = ((int)t1.X, (int)t1.Y);
+			(int X, int Y) t2p = ((int)t2.X, (int)t2.Y);
+
+			// Find the top left and bottom right points for the bounding box of the two colliding objects
+			(int X, int Y) p1 = ((int)Math.Min(t1.X, t2.X), (int)Math.Min(t1.Y, t2.Y));
+			(int X, int Y) p2 = ((int)Math.Max(t1.X, t2.X), (int)Math.Min(t1.Y, t2.Y));
 			
-			int p1x = (int)Math.Min(t1.X, t2.X);
-			int p1y = (int)Math.Min(t1.Y, t2.Y);
+			int boundSize = (p2.X - p1.X) * (p2.Y - p1.Y);
 			
-			int p2x = (int)Math.Max(t1.X, t2.X);
-			int p2y = (int)Math.Max(t1.Y, t2.Y);
-			
-			int boundSize = (p2x - p1x) * (p2y - p1y);
-			
-			int width = p2x - p1x;
+			int width = p2.X - p1.X;
 			
 			for (int i = 0; i < boundSize; i++)
 			{
-				if (c1.Data[(i / width) - p1Y - t1.Y, (i % width) - p1x - t1.X]
+				if (c1.Data[(i / width) - p1.Y - t1p.Y, (i % width) - p1.X - t1p.X]
 				&&
-					c2.Data[(i / width) - p1y - t2.Y, (i % width) - p1x - t2.X])
+					c2.Data[(i / width) - p1.Y - t2p.Y, (i % width) - p1.X - t2p.X])
 					{
 						result = true;
 						break;
@@ -49,13 +53,13 @@ namespace CMDR
 			}
 		}
 		
-        public static bool[,] GenerateColData(ref Collider collider, Image image)
+        public static void GenerateColData(ref Collider collider, Image image)
         {
             int width = image.Width;
 			int height = image.Height;
 			collider.Data = new bool[height,width];
 			
-			BitMap bitmap = new BitMap(image);
+			Bitmap bitmap = new Bitmap(image);
 			
 			for (int y = 0; y <= height; y++)
 				for (int x = 0; x <= width; x++)

@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CMDR.Components
 {
-    public struct Collider : IComponent
+    public struct Static : IComponent
     {
         #region IComponent
         public int Handle { get; set; }
         public Type ID { get; set; }
         public ParentList Parents { get; set; }
         #endregion
-
-        public bool[,] Data;
     }
 }
