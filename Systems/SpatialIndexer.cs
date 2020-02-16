@@ -29,6 +29,9 @@ namespace CMDR.Systems
 	*/
     internal static class SpatialIndexer
     {
+		public static int StorageThreshold = 100;
+		public static int StorageStep = 50;
+		
         public static Dictionary<(int, int), List<int>> GridCells = new Dictionary<(int, int), List<int>>();
 
         private static int _cellSize = 30;
@@ -50,9 +53,9 @@ namespace CMDR.Systems
             HashSet<int> hash = new HashSet<int>();
             int[] result;
 
-            for (int i = 0; i < collider.OverlappedCells.Count; i++)
-                for (int c = 0; c < collider.OverLappedCells[i].Cache.Count; c++)
-                    hash.Add(collider.OverLappedCells[i].Cache[c]);
+            for (int i = 0; i < collider.GridKeys.Count; i++)
+				foreach(int handle in GridCells[collider.GridKeys[i]])
+					hash.Add(handle);
 
             result = new int[hash.Count];
             hash.CopyTo(result);
@@ -66,6 +69,10 @@ namespace CMDR.Systems
 			
 			Transform transform = Data.Components[t][gameObject[t]];
 			Colldier collider = Data.Components[c][gameObject[c]];
+			
+			// Remove the gameObject from all grid cells
+			foreach ((int, int) keys in Collider.GridKeys)
+				GridCells[keys].Remove(gameObject.Handle)
 			
 			// Top left corner converted to grid cordinates
 			(int X, int Y) p1 = ((int)Math.Floor((double)transform.X / CelLSize), (int)Math.Floor((double)transform.Y / CellSize);
@@ -82,8 +89,26 @@ namespace CMDR.Systems
 						GridCells[(y, x)] = new List<int>();
 					
 					GridCells[(y, x)].Add(gameObject.Handle);
-					collider.OccupiedGridCells.Add((y, x));
+					collider.GridKeys.Add((y, x));
 				}
+				
+			// Remove empty grid cells
+			if(GridCells.Count > StorageThreshold)
+			{
+				int DelCount = 0;
+				foreach((int, int) keys in GridCells.Keys)
+				{
+					if(GridCells[keys].Count == 0)
+					{
+						DelCount++;
+						GridCells.Remove(keys);
+					}
+				}
+				// More filled cells exist than the StorageThreshold
+				// Raise the Threshold to prevent it from being checked every update
+				if (DelCount == 0)
+					StorageThreshold += StorageStep;
+			}
 			
 		}
     }

@@ -12,7 +12,7 @@ namespace CMDR.Components
         public ParentList Parents { get; set; }
         #endregion
 
-		public List<(int X, int Y)> OccupiedGridKeys;
+		public List<(int X, int Y)> GridKeys;
 		
 		private int _height;
 		private int _width;
