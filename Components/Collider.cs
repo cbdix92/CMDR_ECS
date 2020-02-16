@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace CMDR.Components
 {
@@ -11,6 +12,11 @@ namespace CMDR.Components
         public ParentList Parents { get; set; }
         #endregion
 
+		public List<(int X, int Y)> OccupiedGridKeys;
+		
+		public int Height;
+		public int Width;
+		
         public bool[,] Data;
     }
 }

@@ -8,7 +8,12 @@ namespace CMDR
     {
         public int Handle;
         public Dictionary<Type, int> Components;
-
+		
+		public int this[Type t]
+		{
+			get => Components[t];
+		}
+		
         public GameObject(int handle)
         {
             Handle = handle;

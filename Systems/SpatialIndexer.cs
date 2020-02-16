@@ -5,13 +5,14 @@ using CMDR.Components;
 
 namespace CMDR.Systems
 {
+	/*
     internal struct Cell
     {
-        public (int X, int Y) GridKey;
+        public (int Y, int X) GridKey;
         public List<int> Cache;
 
 
-        public Cell((int X, int Y)gridKey)
+        public Cell((int Y, int X)gridKey)
         {
             GridKey = gridKey;
             Cache = new List<int>();
@@ -25,9 +26,10 @@ namespace CMDR.Systems
             Cache.Remove(handle);
         }
     }
+	*/
     internal static class SpatialIndexer
     {
-        public static Dictionary<(int, int), Cell> GridCells = new Dictionary<(int, int), Cell>();
+        public static Dictionary<(int, int), List<int>> GridCells = new Dictionary<(int, int), List<int>>();
 
         private static int _cellSize = 30;
         public static int CellSize
@@ -56,5 +58,33 @@ namespace CMDR.Systems
             hash.CopyTo(result);
             return result;
         }
+		
+		internal static void CalcGridPos(GameObject gameObject)
+		{
+			Type t = typeof(Transform);
+			Type c = typeof(Collider);
+			
+			Transform transform = Data.Components[t][gameObject[t]];
+			Colldier collider = Data.Components[c][gameObject[c]];
+			
+			// Top left corner converted to grid cordinates
+			(int X, int Y) p1 = ((int)Math.Floor((double)transform.X / CelLSize), (int)Math.Floor((double)transform.Y / CellSize);
+			
+			// Bottom right corner converted to grid cordinates
+			(int X, int Y) p2 = ((int)Math.Floor((double)(transform.X + collider.Width) / CelLSize), (int)Math.Floor((double)(transform.Y + collider.Width) / CellSize);
+			
+			// Place gameObject in all it's occupied cells
+			for (int y = p1.Y; y <= p2.Y; y++)
+				for(int x = p1.X; x <= p2.X; x++)
+				{
+					// Create new cells that don't exist
+					if(!GridCells.ContainsKey((y, x))
+						GridCells[(y, x)] = new List<int>();
+					
+					GridCells[(y, x)].Add(gameObject.Handle);
+					collider.OccupiedGridCells.Add((y, x));
+				}
+			
+		}
     }
 }
