@@ -40,8 +40,8 @@ namespace CMDR.Systems
                 if (value != _cellSize)
                 {
                     _cellSize = value;
-                    // CalcGridPos for new cellsize here all colliders here
-                    // ............................................
+                    foreach(GameObject gameObject in Data.GameObjects)
+						CalcGridPos(gameObject);
                 }
             }
         }

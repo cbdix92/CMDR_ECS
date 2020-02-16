@@ -14,8 +14,29 @@ namespace CMDR.Components
 
 		public List<(int X, int Y)> OccupiedGridKeys;
 		
-		public int Height;
+		private int _height;
+		private int _width;
+		
+		public int Height
+		{
+			get => _height;
+			set
+			{
+				_height = value;
+				if(value > SpatialIndexer.CellSize)
+					CellSize = value;
+			}
+		}
 		public int Width;
+		{
+			get => _width;
+			set
+			{
+				_width = value;
+				if(value > SpatialIndexer.CellSize)
+					CellSize = value;
+			}
+		}
 		
         public bool[,] Data;
     }
