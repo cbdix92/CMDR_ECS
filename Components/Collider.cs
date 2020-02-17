@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Collections.Generic;
+using CMDR.Systems;
 
 namespace CMDR.Components
 {
-    public struct Collider : IComponent
+    public class Collider : IComponent
     {
         #region IComponent
         public int Handle { get; set; }
@@ -24,17 +25,17 @@ namespace CMDR.Components
 			{
 				_height = value;
 				if(value > SpatialIndexer.CellSize)
-					CellSize = value;
+					SpatialIndexer.CellSize = value;
 			}
 		}
-		public int Width;
+		public int Width
 		{
 			get => _width;
 			set
 			{
 				_width = value;
 				if(value > SpatialIndexer.CellSize)
-					CellSize = value;
+					SpatialIndexer.CellSize = value;
 			}
 		}
 		
