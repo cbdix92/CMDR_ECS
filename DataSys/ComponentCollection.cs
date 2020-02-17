@@ -99,7 +99,7 @@ namespace CMDR
                 }
             }
             // No empty space encountered. Array needs to be resized.
-            Array.Resize(ref _data, Data.SizeStep);
+            Array.Resize(ref _data, _Data.Length + Data.SizeStep);
             return Generate<U>();
         }
         public void FinalDestroy(IComponent target)

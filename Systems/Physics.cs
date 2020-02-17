@@ -22,6 +22,7 @@ namespace CMDR.Systems
                     continue;
                 if (!Move(ref transforms[gameObject.Components[_t]]))
                     continue;
+				SpatialIndexer.CalcGridPos(gameObject);
                 if (!gameObject.Components.ContainsKey(_c))
                     continue;
 
