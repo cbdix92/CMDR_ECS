@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace CMDR
 {
@@ -47,6 +48,10 @@ namespace CMDR
 
             _data[Count] = null;
 
+        }
+        public IEnumerator GetEnumerator()
+        {
+            return _data.GetEnumerator();
         }
     }
 }
