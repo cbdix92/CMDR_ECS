@@ -110,4 +110,54 @@ namespace CMDR
             _data[target.Handle] = default;
         }
     }
+	
+	public class TestCollection<T>
+		where T: IComponent<T>, new()
+	{
+		private var _data;
+		
+		readonly Type _type;
+		
+		public int Count { get; private set; }
+		
+		
+		public T this[int index]
+		{
+			get => _data[index];
+		}
+		
+		public TestCollection<T>()
+		{
+			_type = typeof(T);
+			_data = typeof(type)[Data.SizeStep];
+		}
+		
+		public T Generate(IProfiler profiler = null)
+		{
+			for (int i = Count; i <= _data.Length; i++)
+            {
+                if (_data[i] == null)
+                {
+                    _data[i] = new T
+                    {
+                        Handle = i,
+                        ID = typeof(U),
+                    };
+
+                    _data[i].Parents.Add(i);
+
+                    if (profiler != null)
+                        profiler.Profile(ref _data[i]);
+
+                    Count++;
+                    return _data[i];
+                }
+            }
+		}
+		public void FinalDestroy(T target)
+        {
+            _data[target.Handle] = null;
+        }
+		
+	}
 }

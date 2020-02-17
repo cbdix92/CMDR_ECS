@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CMDR.Components;
 using System.Reflection;
@@ -12,10 +13,11 @@ namespace CMDR
 
         public static GameObjectCollection GameObjects = new GameObjectCollection();
         public static Dictionary<Type, ComponentCollection> Components = new Dictionary<Type, ComponentCollection>();
-        public static Dictionary<Type, int> Types = new Dictionary<Type, int>();
+		public static Hashtable Comps = new Hashtable();
 
         private static object _threadLockGameObject = new object();
         private static object _threadLockComponent = new object();
+		
         public static GameObject CreateGameObject()
         {
             // Creates a new instance of GameObject
@@ -56,11 +58,9 @@ namespace CMDR
         }
 		internal static void Init()
 		{
-            int i = -1;
 			foreach (Type type in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
 			{
-				Components.Add(type, new ComponentCollection(type));
-                Types.Add(type, i++);
+				Components.Add(type, new ComponentCollection<type>());
 			}
 			
 		}
