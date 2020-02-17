@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using CMDR.Components;
 using System.Reflection;
+using System.Linq;
 
 namespace CMDR
 {
     public static class Data
     {
-        public static ubyte SizeStep = 256;
+        public const byte SizeStep = Byte.MaxValue;
 
         public static GameObjectCollection GameObjects = new GameObjectCollection();
         public static Dictionary<Type, ComponentCollection> Components = new Dictionary<Type, ComponentCollection>();
+        public static Dictionary<Type, int> Types = new Dictionary<Type, int>();
 
         private static object _threadLockGameObject = new object();
         private static object _threadLockComponent = new object();
@@ -54,9 +56,11 @@ namespace CMDR
         }
 		internal static void Init()
 		{
+            int i = -1;
 			foreach (Type type in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
 			{
 				Components.Add(type, new ComponentCollection(type));
+                Types.Add(type, i++);
 			}
 			
 		}
