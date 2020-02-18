@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace CMDR.Components
@@ -25,6 +26,10 @@ namespace CMDR.Components
 
             // Signals the Component to Destroy() when it no longer has parents.
             return _parents.Count == 0;
+        }
+        public IEnumerator GetEnumerator()
+        {
+            return _parents.GetEnumerator();
         }
     }
 }

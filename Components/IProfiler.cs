@@ -2,12 +2,13 @@
 
 namespace CMDR.Components
 {
-    public interface IProfiler
+    public interface IProfiler<T>
+        where T: IComponent<T>
     {
         // Base class used to set initial state of Components
-        void Profile(ref IComponent component);
+        void Profile(ref T component);
     }
-    public abstract class TransformProfiler : IProfiler
+    public abstract class TransformProfiler : IProfiler<Transform>
     {
         public float X;
         public float Y;
@@ -17,7 +18,7 @@ namespace CMDR.Components
         public float Yvel;
 
 
-        public virtual void Profile(ref IComponent componet)
+        public virtual void Profile(ref Transform componet)
         {
             Transform target = (Transform)componet;
             

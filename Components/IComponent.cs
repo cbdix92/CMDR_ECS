@@ -8,4 +8,8 @@ namespace CMDR.Components
         Type ID { get; set; }
         ParentList Parents { get; set; }
     }
+    public interface IComponent<T> : IComponent
+    {
+
+    }
 }
