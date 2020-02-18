@@ -61,9 +61,11 @@ namespace CMDR
         }
 		internal static void Init()
 		{
-			foreach (Type type in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
+			var componentCollectionType = typeof(ComponentCollection<>);
+			foreach (Type componentType in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
 			{
-				_comps.Add(type, new ComponentCollection<typeof(type)>());
+				var newType = componentCollectionType.MakeGenericType(componentType);
+				_comps.Add(type, Activator.CreatInstance(newType));
 			}
 			
 		}
