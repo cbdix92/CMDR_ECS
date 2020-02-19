@@ -1,0 +1,5 @@
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csprojAssemblyReference.cache
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.dll
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.pdb
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.dll
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.pdb

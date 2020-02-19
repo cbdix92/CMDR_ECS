@@ -24,7 +24,7 @@ namespace CMDR
         {
             if (Components.ContainsKey(component.ID))
             {
-                this.UnParent(component.ID, Components[component.ID]);
+                RemoveComponent(component.ID);
                 Components.Remove(component.ID);
             }
             
@@ -39,8 +39,9 @@ namespace CMDR
         {
             if (!Components.ContainsKey(type))
                 return;
+            dynamic comps = Data.Components[type];
 
-            this.UnParent(type, Components[type]);
+            comps.RemoveParent(Components[type], Handle);
             Components.Remove(type);
         }
         public void Dispose()

@@ -8,6 +8,7 @@ namespace CMDR.Components
         // Base class used to set initial state of Components
         void Profile(ref T component);
     }
+    /*
     public abstract class TransformProfiler : IProfiler<Transform>
     {
         public float X;
@@ -30,4 +31,5 @@ namespace CMDR.Components
             target.Yvel = Yvel;
         }
     }
+    */
 }

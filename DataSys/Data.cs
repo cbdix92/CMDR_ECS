@@ -10,9 +10,9 @@ namespace CMDR
     public static class Data
     {
 
-		private static Hashtable _comps = new Hashtable();
+		internal static Hashtable Components = new Hashtable();
 
-        public static GameObjectCollection GameObjects = new GameObjectCollection();
+        internal static GameObjectCollection GameObjects = new GameObjectCollection();
 
 
 
@@ -30,7 +30,7 @@ namespace CMDR
         {
             lock(_threadLockComponent)
             {
-                dynamic tmp = _comps[typeof(T)];
+                dynamic tmp = Components[typeof(T)];
                 return tmp.Generate<T>();
             }
         }
@@ -38,19 +38,18 @@ namespace CMDR
         {
             // UnParent all Components coupled to target
             // Parentless Components will automatically be destroyed
-            foreach(Type type in target.Components.Keys)
+            foreach (Type type in target.Components.Keys)
             {
-                dynamic targetCollection = _comps[type];
+                dynamic targetCollection = Components[type];
                 int componetHandle = target.Components[type];
                 if (targetCollection[componetHandle].Parents.Remove(target.Handle))
-                    Destroy<type>(targetCollection[componetHandle]);
+                    targetCollection.FinalDestroy(targetCollection[target.Components[type]]);
             }
             GameObjects.Destroy(target);
         }
-        public static void Destroy<T>(T target)
-            where T: IComponent<T>
+        public static void Destroy(IComponent target)
         {
-            dynamic targetCollection = _comps[target.ID];
+            dynamic targetCollection = Components[target.ID];
 
             // Update parent gameobjects of the removal
             foreach (int parentIndex in target.Parents)
@@ -65,7 +64,7 @@ namespace CMDR
 			foreach (Type componentType in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
 			{
 				var newType = componentCollectionType.MakeGenericType(componentType);
-				_comps.Add(type, Activator.CreatInstance(newType));
+				Components.Add(componentType, Activator.CreateInstance(newType));
 			}
 			
 		}

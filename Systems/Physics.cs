@@ -1,5 +1,6 @@
 ﻿using System;
 using CMDR.Components;
+using System.Collections.Generic;
 
 namespace CMDR.Systems
 {
@@ -11,16 +12,17 @@ namespace CMDR.Systems
 
         public static void Update()
         {
-            GameObject[] gameObjects = Data.GameObjects.Get();
-            Transform[] transforms = (Transform[])Data.Components[_t].Get();
-            Collider[] colliders = (Collider[])Data.Components[_c].Get();
+            dynamic comps = Data.Components;
+            List<GameObject> gameObjects = Data.GameObjects.Get();
+            List<Transform> transforms = comps[_t].Get();
+            List<Collider> colliders = comps[_c].Get();
 
             // Update all transforms
             foreach (GameObject gameObject in gameObjects)
             {
                 if (gameObject.Components.ContainsKey(_s))
                     continue;
-                if (!Move(ref transforms[gameObject.Components[_t]]))
+                if (!Move(transforms[gameObject.Components[_t]]))
                     continue;
 				SpatialIndexer.CalcGridPos(gameObject);
                 if (!gameObject.Components.ContainsKey(_c))
@@ -52,7 +54,7 @@ namespace CMDR.Systems
 
             }
         }
-        public static bool Move(ref Transform transform)
+        public static bool Move(Transform transform)
         {
             if (transform.Xvel == 0 && transform.Yvel == 0)
                 return false;

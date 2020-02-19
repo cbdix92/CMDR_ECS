@@ -67,9 +67,11 @@ namespace CMDR.Systems
 		{
 			Type t = typeof(Transform);
 			Type c = typeof(Collider);
-			
-			Transform transform = (Transform)Data.Components[t][gameObject[t]];
-			Collider collider = (Collider)Data.Components[c][gameObject[c]];
+
+			dynamic comps = Data.Components;
+
+			Transform transform = comps[t][gameObject[t]];
+			Collider collider = comps[c][gameObject[c]];
 
 			// Remove the gameObject from all grid cells
 			foreach ((int, int) keys in collider.GridKeys)

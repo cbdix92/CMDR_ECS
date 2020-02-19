@@ -24,6 +24,10 @@ namespace CMDR
         {
             _data.Remove(target);
         }
+		public void RemoveParent(int component, int parent)
+		{
+			_data[component].Parents.Remove(parent);
+		}
 		
 	}
 }

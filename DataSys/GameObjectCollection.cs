@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace CMDR
 {
     public class GameObjectCollection
     {
-        private GameObject[] _data = new GameObject[Data.SizeStep];
+        private List<GameObject> _data = new List<GameObject>();
 
         public int Count { get; private set; }
 
@@ -13,40 +14,18 @@ namespace CMDR
         {
             get => _data[index];
         }
-        public GameObject[] Get()
+        public List<GameObject> Get()
         {
             return _data;
         }
         public GameObject Generate()
         {
-            // Find empty space for the new GameObject
-            for (int i = 0; i < _data.Length; i++)
-            {
-                if (_data[i] == null)
-                {
-                    _data[i] = new GameObject(i);
-                    Count++;
-                    return _data[i];
-                }
-            }
-            // No empty space encountered. Array needs to be resized.
-            Array.Resize(ref _data, Data.SizeStep);
-            return Generate();
+            _data.Add(new GameObject(_data.Count));
+            return _data[_data.Count - 1];
         }
-        public void Destroy(GameObject target)
+        public void Destroy(GameObject gameObject)
         {
-            int targetIndex = target.Handle;
-            Count--;
-            if (Count == 0)
-            {
-                _data[targetIndex] = null;
-                return;
-            }
-            // Place last object in the array in the targets index, and adjust the objects handle
-            _data.SetValue(_data[Count], targetIndex);
-            _data[targetIndex].Handle = targetIndex;
-
-            _data[Count] = null;
+            _data.Remove(gameObject);;
 
         }
         public IEnumerator GetEnumerator()
