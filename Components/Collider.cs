@@ -5,7 +5,7 @@ using CMDR.Systems;
 
 namespace CMDR.Components
 {
-    public class Collider : IComponent
+    public struct Collider : IComponent
     {
         #region IComponent
         public Component Handle { get; set; }

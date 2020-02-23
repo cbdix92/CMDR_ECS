@@ -5,6 +5,10 @@ namespace CMDR.Components
     public interface IComponent
     {
         Component Handle { get; set; }
+        int ID { get; set; }
+        int Parent { get; set; } 
+        Type Type { get; set; }
+        Scene Scene { get; set; }
     }
     public interface IComponent<T> : IComponent { }
 
@@ -17,8 +21,8 @@ namespace CMDR.Components
     public sealed class Component
     {
         public int ID;
+        public int Parent;
         public Type Type;
-        public GameObject Parent;
         public Scene Scene;
         internal Component(int id, Type type)
         {

@@ -8,14 +8,15 @@ namespace CMDR.Systems
     {
         readonly static Type _t = typeof(Transform);
         readonly static Type _c = typeof(Collider);
-        readonly static Type _s = typeof(Static);
 
         public static void Update()
         {
-            dynamic comps = Data.Components;
-            List<GameObject> gameObjects = Data.GameObjects.Get();
-            List<Transform> transforms = comps[_t].Get();
-            List<Collider> colliders = comps[_c].Get();
+            Scene scene = SceneManager.ActiveScene;
+
+            List<GameObject> gameObjects = scene.GameObjects.Get();
+
+            List<Transform> transforms = scene.Components.Get<Transform>();
+            List<Collider> colliders = scene.Components.Get<Collider>();
 
             // Update all transforms
             foreach (GameObject gameObject in gameObjects)

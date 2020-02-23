@@ -16,6 +16,10 @@ namespace CMDR
             Scene = scene;
             Components = new Dictionary<Type, Component>();
         }
+        public int Get<T>()
+        {
+            return Components[typeof(T)].ID;
+        }
 
         public void Use(Component component)
         {

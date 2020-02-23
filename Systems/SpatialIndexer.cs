@@ -6,33 +6,12 @@ using CMDR.Components;
 
 namespace CMDR.Systems
 {
-	/*
-    internal struct Cell
-    {
-        public (int Y, int X) GridKey;
-        public List<int> Cache;
-
-
-        public Cell((int Y, int X)gridKey)
-        {
-            GridKey = gridKey;
-            Cache = new List<int>();
-        }
-        public void Add(int handle)
-        {
-            Cache.Add(handle);
-        }
-        public void Remove(int handle)
-        {
-            Cache.Remove(handle);
-        }
-    }
-	*/
     internal static class SpatialIndexer
     {
 		public static int StorageThreshold = 100;
 		public static int StorageStep = 50;
 		
+		// Key = Grid Cordinates, Value = List of Collider Handles
         public static Dictionary<(int, int), List<int>> GridCells = new Dictionary<(int, int), List<int>>();
 
         private static int _cellSize = 30;
@@ -44,8 +23,13 @@ namespace CMDR.Systems
                 if (value != _cellSize)
                 {
                     _cellSize = value;
-                    foreach(GameObject gameObject in Data.GameObjects)
-						CalcGridPos(gameObject);
+					List<Transform> transforms = SceneManager.ActiveScene.Components.Get<Transform>();
+					List<Collider> colliders = SceneManager.ActiveScene.Components.Get<Collider>();
+
+                    foreach(GameObject gameObject in SceneManager.ActiveScene.GameObjects)
+					{
+						CalcGridPos(transforms[gameObject.Get<Transform>().ID], ref colliders[gameObject.Get<Collider>()]);
+					}
                 }
             }
         }
@@ -63,15 +47,11 @@ namespace CMDR.Systems
             return result;
         }
 		
-		internal static void CalcGridPos(GameObject gameObject)
+		internal static void CalcGridPos(Transform transform, Collider collider)
 		{
-			Type t = typeof(Transform);
-			Type c = typeof(Collider);
 
-			dynamic comps = Data.Components;
-
-			Transform transform = comps[t][gameObject[t]];
-			Collider collider = comps[c][gameObject[c]];
+			Transform transform = scene.Components.Get<Transform>()[gameObject.Components[typeof(Collider)].ID];
+			Collider collider = scene.Components.Get<Collider>()[gameObject.Get<Collider>();
 
 			// Remove the gameObject from all grid cells
 			foreach ((int, int) keys in collider.GridKeys)

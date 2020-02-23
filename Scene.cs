@@ -9,6 +9,7 @@ namespace CMDR
     public static class SceneManager
     {
         private static Scene _activeScene;
+        public static Scene ActiveScene { get; }
 
         private static List<Scene> _loadedScenes = new List<Scene>();
 
