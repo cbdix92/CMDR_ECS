@@ -51,7 +51,7 @@ namespace CMDR
         {
             lock(_threadLockComponent)
             {
-                Component component = Components.Generate<T>();
+                Component component = Components.Generate<T>(this);
                 component.Scene = this;
                 return component;
             }

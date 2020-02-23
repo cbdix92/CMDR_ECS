@@ -19,12 +19,19 @@ namespace CMDR.DataSys
             dynamic TComponents = _data[typeof(T)];
             return TComponents.Get();
         }
-        public Component Generate<T>()
+        public Component Generate<T>(Scene scene)
             where T : struct, IComponent<T>
         {
             dynamic TComponents = _data[typeof(T)];
 
-            TComponents.Add(new T { Handle = new Component(TComponents.Count, typeof(T)) });
+            TComponents.Add(new T
+            {
+                Handle = new Component(TComponents.Count, -1, typeof(T), scene),
+                ID = TComponents.Count,
+                Parent = -1,
+                Type = typeof(T),
+                Scene = scene
+            });
 
             return TComponents[TComponents.Count - 1].Handle;
         }

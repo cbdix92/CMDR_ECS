@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace CMDR
 {	
+    /*
 	public class ComponentCollection<T>
 		where T: struct, IComponent<T>
 	{
@@ -23,7 +24,8 @@ namespace CMDR
             _data.Remove(_data[component]);
         }
 	}
-    public class Test<T>
+    */
+    public class ComponentCollection<T>
         where T: struct, IComponent<T>
     {
         private T[] _data = new T[Data.Size];

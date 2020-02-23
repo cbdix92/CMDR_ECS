@@ -24,9 +24,9 @@ namespace CMDR.Components
         public int Parent;
         public Type Type;
         public Scene Scene;
-        internal Component(int id, Type type)
+        internal Component(int id, int parent, Type type, Scene scene)
         {
-            (ID, Type) = (id, type);
+            (ID, Parent, Type, Scene) = (id, parent, type, scene);
         }
     }
 }
