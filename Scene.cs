@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using CMDR.Components;
+using CMDR.DataSys;
+
+namespace CMDR
+{
+    public static class SceneManager
+    {
+        private static Scene _activeScene;
+
+        private static List<Scene> _loadedScenes = new List<Scene>();
+
+        internal static void LoadScene(Scene scene)
+        {
+            if (_activeScene == null)
+                _activeScene = scene as Scene;
+
+            _loadedScenes.Add(scene);
+            scene.ID = _loadedScenes.Count - 1;
+        }
+        public static void RemoveScene(int ID)
+        {
+            _loadedScenes.Remove(_loadedScenes[ID]);
+        }
+    }
+    public class Scene
+    {
+        public int ID { get; set; }
+
+        private object _threadLockGameObject = new object();
+        private object _threadLockComponent = new object();
+        
+        internal GameObjectCollection GameObjects = new GameObjectCollection();
+        internal ComponentTable Components = new ComponentTable();
+
+        public Scene()
+        {
+            SceneManager.LoadScene(this);
+        }
+
+        public GameObject GenerateGameObject()
+        {
+            lock (_threadLockGameObject)
+                return GameObjects.Generate(this);
+        }
+        public Component Generate<T>()
+            where T: struct, IComponent<T>
+        {
+            lock(_threadLockComponent)
+            {
+                Component component = Components.Generate<T>();
+                component.Scene = this;
+                return component;
+            }
+        }
+        public void Destroy(GameObject gameObject)
+        {
+            // Destroy all gameObjects components
+            foreach (Component component in gameObject.Components.Values)
+                Destroy(component);
+
+            GameObjects.FinalDestroy(gameObject);
+        }
+        public void Destroy(Component component)
+        {
+            component.Parent.RemoveComponent(component.Type);
+            Components.FinalDestroy(component);
+        }
+
+    }
+}

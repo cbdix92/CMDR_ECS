@@ -8,15 +8,15 @@ namespace CMDR.Components
     public class Collider : IComponent
     {
         #region IComponent
-        public int Handle { get; set; }
-        public Type ID { get; set; }
-        public ParentList Parents { get; set; }
+        public Component Handle { get; set; }
         #endregion
 
 		public List<(int X, int Y)> GridKeys;
 		
 		private int _height;
 		private int _width;
+
+		public bool Static { get; set; }
 		
 		public int Height
 		{

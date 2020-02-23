@@ -58,15 +58,17 @@ namespace CMDR
             // Remove the component from the collection
             targetCollection.FinalDestroy(target);
         }
-		internal static void Init()
-		{
-			var componentCollectionType = typeof(ComponentCollection<>);
-			foreach (Type componentType in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(typeof(IComponent))))
-			{
-				var newType = componentCollectionType.MakeGenericType(componentType);
-				Components.Add(componentType, Activator.CreateInstance(newType));
-			}
-			
-		}
+        internal static void GenerateComponents(out Hashtable output)
+        {
+            output = new Hashtable();
+
+            var TComponentCollection = typeof(ComponentCollection<>);
+
+            foreach (Type TComponent in Assembly.GetExecutingAssembly().GetTypes().Where(T => T.GetInterfaces().Contains(typeof(IComponent))))
+            {
+                var TNew = TComponentCollection.MakeGenericType(TComponent);
+                output.Add(TComponent, Activator.CreateInstance(TNew));
+            }
+        }
     }
 }

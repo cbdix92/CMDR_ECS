@@ -7,9 +7,7 @@ namespace CMDR.Components
     public struct RenderData : IComponent
     {
         #region IComponent
-        public int Handle { get; set; }
-        public Type ID { get; set; }
-        public ParentList Parents { get; set; }
+        public Component Handle { get; set; }
         #endregion
 
         public Image Data { get; internal set; }

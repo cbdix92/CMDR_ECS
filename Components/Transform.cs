@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace CMDR.Components
 {
-    public class Transform : IComponent
+    public struct Transform : IComponent
     {
         #region IComponent
-        public int Handle { get; set; }
-        public Type ID { get; set; }
-        public ParentList Parents { get; set; }
+        public Component Handle { get; set; }
         #endregion
 
         #region POSITION_PROPERTIES

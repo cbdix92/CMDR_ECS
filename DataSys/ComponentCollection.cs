@@ -1,33 +1,28 @@
 ﻿using System;
 using CMDR.Components;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace CMDR
 {	
 	public class ComponentCollection<T>
-		where T: IComponent<T>, new()
+		where T: struct, IComponent<T>
 	{
         private List<T> _data = new List<T>();
 		
 		public int Count { get => _data.Count; }
-		
-		public T this[int index]
-		{
-			get => _data[index];
-		}
-        public T Generate()
+        public List<T> Get()
         {
-            _data.Add(new T { Handle = _data.Count });
-            return _data[_data.Count - 1];
+            return _data;
         }
-		public void FinalDestroy(T target)
+        public void Add(T component)
         {
-            _data.Remove(target);
+            _data.Add(component);
         }
-		public void RemoveParent(int component, int parent)
-		{
-			_data[component].Parents.Remove(parent);
-		}
+		public void Remove(int component)
+        {
+            _data.Remove(_data[component]);
+        }
 		
 	}
 }

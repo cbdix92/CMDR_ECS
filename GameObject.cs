@@ -6,47 +6,41 @@ namespace CMDR
 {
     public class GameObject : IDisposable
     {
-        public int Handle;
-        public Dictionary<Type, int> Components;
+        public int ID;
+        public Scene Scene;
+        public Dictionary<Type, Component> Components { get; private set; }
 		
-		public int this[Type t]
-		{
-			get => Components[t];
-		}
-		
-        public GameObject(int handle)
+        public GameObject(int id, Scene scene)
         {
-            Handle = handle;
-            Components = new Dictionary<Type, int>();
+            ID = id;
+            Scene = scene;
+            Components = new Dictionary<Type, Component>();
         }
 
-        public void Use(IComponent component)
+        public void Use(Component component)
         {
-            if (Components.ContainsKey(component.ID))
+            if (Components.ContainsKey(component.Type))
             {
-                RemoveComponent(component.ID);
-                Components.Remove(component.ID);
+                RemoveComponent(component.Type);
             }
             
-            Components.Add(component.ID, component.Handle);
+            Components.Add(component.Type, component);
         }
-        public void Use(IComponent[] components)
+        public void Use(Component[] components)
         {
-            foreach (IComponent component in components)
+            foreach (Component component in components)
                 Use(component);
         }
         public void RemoveComponent(Type type)
         {
             if (!Components.ContainsKey(type))
-                return;
-            dynamic comps = Data.Components[type];
+                throw new ArgumentException($"Component {type} doesn't exist for {this.ToString()}.");
 
-            comps.RemoveParent(Components[type], Handle);
             Components.Remove(type);
         }
         public void Dispose()
         {
-            Data.Destroy(this);
+            Scene.Destroy(this);
         }
     }
 }

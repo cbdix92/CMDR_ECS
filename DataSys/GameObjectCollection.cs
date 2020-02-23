@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CMDR
 {
-    public class GameObjectCollection
+    internal class GameObjectCollection
     {
         private List<GameObject> _data = new List<GameObject>();
 
@@ -18,12 +18,12 @@ namespace CMDR
         {
             return _data;
         }
-        public GameObject Generate()
+        public GameObject Generate(Scene scene)
         {
-            _data.Add(new GameObject(_data.Count));
+            _data.Add(new GameObject(_data.Count, scene));
             return _data[_data.Count - 1];
         }
-        public void Destroy(GameObject gameObject)
+        public void FinalDestroy(GameObject gameObject)
         {
             _data.Remove(gameObject);;
 
