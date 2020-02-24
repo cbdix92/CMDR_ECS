@@ -6,26 +6,38 @@ namespace CMDR
 {
     internal class GameObjectCollection
     {
-        private List<GameObject> _data = new List<GameObject>();
+        private SGameObject[] _data = new SGameObject[Data.Size];
 
         public int Count { get; private set; }
 
-        public GameObject this[int index]
+        public SGameObject this[int index]
         {
             get => _data[index];
         }
-        public List<GameObject> Get()
+        public SGameObject[] Get()
         {
-            return _data;
+            SGameObject[] result = new SGameObject[Count];
+            Array.Copy(_data, result, Count);
+            return result;
         }
         public GameObject Generate(Scene scene)
         {
-            _data.Add(new GameObject(_data.Count, scene));
-            return _data[_data.Count - 1];
+            if (Count == _data.Length)
+                Array.Resize(ref _data, _data.Length + Data.Size);
+
+
+            _data[Count] = new SGameObject
+            {
+                Handle = new GameObject { ID = Count, Scene = scene },
+                ID = Count,
+                Scene = scene,
+                Components = Data.GenerateKeyValues()
+            };
+            return _data[Count - 1].Handle;
         }
-        public void FinalDestroy(GameObject gameObject)
+        public void FinalDestroy(int gameObject)
         {
-            _data.Remove(gameObject);;
+            _data[gameObject] = _data[Count--];
 
         }
         public IEnumerator GetEnumerator()

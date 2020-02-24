@@ -35,10 +35,10 @@ namespace CMDR.DataSys
 
             return TComponents[TComponents.Count - 1].Handle;
         }
-        public void FinalDestroy(Component component)
+        public void FinalDestroy(KeyValuePair<Type, int> component)
         {
-            dynamic TComponets = _data[component.Type];
-            TComponets.Remove(component.ID);
+            dynamic TComponets = _data[component.Key];
+            TComponets.Remove(component.Value);
         }
 
 

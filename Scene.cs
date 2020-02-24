@@ -44,6 +44,9 @@ namespace CMDR
         public GameObject GenerateGameObject()
         {
             lock (_threadLockGameObject)
+            {
+                GameObject gameObject = GameObjects.Generate(this);
+            }
                 return GameObjects.Generate(this);
         }
         public Component Generate<T>()
@@ -58,15 +61,16 @@ namespace CMDR
         }
         public void Destroy(GameObject gameObject)
         {
+
             // Destroy all gameObjects components
-            foreach (Component component in gameObject.Components.Values)
+            foreach (KeyValuePair<Type, int> component in gameObject.Components)
                 Destroy(component);
 
             GameObjects.FinalDestroy(gameObject);
         }
-        public void Destroy(Component component)
+        internal void Destroy(KeyValuePair<Type,int> component)
         {
-            component.Parent.RemoveComponent(component.Type);
+            // Called from the GameObject.RemoveComponent
             Components.FinalDestroy(component);
         }
 

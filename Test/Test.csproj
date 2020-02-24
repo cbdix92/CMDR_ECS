@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BDDEEB19-2347-449B-8641-50E2CD586444}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CMDR_ECS</RootNamespace>
-    <AssemblyName>CMDR_ECS</AssemblyName>
+    <ProjectGuid>{3EF78C8C-40FF-454C-8B4B-695DDF6A9902}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Test</RootNamespace>
+    <AssemblyName>Test</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,23 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\RenderData.cs" />
-    <Compile Include="DataSys\ComponentTable.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="Systems\BitCollider.cs" />
-    <Compile Include="DataSys\ComponentCollection.cs" />
-    <Compile Include="Components\Collider.cs" />
-    <Compile Include="Components\Common\IComponent.cs" />
-    <Compile Include="Components\Common\IProfiler.cs" />
-    <Compile Include="Components\Common\ParentList.cs" />
-    <Compile Include="Components\Transform.cs" />
-    <Compile Include="DataSys\Data.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="DataSys\GameObjectCollection.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Systems\Physics.cs" />
-    <Compile Include="Systems\SpatialIndexer.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMDR_ECS.csproj">
+      <Project>{bddeeb19-2347-449b-8641-50e2cd586444}</Project>
+      <Name>CMDR_ECS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

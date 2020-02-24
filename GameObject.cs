@@ -8,27 +8,47 @@ namespace CMDR
     {
         public int ID;
         public Scene Scene;
-        public Dictionary<Type, Component> Components { get; private set; }
+    }
+    public struct SGameObject
+    {
+        public GameObject Handle;
+        public int ID;
+        public Scene Scene;
+        public KeyValuePair<Type, int>[] Components;
 		
-        public GameObject(int id, Scene scene)
-        {
-            ID = id;
-            Scene = scene;
-            Components = new Dictionary<Type, Component>();
-        }
         public int Get<T>()
         {
-            return Components[typeof(T)].ID;
+            foreach (KeyValuePair<Type, int> components in Components)
+            {
+                if(components.Key == typeof(T))
+                {
+                    return components.Value;
+                }
+            }
+            return -1;
+        }
+
+        public bool Contains(Type type)
+        {
+            for (int i = 0; i < Components.Length; i++)
+            {
+                if (Components[i].Key == type && Components[i].Value != -1)
+                    return true;
+            }
+            return false;
         }
 
         public void Use(Component component)
         {
-            if (Components.ContainsKey(component.Type))
+            for (int i = 0; i < Components.Length; i++)
             {
-                RemoveComponent(component.Type);
+                if (Components[i].Key == component.Type)
+                {
+                    Scene.Destroy(Components[i]);
+                    Components[i] = new KeyValuePair<Type, int>(component.Type, component.ID);
+                    return;
+                }
             }
-            
-            Components.Add(component.Type, component);
         }
         public void Use(Component[] components)
         {
@@ -37,10 +57,22 @@ namespace CMDR
         }
         public void RemoveComponent(Type type)
         {
-            if (!Components.ContainsKey(type))
-                throw new ArgumentException($"Component {type} doesn't exist for {this.ToString()}.");
-
-            Components.Remove(type);
+            for (int i = 0; i < Components.Length; i++)
+            {
+                if (Components[i].Key == type)
+                {
+                    Scene.Destroy(Components[i]);
+                    Components[i] = new KeyValuePair<Type, int>(type, -1);
+                }
+            }
+        }
+        internal void ComponentMoved(Type type, int newPosition)
+        {
+            for (int i = 0; i < Components.Length; i++)
+            {
+                if (Components[i].Key == type)
+                    Components[i] = new KeyValuePair<Type, int>(type, newPosition);
+            }
         }
     }
 }

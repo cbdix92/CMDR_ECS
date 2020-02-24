@@ -11,6 +11,10 @@ namespace CMDR
 
         public int Count { get; private set; }
 
+        public T this[int index]
+        {
+            get => _data[index];
+        }
         public T[] Get()
         {
             T[] result = new T[Count];
@@ -29,7 +33,11 @@ namespace CMDR
         }
         public void Remove(int component)
         {
+            // The last component in the array will overwrite the one that we want to remove.
             _data[component] = _data[Count--];
+
+            // Tell the moved components parent of it's new position
+            SceneManager.ActiveScene.GameObjects[_data[component].Parent].ComponentMoved(typeof(T), Count);
         }
     }
 }
