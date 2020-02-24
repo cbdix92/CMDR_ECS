@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CMDR
 {
-    public class GameObject : IDisposable
+    public class GameObject
     {
         public int ID;
         public Scene Scene;
@@ -41,10 +41,6 @@ namespace CMDR
                 throw new ArgumentException($"Component {type} doesn't exist for {this.ToString()}.");
 
             Components.Remove(type);
-        }
-        public void Dispose()
-        {
-            Scene.Destroy(this);
         }
     }
 }

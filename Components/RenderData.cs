@@ -8,6 +8,10 @@ namespace CMDR.Components
     {
         #region IComponent
         public Component Handle { get; set; }
+        public int ID { get; set; }
+        public int Parent { get; set; }
+        public Type Type { get; set; }
+        public Scene Scene { get; set; }
         #endregion
 
         public Image Data { get; internal set; }

@@ -9,7 +9,11 @@ namespace CMDR.Components
     {
         #region IComponent
         public Component Handle { get; set; }
-        #endregion
+		public int ID { get; set; }
+		public int Parent { get; set; }
+		public Type Type { get; set; }
+		public Scene Scene { get; set; }
+		#endregion
 
 		public List<(int X, int Y)> GridKeys;
 		
