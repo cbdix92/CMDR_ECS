@@ -23,12 +23,13 @@ namespace CMDR.Systems
                 if (value != _cellSize)
                 {
                     _cellSize = value;
-					List<Transform> transforms = SceneManager.ActiveScene.Components.Get<Transform>();
-					List<Collider> colliders = SceneManager.ActiveScene.Components.Get<Collider>();
+					Transform[] transforms = SceneManager.ActiveScene.Components.Get<Transform>();
+					Collider[] colliders = SceneManager.ActiveScene.Components.Get<Collider>();
 
-                    foreach(GameObject gameObject in SceneManager.ActiveScene.GameObjects)
+                    foreach(SGameObject gameObject in SceneManager.ActiveScene.GameObjects)
 					{
-						CalcGridPos(transforms[gameObject.Get<Transform>().ID], ref colliders[gameObject.Get<Collider>()]);
+						if(gameObject.Contains<Collider>() && gameObject.Contains<Transform>())
+						CalcGridPos(ref colliders[gameObject.Get<Collider>()], transforms[gameObject.Get<Transform>()]);
 					}
                 }
             }
@@ -47,15 +48,11 @@ namespace CMDR.Systems
             return result;
         }
 		
-		internal static void CalcGridPos(Transform transform, Collider collider)
+		internal static void CalcGridPos(ref Collider collider, Transform transform)
 		{
-
-			Transform transform = scene.Components.Get<Transform>()[gameObject.Components[typeof(Collider)].ID];
-			Collider collider = scene.Components.Get<Collider>()[gameObject.Get<Collider>();
-
 			// Remove the gameObject from all grid cells
 			foreach ((int, int) keys in collider.GridKeys)
-				GridCells[keys].Remove(gameObject.Handle);
+				GridCells[keys].Remove(collider.Parent);
 			
 			// Top left corner converted to grid cordinates
 			(int X, int Y) p1 = ((int)Math.Floor(transform.X / CellSize), (int)Math.Floor(transform.Y / CellSize));
@@ -71,7 +68,7 @@ namespace CMDR.Systems
 					if(!GridCells.ContainsKey((y, x)))
 						GridCells[(y, x)] = new List<int>();
 					
-					GridCells[(y, x)].Add(gameObject.Handle);
+					GridCells[(y, x)].Add(collider.Parent);
 					collider.GridKeys.Add((y, x));
 				}
 				

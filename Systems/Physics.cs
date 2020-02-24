@@ -6,46 +6,60 @@ namespace CMDR.Systems
 {
     public static class Physics
     {
-        readonly static Type _t = typeof(Transform);
-        readonly static Type _c = typeof(Collider);
+        readonly static Type _transformT = typeof(Transform);
+        readonly static Type _colliderT = typeof(Collider);
 
         public static void Update()
         {
             Scene scene = SceneManager.ActiveScene;
 
-            List<GameObject> gameObjects = scene.GameObjects.Get();
+            SGameObject[] gameObjects = scene.GameObjects.Get();
 
-            List<Transform> transforms = scene.Components.Get<Transform>();
-            List<Collider> colliders = scene.Components.Get<Collider>();
+            Transform[] transforms = scene.Components.Get<Transform>();
+            Collider[] colliders = scene.Components.Get<Collider>();
 
             // Update all transforms
-            foreach (GameObject gameObject in gameObjects)
+            foreach (SGameObject gameObject in gameObjects)
             {
-                if (gameObject.Components.ContainsKey(_s))
+
+                int transform;
+                int collider;
+
+                if (gameObject.Contains<Transform>())
+                    transform = gameObject.Get<Transform>();
+                else
                     continue;
-                if (!Move(transforms[gameObject.Components[_t]]))
+
+                // Don't update Static objects
+                // if => not static, objects moves, has collider
+                if (!colliders[gameObject.Get<Collider>()].Static 
+                 && Move(transforms[gameObject.Get<Transform>()]) 
+                 && gameObject.Contains<Collider>())
+                    collider = gameObject.Get<Collider>();
+                else
                     continue;
-				SpatialIndexer.CalcGridPos(gameObject);
-                if (!gameObject.Components.ContainsKey(_c))
-                    continue;
+
+                SpatialIndexer.CalcGridPos(ref colliders[collider], transforms[transform]);
 
                 // Enter Broad Phase Collsion Check
 
                 // Query spatial indexer
-                int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders((Collider)colliders[gameObject[_c]]);
+                int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[collider]);
                 foreach (int i in gameObjectColliders)
                 {
+                    int transform2 = gameObjects[i].Get<Transform>();
+                    int collider2 = gameObjects[i].Get<Collider>();
                     // Perform Rect Check
-                    bool b1 = transforms[gameObject[_t]].X - transforms[gameObjects[i][_t]].X <= colliders[gameObjects[i][_c]].Width;
-                    bool b2 = transforms[gameObject[_t]].Y - transforms[gameObjects[i][_t]].Y <= colliders[gameObjects[i][_c]].Height;
+                    bool b1 = transforms[transform].X - transforms[transform2].X <= colliders[collider2].Width;
+                    bool b2 = transforms[transform].Y - transforms[transform2].Y <= colliders[collider2].Height;
                     if (!b1 && b2)
                         continue;
 
                     // Enter Narrow Phase Collision Check
 
                     // BitCollider Check
-                    if (!BitCollider.BitColliderCheck(transforms[gameObject[_t]], transforms[gameObjects[i][_t]],
-                                                      colliders[gameObject[_c]], colliders[gameObjects[i][_c]]))
+                    if (!BitCollider.BitColliderCheck(transforms[transform], transforms[transform2],
+                                                      colliders[collider], colliders[collider2]))
                         continue;
 
                     // Resolve Collision

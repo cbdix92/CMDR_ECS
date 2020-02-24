@@ -14,7 +14,7 @@ namespace CMDR.DataSys
             Data.GenerateComponents(out _data);
         }
 
-        public List<T> Get<T>()
+        public T[] Get<T>()
         {
             dynamic TComponents = _data[typeof(T)];
             return TComponents.Get();

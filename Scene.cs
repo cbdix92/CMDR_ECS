@@ -46,8 +46,8 @@ namespace CMDR
             lock (_threadLockGameObject)
             {
                 GameObject gameObject = GameObjects.Generate(this);
+                return gameObject;
             }
-                return GameObjects.Generate(this);
         }
         public Component Generate<T>()
             where T: struct, IComponent<T>
@@ -63,10 +63,10 @@ namespace CMDR
         {
 
             // Destroy all gameObjects components
-            foreach (KeyValuePair<Type, int> component in gameObject.Components)
+            foreach (KeyValuePair<Type, int> component in GameObjects[gameObject.ID].Components)
                 Destroy(component);
 
-            GameObjects.FinalDestroy(gameObject);
+            GameObjects.FinalDestroy(gameObject.ID);
         }
         internal void Destroy(KeyValuePair<Type,int> component)
         {

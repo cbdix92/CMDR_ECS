@@ -15,7 +15,7 @@ namespace CMDR
         public int ID;
         public Scene Scene;
         public KeyValuePair<Type, int>[] Components;
-		
+
         public int Get<T>()
         {
             foreach (KeyValuePair<Type, int> components in Components)
@@ -28,11 +28,11 @@ namespace CMDR
             return -1;
         }
 
-        public bool Contains(Type type)
+        public bool Contains<T>()
         {
             for (int i = 0; i < Components.Length; i++)
             {
-                if (Components[i].Key == type && Components[i].Value != -1)
+                if (Components[i].Key == typeof(T) && Components[i].Value != -1)
                     return true;
             }
             return false;
