@@ -10,7 +10,8 @@ namespace CMDR
     public static class Data
     {
         public static byte Size = Byte.MaxValue;
-        public static int ComponentCount { get; private set; }
+		
+        public static int ComponentTotal { get; private set; }
 
         public static KeyValuePair<Type, int>[] KeyValues;
         internal static void GenerateComponents(out Hashtable output)
