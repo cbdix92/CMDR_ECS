@@ -8,7 +8,6 @@ namespace CMDR.DataSys
     internal class ComponentTable
     {
         private Hashtable _data;
-
         public ComponentTable()
         {
             Data.GenerateComponents(out _data);

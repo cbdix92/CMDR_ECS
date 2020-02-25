@@ -24,6 +24,8 @@ namespace CMDR
 
             foreach (Type TComponent in Types)
             {
+                if (TComponent.Name == typeof(IComponent<>).Name)
+                    continue;
                 var TNew = TComponentCollection.MakeGenericType(TComponent);
                 output.Add(TComponent, Activator.CreateInstance(TNew));
 

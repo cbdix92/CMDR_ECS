@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace CMDR
 {	
     public class ComponentCollection<T>
-        where T: struct, IComponent<T>
+        where T: struct, IComponent
     {
         private T[] _data = new T[Data.Size];
 
