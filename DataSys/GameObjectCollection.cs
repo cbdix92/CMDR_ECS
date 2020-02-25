@@ -31,8 +31,8 @@ namespace CMDR
                 Handle = new GameObject { ID = Count, Scene = scene },
                 ID = Count,
                 Scene = scene,
-                Components = Data.GenerateKeyValues()
-            };
+                Components = new KeyValuePair<Type, int>[Data.ComponentCount]
+        };
             return _data[Count - 1].Handle;
         }
         public void FinalDestroy(int gameObject)
