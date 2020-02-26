@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CMDR.Components;
 using System.Collections.Generic;
 
@@ -15,60 +16,51 @@ namespace CMDR
         public int ID;
         public Scene Scene;
         public KeyValuePair<Type, int>[] Components;
+		public int NumberOfComponents { get; private set; }
 
         public int Get<T>()
         {
-            foreach (KeyValuePair<Type, int> components in Components)
-            {
-                if(components.Key == typeof(T))
-                {
-                    return components.Value;
-                }
-            }
-            return -1;
+			for (int i = 0; i < NumberOfComponents; i++)
+			{
+				if(Components[i].Key == typeof(T))
+					return Components[i].Value;
+			}
+			return -1;
         }
-
+		
         public bool Contains<T>()
         {
-            for (int i = 0; i < Components.Length; i++)
-            {
-                if (Components[i].Key == typeof(T) && Components[i].Value != -1)
-                    return true;
-            }
-            return false;
+            return (Get<T>() != -1);
         }
-
-        public void Use(Component component)
+		
+        public void Add(Component component)
         {
-            for (int i = 0; i < Components.Length; i++)
+			int i = Get<component.Type>();
+			if (i != -1)
+			{
+				Scene.Destroy(Components[i]);
+				Components[i] = new KeyValuePair<Type, int>(component.Type, component.ID);
+				return;
+			}
+			Components[NumberOfComponents] = new KeyValuePair<Type, int>(component.Type, component.ID);
+			NumberOfComponents++;
+        }
+		
+        public void RemoveComponent<T>()
+        {
+            for (int i = 0; i < NumberOfComponents; i++)
             {
-                if (Components[i].Key == component.Type)
+                if (Components[i].Key == typeof(T))
                 {
                     Scene.Destroy(Components[i]);
-                    Components[i] = new KeyValuePair<Type, int>(component.Type, component.ID);
-                    return;
+                    Components[i] = new KeyValuePair<Type, int>(typeof(T), -1);
                 }
             }
         }
-        public void Use(Component[] components)
-        {
-            foreach (Component component in components)
-                Use(component);
-        }
-        public void RemoveComponent(Type type)
-        {
-            for (int i = 0; i < Components.Length; i++)
-            {
-                if (Components[i].Key == type)
-                {
-                    Scene.Destroy(Components[i]);
-                    Components[i] = new KeyValuePair<Type, int>(type, -1);
-                }
-            }
-        }
+		
         internal void ComponentMoved(Type type, int newPosition)
         {
-            for (int i = 0; i < Components.Length; i++)
+            for (int i = 0; i < NumberOfComponents; i++)
             {
                 if (Components[i].Key == type)
                     Components[i] = new KeyValuePair<Type, int>(type, newPosition);
