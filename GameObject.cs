@@ -18,24 +18,38 @@ namespace CMDR
         public KeyValuePair<Type, int>[] Components;
 		public int NumberOfComponents { get; private set; }
 
-        public int Get<T>()
+        
+        // Used for syntactical  simplicity
+        internal int Get<T>()
         {
-			for (int i = 0; i < NumberOfComponents; i++)
-			{
-				if(Components[i].Key == typeof(T))
-					return Components[i].Value;
-			}
-			return -1;
+            return Get(typeof(T));
+        }
+        
+
+        // Returns the index of Component "type". Returns -1 if that Component does not exist.
+        public int Get(Type type)
+        {
+            if (!Data.Types.Contains(type))
+                throw new ArgumentException($"{type} is not a Component");
+
+            for (int i = 0; i < NumberOfComponents; i++)
+            {
+                if (Components[i].Key == type)
+                    return Components[i].Value;
+            }
+            return -1;
         }
 		
         public bool Contains<T>()
         {
-            return (Get<T>() != -1);
+            return (Get(typeof(T)) != -1);
         }
 		
         public void Add(Component component)
         {
-			int i = Get<component.Type>();
+            
+            int i = Get(component.Type);
+            // if Components already exist, remove it from memory then overwrite it with the new component
 			if (i != -1)
 			{
 				Scene.Destroy(Components[i]);
@@ -46,15 +60,18 @@ namespace CMDR
 			NumberOfComponents++;
         }
 		
-        public void RemoveComponent<T>()
+        public void RemoveComponent(Type type)
         {
-            for (int i = 0; i < NumberOfComponents; i++)
+            int i = Get(type);
+            if (i != -1)
             {
-                if (Components[i].Key == typeof(T))
-                {
-                    Scene.Destroy(Components[i]);
-                    Components[i] = new KeyValuePair<Type, int>(typeof(T), -1);
-                }
+                Scene.Destroy(Components[i]);
+                NumberOfComponents--;
+                ////////////////////////////////////////////// DOES THIS WORK? 
+                //WILL IT PLACE A DEFAULT VALUE STRUCT AT THE END OF THE ARRAY
+                Components[i] = new KeyValuePair<Type, int>();
+                Array.Sort(Components);
+                ///////////////////////////////////////////
             }
         }
 		
