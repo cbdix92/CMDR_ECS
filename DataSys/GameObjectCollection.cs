@@ -6,7 +6,7 @@ namespace CMDR
 {
     internal class GameObjectCollection
     {
-        private SGameObject[] _data = new SGameObject[Data.Size];
+        private SGameObject[] _data = new SGameObject[Data.StorageScale];
 
         public int Count { get; private set; }
 
@@ -23,7 +23,7 @@ namespace CMDR
         public GameObject Generate(Scene scene)
         {
             if (Count == _data.Length)
-                Array.Resize(ref _data, _data.Length + Data.Size);
+                Array.Resize(ref _data, _data.Length + Data.StorageScale);
 
 
             _data[Count] = new SGameObject

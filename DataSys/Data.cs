@@ -9,7 +9,7 @@ namespace CMDR
 {
     public static class Data
     {
-        public static byte Size = Byte.MaxValue;
+        public static byte StorageScale = Byte.MaxValue;
 		
         public static int ComponentTotal { get; private set; }
 

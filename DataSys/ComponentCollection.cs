@@ -7,7 +7,7 @@ namespace CMDR
     public class ComponentCollection<T>
         where T: struct, IComponent
     {
-        private T[] _data = new T[Data.Size];
+        private T[] _data = new T[Data.StorageScale];
 
         public int Count { get; private set; }
 
@@ -24,7 +24,7 @@ namespace CMDR
         public int Add(T component)
         {
             if (Count == _data.Length)
-                Array.Resize(ref _data, _data.Length + Data.Size);
+                Array.Resize(ref _data, _data.Length + Data.StorageScale);
             
             _data[Count] = component;
             
