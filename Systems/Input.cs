@@ -34,6 +34,14 @@ namspace CMDR
 			{
 				if(Count == _keyBinds.Length)
 					Array.Resize(ref _keyBinds, _keyBinds.Length + Data.StorageScale)
+				
+				_keyBinds[Count] = new KeyBind 
+				{
+					Key = key,
+					OnKeyDown = onKeyDown,
+					OnKeyUp = onKeyUp
+				};
+				Count++;
 			}
 		}
 	}
