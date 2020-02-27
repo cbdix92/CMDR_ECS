@@ -8,40 +8,43 @@ namspace CMDR
 		public Key Key;
 		public Action OnKeyUp;
 		public Action OnKeyDown;
-		public bool IsKeyDownTriggered { get; private set; }
+		public bool IsKeyDownTriggered;
+	}
 		
-		internal void Detect()
+	public static class Input
+	{
+		private static KeyBind[] _keyBinds = new KeyBind[Data.StorageScale];
+		public static int Count { get; private set; }
+		public static void AddKeyBind(Key key, Action onKeyDown, Action onKeyUp = null)
 		{
-			if (Keyboard.IsKeyDown(Key) && !IsKeyDownTriggered)
+			if(Count == _keyBinds.Length)
+				Array.Resize(ref _keyBinds, _keyBinds.Length + Data.StorageScale)
+			
+			_keyBinds[Count] = new KeyBind 
 			{
-				OnKeyDown();
-				IsKeyDownTriggered = true;
-			}
-			else if (Keyboard.IsKeyUp(Key) && IsKeyDownTriggered)
-			{
-				if (OnKeyUp != null)
-					OnKeyUp();
-				
-				IsKeyDownTriggered = false;
-			}
+				Key = key,
+				OnKeyDown = onKeyDown,
+				OnKeyUp = onKeyUp
+			};
+			Count++;
 		}
 		
-		public static class Input
+		public static void DetectKeys()
 		{
-			private static KeyBind[] _keyBinds = new KeyBind[Data.StorageScale];
-			public static int Count { get; private set; }
-			public static void AddKeyBind(Key key, Action onKeyDown, Action onKeyUp = null)
+			foreach(KeyBind keybind in _keyBinds)
 			{
-				if(Count == _keyBinds.Length)
-					Array.Resize(ref _keyBinds, _keyBinds.Length + Data.StorageScale)
-				
-				_keyBinds[Count] = new KeyBind 
+				if (Keyboard.IsKeyDown(keybind.Key) && !keybind.IsKeyDownTriggered)
 				{
-					Key = key,
-					OnKeyDown = onKeyDown,
-					OnKeyUp = onKeyUp
-				};
-				Count++;
+					keybind.OnKeyDown();
+					keybind.IsKeyDownTriggered = true;
+				}
+				else if (Keyboard.IsKeyUp(keybind.Key) && keybind.IsKeyDownTriggered)
+				{
+					if (OnKeyUp != null)
+						OnKeyUp();
+					
+					keybind.IsKeyDownTriggered = false;
+				}
 			}
 		}
 	}
