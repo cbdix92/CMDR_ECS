@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namspace CMDR
+namespace CMDR.Systems
 {
 	internal struct KeyBind
 	{
@@ -17,10 +17,11 @@ namspace CMDR
 		public static int Count { get; private set; }
 		public static void AddKeyBind(Key key, Action onKeyDown, Action onKeyUp = null)
 		{
-			if(Count == _keyBinds.Length)
-				Array.Resize(ref _keyBinds, _keyBinds.Length + Data.StorageScale)
-			
-			_keyBinds[Count] = new KeyBind 
+			if (Count == _keyBinds.Length)
+				Array.Resize(ref _keyBinds, _keyBinds.Length + Data.StorageScale);
+
+
+			_keyBinds[Count] = new KeyBind
 			{
 				Key = key,
 				OnKeyDown = onKeyDown,
@@ -31,19 +32,19 @@ namspace CMDR
 		
 		public static void DetectKeys()
 		{
-			foreach(KeyBind keybind in _keyBinds)
+			for(int i = 0; i < _keyBinds.Length; i++)
 			{
-				if (Keyboard.IsKeyDown(keybind.Key) && !keybind.IsKeyDownTriggered)
+				if (Keyboard.IsKeyDown(_keyBinds[i].Key) && !_keyBinds[i].IsKeyDownTriggered)
 				{
-					keybind.OnKeyDown();
-					keybind.IsKeyDownTriggered = true;
+					_keyBinds[i].OnKeyDown();
+					_keyBinds[i].IsKeyDownTriggered = true;
 				}
-				else if (Keyboard.IsKeyUp(keybind.Key) && keybind.IsKeyDownTriggered)
+				else if (Keyboard.IsKeyUp(_keyBinds[i].Key) && _keyBinds[i].IsKeyDownTriggered)
 				{
-					if (OnKeyUp != null)
-						OnKeyUp();
+					if (_keyBinds[i].OnKeyUp != null)
+						_keyBinds[i].OnKeyUp();
 					
-					keybind.IsKeyDownTriggered = false;
+					_keyBinds[i].IsKeyDownTriggered = false;
 				}
 			}
 		}

@@ -22,6 +22,8 @@ namespace CMDR
         {
             output = new Hashtable();
 
+            Types = new HashSet<Type>();
+
             var TComponentCollection = typeof(ComponentCollection<>);
 
             foreach (Type TComponent in _types)

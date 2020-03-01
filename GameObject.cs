@@ -9,6 +9,12 @@ namespace CMDR
     {
         public int ID;
         public Scene Scene;
+
+
+        public void Use(Component component)
+        {
+            Scene.GameObjects[ID].Use(component);
+        }
     }
     public struct SGameObject
     {
@@ -45,7 +51,7 @@ namespace CMDR
             return (Get(typeof(T)) != -1);
         }
 		
-        public void Add(Component component)
+        public void Use(Component component)
         {
             
             int i = Get(component.Type);
