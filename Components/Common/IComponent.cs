@@ -14,10 +14,6 @@ namespace CMDR.Components
 
 
 
-    // Could be used to contain the components data handles at the top level instead of returning an int
-    // Returned by the Scene when creating a new component.
-    // Passed as an argument at the toplevel to manage components.
-    // Work in progress ...
     public sealed class Component
     {
         public int ID;
@@ -27,6 +23,14 @@ namespace CMDR.Components
         internal Component(int id, int parent, Type type, Scene scene)
         {
             (ID, Parent, Type, Scene) = (id, parent, type, scene);
+        }
+        public T Get<T>()
+        {
+            return Scene.Components.Get<T>()[ID];
+        }
+        public void Update<T>(T component)
+        {
+            Scene.Components.Get<T>()[ID] = component;
         }
     }
 }

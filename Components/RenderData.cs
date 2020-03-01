@@ -16,8 +16,9 @@ namespace CMDR.Components
 
         public Image Data { get; internal set; }
 
-        public static void FromFile(ref RenderData renderData, string src)
+        public static void FromFile(Component component, string src)
         {
+            RenderData renderData = component.Get<RenderData>();
             try
             {
                 renderData.Data = Image.FromFile(src);
@@ -26,8 +27,7 @@ namespace CMDR.Components
             {
                 throw new FileNotFoundException($"'{src}', RenderData");
             }
+            component.Update<RenderData>(renderData);
         }
-
-
     }
 }

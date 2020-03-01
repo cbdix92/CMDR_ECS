@@ -15,6 +15,11 @@ namespace CMDR
         {
             Scene.GameObjects[ID].Use(component);
         }
+        public void Use(Component[] components)
+        {
+            foreach (Component component in components)
+                Use(component);
+        }
     }
     public struct SGameObject
     {
