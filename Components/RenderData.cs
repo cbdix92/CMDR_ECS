@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CMDR.Components
 {
-    public struct RenderData : IComponent
+    public struct RenderData : IComponent<RenderData>
     {
         #region IComponent
         public Component Handle { get; set; }
