@@ -2,19 +2,30 @@
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using CMDR.Systems;
 
 namespace CMDR
 {
     public sealed class Display : Form
     {
-        public Display(int sizeX, int sizeY)
+        public Display(int width, int height)
         {
-            (Camera.SizeX, Camera.SizeY) = (sizeX, sizeY);
+            (Camera.Width, Camera.Height) = (width, height);
+            
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
-            this.Size = new Size(sizeX, sizeY);
+            this.Size = new Size(width, height);
             this.Text = Assembly.GetEntryAssembly().GetName().ToString();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+        }
+
+        public void Start()
+        {
+
+            Render.SetDisplay(this);
+            Application.EnableVisualStyles();
+            UpdatePump.Init();
+            Application.Run(this);
         }
     }
 }

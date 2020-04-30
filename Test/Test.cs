@@ -6,6 +6,8 @@ namespace Test
 {
     class Test
     {
+        public static Display Display;
+
         public static Scene TestScene;
 
         public static GameObject GameObject1;
@@ -26,6 +28,8 @@ namespace Test
 
             Component[] comps = new Component[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
+            Display = new Display(800, 600);
+            Display.Start();
         }
     }
 }

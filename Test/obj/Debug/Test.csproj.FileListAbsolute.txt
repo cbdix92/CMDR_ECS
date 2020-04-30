@@ -7,3 +7,6 @@ C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\obj\Debug\Test.csprojAssemblyRefer
 C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\obj\Debug\Test.csproj.CopyComplete
 C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\obj\Debug\Test.exe
 C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\obj\Debug\Test.pdb
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\bin\Debug\OpenTK.dll
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\bin\Debug\OpenTK.pdb
+C:\Users\cbdix\OneDrive\Desktop\CMDR_ECS\Test\bin\Debug\OpenTK.xml

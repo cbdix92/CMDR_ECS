@@ -11,13 +11,13 @@ namespace CMDR
 
         public static float Xvel;
         public static float Yvel;
-        public static int SizeX { get; internal set; }
-        public static int SizeY { get; internal set; }
+        public static int Width { get; internal set; }
+        public static int Height { get; internal set; }
 
         public static bool CameraRectCheck(Transform transform)
         {
-            bool B1 = transform.X - X < SizeX;
-            bool B2 = transform.Y - Y < SizeY;
+            bool B1 = transform.X - X < Width;
+            bool B2 = transform.Y - Y < Height;
             return B1 && B2;
         }
 

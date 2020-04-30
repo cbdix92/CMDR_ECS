@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing;
 
 using CMDR.Components;
 
@@ -15,11 +15,16 @@ namespace CMDR.Systems
 
         public static byte ZDepth;
 
+        internal static void SetDisplay(Display display)
+        {
+            Display = display;
+            Buffer_Context = BufferedGraphicsManager.Current;
+            Buffer = Buffer_Context.Allocate(Display.CreateGraphics(), new Rectangle(0, 0, Display.Width, Display.Height));
+        }
         internal static void ScreenBuffer()
         {
-            Scene scene = Scene;
-            Transform[] transforms = scene.Components.Get<Transform>();
-            RenderData[] renderables = scene.Components.Get<RenderData>();
+            Transform[] transforms = Scene.Components.Get<Transform>();
+            RenderData[] renderables = Scene.Components.Get<RenderData>();
 
             foreach(SGameObject gameObject in Camera.GetRenderable())
             {
@@ -28,14 +33,11 @@ namespace CMDR.Systems
                 Buffer.Graphics.DrawImage(image, transform.X - Camera.X, transform.Y - Camera.Y);
             }
         }
-        internal static void SetDisplay(Display display)
+        internal static void Update(object caller, EventArgs e)
         {
-            Display = display;
-            Buffer_Context = BufferedGraphicsManager.Current;
-            Buffer = Buffer_Context.Allocate(Display.CreateGraphics(), new Rectangle(0, 0, Display.Width, Display.Height));
-        }
-        internal static void Draw()
-        {
+            // Draw images to internal buffer
+            ScreenBuffer();
+            // Draw images to the screen
             Buffer.Render();
         }
     }
