@@ -67,8 +67,7 @@ namespace CMDR
 				Components[i] = new KeyValuePair<Type, int>(component.Type, component.ID);
 				return;
 			}
-			Components[NumberOfComponents] = new KeyValuePair<Type, int>(component.Type, component.ID);
-			NumberOfComponents++;
+			Components[NumberOfComponents++] = new KeyValuePair<Type, int>(component.Type, component.ID);
         }
 		
         public void RemoveComponent(Type type)
