@@ -45,5 +45,10 @@ namespace CMDR
         {
             return _data.GetEnumerator();
         }
+
+        public void Update(SGameObject gameObject)
+        {
+            _data[gameObject.ID] = gameObject;
+        }
     }
 }

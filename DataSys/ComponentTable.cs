@@ -39,6 +39,11 @@ namespace CMDR.DataSys
             dynamic TComponets = _data[component.Key];
             TComponets.Remove(component.Value);
         }
+        public void Update<T>(T component)
+        {
+            dynamic TComponents = _data[typeof(T)];
+            TComponents.Update(component);
+        }
 
 
     }

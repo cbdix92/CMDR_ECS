@@ -24,7 +24,7 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
-            CMDR.Components.RenderData.FromFile(RenderData, "Test.png");
+            RenderData.Get<RenderData>().FromFile("Test.png");
 
             Component[] comps = new Component[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);

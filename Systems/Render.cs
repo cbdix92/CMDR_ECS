@@ -26,13 +26,15 @@ namespace CMDR.Systems
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();
 
+            (float camX,float camY) = (Camera.X, Camera.Y);
+
             foreach(SGameObject gameObject in Camera.GetRenderable())
             {
                 int i = gameObject.Get<RenderData>();
                 //Image image = renderables[gameObject.Get<RenderData>()].Data;
                 Image image = renderables[i].Data;
                 Transform transform = transforms[gameObject.Get<Transform>()];
-                Buffer.Graphics.DrawImage(image, transform.X - Camera.X, transform.Y - Camera.Y);
+                Buffer.Graphics.DrawImage(image, transform.X - camX, transform.Y - camY);
             }
         }
         internal static void Update(object caller, EventArgs e)

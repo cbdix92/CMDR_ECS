@@ -39,5 +39,10 @@ namespace CMDR
             // Tell the moved components parent of it's new position
             SceneManager.ActiveScene.GameObjects[_data[component].Parent].ComponentMoved(typeof(T), Count);
         }
+
+        public void Update(T component)
+        {
+            _data[component.ID] = component;
+        }
     }
 }

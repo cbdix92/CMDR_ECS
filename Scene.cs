@@ -74,5 +74,15 @@ namespace CMDR
             Components.FinalDestroy(component);
         }
 
+        internal void UpdateComponent<T>(T component)
+            where T: IComponent<T>
+        {
+            Components.Update<T>(component);
+        }
+        internal void UpdateGameObject(SGameObject gameObject)
+        {
+            GameObjects.Update(gameObject);
+        }
+
     }
 }

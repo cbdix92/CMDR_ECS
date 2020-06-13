@@ -16,18 +16,17 @@ namespace CMDR.Components
 
         public Image Data { get; internal set; }
 
-        public static void FromFile(Component component, string src)
+        public void FromFile(string src)
         {
-            RenderData renderData = component.Get<RenderData>();
             try
             {
-                renderData.Data = Image.FromFile(src);
+                Data = Image.FromFile(src);
             }
             catch (FileNotFoundException)
             {
                 throw new FileNotFoundException($"'{src}', RenderData");
             }
-            component.Update<RenderData>(renderData);
+            Scene.UpdateComponent<RenderData>(this);
         }
     }
 }

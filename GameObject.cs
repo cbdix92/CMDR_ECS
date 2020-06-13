@@ -68,6 +68,7 @@ namespace CMDR
 				return;
 			}
 			Components[NumberOfComponents++] = new KeyValuePair<Type, int>(component.Type, component.ID);
+            Scene.UpdateGameObject(this);
         }
 		
         public void RemoveComponent(Type type)

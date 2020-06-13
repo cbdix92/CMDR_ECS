@@ -28,9 +28,11 @@ namespace CMDR.Components
         {
             return Scene.Components.Get<T>()[ID];
         }
+        /*
         public void Update<T>(T component)
         {
             Scene.Components.Get<T>()[ID] = component;
         }
+        */
     }
 }
