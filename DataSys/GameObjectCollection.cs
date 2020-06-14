@@ -20,7 +20,7 @@ namespace CMDR
             Array.Copy(_data, result, Count);
             return result;
         }
-        public GameObject Generate(Scene scene)
+        public SGameObject Generate(Scene scene)
         {
             if (Count == _data.Length)
                 Array.Resize(ref _data, _data.Length + Data.StorageScale);
@@ -33,8 +33,9 @@ namespace CMDR
                 Scene = scene,
                 Components = new KeyValuePair<Type, int>[Data.ComponentTotal]
             };
-            Count++;
-            return _data[Count - 1].Handle;
+            return _data[Count++];
+            //Count++;
+            //return _data[Count - 1].Handle;
         }
         public void FinalDestroy(int gameObject)
         {

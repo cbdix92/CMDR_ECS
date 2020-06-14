@@ -41,20 +41,19 @@ namespace CMDR
             SceneManager.LoadScene(this);
         }
 
-        public GameObject GenerateGameObject()
+        public SGameObject GenerateGameObject()
         {
             lock (_threadLockGameObject)
             {
-                GameObject gameObject = GameObjects.Generate(this);
-                return gameObject;
+                return GameObjects.Generate(this);
             }
         }
-        public Component Generate<T>()
+        public T Generate<T>()
             where T: struct, IComponent<T>
         {
             lock(_threadLockComponent)
             {
-                Component component = Components.Generate<T>(this);
+                T component = Components.Generate<T>(this);
                 component.Scene = this;
                 return component;
             }

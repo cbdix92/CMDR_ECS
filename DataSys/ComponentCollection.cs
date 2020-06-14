@@ -21,7 +21,7 @@ namespace CMDR
             Array.Copy(_data, result, Count);
             return result;
         }
-        public int Add(T component)
+        public T Add(T component)
         {
             if (Count == _data.Length)
                 Array.Resize(ref _data, _data.Length + Data.StorageScale);
@@ -29,7 +29,7 @@ namespace CMDR
             _data[Count] = component;
             
             Count++;
-            return Count - 1;
+            return component;// Count - 1;
         }
         public void Remove(int component)
         {

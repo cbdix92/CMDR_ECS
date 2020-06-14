@@ -11,13 +11,13 @@ namespace CMDR
         public Scene Scene;
 
 
-        public void Use(Component component)
+        public void Use(IComponent component)
         {
             Scene.GameObjects[ID].Use(component);
         }
-        public void Use(Component[] components)
+        public void Use(IComponent[] components)
         {
-            foreach (Component component in components)
+            foreach (IComponent component in components)
                 Use(component);
         }
     }
@@ -55,8 +55,12 @@ namespace CMDR
         {
             return (Get(typeof(T)) != -1);
         }
-		
-        public void Use(Component component)
+		public void Use(IComponent[] components)
+        {
+            foreach (IComponent component in components)
+                Use(component);
+        }
+        public void Use(IComponent component)
         {
             
             int i = Get(component.Type);

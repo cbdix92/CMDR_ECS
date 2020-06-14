@@ -10,11 +10,11 @@ namespace Test
 
         public static Scene TestScene;
 
-        public static GameObject GameObject1;
+        public static SGameObject GameObject1;
 
-        public static Component Collider;
-        public static Component Transform;
-        public static Component RenderData;
+        public static Collider Collider;
+        public static Transform Transform;
+        public static RenderData RenderData;
 
         static void Main(string[] args)
         {
@@ -24,9 +24,9 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
-            RenderData.Get<RenderData>().FromFile("Test.png");
+            RenderData.FromFile("Test.png");
 
-            Component[] comps = new Component[] { Collider, Transform, RenderData };
+            IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
             Display = new Display(800, 600);
             Display.Start();

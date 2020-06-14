@@ -17,29 +17,80 @@ namespace CMDR.Components
         #endregion
 
         #region POSITION_PROPERTIES
-        public float X { get; internal set; }
-        public float Y { get; internal set; }
-        public int Z { get; internal set; }
+        private float _x, _y, _z;
+        public float X
+        {
+            get => _x;
+            internal set
+            {
+                _x = value;
+                Update();
+            }
+        }
+        public float Y
+        {
+            get => _y;
+            internal set
+            {
+                _y = value;
+                Update();
+            }
+        }
+        public float Z
+        {
+            get => _z;
+            internal set
+            {
+                _z = value;
+                Update();
+            }
+        }
         #endregion
 
-        public float Xvel { get; set; }
-        public float Yvel { get; set; }
+        #region VELOCITY_PROPERTIES
+        private float _xvel, _yvel;
+        public float Xvel
+        {
+            get => _xvel;
+            set
+            {
+                _xvel = value;
+                Update();
+            }
+        }
+        public float Yvel
+        {
+            get => _yvel;
+            set
+            {
+                _yvel = value;
+                Update();
+            }
+        }
+        #endregion
 
         public void Move()
         {
             // Move transform based on velocity
             X += Xvel;
             Y += Yvel;
+            Update();
         }
         public void Move(float x, float y)
         {
             X += x;
             Y += y;
+            Update();
         }
         public void Teleport(float x, float y)
         {
             X = x;
             Y = y;
+            Update();
+        }
+        private void Update()
+        {
+            Scene.UpdateComponent<Transform>(this);
         }
     }
     
