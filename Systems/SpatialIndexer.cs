@@ -29,27 +29,31 @@ namespace CMDR.Systems
                     foreach(SGameObject gameObject in SceneManager.ActiveScene.GameObjects)
 					{
 						if(gameObject.Contains<Collider>() && gameObject.Contains<Transform>())
-						CalcGridPos(ref colliders[gameObject.Get<Collider>()], transforms[gameObject.Get<Transform>()]);
+						CalcGridPos(colliders[gameObject.Get<Collider>()], transforms[gameObject.Get<Transform>()]);
 					}
                 }
             }
         }
         internal static int[] GetNearbyColliders(Collider collider)
         {
+			// HashSet used to prevent GameObject ID duplication
             HashSet<int> hash = new HashSet<int>();
             int[] result;
 
             for (int i = 0; i < collider.GridKeys.Count; i++)
-				foreach(int handle in GridCells[collider.GridKeys[i]])
-					hash.Add(handle);
+				foreach(int id in GridCells[collider.GridKeys[i]])
+					hash.Add(id);
 
             result = new int[hash.Count];
             hash.CopyTo(result);
             return result;
         }
 		
-		internal static void CalcGridPos(ref Collider collider, Transform transform)
+		internal static void CalcGridPos(Collider collider, Transform transform)
 		{
+			if (collider.GridKeys == null)
+				collider.GridKeys = new List<(int X, int Y)>();
+
 			// Remove the gameObject from all grid cells
 			foreach ((int, int) keys in collider.GridKeys)
 				GridCells[keys].Remove(collider.Parent);

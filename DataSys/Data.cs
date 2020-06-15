@@ -38,5 +38,15 @@ namespace CMDR
                 ComponentTotal++;
             }
         }
+
+        public static void Update<T>(T component)
+            where T: IComponent<T>
+        {
+            component.Scene.Components.Update<T>(component);
+        }
+        internal static void Update(SGameObject gameObject)
+        {
+            gameObject.Scene.GameObjects.Update(gameObject);
+        }
     }
 }

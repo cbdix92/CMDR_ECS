@@ -9,7 +9,6 @@ namespace CMDR.Components
     public struct Transform : IComponent<Transform>
     {
         #region IComponent
-        public Component Handle { get; set; }
         public int ID { get; set; }
         public int Parent { get; set; }
         public Type Type { get; set; }
@@ -90,7 +89,7 @@ namespace CMDR.Components
         }
         private void Update()
         {
-            Scene.UpdateComponent<Transform>(this);
+            Data.Update<Transform>(this);
         }
     }
     

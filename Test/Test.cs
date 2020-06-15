@@ -26,10 +26,18 @@ namespace Test
             RenderData = TestScene.Generate<RenderData>();
             RenderData.FromFile("Test.png");
 
+            //Transform.Xvel = 5;
+            test(Transform);
+
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
             Display = new Display(800, 600);
+            Console.Write(Transform.Xvel);
             Display.Start();
+        }
+        public static void test(Transform t)
+        {
+            t.Xvel = 5;
         }
     }
 }

@@ -22,45 +22,54 @@ namespace CMDR.Systems
             foreach (SGameObject gameObject in gameObjects)
             {
 
-                int transform;
-                int collider;
+                int transformID = gameObject.Get<Transform>();
+                int colliderID = gameObject.Get<Collider>();
 
-                if (gameObject.Contains<Transform>())
-                    transform = gameObject.Get<Transform>();
-                else
+                #region FILTER_LOGIC
+                if (transformID == -1)
                     continue;
-
-                // Don't update Static objects
-                // if => not static, objects moves, has collider
-                if (!colliders[gameObject.Get<Collider>()].Static 
-                 && Move(transforms[gameObject.Get<Transform>()]) 
-                 && gameObject.Contains<Collider>())
-                    collider = gameObject.Get<Collider>();
-                else
+                if (colliderID == -1)
+                {
+                    Move(transforms[transformID]);
                     continue;
+                }
+                if (colliders[colliderID].Static)
+                    continue;
+                if (!Move(transforms[transformID]))
+                    continue;
+                #endregion
 
-                SpatialIndexer.CalcGridPos(ref colliders[collider], transforms[transform]);
 
-                // Enter Broad Phase Collsion Check
+                #region COLLISION_CHECK
 
-                // Query spatial indexer
-                int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[collider]);
+                #region BROAD_PHASE
+
+                // Query spatial indexer for nearby gameobjects
+                SpatialIndexer.CalcGridPos(colliders[colliderID], transforms[transformID]);
+                int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);
                 foreach (int i in gameObjectColliders)
                 {
                     int transform2 = gameObjects[i].Get<Transform>();
                     int collider2 = gameObjects[i].Get<Collider>();
-                    // Perform Rect Check
-                    bool b1 = transforms[transform].X - transforms[transform2].X <= colliders[collider2].Width;
-                    bool b2 = transforms[transform].Y - transforms[transform2].Y <= colliders[collider2].Height;
+                    // Bounding box check
+                    bool b1 = transforms[transformID].X - transforms[transform2].X <= colliders[collider2].Width;
+                    bool b2 = transforms[transformID].Y - transforms[transform2].Y <= colliders[collider2].Height;
                     if (!b1 && b2)
                         continue;
 
-                    // Enter Narrow Phase Collision Check
+                #endregion
 
-                    // BitCollider Check
-                    if (!BitCollider.BitColliderCheck(transforms[transform], transforms[transform2],
-                                                      colliders[collider], colliders[collider2]))
+                #region NARROW_PAHSE
+
+                    // Bit collider Check
+                    if (!BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2],
+                                                      colliders[colliderID], colliders[collider2]))
                         continue;
+
+                #endregion
+
+                #endregion
+
 
                     // Resolve Collision
                     // ...

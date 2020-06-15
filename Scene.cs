@@ -58,11 +58,11 @@ namespace CMDR
                 return component;
             }
         }
-        public void Destroy(GameObject gameObject)
+        public void Destroy(SGameObject gameObject)
         {
 
             // Destroy all gameObjects components
-            foreach (KeyValuePair<Type, int> component in GameObjects[gameObject.ID].Components)
+            foreach (KeyValuePair<Type, int> component in gameObject.Components)
                 Destroy(component);
 
             GameObjects.FinalDestroy(gameObject.ID);
@@ -71,16 +71,6 @@ namespace CMDR
         {
             // Called from the GameObject.RemoveComponent
             Components.FinalDestroy(component);
-        }
-
-        internal void UpdateComponent<T>(T component)
-            where T: IComponent<T>
-        {
-            Components.Update<T>(component);
-        }
-        internal void UpdateGameObject(SGameObject gameObject)
-        {
-            GameObjects.Update(gameObject);
         }
 
     }

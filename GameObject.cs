@@ -5,25 +5,8 @@ using System.Collections.Generic;
 
 namespace CMDR
 {
-    public class GameObject
-    {
-        public int ID;
-        public Scene Scene;
-
-
-        public void Use(IComponent component)
-        {
-            Scene.GameObjects[ID].Use(component);
-        }
-        public void Use(IComponent[] components)
-        {
-            foreach (IComponent component in components)
-                Use(component);
-        }
-    }
     public struct SGameObject
     {
-        public GameObject Handle;
         public int ID;
         public Scene Scene;
         public KeyValuePair<Type, int>[] Components;
@@ -62,17 +45,19 @@ namespace CMDR
         }
         public void Use(IComponent component)
         {
-            
+            component.Parent = ID;
+
             int i = Get(component.Type);
             // if Components already exist, remove it from memory then overwrite it with the new component
 			if (i != -1)
 			{
 				Scene.Destroy(Components[i]);
 				Components[i] = new KeyValuePair<Type, int>(component.Type, component.ID);
+                Data.Update(this);
 				return;
 			}
 			Components[NumberOfComponents++] = new KeyValuePair<Type, int>(component.Type, component.ID);
-            Scene.UpdateGameObject(this);
+            Data.Update(this);
         }
 		
         public void RemoveComponent(Type type)

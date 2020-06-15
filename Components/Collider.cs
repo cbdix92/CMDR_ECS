@@ -8,7 +8,6 @@ namespace CMDR.Components
     public struct Collider : IComponent<Collider>
     {
         #region IComponent
-        public Component Handle { get; set; }
 		public int ID { get; set; }
 		public int Parent { get; set; }
 		public Type Type { get; set; }
@@ -16,12 +15,23 @@ namespace CMDR.Components
 		#endregion
 
 		public List<(int X, int Y)> GridKeys;
-		
-		private int _height;
-		private int _width;
 
-		public bool Static { get; set; }
-		
+		public bool[,] ColData;
+
+		private bool _static;
+		public bool Static
+		{
+			get { return _static; }
+			set
+			{
+				_static = value;
+				Data.Update<Collider>(this);
+			}
+		}
+
+
+        private int _height;
+		private int _width;
 		public int Height
 		{
 			get => _height;
@@ -30,6 +40,8 @@ namespace CMDR.Components
 				_height = value;
 				if(value > SpatialIndexer.CellSize)
 					SpatialIndexer.CellSize = value;
+
+				Data.Update<Collider>(this);
 			}
 		}
 		public int Width
@@ -40,9 +52,9 @@ namespace CMDR.Components
 				_width = value;
 				if(value > SpatialIndexer.CellSize)
 					SpatialIndexer.CellSize = value;
+				
+				Data.Update<Collider>(this);
 			}
 		}
-		
-        public bool[,] Data;
     }
 }

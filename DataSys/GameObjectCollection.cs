@@ -28,7 +28,6 @@ namespace CMDR
 
             _data[Count] = new SGameObject
             {
-                Handle = new GameObject { ID = Count, Scene = scene },
                 ID = Count,
                 Scene = scene,
                 Components = new KeyValuePair<Type, int>[Data.ComponentTotal]

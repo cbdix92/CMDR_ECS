@@ -30,9 +30,9 @@ namespace CMDR
 			
 			for (int i = 0; i < boundSize; i++)
 			{
-				if (c1.Data[(i / width) - p1.Y - t1p.Y, (i % width) - p1.X - t1p.X]
+				if (c1.ColData[(i / width) - p1.Y - t1p.Y, (i % width) - p1.X - t1p.X]
 				&&
-					c2.Data[(i / width) - p1.Y - t2p.Y, (i % width) - p1.X - t2p.X])
+					c2.ColData[(i / width) - p1.Y - t2p.Y, (i % width) - p1.X - t2p.X])
 					{
 						result = true;
 						break;
@@ -57,14 +57,14 @@ namespace CMDR
         {
             int width = image.Width;
 			int height = image.Height;
-			collider.Data = new bool[height,width];
+			collider.ColData = new bool[height,width];
 			
 			Bitmap bitmap = new Bitmap(image);
 			
 			for (int y = 0; y <= height; y++)
 				for (int x = 0; x <= width; x++)
 				{
-					collider.Data[y,x] = bitmap.GetPixel(x,y).A > AlphaThreshold;
+					collider.ColData[y,x] = bitmap.GetPixel(x,y).A > AlphaThreshold;
 				}
         }
     }

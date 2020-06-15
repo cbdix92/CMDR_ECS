@@ -7,26 +7,25 @@ namespace CMDR.Components
     public struct RenderData : IComponent<RenderData>
     {
         #region IComponent
-        public Component Handle { get; set; }
         public int ID { get; set; }
         public int Parent { get; set; }
         public Type Type { get; set; }
         public Scene Scene { get; set; }
         #endregion
 
-        public Image Data { get; internal set; }
+        public Image ImgData { get; internal set; }
 
         public void FromFile(string src)
         {
             try
             {
-                Data = Image.FromFile(src);
+                ImgData = Image.FromFile(src);
             }
             catch (FileNotFoundException)
             {
                 throw new FileNotFoundException($"'{src}', RenderData");
             }
-            Scene.UpdateComponent<RenderData>(this);
+            Data.Update<RenderData>(this);
         }
     }
 }
