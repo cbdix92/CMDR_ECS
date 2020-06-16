@@ -87,7 +87,7 @@ namespace CMDR.Components
             Y = y;
             Update();
         }
-        private void Update()
+        public void Update()
         {
             Data.Update<Transform>(this);
         }

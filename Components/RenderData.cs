@@ -27,5 +27,9 @@ namespace CMDR.Components
             }
             Data.Update<RenderData>(this);
         }
+        public void Update()
+        {
+            Data.Update<RenderData>(this);
+        }
     }
 }

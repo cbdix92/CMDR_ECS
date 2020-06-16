@@ -11,7 +11,6 @@ namespace CMDR.Systems
 		public static int StorageThreshold = 100;
 		public static int StorageStep = 50;
 		
-		// Key = Grid Cordinates, Value = List of Collider Handles
         public static Dictionary<(int, int), List<int>> GridCells = new Dictionary<(int, int), List<int>>();
 
         private static int _cellSize = 30;
@@ -29,11 +28,14 @@ namespace CMDR.Systems
                     foreach(SGameObject gameObject in SceneManager.ActiveScene.GameObjects)
 					{
 						if(gameObject.Contains<Collider>() && gameObject.Contains<Transform>())
-						CalcGridPos(colliders[gameObject.Get<Collider>()], transforms[gameObject.Get<Transform>()]);
+						CalcGridPos(ref colliders[gameObject.Get<Collider>()], transforms[gameObject.Get<Transform>()]);
 					}
                 }
             }
         }
+		/// <summary>
+		/// Returns a list of GameObject ID's near the provided collider.
+		/// </summary>
         internal static int[] GetNearbyColliders(Collider collider)
         {
 			// HashSet used to prevent GameObject ID duplication
@@ -42,19 +44,20 @@ namespace CMDR.Systems
 
             for (int i = 0; i < collider.GridKeys.Count; i++)
 				foreach(int id in GridCells[collider.GridKeys[i]])
-					hash.Add(id);
+					if (id != collider.Parent)
+						hash.Add(id);
 
             result = new int[hash.Count];
             hash.CopyTo(result);
             return result;
         }
 		
-		internal static void CalcGridPos(Collider collider, Transform transform)
+		internal static void CalcGridPos(ref Collider collider, Transform transform)
 		{
 			if (collider.GridKeys == null)
 				collider.GridKeys = new List<(int X, int Y)>();
 
-			// Remove the gameObject from all grid cells
+			// Remove the Colliders parent from all grid cells
 			foreach ((int, int) keys in collider.GridKeys)
 				GridCells[keys].Remove(collider.Parent);
 			
@@ -93,7 +96,8 @@ namespace CMDR.Systems
 				if (DelCount == 0)
 					StorageThreshold += StorageStep;
 			}
-			
+
+			Data.Update<Collider>(collider);
 		}
     }
 }

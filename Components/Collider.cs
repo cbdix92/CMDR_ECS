@@ -7,7 +7,7 @@ namespace CMDR.Components
 {
     public struct Collider : IComponent<Collider>
     {
-        #region IComponent
+		#region IComponent
 		public int ID { get; set; }
 		public int Parent { get; set; }
 		public Type Type { get; set; }
@@ -28,7 +28,6 @@ namespace CMDR.Components
 				Data.Update<Collider>(this);
 			}
 		}
-
 
         private int _height;
 		private int _width;
@@ -56,5 +55,10 @@ namespace CMDR.Components
 				Data.Update<Collider>(this);
 			}
 		}
-    }
+
+		public void Update()
+		{
+			Data.Update<Collider>(this);
+		}
+	}
 }

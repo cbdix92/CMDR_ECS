@@ -30,8 +30,6 @@ namespace CMDR.DataSys
                 Type = typeof(T),
                 Scene = scene
             });
-
-            //return TComponents[TComponents.Count - 1];
         }
         public void FinalDestroy(KeyValuePair<Type, int> component)
         {

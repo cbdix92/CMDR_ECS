@@ -27,7 +27,7 @@ namespace Test
             RenderData.FromFile("Test.png");
 
             //Transform.Xvel = 5;
-            test(Transform);
+            test(ref Transform);
 
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
@@ -35,7 +35,7 @@ namespace Test
             Console.Write(Transform.Xvel);
             Display.Start();
         }
-        public static void test(Transform t)
+        public static void test(ref Transform t)
         {
             t.Xvel = 5;
         }

@@ -45,8 +45,13 @@ namespace CMDR.Systems
                 #region BROAD_PHASE
 
                 // Query spatial indexer for nearby gameobjects
-                SpatialIndexer.CalcGridPos(colliders[colliderID], transforms[transformID]);
+                SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
                 int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);
+                
+                // Stop the object from trying to collide with itself
+                if (gameObjectColliders.Length == 0)
+                    continue;
+
                 foreach (int i in gameObjectColliders)
                 {
                     int transform2 = gameObjects[i].Get<Transform>();
@@ -85,10 +90,6 @@ namespace CMDR.Systems
             transform.X += transform.Xvel;
             transform.Y += transform.Yvel;
             return true;
-        }
-        public static void RectCheck()
-        {
-
         }
     }
 }

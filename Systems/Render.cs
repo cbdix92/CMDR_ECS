@@ -21,6 +21,10 @@ namespace CMDR.Systems
             Buffer_Context = BufferedGraphicsManager.Current;
             Buffer = Buffer_Context.Allocate(Display.CreateGraphics(), new Rectangle(0, 0, Display.Width, Display.Height));
         }
+        internal static void ClearScreen()
+        {
+            Buffer.Graphics.Clear(Color.Black);
+        }
         internal static void ScreenBuffer()
         {
             Transform[] transforms = Scene.Components.Get<Transform>();
@@ -39,6 +43,7 @@ namespace CMDR.Systems
         }
         internal static void Update(object caller, EventArgs e)
         {
+            ClearScreen();
             // Draw images to internal buffer
             ScreenBuffer();
             // Draw images to the screen
