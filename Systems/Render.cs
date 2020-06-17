@@ -27,6 +27,8 @@ namespace CMDR.Systems
         }
         internal static void ScreenBuffer()
         {
+            Debugger.Draw();
+
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();
 

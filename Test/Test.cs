@@ -1,6 +1,8 @@
 ﻿using System;
 using CMDR;
 using CMDR.Components;
+using CMDR.Systems;
+using System.Windows.Input;
 
 namespace Test
 {
@@ -16,8 +18,13 @@ namespace Test
         public static Transform Transform;
         public static RenderData RenderData;
 
+        private static float _speed = 3.0F;
+
+        [STAThread]
         static void Main(string[] args)
         {
+            Debugger.EnableDebugger = true;
+
             TestScene = new Scene();
             GameObject1 = TestScene.GenerateGameObject();
 
@@ -26,18 +33,17 @@ namespace Test
             RenderData = TestScene.Generate<RenderData>();
             RenderData.FromFile("Test.png");
 
-            //Transform.Xvel = 5;
-            test(ref Transform);
 
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
             Display = new Display(800, 600);
-            Console.Write(Transform.Xvel);
+
+            Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
+            Input.AddKeyBind(Key.A, () => { Transform.Xvel += -_speed; }, () => { Transform.Xvel -= -_speed; });
+            Input.AddKeyBind(Key.S, () => { Transform.Yvel += _speed; }, () => { Transform.Yvel -= _speed; });
+            Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; }, () => { Transform.Xvel -= _speed; });
+
             Display.Start();
-        }
-        public static void test(ref Transform t)
-        {
-            t.Xvel = 5;
         }
     }
 }

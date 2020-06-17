@@ -29,10 +29,15 @@ namespace CMDR.Systems
 			};
 			Count++;
 		}
-		
-		public static void DetectKeys()
+		public static void RemoveKeyBind(Key key)
 		{
-			for(int i = 0; i < _keyBinds.Length; i++)
+			// Remove KeyBind Here
+			// ...
+		}
+		
+		public static void DetectKeys(object caller, EventArgs e)
+		{
+			for(int i = 0; i < Count; i++)
 			{
 				if (Keyboard.IsKeyDown(_keyBinds[i].Key) && !_keyBinds[i].IsKeyDownTriggered)
 				{

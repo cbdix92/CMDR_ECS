@@ -34,11 +34,12 @@ namespace CMDR.Systems
 
         public static void Init()
         {
-            RenderUpdates = new Update(30);
+            RenderUpdates = new Update(10);
             PhysicsUpdates = new Update(10);
 
             RenderUpdates.Handler += Render.Update;
             PhysicsUpdates.Handler += Physics.Update;
+            PhysicsUpdates.Handler += Input.DetectKeys;
 
         }
     }
