@@ -37,11 +37,12 @@ namespace Test
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
             Display = new Display(800, 600);
+            Transform.Teleport(100, 100);
 
             Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
             Input.AddKeyBind(Key.A, () => { Transform.Xvel += -_speed; }, () => { Transform.Xvel -= -_speed; });
-            Input.AddKeyBind(Key.S, () => { Transform.Yvel += _speed; }, () => { Transform.Yvel -= _speed; });
-            Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; }, () => { Transform.Xvel -= _speed; });
+            Input.AddKeyBind(Key.S, () => { Transform.Yvel += _speed; });
+            Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; });
 
             Display.Start();
         }

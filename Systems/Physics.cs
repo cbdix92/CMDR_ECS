@@ -67,7 +67,7 @@ namespace CMDR.Systems
                 #region NARROW_PAHSE
 
                     // Bit collider Check
-                    if (!BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2],
+                    if (!BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2], 
                                                       colliders[colliderID], colliders[collider2]))
                         continue;
 
@@ -89,7 +89,6 @@ namespace CMDR.Systems
                 return false;
             transform.X += transform.Xvel;
             transform.Y += transform.Yvel;
-            Data.Update<Transform>(transform);
             return true;
         }
     }

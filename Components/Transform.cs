@@ -68,18 +68,11 @@ namespace CMDR.Components
         }
         #endregion
 
-        public void Move()
-        {
-            // Move transform based on velocity
-            X += Xvel;
-            Y += Yvel;
-            Update();
-        }
         public void Move(float x, float y)
         {
             X += x;
             Y += y;
-            Update();
+            Update();   
         }
         public void Teleport(float x, float y)
         {
