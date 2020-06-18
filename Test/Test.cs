@@ -41,8 +41,10 @@ namespace Test
 
             Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
             Input.AddKeyBind(Key.A, () => { Transform.Xvel += -_speed; }, () => { Transform.Xvel -= -_speed; });
-            Input.AddKeyBind(Key.S, () => { Transform.Yvel += _speed; });
-            Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; });
+            Input.AddKeyBind(Key.S, () => { Transform.Yvel += _speed; }, () => { Transform.Yvel -= _speed; });
+            Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; }, () => { Transform.Xvel -= _speed; });
+            Input.AddKeyBind(Key.Q, () => { Transform.Xvel = 2; });
+            Input.AddKeyBind(Key.E, () => { Transform.Xvel = 0; });
 
             Display.Start();
         }

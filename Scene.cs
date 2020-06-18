@@ -26,7 +26,7 @@ namespace CMDR
             _loadedScenes.Remove(_loadedScenes[ID]);
         }
     }
-    public unsafe class Scene
+    public class Scene
     {
         public int ID { get; set; }
 

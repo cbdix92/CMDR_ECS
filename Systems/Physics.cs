@@ -39,11 +39,9 @@ namespace CMDR.Systems
                     continue;
                 #endregion
 
-
                 #region COLLISION_CHECK
 
                 #region BROAD_PHASE
-
                 // Query spatial indexer for nearby gameobjects
                 SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
                 int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);
@@ -78,8 +76,7 @@ namespace CMDR.Systems
 
                     // Resolve Collision
                     // ...
-
-                }
+            }
 
             }
         }
