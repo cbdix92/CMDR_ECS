@@ -35,7 +35,7 @@ namespace CMDR.Systems
 			// ...
 		}
 		
-		public static void DetectKeys(object caller, EventArgs e)
+		public static void Update(long ticks)
 		{
 			for(int i = 0; i < Count; i++)
 			{

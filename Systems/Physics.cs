@@ -9,7 +9,7 @@ namespace CMDR.Systems
         readonly static Type _transformT = typeof(Transform);
         readonly static Type _colliderT = typeof(Collider);
 
-        public static void Update(object caller, EventArgs e)
+        public static void Update(long ticks)
         {
             Scene scene = SceneManager.ActiveScene;
 

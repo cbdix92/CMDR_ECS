@@ -43,7 +43,7 @@ namespace CMDR.Systems
                 Buffer.Graphics.DrawImage(image, transform.X - camX, transform.Y - camY);
             }
         }
-        internal static void Update(object caller, EventArgs e)
+        internal static void Update(long ticks)
         {
             ClearScreen();
             // Draw images to internal buffer
