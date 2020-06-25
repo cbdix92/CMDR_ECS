@@ -5,28 +5,27 @@ namespace CMDR.Components
     public class Component<T>
         where T: IComponent<T>
     {
-        public readonly Type Type;
-        public readonly Scene Scene;
-        internal T Data;
-        public T Get
+        internal readonly Scene Scene;
+        internal int ID;
+        public T this
         {
             get
             {
                 // There has to be a better way to do this without needing to retrieve the entire collection. Something to look into later.
-                return Scene.Components.Get<T>()[Data.ID];
+                return Scene.Components.Get<T>()[ID];
             }
         }
     }
 
     public class GameObject
     {
-        public readonly Scene Scene;
-        internal SGameObject Data;
-        public SGameObject Get
+        internal readonly Scene Scene;
+        internal int ID;
+        public SGameObject this
         {
             get
             {
-                return Scene.GameObjects[Data.ID];
+                return Scene.GameObjects[ID];
             }
         }
     }
