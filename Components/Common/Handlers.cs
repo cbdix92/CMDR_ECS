@@ -7,7 +7,7 @@ namespace CMDR.Components
     {
         internal readonly Scene Scene;
         internal int ID;
-        public T this
+        public T Get
         {
             get
             {
@@ -21,7 +21,7 @@ namespace CMDR.Components
     {
         internal readonly Scene Scene;
         internal int ID;
-        public SGameObject this
+        public SGameObject get
         {
             get
             {
