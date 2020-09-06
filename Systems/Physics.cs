@@ -25,7 +25,49 @@ namespace CMDR.Systems
                 int transformID = gameObject.Get<Transform>();
                 int colliderID = gameObject.Get<Collider>();
 
-                #region FILTER_LOGIC
+                #region COLLISION_LOGIC
+
+                bool result = transformID != -1 && colliderID != -1 && colliders[colliderID].Static == false && CanMove(transforms[transformID]);
+
+                switch (result)
+                {
+                    case true:
+
+                        SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
+                        int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);
+
+                        // If no colliders are returned then continue the loop
+                        if (gameObjectColliders.Length == 0)
+                            continue;
+
+                        foreach (int i in gameObjectColliders)
+                        {
+                            int transform2 = gameObjects[i].Get<Transform>();
+                            int collider2 = gameObjects[i].Get<Collider>();
+
+                            // Bounding box checks
+                            bool b1 = transforms[transformID].X - transforms[transform2].X <= colliders[collider2].Width;
+                            bool b2 = transforms[transformID].Y - transforms[transform2].Y <= colliders[collider2].Height;
+
+                            // Compare bounding box checks and then bit collider check
+                            if (!b1 && b2 && !BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2], colliders[colliderID], colliders[collider2]))
+                                continue;
+                        }
+
+                        continue;
+                    case false:
+                        // Nothing needs to be done. Restart the loop
+                        continue;
+                }
+                #endregion
+
+
+                // Resolve Collisions Here ...
+                // ...
+
+
+
+                /*
                 if (transformID == -1)
                     continue;
                 if (colliderID == -1)
@@ -59,8 +101,9 @@ namespace CMDR.Systems
                     bool b2 = transforms[transformID].Y - transforms[transform2].Y <= colliders[collider2].Height;
                     if (!b1 && b2)
                         continue;
-
+                        
                 #endregion
+                
 
                 #region NARROW_PAHSE
 
@@ -70,23 +113,19 @@ namespace CMDR.Systems
                         continue;
 
                 #endregion
-
-                #endregion
-
-
-                    // Resolve Collision
-                    // ...
-            }
+                */
 
             }
         }
-        public static bool Move(Transform transform)
+
+        public static void Move(Transform transform)
         {
-            if (transform.Xvel == 0 && transform.Yvel == 0)
-                return false;
             transform.X += transform.Xvel;
             transform.Y += transform.Yvel;
-            return true;
+        }
+        public static bool CanMove(Transform transform)
+        {
+            return transform.Xvel != 0 || transform.Yvel != 0;
         }
     }
 }
