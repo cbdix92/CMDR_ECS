@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 using CMDR.Systems;
 
 namespace CMDR
@@ -18,13 +19,13 @@ namespace CMDR
             this.Text = Assembly.GetEntryAssembly().GetName().ToString();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
-
         public void Start()
         {
 
             Render.SetDisplay(this);
             Application.EnableVisualStyles();
-            UpdatePump.Init();
+            var gameloop = new Task(() => GameLoop.Start());
+            gameloop.Start();
             Application.Run(this);
         }
     }

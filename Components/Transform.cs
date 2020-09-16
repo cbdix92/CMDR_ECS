@@ -15,6 +15,19 @@ namespace CMDR.Components
         public Scene Scene { get; set; }
         #endregion
 
+        private int _static;
+        public bool Static
+        {
+            get
+            {
+                return _static == 1 ? true : false;
+            }
+            set
+            {
+                _static = value == true ? 0 : 1;
+            }
+        }
+
         #region POSITION_PROPERTIES
         private float _x, _y, _z;
         public float X
@@ -53,7 +66,8 @@ namespace CMDR.Components
             get => _xvel;
             set
             {
-                _xvel = value;
+                _xvel = value * _static;
+                Console.WriteLine("Transform!");
                 Update();
             }
         }
@@ -62,7 +76,7 @@ namespace CMDR.Components
             get => _yvel;
             set
             {
-                _yvel = value;
+                _yvel = value * _static;
                 Update();
             }
         }

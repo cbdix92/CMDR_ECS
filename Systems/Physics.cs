@@ -27,18 +27,16 @@ namespace CMDR.Systems
 
                 #region COLLISION_LOGIC
 
-                bool result = transformID != -1 && colliderID != -1 && colliders[colliderID].Static == false && CanMove(transforms[transformID]);
+                bool result = transformID != -1 && colliderID != -1 && CanMove(transforms[transformID]);
 
                 switch (result)
                 {
                     case true:
 
+                        Move(transforms[transformID]);
+                        
                         SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
                         int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);
-
-                        // If no colliders are returned then continue the loop
-                        if (gameObjectColliders.Length == 0)
-                            continue;
 
                         foreach (int i in gameObjectColliders)
                         {
@@ -51,19 +49,16 @@ namespace CMDR.Systems
 
                             // Compare bounding box checks and then bit collider check
                             if (!b1 && b2 && !BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2], colliders[colliderID], colliders[collider2]))
-                                continue;
+                                continue; // Resolve collision here ...
                         }
 
                         continue;
+
                     case false:
                         // Nothing needs to be done. Restart the loop
                         continue;
                 }
                 #endregion
-
-
-                // Resolve Collisions Here ...
-                // ...
 
 
 

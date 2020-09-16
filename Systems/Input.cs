@@ -34,7 +34,7 @@ namespace CMDR.Systems
 			// Remove KeyBind Here
 			// ...
 		}
-		
+
 		public static void Update(long ticks)
 		{
 			for(int i = 0; i < Count; i++)

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CMDR.Systems
 {
@@ -70,12 +71,14 @@ namespace CMDR.Systems
 
         internal void Update(long ticks)
         {
-            if (_lastUpdate + _target >= ticks)
+            if (_lastUpdate + _target <= ticks)
+            {
                 if (Handler != null)
                     Handler(ticks);
+                _lastUpdate = ticks;
+            }
         }
     }
-
     public static class GameLoop
     {
         internal static bool Running = true;

@@ -21,7 +21,7 @@ namespace CMDR.Components
 		private bool _static;
 		public bool Static
 		{
-			get { return _static; }
+			get => _static;
 			set
 			{
 				_static = value;
