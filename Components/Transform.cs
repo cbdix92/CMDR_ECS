@@ -67,7 +67,6 @@ namespace CMDR.Components
             set
             {
                 _xvel = value * _static;
-                Console.WriteLine("Transform!");
                 Update();
             }
         }
@@ -86,6 +85,7 @@ namespace CMDR.Components
         {
             X += x;
             Y += y;
+            Console.WriteLine(X);
             Update();   
         }
         public void Teleport(float x, float y)
@@ -96,7 +96,7 @@ namespace CMDR.Components
         }
         public void Update()
         {
-            Data.Update<Transform>(this);
+            Scene.Update<Transform>(this);
         }
     }
     

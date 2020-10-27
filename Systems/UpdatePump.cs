@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace CMDR.Systems
 {
@@ -71,10 +72,9 @@ namespace CMDR.Systems
 
         internal void Update(long ticks)
         {
-            if (_lastUpdate + _target <= ticks)
+            if (_lastUpdate + _target <= ticks && Handler != null)
             {
-                if (Handler != null)
-                    Handler(ticks);
+                Handler(ticks);
                 _lastUpdate = ticks;
             }
         }
@@ -89,18 +89,23 @@ namespace CMDR.Systems
         internal static void Start()
         {
 
-            Time = new Stopwatch();
-            Time.Start();
+            Thread thread = new Thread(() =>
+                {
+                    Time = new Stopwatch();
+                    Time.Start();
 
-            CreateUpdater(100L, Render.Update);
-            CreateUpdater(100L, Physics.Update);
-            CreateUpdater(100L, Input.Update);
+                    CreateUpdater(100L, Render.Update);
+                    CreateUpdater(100L, Physics.Update);
+                    CreateUpdater(100L, Input.Update);
 
-            while (Running)
-            {
-                foreach (Updater updater in Updaters)
-                    updater.Update(Time.ElapsedTicks);
-            }
+                    while (Running)
+                    {
+                        foreach (Updater updater in Updaters)
+                            updater.Update(Time.ElapsedTicks);
+                    }
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
         }
         internal static void CreateUpdater(long persecond, UpdateHandler update)
         {

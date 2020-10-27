@@ -40,7 +40,11 @@ namespace CMDR
         {
             SceneManager.LoadScene(this);
         }
-
+        public void Update<T>(T component)
+            where T: IComponent<T>
+        {
+            Components.Update<T>(component);
+        }
         public SGameObject GenerateGameObject()
         {
             lock (_threadLockGameObject)

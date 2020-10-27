@@ -25,11 +25,11 @@ namespace CMDR.Components
             {
                 throw new FileNotFoundException($"'{src}', RenderData");
             }
-            Data.Update<RenderData>(this);
+            Update();
         }
         public void Update()
         {
-            Data.Update<RenderData>(this);
+            Scene.Update<RenderData>(this);
         }
     }
 }

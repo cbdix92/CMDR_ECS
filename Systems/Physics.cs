@@ -27,7 +27,7 @@ namespace CMDR.Systems
 
                 #region COLLISION_LOGIC
 
-                bool result = transformID != -1 && colliderID != -1 && CanMove(transforms[transformID]);
+                bool result = transformID != -1 && colliderID != -1 && Move(transforms[transformID]);
 
                 switch (result)
                 {
@@ -113,10 +113,11 @@ namespace CMDR.Systems
             }
         }
 
-        public static void Move(Transform transform)
+        public static bool Move(Transform transform)
         {
             transform.X += transform.Xvel;
             transform.Y += transform.Yvel;
+            return transform.Xvel != 0 || transform.Yvel != 0;
         }
         public static bool CanMove(Transform transform)
         {

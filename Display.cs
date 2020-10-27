@@ -24,8 +24,7 @@ namespace CMDR
 
             Render.SetDisplay(this);
             Application.EnableVisualStyles();
-            var gameloop = new Task(() => GameLoop.Start());
-            gameloop.Start();
+            GameLoop.Start();
             Application.Run(this);
         }
     }

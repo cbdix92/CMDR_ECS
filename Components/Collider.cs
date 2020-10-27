@@ -25,7 +25,7 @@ namespace CMDR.Components
 			set
 			{
 				_static = value;
-				Data.Update<Collider>(this);
+				Update();
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace CMDR.Components
 				if(value > SpatialIndexer.CellSize)
 					SpatialIndexer.CellSize = value;
 
-				Data.Update<Collider>(this);
+				Update();
 			}
 		}
 		public int Width
@@ -51,14 +51,14 @@ namespace CMDR.Components
 				_width = value;
 				if(value > SpatialIndexer.CellSize)
 					SpatialIndexer.CellSize = value;
-				
-				Data.Update<Collider>(this);
+
+				Update();
 			}
 		}
 
 		public void Update()
 		{
-			Data.Update<Collider>(this);
+			Scene.Update<Collider>(this);
 		}
 	}
 }

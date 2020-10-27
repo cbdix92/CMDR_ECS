@@ -18,7 +18,7 @@ namespace Test
         public static Transform Transform;
         public static RenderData RenderData;
 
-        private static float _speed = 3.0F;
+        private static float _speed = 0.3F;
 
         [STAThread]
         static void Main(string[] args)
@@ -37,7 +37,9 @@ namespace Test
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
             Display = new Display(800, 600);
-            Transform.Teleport(100, 100);
+            Transform.Xvel = _speed;
+            //Transform.Teleport(100, 100);
+            Transform.Static = false;
 
             Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
             Input.AddKeyBind(Key.A, () => { Transform.Xvel += -_speed; }, () => { Transform.Xvel -= -_speed; });
