@@ -25,9 +25,9 @@ namespace CMDR.Systems
         {
             Buffer.Graphics.Clear(Color.Black);
         }
-        internal static void ScreenBuffer()
+        internal static void ScreenBuffer(long ticks)
         {
-            Debugger.Draw();
+            Debugger.Draw(ticks);
 
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();
@@ -47,7 +47,7 @@ namespace CMDR.Systems
         {
             ClearScreen();
             // Draw images to internal buffer
-            ScreenBuffer();
+            ScreenBuffer(ticks);
             // Draw images to the screen
             Buffer.Render();
         }

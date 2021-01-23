@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CMDR.Systems
@@ -23,8 +24,23 @@ namespace CMDR.Systems
             }
         }
         private static bool _drawSpatialLines { get; set; }
-        internal static void Draw()
+
+        private static long _lastCount;
+        private static byte _fpsCounter;
+        private static byte _fpsCurrent;
+
+        internal static void Draw(long ticks)
         {
+            if (ticks >= _lastCount+Stopwatch.Frequency)
+            {
+                _fpsCurrent = _fpsCounter;
+                _lastCount = ticks;
+                _fpsCounter = 0;
+            }
+            else
+            {
+                _fpsCounter++;
+            }
             if (_drawSpatialLines)
             {
                 foreach ((int, int) i in SpatialIndexer.GridCells.Keys)
@@ -39,6 +55,8 @@ namespace CMDR.Systems
                     Render.Buffer.Graphics.DrawString("(" + i.Item1 + ", " + i.Item2 + ")", Render.Display.Font, Brushes.Red, x - (int)Camera.X + 5, y - (int)Camera.Y + 5);
                 }
             }
+            Render.Buffer.Graphics.DrawString("FPS:" + _fpsCurrent.ToString(), Render.Display.Font, Brushes.Red, 5F, 5F);
+            Render.Buffer.Graphics.DrawString("GRID:" + SpatialIndexer.GridCells.Count.ToString(), Render.Display.Font, Brushes.Red, 100F, 5F);
         }
     }
 }

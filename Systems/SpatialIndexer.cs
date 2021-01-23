@@ -66,8 +66,9 @@ namespace CMDR.Systems
 			
 			// Bottom right corner converted to grid cordinates
 			(int X, int Y) p2 = ((int)Math.Floor((transform.X + collider.Width) / CellSize), (int)Math.Floor((transform.Y + collider.Width) / CellSize));
-			
+
 			// Place gameObject in all it's occupied cells
+			collider.GridKeys.Clear();
 			for (int y = p1.Y; y <= p2.Y; y++)
 				for(int x = p1.X; x <= p2.X; x++)
 				{
@@ -80,15 +81,16 @@ namespace CMDR.Systems
 				}
 				
 			// Remove empty grid cells
-			if(GridCells.Count > StorageThreshold)
+			if(GridCells.Count >= StorageThreshold)
 			{
 				int DelCount = 0;
-				foreach((int, int) keys in GridCells.Keys)
+				List<(int, int)> _temp = GridCells.Keys.ToList();
+				foreach ((int, int) key in _temp)// GridCells.Keys)
 				{
-					if(GridCells[keys].Count == 0)
+					if(GridCells[key].Count == 0)
 					{
 						DelCount++;
-						GridCells.Remove(keys);
+						GridCells.Remove(key);
 					}
 				}
 				// More filled cells exist than the StorageThreshold
