@@ -9,7 +9,8 @@ namespace CMDR.Components
         Type Type { get; set; }
         Scene Scene { get; set; }
 
-        void Update();
+        void Receive();
+        void Send();
     }
     public interface IComponent<T> : IComponent { }
 }

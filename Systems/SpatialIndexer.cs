@@ -98,7 +98,7 @@ namespace CMDR.Systems
 				if (DelCount == 0)
 					StorageThreshold += StorageStep;
 			}
-			collider.Update();
+			collider.Send();
 		}
     }
 }

@@ -24,8 +24,9 @@ namespace CMDR.Components
 			get => _static;
 			set
 			{
+				Receive();
 				_static = value;
-				Update();
+				Send();
 			}
 		}
 
@@ -36,11 +37,12 @@ namespace CMDR.Components
 			get => _height;
 			set
 			{
+				Receive();
 				_height = value;
 				if(value > SpatialIndexer.CellSize)
 					SpatialIndexer.CellSize = value;
 
-				Update();
+				Send();
 			}
 		}
 		public int Width
@@ -48,15 +50,31 @@ namespace CMDR.Components
 			get => _width;
 			set
 			{
+				Receive();
 				_width = value;
 				if(value > SpatialIndexer.CellSize)
 					SpatialIndexer.CellSize = value;
 
-				Update();
+				Send();
 			}
 		}
-
-		public void Update()
+		public void SetBounds(RenderData renderData)
+        {
+			Receive();
+			(Width, Height) = (renderData.ImgData.Width, renderData.ImgData.Height);
+			Send();
+        }
+		public void SetBounds(int width, int height)
+        {
+			Receive();
+			(Width, Height) = (width, height);
+			Send();
+        }
+		public void Receive()
+        {
+			this = Scene.Get<Collider>(ID);
+		}
+		public void Send()
 		{
 			Scene.Update<Collider>(this);
 		}

@@ -32,6 +32,7 @@ namespace Test
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
             RenderData.FromFile("Test.png");
+            Collider.SetBounds(RenderData);
 
 
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };

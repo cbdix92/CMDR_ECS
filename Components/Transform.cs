@@ -24,8 +24,9 @@ namespace CMDR.Components
             }
             set
             {
+                Receive();
                 _static = value == true ? 0 : 1;
-                Update();
+                Send();
             }
         }
 
@@ -36,9 +37,9 @@ namespace CMDR.Components
             get => _x;
             internal set
             {
-                this = Scene.Get<Transform>(ID);
+                Receive();
                 _x = value;
-                Update();
+                Send();
             }
         }
         public float Y
@@ -46,9 +47,9 @@ namespace CMDR.Components
             get => _y;
             internal set
             {
-                this = Scene.Get<Transform>(ID);
+                Receive();
                 _y = value;
-                Update();
+                Send();
             }
         }
         public float Z
@@ -56,9 +57,9 @@ namespace CMDR.Components
             get => _z;
             internal set
             {
-                this = Scene.Get<Transform>(ID);
+                Receive();
                 _z = value;
-                Update();
+                Send();
             }
         }
         #endregion
@@ -70,9 +71,9 @@ namespace CMDR.Components
             get => _xvel;
             set
             {
-                this = Scene.Get<Transform>(ID);
+                Receive();
                 _xvel = value * _static;
-                Update();
+                Send();
             }
         }
         public float Yvel
@@ -80,27 +81,33 @@ namespace CMDR.Components
             get => _yvel;
             set
             {
-                this = Scene.Get<Transform>(ID);
+                Receive();
                 _yvel = value * _static;
-                Update();
+                Send();
             }
         }
         #endregion
 
         public void Move(float x, float y)
         {
+            Receive();
             X += x;
             Y += y;
-            Console.WriteLine(X);
-            Update();   
+            Send();   
         }
         public void Teleport(float x, float y)
         {
+            Receive();
             X = x;
             Y = y;
-            Update();
+            Send();
         }
-        public void Update()
+
+        public void Receive()
+        {
+            this = Scene.Get<Transform>(ID);
+        }
+        public void Send()
         {
             Scene.Update<Transform>(this);
         }

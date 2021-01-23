@@ -17,6 +17,7 @@ namespace CMDR.Components
 
         public void FromFile(string src)
         {
+            Receive();
             try
             {
                 ImgData = Image.FromFile(src);
@@ -25,9 +26,13 @@ namespace CMDR.Components
             {
                 throw new FileNotFoundException($"'{src}', RenderData");
             }
-            Update();
+            Send();
         }
-        public void Update()
+        public void Receive()
+        {
+            this = Scene.Get<RenderData>(ID);
+        }
+        public void Send()
         {
             Scene.Update<RenderData>(this);
         }

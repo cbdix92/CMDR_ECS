@@ -46,7 +46,7 @@ namespace CMDR
         public void Use(IComponent component)
         {
             component.Parent = ID;
-            component.Update();
+            component.Send();
             int i = Get(component.Type);
             // if Components already exist, remove it from memory then overwrite it with the new component
 			if (i != -1)
