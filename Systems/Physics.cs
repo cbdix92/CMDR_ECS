@@ -32,8 +32,6 @@ namespace CMDR.Systems
                 switch (result)
                 {
                     case true:
-
-                        Move(transforms[transformID]);
                         
                         SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
                         int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);

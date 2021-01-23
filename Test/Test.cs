@@ -37,8 +37,8 @@ namespace Test
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
             Display = new Display(800, 600);
-            Transform.Xvel = _speed;
-            //Transform.Teleport(100, 100);
+            //Transform.Xvel = _speed;
+            Transform.Teleport(100, 100);
             Transform.Static = false;
 
             Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
@@ -47,6 +47,7 @@ namespace Test
             Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; }, () => { Transform.Xvel -= _speed; });
             Input.AddKeyBind(Key.Q, () => { Transform.Xvel = 2; });
             Input.AddKeyBind(Key.E, () => { Transform.Xvel = 0; });
+            Input.AddKeyBind(Key.H, () => { Console.WriteLine("Hello"); });
 
             Display.Start();
         }

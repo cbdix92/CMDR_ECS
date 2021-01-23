@@ -25,6 +25,7 @@ namespace CMDR.Components
             set
             {
                 _static = value == true ? 0 : 1;
+                Update();
             }
         }
 
@@ -35,6 +36,7 @@ namespace CMDR.Components
             get => _x;
             internal set
             {
+                this = Scene.Get<Transform>(ID);
                 _x = value;
                 Update();
             }
@@ -44,6 +46,7 @@ namespace CMDR.Components
             get => _y;
             internal set
             {
+                this = Scene.Get<Transform>(ID);
                 _y = value;
                 Update();
             }
@@ -53,6 +56,7 @@ namespace CMDR.Components
             get => _z;
             internal set
             {
+                this = Scene.Get<Transform>(ID);
                 _z = value;
                 Update();
             }
@@ -66,6 +70,7 @@ namespace CMDR.Components
             get => _xvel;
             set
             {
+                this = Scene.Get<Transform>(ID);
                 _xvel = value * _static;
                 Update();
             }
@@ -75,6 +80,7 @@ namespace CMDR.Components
             get => _yvel;
             set
             {
+                this = Scene.Get<Transform>(ID);
                 _yvel = value * _static;
                 Update();
             }

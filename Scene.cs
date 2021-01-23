@@ -45,6 +45,12 @@ namespace CMDR
         {
             Components.Update<T>(component);
         }
+
+        public T Get<T>(int id)
+        {
+            return Components.Get<T>()[id];
+        }
+
         public SGameObject GenerateGameObject()
         {
             lock (_threadLockGameObject)
