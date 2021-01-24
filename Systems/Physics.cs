@@ -47,7 +47,10 @@ namespace CMDR.Systems
 
                             // Compare bounding box checks and then bit collider check
                             if (!b1 && b2 && !BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2], colliders[colliderID], colliders[collider2]))
+                            {
+                                Console.WriteLine("Collision Detected!");
                                 continue; // Resolve collision here ...
+                            }
                         }
 
                         continue;

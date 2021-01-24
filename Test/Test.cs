@@ -13,10 +13,15 @@ namespace Test
         public static Scene TestScene;
 
         public static SGameObject GameObject1;
+        public static SGameObject GameObject2;
 
         public static Collider Collider;
         public static Transform Transform;
         public static RenderData RenderData;
+
+        public static Collider Collider2;
+        public static Transform Transform2;
+        public static RenderData RenderData2;
 
         private static float _speed = 0.3F;
 
@@ -26,6 +31,7 @@ namespace Test
             Debugger.EnableDebugger = true;
 
             TestScene = new Scene();
+            GameObject2 = TestScene.GenerateGameObject();
             GameObject1 = TestScene.GenerateGameObject();
 
             Collider = TestScene.Generate<Collider>();
@@ -34,13 +40,24 @@ namespace Test
             RenderData.FromFile("Test.png");
             Collider.SetBounds(RenderData);
 
+            Collider2 = TestScene.Generate<Collider>();
+            Transform2 = TestScene.Generate<Transform>();
+            RenderData2 = TestScene.Generate<RenderData>();
+            RenderData2.FromFile("Test.png");
+            Collider2.SetBounds(RenderData2);
+
 
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
             GameObject1.Use(comps);
-            Display = new Display(800, 600);
-            //Transform.Xvel = _speed;
             Transform.Teleport(100, 100);
             Transform.Static = false;
+
+            IComponent[] comps2 = new IComponent[] { Collider2, Transform2, RenderData2 };
+            GameObject2.Use(comps2);
+            Transform2.Teleport(500, 500);
+            Transform2.Static = false;
+
+            Display = new Display(1000, 1000);
 
             Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
             Input.AddKeyBind(Key.A, () => { Transform.Xvel += -_speed; }, () => { Transform.Xvel -= -_speed; });

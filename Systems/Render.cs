@@ -34,7 +34,7 @@ namespace CMDR.Systems
 
             (float camX,float camY) = (Camera.X, Camera.Y);
 
-            foreach(SGameObject gameObject in Camera.GetRenderable())
+            foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
             {
                 int i = gameObject.Get<RenderData>();
                 //Image image = renderables[gameObject.Get<RenderData>()].Data;

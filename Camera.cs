@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using CMDR.Components;
 
 namespace CMDR
@@ -22,10 +23,13 @@ namespace CMDR
         }
 
         // Returns renderable objects in view of the camera
-        internal static SGameObject[] GetRenderable()
+        internal static IEnumerable<SGameObject> GetRenderable(Transform[] transforms)
         {
-            Transform[] transforms = SceneManager.ActiveScene.Components.Get<Transform>();
-            return SceneManager.ActiveScene.GameObjects.Get().GroupBy(gameObject => gameObject.Contains<RenderData>() && CameraRectCheck(transforms[gameObject.Get<Transform>()])).Select(x => x.FirstOrDefault()).ToArray();
+            IEnumerable<SGameObject> _ = SceneManager.ActiveScene.GameObjects.Get().AsQueryable().Where(gameObject => gameObject.Contains<RenderData>()
+            &&
+            CameraRectCheck(transforms[gameObject.Get<Transform>()]));
+
+            return _;
 
         }
     }

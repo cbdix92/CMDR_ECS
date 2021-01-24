@@ -29,6 +29,13 @@ namespace CMDR.Systems
         private static byte _fpsCounter;
         private static byte _fpsCurrent;
 
+        // Spatial line vars
+        private static int s;
+        private static int x;
+        private static int y;
+        private static int cX;
+        private static int cY;
+
         internal static void Draw(long ticks)
         {
             if (ticks >= _lastCount+Stopwatch.Frequency)
@@ -45,11 +52,11 @@ namespace CMDR.Systems
             {
                 foreach ((int, int) i in SpatialIndexer.GridCells.Keys)
                 {
-                    int s = SpatialIndexer.CellSize;
-                    int x = i.Item2 * s;
-                    int y = i.Item1 * s;
-                    int cX = x + s / 2;
-                    int cY = y + s / 2;
+                    s = SpatialIndexer.CellSize;
+                    x = i.Item2 * s;
+                    y = i.Item1 * s;
+                    cX = x + s / 2;
+                    cY = y + s / 2;
                     Render.Buffer.Graphics.DrawRectangle(new Pen(Brushes.Red), new Rectangle(x - (int)Camera.X, y - (int)Camera.Y, s, s));
                     Render.Buffer.Graphics.DrawString(SpatialIndexer.GridCells[i].Count.ToString(), Render.Display.Font, Brushes.Red, cX - Camera.X, cY - Camera.Y);
                     Render.Buffer.Graphics.DrawString("(" + i.Item1 + ", " + i.Item2 + ")", Render.Display.Font, Brushes.Red, x - (int)Camera.X + 5, y - (int)Camera.Y + 5);
