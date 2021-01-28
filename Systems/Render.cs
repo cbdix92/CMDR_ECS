@@ -41,6 +41,7 @@ namespace CMDR.Systems
                 Image image = renderables[i].ImgData;
                 Transform transform = transforms[gameObject.Get<Transform>()];
                 Buffer.Graphics.DrawImage(image, transform.X - camX, transform.Y - camY);
+                Debugger.DrawBoundingBox(gameObject);
             }
         }
         internal static void Update(long ticks)

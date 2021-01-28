@@ -27,7 +27,7 @@ namespace CMDR.Systems
 
                     foreach(SGameObject gameObject in SceneManager.ActiveScene.GameObjects)
 					{
-						if(gameObject.Contains<Collider>() && gameObject.Contains<Transform>())
+						if(gameObject.Contains<Collider>() && gameObject.Contains<Transform>() && colliders[gameObject.Get<Collider>()].Static == false)
 						CalcGridPos(ref colliders[gameObject.Get<Collider>()], transforms[gameObject.Get<Transform>()]);
 					}
                 }

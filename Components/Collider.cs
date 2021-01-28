@@ -39,7 +39,7 @@ namespace CMDR.Components
 			{
 				Receive();
 				_height = value;
-				if(value > SpatialIndexer.CellSize)
+				if(value > SpatialIndexer.CellSize && !_static)
 					SpatialIndexer.CellSize = value;
 
 				Send();
@@ -69,6 +69,10 @@ namespace CMDR.Components
 			Receive();
 			(Width, Height) = (width, height);
 			Send();
+        }
+		public void GenerateColData(string src)
+        {
+			BitCollider.GenerateColData(ref this, src);
         }
 		public void Receive()
         {

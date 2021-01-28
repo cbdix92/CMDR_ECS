@@ -33,6 +33,11 @@ namespace CMDR
             }
             return -1;
         }
+        public T SGet<T>()
+            where T: struct, IComponent<T>
+        {
+            return Scene.Components.Get<T>()[Get(typeof(T))];
+        }
 		
         public bool Contains<T>()
         {

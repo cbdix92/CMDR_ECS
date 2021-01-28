@@ -25,6 +25,7 @@ namespace CMDR.Systems
                 int transformID = gameObject.Get<Transform>();
                 int colliderID = gameObject.Get<Collider>();
 
+
                 #region COLLISION_LOGIC
 
                 bool result = transformID != -1 && colliderID != -1 && Move(transforms[transformID]);
@@ -32,23 +33,30 @@ namespace CMDR.Systems
                 switch (result)
                 {
                     case true:
-                        
-                        SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
-                        int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(colliders[colliderID]);
+
+                        Transform transform = transforms[gameObject.Get<Transform>()];
+                        Collider collider = colliders[gameObject.Get<Collider>()];
+
+                        SpatialIndexer.CalcGridPos(ref collider, transform);
+                        int[] gameObjectColliders = SpatialIndexer.GetNearbyColliders(collider);
 
                         foreach (int i in gameObjectColliders)
                         {
-                            int transform2 = gameObjects[i].Get<Transform>();
-                            int collider2 = gameObjects[i].Get<Collider>();
 
+                            Transform transform2 = transforms[gameObjects[i].Get<Transform>()];
+                            Collider collider2 = colliders[gameObjects[i].Get<Collider>()];
                             // Bounding box checks
-                            bool b1 = transforms[transformID].X - transforms[transform2].X <= colliders[collider2].Width;
-                            bool b2 = transforms[transformID].Y - transforms[transform2].Y <= colliders[collider2].Height;
+                            bool rectCol = 
+                                   transform.X <= transform2.X + collider2.Width
+                                && transform.X + collider.Width >= transform2.X
+                                && transform.Y <= transform2.Y + collider2.Height
+                                && transform.Y + collider.Height >= transform2.Y;
+
 
                             // Compare bounding box checks and then bit collider check
-                            if (!b1 && b2 && !BitCollider.BitColliderCheck(transforms[transformID], transforms[transform2], colliders[colliderID], colliders[collider2]))
+                            if (rectCol && BitCollider.BitColliderCheck(transform, transform2, collider, collider2))
                             {
-                                Console.WriteLine("Collision Detected!");
+                                Debug(ticks);
                                 continue; // Resolve collision here ...
                             }
                         }
@@ -57,6 +65,8 @@ namespace CMDR.Systems
 
                     case false:
                         // Nothing needs to be done. Restart the loop
+                        if (colliders[colliderID].GridKeys == null)
+                            SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
                         continue;
                 }
                 #endregion
@@ -113,7 +123,11 @@ namespace CMDR.Systems
 
             }
         }
-
+        public static void Debug(long ticks)
+        {
+            //Console.Clear();
+            Console.WriteLine("Collision Deteted: " + ticks.ToString());
+        }
         public static bool Move(Transform transform)
         {
             transform.X += transform.Xvel;

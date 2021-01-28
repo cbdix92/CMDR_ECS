@@ -23,7 +23,7 @@ namespace Test
         public static Transform Transform2;
         public static RenderData RenderData2;
 
-        private static float _speed = 0.3F;
+        private static float _speed = 0.1F;
 
         [STAThread]
         static void Main(string[] args)
@@ -39,12 +39,14 @@ namespace Test
             RenderData = TestScene.Generate<RenderData>();
             RenderData.FromFile("Test.png");
             Collider.SetBounds(RenderData);
+            Collider.GenerateColData("Test.png");
 
             Collider2 = TestScene.Generate<Collider>();
             Transform2 = TestScene.Generate<Transform>();
             RenderData2 = TestScene.Generate<RenderData>();
             RenderData2.FromFile("Test.png");
             Collider2.SetBounds(RenderData2);
+            Collider2.GenerateColData("Test.png");
 
 
             IComponent[] comps = new IComponent[] { Collider, Transform, RenderData };
@@ -54,7 +56,7 @@ namespace Test
 
             IComponent[] comps2 = new IComponent[] { Collider2, Transform2, RenderData2 };
             GameObject2.Use(comps2);
-            Transform2.Teleport(500, 500);
+            Transform2.Teleport(180, 256);
             Transform2.Static = false;
 
             Display = new Display(1000, 1000);

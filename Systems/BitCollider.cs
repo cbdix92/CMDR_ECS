@@ -2,6 +2,7 @@
 using System.IO;
 using System.Drawing;
 using CMDR.Components;
+using CMDR.Systems;
 
 namespace CMDR
 {
@@ -14,30 +15,45 @@ namespace CMDR
 		
 		internal static bool BitColliderCheck(Transform t1, Transform t2, Collider c1, Collider c2)
 		{
+			Console.WriteLine("Enter But Collider: "+ GameLoop.Time.ElapsedMilliseconds.ToString());
 			bool result = false;
 
 			// Prevent int casting during iteration
 			(int X, int Y) t1p = ((int)t1.X, (int)t1.Y);
 			(int X, int Y) t2p = ((int)t2.X, (int)t2.Y);
 
-			// Find the top left and bottom right points for the bounding box of the two colliding objects
-			(int X, int Y) p1 = ((int)Math.Min(t1.X, t2.X), (int)Math.Min(t1.Y, t2.Y));
-			(int X, int Y) p2 = ((int)Math.Max(t1.X, t2.X), (int)Math.Min(t1.Y, t2.Y));
+			// Find the top left and bottom right points for the insecting area between the two objects.
+			(int X, int Y) p1 = ((int)Math.Max(t1.X, t2.X), (int)Math.Max(t1.Y, t2.Y));
+			(int X, int Y) p2 = ((int)Math.Min(t1.X + c1.Width, t2.X + c2.Width), (int)Math.Min(t1.Y + c1.Height, t2.Y + c2.Height));
 			
-			int boundSize = (p2.X - p1.X) * (p2.Y - p1.Y);
+			int boundSize = (p2.X - p1.X) * (p2.Y - p1.Y) - 1;
 			
 			int width = p2.X - p1.X;
+
+			int x1;
+			int x2;
+			int y1;
+			int y2;
+			bool chk1;
+			bool chk2;
 			
 			for (int i = 0; i < boundSize; i++)
 			{
-				if (c1.ColData[(i / width) - p1.Y - t1p.Y, (i % width) - p1.X - t1p.X]
-				&&
-					c2.ColData[(i / width) - p1.Y - t2p.Y, (i % width) - p1.X - t2p.X])
+
+
+				x1 = (i % width) + (p1.X - t1p.X);
+				x2 = (i % width) + (p1.X - t2p.X);
+				y1 = (i / width) + (p1.Y - t1p.Y);
+				y2 = (i / width) + (p1.Y - t2p.Y);
+				chk1 = c1.ColData[y1, x1];
+				chk2 = c2.ColData[y2, x2];
+				if (chk1 && chk2)
 					{
 						result = true;
 						break;
 					}
 			}
+			Console.WriteLine("Exit Bit Collider: " + GameLoop.Time.ElapsedMilliseconds.ToString() + " " + result.ToString());
 			return result;
 		}
 		
@@ -61,8 +77,8 @@ namespace CMDR
 			
 			Bitmap bitmap = new Bitmap(image);
 			
-			for (int y = 0; y <= height; y++)
-				for (int x = 0; x <= width; x++)
+			for (int y = 0; y < height; y++)
+				for (int x = 0; x < width; x++)
 				{
 					collider.ColData[y,x] = bitmap.GetPixel(x,y).A > AlphaThreshold;
 				}
