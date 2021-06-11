@@ -12,8 +12,8 @@ namespace CMDR
         public KeyValuePair<Type, int>[] Components;
 		public int NumberOfComponents { get; private set; }
 
-        
-        // Used for syntactical  simplicity
+
+        // Used for syntactic simplicity
         internal int Get<T>()
         {
             return Get(typeof(T));

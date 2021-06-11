@@ -23,7 +23,7 @@ namespace Test
         public static Transform Transform2;
         public static RenderData RenderData2;
 
-        private static float _speed = 0.1F;
+        private static float _speed = 1.0F;
 
         [STAThread]
         static void Main(string[] args)
@@ -37,9 +37,9 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
-            RenderData.FromFile("Test.png");
+            RenderData.FromFile("assets/character/ninja_male_assets/Run__000.png");
             Collider.SetBounds(RenderData);
-            Collider.GenerateColData("Test.png");
+            Collider.GenerateColData("assets/character/ninja_male_assets/Run__000.png");
 
             Collider2 = TestScene.Generate<Collider>();
             Transform2 = TestScene.Generate<Transform>();

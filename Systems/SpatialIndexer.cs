@@ -8,7 +8,7 @@ namespace CMDR.Systems
 {
     internal static class SpatialIndexer
     {
-		public static int StorageThreshold = 50;
+		public static int StorageThreshold = 500;
 		public static int StorageStep = 50;
 		
         public static Dictionary<(int, int), List<int>> GridCells = new Dictionary<(int, int), List<int>>();

@@ -37,7 +37,6 @@ namespace CMDR.Systems
             foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
             {
                 int i = gameObject.Get<RenderData>();
-                //Image image = renderables[gameObject.Get<RenderData>()].Data;
                 Image image = renderables[i].ImgData;
                 Transform transform = transforms[gameObject.Get<Transform>()];
                 Buffer.Graphics.DrawImage(image, transform.X - camX, transform.Y - camY);

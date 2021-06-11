@@ -15,7 +15,7 @@ namespace CMDR
 		
 		internal static bool BitColliderCheck(Transform t1, Transform t2, Collider c1, Collider c2)
 		{
-			Console.WriteLine("Enter But Collider: "+ GameLoop.Time.ElapsedMilliseconds.ToString());
+			//Console.WriteLine("Enter But Collider: "+ GameLoop.Time.ElapsedMilliseconds.ToString());
 			bool result = false;
 
 			// Prevent int casting during iteration
@@ -53,7 +53,7 @@ namespace CMDR
 						break;
 					}
 			}
-			Console.WriteLine("Exit Bit Collider: " + GameLoop.Time.ElapsedMilliseconds.ToString() + " " + result.ToString());
+			//Console.WriteLine("Exit Bit Collider: " + GameLoop.Time.ElapsedMilliseconds.ToString() + " " + result.ToString());
 			return result;
 		}
 		
