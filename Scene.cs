@@ -26,13 +26,15 @@ namespace CMDR
             _loadedScenes.Remove(_loadedScenes[ID]);
         }
     }
+
+    [Serializable]
     public class Scene
     {
         public int ID { get; set; }
 
         private object _threadLockGameObject = new object();
         private object _threadLockComponent = new object();
-        
+
         internal GameObjectCollection GameObjects = new GameObjectCollection();
         internal ComponentTable Components = new ComponentTable();
 

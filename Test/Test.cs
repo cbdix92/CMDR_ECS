@@ -25,6 +25,20 @@ namespace Test
 
         private static float _speed = 1.0F;
 
+        public static string[] paths = new string[]
+        {
+            "assets/character/ninja_male_assets/Run__000.png",
+            "assets/character/ninja_male_assets/Run__001.png",
+            "assets/character/ninja_male_assets/Run__002.png",
+            "assets/character/ninja_male_assets/Run__003.png",
+            "assets/character/ninja_male_assets/Run__004.png",
+            "assets/character/ninja_male_assets/Run__005.png",
+            "assets/character/ninja_male_assets/Run__006.png",
+            "assets/character/ninja_male_assets/Run__007.png",
+            "assets/character/ninja_male_assets/Run__008.png",
+            "assets/character/ninja_male_assets/Run__009.png"
+        };
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -37,6 +51,7 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
+            RenderData.CreateAnimation("Test", paths, 1000);
             RenderData.FromFile("assets/character/ninja_male_assets/Run__000.png");
             Collider.SetBounds(RenderData);
             Collider.GenerateColData("assets/character/ninja_male_assets/Run__000.png");
@@ -45,6 +60,7 @@ namespace Test
             Transform2 = TestScene.Generate<Transform>();
             RenderData2 = TestScene.Generate<RenderData>();
             RenderData2.FromFile("Test.png");
+            RenderData2.Static = true;
             Collider2.SetBounds(RenderData2);
             Collider2.GenerateColData("Test.png");
 
