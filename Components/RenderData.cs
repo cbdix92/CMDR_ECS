@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CMDR.Components
 {
@@ -39,7 +40,8 @@ namespace CMDR.Components
         public void CreateAnimation(string name, string[] paths, int stepSize)
         {
             Receive();
-            
+            if (AnimationData == null)
+                AnimationData = new Animation();
             // temp debug
             currentState = name;
 
@@ -77,10 +79,11 @@ namespace CMDR.Components
         }
     }
 
-    internal struct Animation
+    internal class Animation
     {
         internal long _lastFrame;
-        internal int _stepSize;
+        internal long _stepSize;
+        internal int _nextFrame;
 
         internal Dictionary<string, List<Image>> _data;
 
@@ -89,19 +92,25 @@ namespace CMDR.Components
             if (_data == null)
                 throw new NullReferenceException("Animation frames never loaded!");
 
-            int _newFrame = (int)(ticks - _lastFrame) % _stepSize;
-            if (_newFrame >= _data.Count)
+            if (_nextFrame == _data[name].Count)
             {
-                _newFrame = 0;// _newFrame%_stepSize;
+                _nextFrame = 0;
             }
-            _lastFrame = ticks;
-            return _data[name][_newFrame];
+            if (ticks >= _lastFrame+_stepSize)
+            {
+                _lastFrame = ticks;
+                return _data[name][_nextFrame++];
+            }
+            else
+            {
+                return _data[name][_nextFrame];
+            }
 
         }
 
-        internal void InsertFrames(string name, Image[] image, int stepSize)
+        internal void InsertFrames(string name, Image[] image, long stepSize)
         {
-            _stepSize = stepSize;
+            _stepSize = stepSize*(Stopwatch.Frequency/1000);
 
             if (_data == null)
                 _data = new Dictionary<string, List<Image>>();
