@@ -56,7 +56,7 @@ namespace CMDR.Systems
                             // Compare bounding box checks and then bit collider check
                             if (rectCol && BitCollider.BitColliderCheck(transform, transform2, collider, collider2))
                             {
-                                Debug(ticks);
+                                //Debug(ticks);
                                 continue; // Resolve collision here ...
                             }
                         }

@@ -19,6 +19,11 @@ namespace CMDR
             this.Text = Assembly.GetEntryAssembly().GetName().ToString();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            GameLoop.Running = false;
+        }
         public void Start()
         {
 

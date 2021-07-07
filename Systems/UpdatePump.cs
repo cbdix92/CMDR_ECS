@@ -86,10 +86,12 @@ namespace CMDR.Systems
 
         internal static List<Updater> Updaters = new List<Updater>();
 
+        internal static Thread thread;
+
         internal static void Start()
         {
 
-            Thread thread = new Thread(() =>
+            thread = new Thread(() =>
                 {
                     Time = new Stopwatch();
                     Time.Start();
