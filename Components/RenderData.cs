@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace CMDR.Components
 {
+    public delegate long FrameTimer(int _nextFrame);
     public struct RenderData : IComponent<RenderData>
     {
         #region IComponent
@@ -37,7 +38,7 @@ namespace CMDR.Components
             Send();
         }
 
-        public void CreateAnimation(string name, string[] paths, int stepSize)
+        public void CreateAnimation(string name, string[] paths, FrameTimer frameTimer)
         {
             Receive();
             if (AnimationData == null)
@@ -58,7 +59,8 @@ namespace CMDR.Components
                     throw new FileNotFoundException($"'{paths[i]}', Animation");
                 }
             }
-            AnimationData.InsertFrames(name, _, stepSize);
+
+            AnimationData.InsertFrames(name, _, frameTimer);
 
             Send();
         }
@@ -85,12 +87,16 @@ namespace CMDR.Components
         internal long _stepSize;
         internal int _nextFrame;
 
+        internal FrameTimer _frameTimer;
+
         internal Dictionary<string, List<Image>> _data;
 
         internal Image Get(long ticks, string name)
         {
             if (_data == null)
                 throw new NullReferenceException("Animation frames never loaded!");
+
+            _stepSize = _frameTimer(_nextFrame) * (Stopwatch.Frequency / 1000);
 
             if (_nextFrame == _data[name].Count)
             {
@@ -108,9 +114,10 @@ namespace CMDR.Components
 
         }
 
-        internal void InsertFrames(string name, Image[] image, long stepSize)
+        internal void InsertFrames(string name, Image[] image, FrameTimer frameTimer)
         {
-            _stepSize = stepSize*(Stopwatch.Frequency/1000);
+            _frameTimer = frameTimer;
+            _stepSize = _frameTimer(_nextFrame) * (Stopwatch.Frequency / 1000);
 
             if (_data == null)
                 _data = new Dictionary<string, List<Image>>();
