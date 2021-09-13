@@ -11,6 +11,7 @@ namespace CMDR.Systems
 
         public static void Update(long ticks)
         {
+            MoveCamera();
             Scene scene = SceneManager.ActiveScene;
 
             SGameObject[] gameObjects = scene.GameObjects.Get();
@@ -133,6 +134,11 @@ namespace CMDR.Systems
             transform.X += transform.Xvel;
             transform.Y += transform.Yvel;
             return transform.Xvel != 0 || transform.Yvel != 0;
+        }
+        public static void MoveCamera()
+        {
+            Camera.X += Camera.Xvel;
+            Camera.Y += Camera.Yvel;
         }
         public static bool CanMove(Transform transform)
         {

@@ -23,7 +23,8 @@ namespace Test
         public static Transform Transform2;
         public static RenderData RenderData2;
 
-        private static float _speed = 1.0F;
+        private static float _speed = 5.0F;
+        private static float _speed2 = _speed/2;
 
         public static string[] paths = new string[]
         {
@@ -89,6 +90,23 @@ namespace Test
             Input.AddKeyBind(Key.Q, () => { Transform.Xvel = 2; });
             Input.AddKeyBind(Key.E, () => { Transform.Xvel = 0; });
             Input.AddKeyBind(Key.H, () => { Console.WriteLine("Hello"); });
+            Input.AddKeyBind(Key.Up, () => { Camera.Yvel += -_speed; }, () => { Camera.Yvel -= -_speed; });
+            Input.AddKeyBind(Key.Down, () => { Camera.Yvel += _speed; }, () => { Camera.Yvel -= _speed; });
+            Input.AddKeyBind(Key.Left, () => { Camera.Xvel += -_speed; }, () => { Camera.Xvel -= -_speed; });
+            Input.AddKeyBind(Key.Right, () => { Camera.Xvel += _speed; }, () => { Camera.Xvel -= _speed; });
+
+            void GameLogic(long ticks)
+            {
+                if (Transform2.Xvel == _speed2)
+                {
+                    Transform2.Xvel = -_speed2;
+                    return;
+                }
+                if (Transform2.Xvel == -_speed2)
+                    Transform2.Xvel = _speed2;
+            }
+            GameLoop.CreateUpdater(1L, GameLogic);
+            Transform2.Xvel = _speed2;
 
             Display.Start();
         }

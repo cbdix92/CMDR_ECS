@@ -51,9 +51,9 @@ namespace CMDR.Systems
     */
 
 
-    internal delegate void UpdateHandler(long ticks);
+    public delegate void UpdateHandler(long ticks);
 
-    internal struct Updater
+    internal class Updater
     {
         private long _lastUpdate;
         private long _target;
@@ -109,7 +109,7 @@ namespace CMDR.Systems
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }
-        internal static void CreateUpdater(long persecond, UpdateHandler update)
+        public static void CreateUpdater(long persecond, UpdateHandler update)
         {
             Updater foo = new Updater();
             foo.PerSecond = persecond;
