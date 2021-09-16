@@ -75,5 +75,12 @@
     <Compile Include="Systems\SpatialIndexer.cs" />
     <Compile Include="Systems\UpdatePump.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GLFW\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
