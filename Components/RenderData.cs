@@ -102,7 +102,7 @@ namespace CMDR.Components
             {
                 _nextFrame = 0;
             }
-            if (ticks >= _lastFrame+_stepSize)
+            if (ticks >= _lastFrame + _stepSize)
             {
                 _lastFrame = ticks;
                 return _data[name][_nextFrame++];

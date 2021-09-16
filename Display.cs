@@ -22,6 +22,7 @@ namespace CMDR
 
         protected override void OnClosed(EventArgs e)
         {
+            base.OnClosed(e);
             GameLoop.Running = false;
         }
         public void Start()

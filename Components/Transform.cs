@@ -88,6 +88,40 @@ namespace CMDR.Components
         }
         #endregion
 
+        #region ROTATION_PROPERTIES
+        private float _rotD;
+        public float RotDeg
+        {
+            get => _rotD;
+            set
+            {
+                Receive();
+                _rotD = value;
+                Send();
+            }
+        }
+        public float RotRad
+        {
+            get => _rotD / 180.0F * (float)Math.PI;
+        }
+
+        #endregion
+
+        #region SCALE_PROPERTIES
+        private float _scale;
+        public float Scale
+        {
+            get => _scale+1;
+            set
+            {
+                Receive();
+                _scale = value;
+                Send();
+            }
+        }
+        #endregion
+
+
         public void Move(float x, float y)
         {
             Receive();
