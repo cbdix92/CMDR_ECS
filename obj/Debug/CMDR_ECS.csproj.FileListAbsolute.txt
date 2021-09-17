@@ -27,3 +27,6 @@ C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csproj.CoreCompileInputs.cach
 C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csproj.CopyComplete
 C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.dll
 C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.GLFW.Strings.resources
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csproj.GenerateResource.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.dll.config

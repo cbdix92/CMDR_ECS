@@ -36,3 +36,4 @@ C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.csproj.CoreCompileInputs.cac
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.csproj.CopyComplete
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.exe
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\CMDR_ECS.dll.config

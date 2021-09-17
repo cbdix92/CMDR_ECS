@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using GLFW;
 
 namespace CMDR.Systems
 {
@@ -100,7 +101,7 @@ namespace CMDR.Systems
                     CreateUpdater(100L, Physics.Update);
                     CreateUpdater(100L, Input.Update);
 
-                    while (Running)
+                    while (Glfw.WindowShouldClose(Display.Window))
                     {
                         foreach (Updater updater in Updaters)
                             updater.Update(Time.ElapsedTicks);
