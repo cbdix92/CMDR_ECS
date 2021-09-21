@@ -105,7 +105,10 @@ namespace CMDR.Systems
                     {
                         foreach (Updater updater in Updaters)
                             updater.Update(Time.ElapsedTicks);
+
+                        Glfw.PollEvents();
                     }
+                    Glfw.Terminate();
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
