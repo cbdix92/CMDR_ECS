@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using GLFW;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 using CMDR.Components;
