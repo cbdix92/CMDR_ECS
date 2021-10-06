@@ -114,6 +114,12 @@
     <Compile Include="GLFW\Structs\Window.cs" />
     <Compile Include="GLFW\Util.cs" />
     <Compile Include="GLFW\Vulkan.cs" />
+    <Compile Include="ImageDecoder\DecoderJPEG.cs" />
+    <Compile Include="ImageDecoder\DecoderPNG.cs" />
+    <Compile Include="ImageDecoder\enums.cs" />
+    <Compile Include="ImageDecoder\Exceptions.cs" />
+    <Compile Include="ImageDecoder\Load.cs" />
+    <Compile Include="ImageDecoder\Util.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Systems\BitCollider.cs" />
     <Compile Include="DataSys\ComponentCollection.cs" />
@@ -132,6 +138,7 @@
     <Compile Include="Systems\Render.cs" />
     <Compile Include="Systems\SpatialIndexer.cs" />
     <Compile Include="Systems\UpdatePump.cs" />
+    <Compile Include="Texture.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

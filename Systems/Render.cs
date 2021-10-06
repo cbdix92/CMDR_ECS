@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Drawing;
 using GLFW;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -14,8 +12,6 @@ namespace CMDR.Systems
         internal static Scene Scene { get => SceneManager.ActiveScene; }
 
         public static byte ZDepth;
-
-        internal static System.Drawing.Drawing2D.MatrixOrder _append = System.Drawing.Drawing2D.MatrixOrder.Append;
 
 
         internal static int VAO;
@@ -40,27 +36,15 @@ namespace CMDR.Systems
 
             foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
             {
-                int i = gameObject.Get<RenderData>();
-                System.Drawing.Image image = (System.Drawing.Image)renderables[i].GetRender(ticks).Clone();
+                int tex_ID = gameObject.Get<RenderData>();
+                Texture texture = renderables[tex_ID].GetRender(ticks);
                 Transform transform = transforms[gameObject.Get<Transform>()];
 
+                // Get width and height of rotated texture
                 float rad = transform.RotRad;
-                double w = Math.Abs((Math.Cos(rad) * image.Width) + Math.Abs((Math.Sin(rad) * image.Height)));
-                double h = Math.Abs((Math.Sin(rad) * image.Width) + Math.Abs((Math.Cos(rad) * image.Height)));
-                Bitmap bmp = new Bitmap((int)Math.Ceiling(w), (int)Math.Ceiling(h));
-                Graphics G = Graphics.FromImage(image);
-                G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                G.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                double w = Math.Abs((Math.Cos(rad) * texture.Width) + Math.Abs((Math.Sin(rad) * texture.Height)));
+                double h = Math.Abs((Math.Sin(rad) * texture.Width) + Math.Abs((Math.Cos(rad) * texture.Height)));
 
-                System.Drawing.Drawing2D.Matrix m = G.Transform;// new System.Drawing.Drawing2D.Matrix();
-
-                m.Scale(transform.Scale, transform.Scale, _append);
-                m.RotateAt(transform.RotDeg, new PointF((float)(image.Width / 2), (float)(image.Height / 2)), _append);
-                G.Transform = m;
-                G.DrawImage(image, 0, 0);
-                //Buffer.Graphics.DrawImage(image, transform.X - camX, transform.Y - camY);
-                //Buffer.Render(G);
-                G.Dispose();
                 Debugger.DrawBoundingBox(gameObject);
             }
             Glfw.SwapBuffers(Display.Window);

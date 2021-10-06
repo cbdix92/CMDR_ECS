@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
+using ImageDecoder;
 
 namespace CMDR.Components
 {
@@ -18,7 +18,7 @@ namespace CMDR.Components
 
         public bool Static { get; set; }
 
-        public Image ImgData { get; internal set; }
+        public Texture ImgData { get; internal set; }
 
         internal Animation AnimationData;
 
@@ -27,14 +27,7 @@ namespace CMDR.Components
         public void FromFile(string src)
         {
             Receive();
-            try
-            {
-                ImgData = Image.FromFile(src);
-            }
-            catch (FileNotFoundException)
-            {
-                throw new FileNotFoundException($"'{src}', RenderData");
-            }
+            ImgData = Load.LoadFromFile(src);
             Send();
         }
 
@@ -46,13 +39,13 @@ namespace CMDR.Components
             // temp debug
             currentState = name;
 
-            Image[] _ = new Image[paths.Length];
+            Texture[] _ = new Texture[paths.Length];
 
             for (int i = 0; i < paths.Length; i++)
             {
                 try
                 {
-                    _[i] = Image.FromFile(paths[i]);
+                    _[i] = Load.LoadFromFile(paths[i]);
                 }
                 catch (FileNotFoundException)
                 {
@@ -65,7 +58,7 @@ namespace CMDR.Components
             Send();
         }
 
-        public Image GetRender(long ticks)
+        public Texture GetRender(long ticks)
         {
             //return AnimationData.Get(ticks, currentState);
             return Static ? ImgData : AnimationData.Get(ticks, currentState);
@@ -89,9 +82,9 @@ namespace CMDR.Components
 
         internal FrameTimer _frameTimer;
 
-        internal Dictionary<string, List<Image>> _data;
+        internal Dictionary<string, List<Texture>> _data;
 
-        internal Image Get(long ticks, string name)
+        internal Texture Get(long ticks, string name)
         {
             if (_data == null)
                 throw new NullReferenceException("Animation frames never loaded!");
@@ -114,16 +107,16 @@ namespace CMDR.Components
 
         }
 
-        internal void InsertFrames(string name, Image[] image, FrameTimer frameTimer)
+        internal void InsertFrames(string name, Texture[] image, FrameTimer frameTimer)
         {
             _frameTimer = frameTimer;
             _stepSize = _frameTimer(_nextFrame) * (Stopwatch.Frequency / 1000);
 
             if (_data == null)
-                _data = new Dictionary<string, List<Image>>();
+                _data = new Dictionary<string, List<Texture>>();
 
             if (!_data.ContainsKey(name))
-                _data.Add(name, new List<Image>(image));
+                _data.Add(name, new List<Texture>(image));
 
 
         }
