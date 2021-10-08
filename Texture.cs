@@ -27,7 +27,7 @@ namespace CMDR
                 throw new ArgumentOutOfRangeException("The specified pixel is outside of the bounds of this texture.");
 
             float[] result = new float[Stride];
-            for (int i = 0; i<Stride; i++)
+            for (int i = 0; i < Stride; i++)
             {
                 result[i] = ColorData[(y * Width + x) + i];
             }

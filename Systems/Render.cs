@@ -32,7 +32,10 @@ namespace CMDR.Systems
 
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
-            GL.BindVertexArray(VAO);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
+            
+			
+			//GL.BindVertexArray(VAO);
 
             foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
             {
