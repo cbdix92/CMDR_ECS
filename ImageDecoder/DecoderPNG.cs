@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
-namespace ImageDecoder
+namespace CMDR
 {
     internal static class DecodePNG
     {
@@ -63,7 +63,7 @@ namespace ImageDecoder
                 switch(chunk)
                 {
                     case PLTE:
-                        break;
+                        throw new NotImplementedException("PLTE");
 
                     case IDAT:
                         // Combine all IDAT chunks to form the ZLIB
@@ -90,28 +90,29 @@ namespace ImageDecoder
                         return new Texture(_, width, height, dataStride);
 
                     case bKGD:
-                        break;
+                        throw new NotImplementedException("bKGD");
 
                     case cHRM:
-                        break;
+                        throw new NotImplementedException("cHRM");
 
                     case dSIG:
-                        break;
+                        throw new NotImplementedException("dSIG");
 
                     case eXIf:
-                        break;
+                        throw new NotImplementedException("eXIf");
 
                     case gAMA:
+                        UInt32 Gamma = (UInt32)BR.ReadBytes(4).ConvertInt(BitCount.Bit32);
                         break;
 
                     case hIST:
-                        break;
+                        throw new NotImplementedException("hIST");
 
                     case iCCP:
-                        break;
+                        throw new NotImplementedException("iCCP");
 
                     case iTXt:
-                        break;
+                        throw new NotImplementedException("iTXt");
 
                     case pHYs:
                         UInt32 pixelsPerUnitX = (UInt32)BR.ReadBytes(4).ConvertInt(BitCount.Bit32);
@@ -158,19 +159,21 @@ namespace ImageDecoder
                         break;
 
                     case sPLT:
-                        break;
+                        throw new NotImplementedException("sPLT");
 
                     case sRGB:
+                        int RenderingIntent = BR.ReadByte();
                         break;
+                        //throw new NotImplementedException("sRGB");
 
                     case sTER:
-                        break;
+                        throw new NotImplementedException("sTER");
 
                     case tEXt:
-                        break;
+                        throw new NotImplementedException("tEXt");
 
                     case tIME:
-                        break;
+                        throw new NotImplementedException("tIME");
 
                     case tRNS:
                         switch(colorType)
@@ -185,7 +188,7 @@ namespace ImageDecoder
                         throw new InvalidDataException($"tRNS chunk found for color type {colorType}: " + (colorType == 4 ? "Greyscale with alpha" : "Truecolour with alpha"));
                     
                     case zTXt:
-                        break;
+                        throw new NotImplementedException("zTXt");
 
                 }
                 // Skip CRC for now ...

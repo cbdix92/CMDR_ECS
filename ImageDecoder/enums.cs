@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ImageDecoder
+namespace CMDR
 {
     enum BitCount
     {

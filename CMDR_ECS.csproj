@@ -35,6 +35,9 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.3.11, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>packages\SharpZipLib.1.3.3\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -139,6 +142,7 @@
     <Compile Include="Systems\SpatialIndexer.cs" />
     <Compile Include="Systems\UpdatePump.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="Vector3.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

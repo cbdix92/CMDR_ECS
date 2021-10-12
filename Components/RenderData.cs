@@ -2,11 +2,11 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ImageDecoder;
 
 namespace CMDR.Components
 {
-    public delegate long FrameTimer(int _nextFrame);
+
+    //TODO rename this to Material
     public struct RenderData : IComponent<RenderData>
     {
         #region IComponent
@@ -31,7 +31,7 @@ namespace CMDR.Components
             Send();
         }
 
-        public void CreateAnimation(string name, string[] paths, FrameTimer frameTimer)
+        public void CreateAnimation(string name, string[] paths, float stepSize)
         {
             Receive();
             if (AnimationData == null)
@@ -53,7 +53,7 @@ namespace CMDR.Components
                 }
             }
 
-            AnimationData.InsertFrames(name, _, frameTimer);
+            AnimationData.InsertFrames(name, _, stepSize);
 
             Send();
         }
@@ -74,13 +74,22 @@ namespace CMDR.Components
         }
     }
 
-    internal class Animation
+    public class Animation
     {
         internal long lastFrame;
-        internal long stepSize;
         internal int nextFrame;
 
-        internal FrameTimer frameTimer;
+
+        // Backing field is set to the number of ticks to wait between frames. Not Milliseconds!
+        private float _stepSize;
+        public float StepSize
+        {
+            get => (Stopwatch.Frequency / 1000) / _stepSize;
+            set
+            {
+                _stepSize = value * (Stopwatch.Frequency / 1000);
+            }
+        }
 
         internal Dictionary<string, List<Texture>> data;
 
@@ -89,13 +98,10 @@ namespace CMDR.Components
             if (data == null)
                 throw new NullReferenceException("Animation frames never loaded!");
 
-            stepSize = frameTimer(nextFrame) * (Stopwatch.Frequency / 1000);
-
             if (nextFrame == data[name].Count)
-            {
                 nextFrame = 0;
-            }
-            if (ticks >= lastFrame + stepSize)
+
+            if (ticks >= lastFrame + StepSize)
             {
                 lastFrame = ticks;
                 return data[name][nextFrame++];
@@ -107,16 +113,15 @@ namespace CMDR.Components
 
         }
 
-        internal void InsertFrames(string name, Texture[] image, FrameTimer frameTimer)
+        internal void InsertFrames(string name, Texture[] images, float stepSize)
         {
-            this.frameTimer = frameTimer;
-            stepSize = this.frameTimer(nextFrame) * (Stopwatch.Frequency / 1000);
+            StepSize = stepSize;
 
             if (data == null)
                 data = new Dictionary<string, List<Texture>>();
 
             if (!data.ContainsKey(name))
-                data.Add(name, new List<Texture>(image));
+                data.Add(name, new List<Texture>(images));
 
 
         }

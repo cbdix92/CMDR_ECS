@@ -40,11 +40,6 @@ namespace Test
             "assets/character/ninja_male_assets/Run__009.png"
         };
 
-        public static long WalkingAnimation(int frame)
-        {
-            return 80;
-        }
-
         [STAThread]
         static void Main(string[] args)
         {
@@ -59,7 +54,7 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
-            RenderData.CreateAnimation("Test", paths, WalkingAnimation);
+            RenderData.CreateAnimation("Test", paths, 80);
             RenderData.FromFile("assets/character/ninja_male_assets/Run__000.png");
             Collider.SetBounds(RenderData);
             Collider.GenerateColData("assets/character/ninja_male_assets/Run__000.png");

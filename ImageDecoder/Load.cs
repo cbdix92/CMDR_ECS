@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 
 
-namespace ImageDecoder
+namespace CMDR
 {
     public static class Load
     {

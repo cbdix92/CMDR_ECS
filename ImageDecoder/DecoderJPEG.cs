@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace ImageDecoder
+namespace CMDR
 {
     internal static class DecodeJPEG
     {
