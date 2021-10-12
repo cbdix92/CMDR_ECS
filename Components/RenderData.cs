@@ -76,47 +76,47 @@ namespace CMDR.Components
 
     internal class Animation
     {
-        internal long _lastFrame;
-        internal long _stepSize;
-        internal int _nextFrame;
+        internal long lastFrame;
+        internal long stepSize;
+        internal int nextFrame;
 
-        internal FrameTimer _frameTimer;
+        internal FrameTimer frameTimer;
 
-        internal Dictionary<string, List<Texture>> _data;
+        internal Dictionary<string, List<Texture>> data;
 
         internal Texture Get(long ticks, string name)
         {
-            if (_data == null)
+            if (data == null)
                 throw new NullReferenceException("Animation frames never loaded!");
 
-            _stepSize = _frameTimer(_nextFrame) * (Stopwatch.Frequency / 1000);
+            stepSize = frameTimer(nextFrame) * (Stopwatch.Frequency / 1000);
 
-            if (_nextFrame == _data[name].Count)
+            if (nextFrame == data[name].Count)
             {
-                _nextFrame = 0;
+                nextFrame = 0;
             }
-            if (ticks >= _lastFrame + _stepSize)
+            if (ticks >= lastFrame + stepSize)
             {
-                _lastFrame = ticks;
-                return _data[name][_nextFrame++];
+                lastFrame = ticks;
+                return data[name][nextFrame++];
             }
             else
             {
-                return _data[name][_nextFrame];
+                return data[name][nextFrame];
             }
 
         }
 
         internal void InsertFrames(string name, Texture[] image, FrameTimer frameTimer)
         {
-            _frameTimer = frameTimer;
-            _stepSize = _frameTimer(_nextFrame) * (Stopwatch.Frequency / 1000);
+            this.frameTimer = frameTimer;
+            stepSize = this.frameTimer(nextFrame) * (Stopwatch.Frequency / 1000);
 
-            if (_data == null)
-                _data = new Dictionary<string, List<Texture>>();
+            if (data == null)
+                data = new Dictionary<string, List<Texture>>();
 
-            if (!_data.ContainsKey(name))
-                _data.Add(name, new List<Texture>(image));
+            if (!data.ContainsKey(name))
+                data.Add(name, new List<Texture>(image));
 
 
         }
