@@ -20,7 +20,12 @@ namespace CMDR
                 throw new System.Exception(error);
             }
 
-            Window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
+            Glfw.WindowHint(Hint.Doublebuffer, 1);
+
+            Window = Glfw.CreateWindow(width, height, title, Glfw.GetPrimaryMonitor(), null);
+
+            if(Window == null)
+                throw new Exception("Window returned Null")
 
             Glfw.MakeContextCurrent(Window);
 
