@@ -89,6 +89,8 @@ namespace CMDR.Systems
 
         internal static Thread thread;
 
+        public static long GameTime => Time.ElapsedTicks;
+
         internal static void Start()
         {
 
@@ -101,10 +103,10 @@ namespace CMDR.Systems
                     CreateUpdater(100L, Physics.Update);
                     CreateUpdater(100L, Input.Update);
 
-                    while (Glfw.WindowShouldClose(Display.Window))
+                    while (!Glfw.WindowShouldClose(Display.Window))
                     {
                         foreach (Updater updater in Updaters)
-                            updater.Update(Time.ElapsedTicks);
+                            updater.Update(GameTime);
 
                         Glfw.PollEvents();
                     }
@@ -112,6 +114,7 @@ namespace CMDR.Systems
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
+
         }
         public static void CreateUpdater(long persecond, UpdateHandler update)
         {

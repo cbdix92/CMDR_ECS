@@ -27,6 +27,9 @@ namespace CMDR.Systems
         internal static void ScreenBuffer(long ticks)
         {
 
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+
             Debugger.Draw(ticks);
 
             Transform[] transforms = Scene.Components.Get<Transform>();
@@ -40,7 +43,7 @@ namespace CMDR.Systems
 			GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             
 			
-			//GL.BindVertexArray(VAO);
+			GL.BindVertexArray(VAO);
 
             foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
             {
