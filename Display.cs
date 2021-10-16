@@ -20,7 +20,10 @@ namespace CMDR
                 throw new System.Exception(error);
             }
 
+			Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
+			Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
             Glfw.WindowHint(Hint.Doublebuffer, 1);
+			
 
             Window = Glfw.CreateWindow(width, height, title, Glfw.GetPrimaryMonitor(), null);
 
