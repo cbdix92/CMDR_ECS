@@ -40,3 +40,7 @@ C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\CMDR_ECS.dll.config
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.pdb
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\CMDR_ECS.dll.config
+C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.xml

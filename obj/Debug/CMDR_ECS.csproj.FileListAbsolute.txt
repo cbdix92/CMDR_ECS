@@ -33,3 +33,9 @@ C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.dll.config
 C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\ICSharpCode.SharpZipLib.pdb
 C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\Coleton\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.GLFW.Strings.resources
+C:\Users\Coleton\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csproj.GenerateResource.cache
+C:\Users\Coleton\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.dll.config
+C:\Users\Coleton\Desktop\CMDR_ECS\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Coleton\Desktop\CMDR_ECS\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\Users\Coleton\Desktop\CMDR_ECS\bin\Debug\ICSharpCode.SharpZipLib.xml
