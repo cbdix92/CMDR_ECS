@@ -30,7 +30,7 @@ namespace CMDR
             Window = Glfw.CreateWindow(width, height, title, Glfw.Monitors[0], Window.None);
 
             if (Window == null)
-                throw new GLFW.Exception("Window returned Null");
+                throw new NullReferenceException("Window returned Null");
 
             Glfw.MakeContextCurrent(Window);
 
