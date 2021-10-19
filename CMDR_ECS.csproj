@@ -123,6 +123,7 @@
     <Compile Include="ImageDecoder\Exceptions.cs" />
     <Compile Include="ImageDecoder\Load.cs" />
     <Compile Include="ImageDecoder\Util.cs" />
+    <Compile Include="OpenGL.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Systems\BitCollider.cs" />
     <Compile Include="DataSys\ComponentCollection.cs" />

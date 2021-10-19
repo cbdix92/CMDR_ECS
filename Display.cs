@@ -20,8 +20,8 @@ namespace CMDR
                 throw new System.Exception(error);
             }
 
-			Glfw.WindowHint(Hint.ContextVersionMajor, 3);
-			Glfw.WindowHint(Hint.ContextVersionMinor, 2);
+			Glfw.WindowHint(Hint.ContextVersionMajor, 4);
+			Glfw.WindowHint(Hint.ContextVersionMinor, 1);
 			Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
 			Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
             Glfw.WindowHint(Hint.Doublebuffer, 1);
@@ -38,7 +38,7 @@ namespace CMDR
 
         public void Start()
         {
-            GL.Init();
+            //GL.Init();
             GL.ClearColor(Color4.Black);
 
             GameLoop.Start();
