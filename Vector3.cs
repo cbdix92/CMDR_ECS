@@ -19,6 +19,29 @@ namespace CMDR
         {
             (X, Y, Z) = (x, y, z);
         }
+        public float this[int index]
+        {
+            get
+            {
+                if (index == 0)
+                    return X;
+                else if (index == 1)
+                    return Y;
+                else if (index == 2)
+                    return Z;
+                throw new IndexOutOfRangeException($"index of {index} is out of range of Vector4!");
+            }
+            set
+            {
+                if (index == 0)
+                    X = value;
+                else if (index == 1)
+                    Y = value;
+                else if (index == 2)
+                    Z = value;
+                throw new IndexOutOfRangeException($"index of {index} is out of range of Vector4!");
+            }
+        }
 
         public float Magnitude()
         {

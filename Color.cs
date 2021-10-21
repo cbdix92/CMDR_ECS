@@ -13,7 +13,7 @@ namespace CMDR
 
         #region CONSTANTS
 
-        public static readonly Color BLACK = new Color(255F);
+        public static readonly Color Black = new Color(255.0f);
 
         #endregion
 

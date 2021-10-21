@@ -1,7 +1,6 @@
 ﻿using System;
 using GLFW;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+using OpenGL;
 using System.Collections.Generic;
 
 using CMDR.Components;
@@ -14,12 +13,12 @@ namespace CMDR.Systems
 
         public static byte ZDepth;
 
-        public static Matrix4 ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 3, Camera.Width / Camera.Height, 0.1f, 2000);
+        public static Matrix4 ProjectionMatrix = Matrix4.CreatePerspectiveFOV((float)Math.PI / 3, Camera.Width / Camera.Height, 0.1f, 2000);
         public static Matrix4 CameraMatrix = Matrix4.CreateTranslation(Camera.X, Camera.Y, Camera.Z);
 
 
-        internal static int VAO;
-        internal static int VBO;
+        internal static uint VAO;
+        internal static uint VBO;
         internal static void ClearScreen()
         {
             //Buffer.Graphics.Clear(Color.Black);
@@ -27,7 +26,7 @@ namespace CMDR.Systems
         internal static void ScreenBuffer(long ticks)
         {
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(GL.BUFFER_MASK.COLOR_BUFFER_BIT | GL.BUFFER_MASK.DEPTH_BUFFER_BIT);
 
 
             Debugger.Draw(ticks);
@@ -40,7 +39,7 @@ namespace CMDR.Systems
 
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
-			GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
+			GL.BindBuffer(GL.BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
             
 			
 			GL.BindVertexArray(VAO);

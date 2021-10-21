@@ -1,8 +1,7 @@
 ﻿using System;
 using CMDR.Systems;
 using GLFW;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
+using OpenGL;
 
 namespace CMDR
 {
@@ -39,7 +38,7 @@ namespace CMDR
         public void Start()
         {
             //GL.Init();
-            GL.ClearColor(Color4.Black);
+            GL.ClearColor(Color.Black);
 
             GameLoop.Start();
         }
