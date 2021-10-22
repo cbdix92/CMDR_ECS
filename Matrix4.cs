@@ -134,6 +134,16 @@ namespace CMDR
 
         #endregion
 
+        public float Determinant()
+        {
+            return    ( M00 * M11 * M22 * M33 ) - ( M00 * M11 * M23 * M32 ) + ( M00 * M12 * M23 * M31 ) - ( M00 * M12 * M21 * M33 )
+                    + ( M00 * M13 * M21 * M32 ) - ( M00 * M13 * M22 * M31 ) - ( M01 * M12 * M23 * M30 ) + ( M01 * M12 * M20 * M33 )
+                    - ( M01 * M13 * M20 * M32 ) + ( M01 * M13 * M22 * M30 ) - ( M01 * M10 * M22 * M33 ) + ( M01 * M10 * M23 * M32 )
+                    + ( M02 * M13 * M20 * M31 ) - ( M02 * M13 * M21 * M30 ) + ( M02 * M10 * M21 * M33 ) - ( M02 * M10 * M23 * M31 )
+                    + ( M02 * M11 * M23 * M30 ) - ( M02 * M11 * M20 * M33 ) - ( M03 * M10 * M21 * M32 ) + ( M03 * M10 * M22 * M31 )
+                    - ( M03 * M11 * M22 * M30 ) + ( M03 * M11 * M20 * M32 ) - ( M03 * M12 * M20 * M31 ) + ( M03 * M12 * M21 * M30 );
+        }
+
         public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
         {
             throw new NotImplementedException("CreatePerspectiveFOV");
