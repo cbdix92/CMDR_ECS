@@ -12,6 +12,11 @@ namespace CMDR
         public Vector4 Row1;
         public Vector4 Row2;
         public Vector4 Row3;
+		
+		public static readonly Matrix4 Identity = new Matrix4( 1f, 0, 0, 0,
+															   0, 1f, 0, 0,
+															   0, 0, 1f, 0,
+															   0, 0, 0, 1f );
 
         #region MATRIX_INDEXERS
         public float M00{ get => Row0.X; set { Row0.X = value; } }
@@ -62,6 +67,11 @@ namespace CMDR
         #endregion
 
         #region CONTRUCTORS
+		public Matrix4(Matrix4 matrix)
+		{
+			this = matrix;
+		}
+		
         public Matrix4(Vector4 row0, Vector4 row1, Vector4 row2, Vector4 row3)
         {
             Row0 = row0;
@@ -156,10 +166,35 @@ namespace CMDR
         {
             return CreateTranslation(vec.X, vec.Y, vec.Z);
         }
+		
         public static Matrix4 CreateTranslation(float x, float y, float z)
         {
-            throw new NotImplementedException("CreatTranslation");
+			Matrix4 result = new Matrix4(Identity);
+			result.Row0.W = x;
+			result.Row1.W = y;
+			result.Row2.W = z;
+			return result;
         }
+		
+		public static Matrix4 CreateRotation(Vector3 vec)
+		{
+			return CreateRotation(vec.X, vec.Y, vex.Z);
+		}
+		
+		public static Matrix4 CreateRotation(float x, float y, float z)
+		{
+			throw new NotImplementedException("CreateRotation");
+		}
+		
+		public static Matrix4 CreateScale(Vector3 vec)
+		{
+			return CreateScale(vec.X, vec.Y, vec.Z);
+		}
+		
+		public static Matrix4 CreateScale(float x, float y, float z)
+		{
+			throw new NotImplementedException("CreateRotation");
+		}
 		
 		public bool Equals(Matrix4 other)
 		{
