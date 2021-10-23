@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CMDR
 {
-    public struct Matrix4
+    public struct Matrix4 : IEquatable<Matrix4>
     {
         public Vector4 Row0;
         public Vector4 Row1;
@@ -160,7 +160,11 @@ namespace CMDR
         {
             throw new NotImplementedException("CreatTranslation");
         }
-
+		
+		public bool Equals(Matrix4 other)
+		{
+			return Row0 == other.Row0 && Row1 == other.Row1 && Row2 == other.Row2 && Row3 == other.Row3;
+		}
 
 
     }
