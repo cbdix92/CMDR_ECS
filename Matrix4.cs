@@ -193,7 +193,11 @@ namespace CMDR
 		
 		public static Matrix4 CreateScale(float x, float y, float z)
 		{
-			throw new NotImplementedException("CreateRotation");
+			Matrix4 result = new Matrix4(Identity);
+			result.Row0.X = x;
+			result.Row1.Y = y;
+			result.Row2.Z = z;
+			return result;
 		}
 		
 		public bool Equals(Matrix4 other)
