@@ -27,10 +27,7 @@ C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\Test.exe.config
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\Test.exe
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\Test.pdb
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\CMDR_ECS.dll
-C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\OpenTK.dll
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\CMDR_ECS.pdb
-C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\OpenTK.pdb
-C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\OpenTK.xml
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.csprojAssemblyReference.cache
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.csproj.CoreCompileInputs.cache
 C:\Users\cbdix\Desktop\CMDR_ECS\Test\obj\Debug\Test.csproj.CopyComplete

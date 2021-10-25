@@ -19,8 +19,8 @@ namespace OpenGL
             return GetProcAddress(_lib, name);
         }
 
-        [DllImport(Kernel32, SetLastError = true)]
-        internal extern static IntPtr GetProcAddress(IntPtr lib, string funcName);
+        [DllImport(Kernel32, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
+        internal static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
 
         [DllImport(Kernel32, SetLastError = true)]
         internal static extern IntPtr LoadLibrary(string lpFileName);
