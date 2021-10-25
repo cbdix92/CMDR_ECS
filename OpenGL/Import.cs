@@ -12,12 +12,14 @@ namespace OpenGL
 
 
         private static IntPtr _lib = LoadLibrary(Opengl32);
-        
-        
+
         internal static IntPtr GetProcAddress(string name)
         {
             return GetProcAddress(_lib, name);
         }
+
+        [DllImport(Opengl32, SetLastError = true)]
+        internal static extern IntPtr wglGetProcAddress(string name);
 
         [DllImport(Kernel32, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         internal static extern IntPtr GetProcAddress(IntPtr hModule, string procName);

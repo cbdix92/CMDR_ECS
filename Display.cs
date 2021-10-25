@@ -25,7 +25,7 @@ namespace CMDR
             Glfw.WindowHint(Hint.Doublebuffer, 1);
             Glfw.WindowHint(Hint.ScaleToMonitor, 0);
 
-            Window = Glfw.CreateWindow(width, height, title, Glfw.Monitors[0], Window.None);
+            Window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
 
             if (Window == null)
                 throw new NullReferenceException("Window returned Null");
@@ -37,7 +37,7 @@ namespace CMDR
         public void Start()
         {
             //GL.Init();
-            GL.ClearColor(Color.Black);
+            GL.ClearColor(Color.Red);
 
             GameLoop.Start();
         }
