@@ -18,15 +18,14 @@ namespace CMDR
                 GLFW.Exception.GetErrorMessage(Glfw.GetError(out string error));
                 throw new System.Exception(error);
             }
-
 			Glfw.WindowHint(Hint.ContextVersionMajor, 4);
-			Glfw.WindowHint(Hint.ContextVersionMinor, 1);
+			Glfw.WindowHint(Hint.ContextVersionMinor, 5);
 			Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
 			Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
             Glfw.WindowHint(Hint.Doublebuffer, 1);
-			
+            Glfw.WindowHint(Hint.ScaleToMonitor, 0);
 
-            Window = Glfw.CreateWindow(width, height, title, Glfw.Monitors[0], Window.None);
+            Window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
 
             if (Window == null)
                 throw new NullReferenceException("Window returned Null");
@@ -38,7 +37,7 @@ namespace CMDR
         public void Start()
         {
             //GL.Init();
-            GL.ClearColor(Color.Black);
+            GL.ClearColor(Color.Red);
 
             GameLoop.Start();
         }

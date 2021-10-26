@@ -21,12 +21,12 @@ namespace CMDR.Systems
         internal static uint VBO;
         internal static void ClearScreen()
         {
-            //Buffer.Graphics.Clear(Color.Black);
+            GL.Clear(GL.BUFFER_MASK.COLOR_BUFFER_BIT | GL.BUFFER_MASK.DEPTH_BUFFER_BIT);
         }
         internal static void ScreenBuffer(long ticks)
         {
 
-            GL.Clear(GL.BUFFER_MASK.COLOR_BUFFER_BIT | GL.BUFFER_MASK.DEPTH_BUFFER_BIT);
+            
 
 
             Debugger.Draw(ticks);
@@ -37,12 +37,12 @@ namespace CMDR.Systems
 
             (float camX,float camY) = (Camera.X, Camera.Y);
 
-            VAO = GL.GenVertexArray();
-            VBO = GL.GenBuffer();
-			GL.BindBuffer(GL.BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
+            //VAO = GL.GenVertexArray();
+            //VBO = GL.GenBuffer();
+			//GL.BindBuffer(GL.BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
             
 			
-			GL.BindVertexArray(VAO);
+			//GL.BindVertexArray(VAO);
 
             foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
             {

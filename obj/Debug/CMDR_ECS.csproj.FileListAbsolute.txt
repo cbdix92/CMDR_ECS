@@ -19,9 +19,6 @@ C:\Users\Coleton\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.dll
 C:\Users\Coleton\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.pdb
 C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.dll
 C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\CMDR_ECS.pdb
-C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\OpenTK.dll
-C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\OpenTK.pdb
-C:\Users\cbdix\Desktop\CMDR_ECS\bin\Debug\OpenTK.xml
 C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csprojAssemblyReference.cache
 C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csproj.CoreCompileInputs.cache
 C:\Users\cbdix\Desktop\CMDR_ECS\obj\Debug\CMDR_ECS.csproj.CopyComplete

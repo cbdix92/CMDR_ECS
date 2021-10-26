@@ -159,6 +159,7 @@ namespace CMDR
 
         public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
         {
+            return new Matrix4();
             throw new NotImplementedException("CreatePerspectiveFOV");
         }
 
@@ -178,7 +179,7 @@ namespace CMDR
 		
 		public static Matrix4 CreateRotation(Vector3 vec)
 		{
-			return CreateRotation(vec.X, vec.Y, vex.Z);
+			return CreateRotation(vec.X, vec.Y, vec.Z);
 		}
 		
 		public static Matrix4 CreateRotation(float x, float y, float z)
@@ -202,7 +203,7 @@ namespace CMDR
 		
 		public bool Equals(Matrix4 other)
 		{
-			return Row0 == other.Row0 && Row1 == other.Row1 && Row2 == other.Row2 && Row3 == other.Row3;
+			return Row0.Equals(other.Row0) && Row1.Equals(other.Row1) && Row2.Equals(other.Row2) && Row3.Equals(other.Row3);
 		}
 
 
