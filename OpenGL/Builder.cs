@@ -1,20 +1,33 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace OpenGL
 {
-	private class Builder
+	internal class Builder
 	{
 		private static Builder instance = new Builder();
+
+		public AppDomain domain = Thread.GetDomain();
+		AppDomain.CurrentDomain.
+
+		AssemblyBuilder assemblyBuilder = Thread.GetDomain()
 		
-		private Builder()
+		private unsafe Builder()
 		{
-			MethodInfo[] methods = Assembly.GetTypes().SelectMany(x => x.GetMethods()).Where(y => y.GetCustomAttributes(typeof(BuildInfo), false).length > 0).ToArray();
+			Assembly assembly = Assembly.GetExecutingAssembly();
+			MethodInfo[] methods = assembly.GetTypes().SelectMany(x => x.GetMethods()).Where(y => y.GetCustomAttributes(typeof(BuildInfo), false).Length > 0).ToArray();
 			
 			foreach(MethodInfo method in methods)
 			{
-				Delegate delegate = method.CreatDelegate(method.GetType());
+				BuildInfo buildInfo = method.GetCustomAttribute<BuildInfo>();
+				string name = buildInfo.Name;
+				IntPtr ptr = GetProc(name);
+				IntPtr outout = method.MethodHandle.GetFunctionPointer();
+				Marshal.GetDelegateForFunctionPointer(GetProc(name), method.GetType());
 			}
 			
 		}
@@ -27,8 +40,8 @@ namespace OpenGL
 	
 	public class BuildInfo : Attribute
 	{
-		string Name;
-		string Lib;
+		public string Name;
+		public string Lib;
 	}
 	
 	

@@ -26,9 +26,6 @@ namespace OpenGL
 
         [DllImport(Kernel32, SetLastError = true)]
         internal static extern IntPtr LoadLibrary(string lpFileName);
-		
-		[DLLImport(Opengl32, SetLastError = true;)]
-		internal static extern IntPtr wglGetProcAddress(string name);
 
     }
 }

@@ -122,6 +122,7 @@
     <Compile Include="ImageDecoder\Load.cs" />
     <Compile Include="ImageDecoder\Util.cs" />
     <Compile Include="Matrix4.cs" />
+    <Compile Include="OpenGL\Builder.cs" />
     <Compile Include="OpenGL\Enums.cs" />
     <Compile Include="OpenGL\Import.cs" />
     <Compile Include="OpenGL\DLLImports.cs" />
