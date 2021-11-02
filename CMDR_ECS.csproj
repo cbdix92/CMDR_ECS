@@ -60,6 +60,12 @@
     <Compile Include="Display.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GLBuilder\Api.cs" />
+    <Compile Include="GLBuilder\Builder.cs" />
+    <Compile Include="GLBuilder\BuildInfo.cs" />
+    <Compile Include="GLBuilder\BuildLog.cs" />
+    <Compile Include="GLBuilder\Enums.cs" />
+    <Compile Include="GLBuilder\OpenGL.cs" />
     <Compile Include="GLFW\CharEventArgs.cs" />
     <Compile Include="GLFW\ContentScaleEventArgs.cs" />
     <Compile Include="GLFW\Delegates.cs" />
@@ -122,11 +128,8 @@
     <Compile Include="ImageDecoder\Load.cs" />
     <Compile Include="ImageDecoder\Util.cs" />
     <Compile Include="Matrix4.cs" />
-    <Compile Include="OpenGL\Builder.cs" />
-    <Compile Include="OpenGL\Enums.cs" />
-    <Compile Include="OpenGL\Import.cs" />
-    <Compile Include="OpenGL\DLLImports.cs" />
-    <Compile Include="OpenGL\OpenGL.cs" />
+    <Compile Include="OpenGLAbstractions\ShaderProgram.cs" />
+    <Compile Include="OpenGLAbstractions\VAO.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Systems\BitCollider.cs" />
     <Compile Include="DataSys\ComponentCollection.cs" />

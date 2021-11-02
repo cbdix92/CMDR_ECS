@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using OpenTK.Graphics.OpenGL4;
+using OpenGL;
 
 public struct ShaderProgram
 {
@@ -13,7 +13,7 @@ public struct ShaderProgram
 
         // Shader IDs
         VertID = GL.CreateShader(ShaderType.VertexShader);
-        FragID = Gl.CreateShader(ShaderType.FragmentShader);
+        FragID = GL.CreateShader(ShaderType.FragmentShader);
 
         // Read shader source code
         var vertRead = File.ReadAllText(pathVert);

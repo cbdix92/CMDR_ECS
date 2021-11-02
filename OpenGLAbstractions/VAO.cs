@@ -1,9 +1,8 @@
 using System;
-using OpenTK.Graphics.OpenGL4;
-
+using OpenGL;
 public struct VAO
 {
-    int ID;
+    uint ID;
 
     public VAO(float[] data, int VBO)
     {

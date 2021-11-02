@@ -5,6 +5,11 @@ namespace OpenGL
 {
     public static unsafe partial class GL
     {
+        public static bool Init()
+        {
+            Log.Init();
+            return Builder.Start();
+        }
 
         #region B
         public static void BindBuffer(BUFFER_BINDING_TARGET target, uint buffer) { _bindBuffer(target, buffer); }
