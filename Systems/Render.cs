@@ -21,7 +21,7 @@ namespace CMDR.Systems
         internal static uint VBO;
         internal static void ClearScreen()
         {
-            GL.Clear(GL.BUFFER_MASK.COLOR_BUFFER_BIT | GL.BUFFER_MASK.DEPTH_BUFFER_BIT);
+            GL.Clear(BUFFER_MASK.COLOR_BUFFER_BIT | BUFFER_MASK.DEPTH_BUFFER_BIT);
         }
         internal static void ScreenBuffer(long ticks)
         {

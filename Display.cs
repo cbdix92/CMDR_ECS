@@ -36,7 +36,7 @@ namespace CMDR
 
         public void Start()
         {
-            //GL.Init();
+            GL.Init();
             GL.ClearColor(Color.Red);
 
             GameLoop.Start();

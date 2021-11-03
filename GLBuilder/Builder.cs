@@ -102,7 +102,7 @@ namespace OpenGL
 				error = Marshal.GetLastWin32Error();
 				if (error == 0)
                 {
-					var pointer = (int)result;
+					var pointer = (Int64)result;
 					if(pointer != 0 || pointer != 1 || pointer != 2 || pointer != 3 || pointer != -1)
 						return result;
 

@@ -12,23 +12,28 @@ public struct ShaderProgram
     {
 
         // Shader IDs
-        VertID = GL.CreateShader(ShaderType.VertexShader);
-        FragID = GL.CreateShader(ShaderType.FragmentShader);
+        //VertID = GL.CreateShader(ShaderType.VertexShader);
+        //FragID = GL.CreateShader(ShaderType.FragmentShader);
 
         // Read shader source code
         var vertRead = File.ReadAllText(pathVert);
         var fragRead = File.ReadAllText(pathFrag);
 
-        GL.ShaderSource(VertID, vertRead);
-        GL.CompileShader(VertID);
+        //temp debug
+        ID = 0;
+        VertID = 0;
+        FragID = 0;
 
-        GL.ShaderSource(FragID, fragRead);
-        GL.CompileShader(FragID);
+        //GL.ShaderSource(VertID, vertRead);
+        //GL.CompileShader(VertID);
 
-        ID = GL.CreateProgram();
-        GL.AttachShader(ID, VertID);
-        GL.AttachShader(ID, FragID);
-        GL.LinkProgram(ID);
+        //GL.ShaderSource(FragID, fragRead);
+        //GL.CompileShader(FragID);
+
+        //ID = GL.CreateProgram();
+        //GL.AttachShader(ID, VertID);
+        //GL.AttachShader(ID, FragID);
+        //GL.LinkProgram(ID);
 
         //TODO Check for GLSL compile errors here
         // ...

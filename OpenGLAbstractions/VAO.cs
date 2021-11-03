@@ -4,10 +4,10 @@ public struct VAO
 {
     uint ID;
 
-    public VAO(float[] data, int VBO)
+    public VAO(float[] data, uint VBO)
     {
         ID = GL.GenVertexArray();
-        GL.BindArray(BufferTarget.ArrayBuffer, VBO);
+        GL.BindBuffer(BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
 
         GL.BindVertexArray(ID);
     }
