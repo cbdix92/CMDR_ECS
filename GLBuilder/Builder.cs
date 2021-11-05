@@ -44,18 +44,18 @@ namespace OpenGL
 
 				BuildInfo buildInfo = method.GetCustomAttribute<BuildInfo>();
 				
-				// 32bit process
-				if(IntPtr.Size == 4)
+				// 64 bit process
+				if(IntPtr.Size == 8)
+				{
+					ulong* source = (ulong*)GetProcFromBuildInfo(buildInfo) + 1;
+					ulong* target = (ulong*)method.MethodHandle.GetFunctionPointer() + 1;
+					*target = *source;
+				}
+				// 32 bit process
+				else
 				{
 					int* ptr = (int*)GetProcFromBuildInfo(buildInfo) + 2;
 					int* target = (int*)method.MethodHandle.GetFunctionPointer() + 2;
-					*target = *ptr;
-				}
-				// 64bit process
-				else
-				{
-					ulong* ptr = (ulong*)GetProcFromBuildInfo(buildInfo) + 1;
-					ulong* target = (ulong*)method.MethodHandle.GetFunctionPointer() + 1;
 					*target = *ptr;
 				}
 				
