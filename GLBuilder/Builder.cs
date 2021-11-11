@@ -43,20 +43,28 @@ namespace OpenGL
 				RuntimeHelpers.PrepareMethod(method.MethodHandle);
 
 				BuildInfo buildInfo = method.GetCustomAttribute<BuildInfo>();
+
+				UInt64* location = (UInt64*)(method.MethodHandle.Value.ToPointer());
+				int index = (int)(((*location) >> 32) & 0xff);
 				
 				// 64 bit process
 				if(IntPtr.Size == 8)
 				{
 					ulong* source = (ulong*)GetProcFromBuildInfo(buildInfo) + 1;
-					ulong* target = (ulong*)method.MethodHandle.GetFunctionPointer() + 1;
+
+					ulong* classstart = (ulong*)method.DeclaringType.TypeHandle.Value.ToPointer();
+					ulong* target = (ulong*)classstart + index + 10;
+					//ulong* target = (ulong*)method.MethodHandle.GetFunctionPointer() + 1;
 					*target = *source;
 				}
 				// 32 bit process
 				else
 				{
-					int* ptr = (int*)GetProcFromBuildInfo(buildInfo) + 2;
-					int* target = (int*)method.MethodHandle.GetFunctionPointer() + 2;
-					*target = *ptr;
+					uint* source = (uint*)GetProcFromBuildInfo(buildInfo) + 2;
+					uint* classstart = (uint*)method.DeclaringType.TypeHandle.Value.ToPointer();
+					uint* target = (uint*)classstart + index + 10;
+					//int* target = (int*)method.MethodHandle.GetFunctionPointer() + 2;
+					*target = *source;
 				}
 				
 			}

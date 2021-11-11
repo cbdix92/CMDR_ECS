@@ -11,6 +11,12 @@ namespace OpenGL
             return Builder.Start();
         }
 
+        #region A
+
+        public static void AttachShader(uint program, uint shader) { _attachShader(program, shader); }
+
+        #endregion
+
         #region B
         public static void BindBuffer(BUFFER_BINDING_TARGET target, uint buffer) { _bindBuffer(target, buffer); }
 
@@ -23,6 +29,12 @@ namespace OpenGL
         public static void Clear(BUFFER_MASK mask) { _clear(mask); }
 
         public static void ClearColor(Color color) { _clearColor(color.R, color.G, color.B, color.A); }
+
+        public static void CompileShader(uint shader) { _compileShader(shader); }
+
+        public static uint CreateProgram() { return _createProgram(); }
+
+        public static uint CreateShader(SHADER_TYPE shaderType) { return _createShader(shaderType); }
 
         #endregion
 
@@ -61,6 +73,19 @@ namespace OpenGL
         }
         #endregion
 
+        #region L
 
+        public static void LinkProgram(uint program) { _linkProgram(program); }
+
+        #endregion
+
+        #region S
+
+        public static void ShaderSource(uint shader, string source)
+        {
+            _shaderSource(shader, source.Length, source, 0);
+        }
+
+        #endregion
     }
 }

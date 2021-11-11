@@ -9,6 +9,14 @@ namespace OpenGL
 		private const string User32 = "user32.dll";
         private const string Kernel32 = "kernel32.dll";
         private const string Opengl32 = "opengl32.dll";
+
+        #region A
+
+        [DllImport(Opengl32, EntryPoint = "glAttachShader", SetLastError = true)]
+        private static extern void _attachShader(uint program, uint shader);
+
+        #endregion
+
         #region B
         [DllImport(Opengl32, EntryPoint = "glBindBuffer", SetLastError = true)]
         private static extern void _bindBuffer(BUFFER_BINDING_TARGET target, uint buffer);
@@ -27,6 +35,18 @@ namespace OpenGL
 
         [DllImport(Opengl32, EntryPoint = "glClearColor", SetLastError = true)]
         private static extern void _clearColor(float red, float green, float blue, float alpha);
+
+        [DllImport(Opengl32, EntryPoint = "glCompileShader", SetLastError = true)]
+        private static extern void _compileShader(uint shader);
+
+        [DllImport(Opengl32, EntryPoint = "glCreateProgram", SetLastError = true)]
+        private static extern uint _createProgram();
+
+        [DllImport(Opengl32, EntryPoint = "glCreateShader", SetLastError = true)]
+        private static extern uint _createShader(SHADER_TYPE shaderType);
+
+
+
         #endregion
 
         #region G
@@ -40,5 +60,17 @@ namespace OpenGL
         internal static void _genVertexArrays(uint n, uint* arrays) { }
         #endregion
 
+        #region L
+        [DllImport(Opengl32, EntryPoint = "glLinkProgram", SetLastError = true)]
+        private static extern void _linkProgram(uint program);
+
+        #endregion
+
+        #region S
+
+        [DllImport(Opengl32, EntryPoint ="glShaderSource", SetLastError = true)]
+        private static extern void _shaderSource(uint shader, int count, string source, int length);
+
+        #endregion
     }
 }
