@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using CMDR;
 
 namespace OpenGL
@@ -83,7 +84,16 @@ namespace OpenGL
 
         public static void ShaderSource(uint shader, string source)
         {
-            _shaderSource(shader, source.Length, source, 0);
+            byte[] buffer = Encoding.UTF8.GetBytes(source);
+            fixed (byte* p = &buffer[0])
+            {
+                byte*[] sources = new byte*[] { p };
+                fixed (byte** s = &sources[0])
+                {
+                    int length = buffer.Length;
+                    _shaderSource(shader, 1, s, &length);
+                }
+            }
         }
 
         #endregion

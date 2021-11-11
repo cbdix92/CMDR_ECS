@@ -69,7 +69,7 @@ namespace OpenGL
         #region S
 
         [DllImport(Opengl32, EntryPoint ="glShaderSource", SetLastError = true)]
-        private static extern void _shaderSource(uint shader, int count, string source, int length);
+        private static extern void _shaderSource(uint shader, int count, byte** source, int* length);
 
         #endregion
     }
