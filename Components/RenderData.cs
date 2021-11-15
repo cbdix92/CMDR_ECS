@@ -5,8 +5,6 @@ using System.Diagnostics;
 
 namespace CMDR.Components
 {
-
-    //TODO rename this to Material
     public struct RenderData : IComponent<RenderData>
     {
         #region IComponent
@@ -20,7 +18,7 @@ namespace CMDR.Components
 
         public Texture ImgData { get; internal set; }
 
-        internal Animation AnimationData;
+        internal Animator2D AnimationData;
 
         public string currentState;
 
@@ -31,11 +29,11 @@ namespace CMDR.Components
             Send();
         }
 
-        public void CreateAnimation(string name, string[] paths, float stepSize)
+        public unsafe void CreateAnimation2D(string name, string[] paths, float stepSize)
         {
             Receive();
-            if (AnimationData == null)
-                AnimationData = new Animation();
+            if (AnimationData.Equals(default(Animator2D)))
+                AnimationData = new Animator2D();
             // temp debug
             currentState = name;
 

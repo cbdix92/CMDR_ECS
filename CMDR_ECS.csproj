@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="Components\Animator2D.cs" />
     <Compile Include="Components\Common\Handlers.cs" />
     <Compile Include="Components\RenderData.cs" />
     <Compile Include="DataSys\ComponentTable.cs" />
