@@ -51,11 +51,9 @@ namespace OpenGL
 
         #region G
 
-        //[DllImport(Opengl32, EntryPoint = "glGenBuffers", SetLastError = true)]
         [BuildInfo(Opengl32, "glGenBuffers")]
         internal static void _genBuffers(int n, uint* buffers) { }
 
-        //[DllImport(Opengl32, EntryPoint = "glGenVertexArrays", SetLastError = true)]
         [BuildInfo(Opengl32, "glGenVertexArrays")]
         internal static void _genVertexArrays(uint n, uint* arrays) { }
         #endregion

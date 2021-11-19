@@ -159,8 +159,16 @@ namespace CMDR
 
         public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
         {
-            return new Matrix4();
             throw new NotImplementedException("CreatePerspectiveFOV");
+        }
+
+        public static Matrix4 CreateOrthographic()
+        {
+            Matrix4 result = Identity;
+
+
+
+            return result;
         }
 
         public static Matrix4 CreateTranslation(Vector3 vec)

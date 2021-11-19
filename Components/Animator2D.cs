@@ -12,6 +12,10 @@ namespace CMDR.Components
 
         // Backing field is set to the number of ticks to wait between frames. Not Milliseconds!
         private float _stepSize;
+
+        /// <summary>
+        /// Get and set the number of milliseconds to wait between each frame.
+        /// </summary>
         public float StepSize
         {
             get => (Stopwatch.Frequency / 1000) / _stepSize;
