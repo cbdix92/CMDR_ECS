@@ -165,8 +165,8 @@ namespace CMDR
         public static Matrix4 CreateOrthographic()
         {
             Matrix4 result = Identity;
-
-
+			
+			Camera.CreateOrthographic(out result);
 
             return result;
         }
@@ -193,6 +193,36 @@ namespace CMDR
 		public static Matrix4 CreateRotation(float x, float y, float z)
 		{
 			throw new NotImplementedException("CreateRotation");
+		}
+		
+		public static Matrix4 CreateRotationX(float rotation)
+		{
+			Matrix4 result = Identity;
+			result.M11 = MathHelper.Cos(rotation);
+			result.M12 = -MathHelper.Sin(rotation);
+			result.M21 = MathHelper.Sin(rotation);
+			result.M22 = MathHelper.Cos(rotation);
+			return result;
+		}
+		
+		public static Matrix4 CreateRotationY(float rotation)
+		{
+			Matrix4 result = Identity;
+			result.M00 = MathHelper.Cos(rotation);
+			result.M02 = MathHelper.Sin(rotation);
+			result.M20 = -MathHelper.Sin(rotation);
+			result.M22 = MathHelper.Cos(rotation);
+			return result;
+		}
+		
+		public static Matrix4 CreateRotationZ(float rotation)
+		{
+			Matrix4 result = Identity;
+			result.M00 = MathHelper.Cos(rotation);
+			result.M01 = -MathHelper.Sin(rotation);
+			result.M10 = MathHelper.Sin(rotation);
+			result.M11 = MathHelper.Cos(rotation);
+			return result;
 		}
 		
 		public static Matrix4 CreateScale(Vector3 vec)

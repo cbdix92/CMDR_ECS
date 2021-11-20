@@ -31,34 +31,35 @@ namespace CMDR.Components
         }
 
         #region POSITION_PROPERTIES
-        private float _x, _y, _z;
+		public Vector3 Pos;
+		
         public float X
         {
-            get => _x;
+            get => Pos.X;
             internal set
             {
                 Receive();
-                _x = value;
+                Pos.X = value;
                 Send();
             }
         }
         public float Y
         {
-            get => _y;
+            get => Pos.Y;
             internal set
             {
                 Receive();
-                _y = value;
+                Pos.Y = value;
                 Send();
             }
         }
         public float Z
         {
-            get => _z;
+            get => Pos.Z;
             internal set
             {
                 Receive();
-                _z = value;
+                Pos.Z = value;
                 Send();
             }
         }
@@ -108,17 +109,41 @@ namespace CMDR.Components
         #endregion
 
         #region SCALE_PROPERTIES
-        private float _scale;
-        public float Scale
-        {
-            get => _scale+1;
-            set
-            {
-                Receive();
-                _scale = value;
-                Send();
-            }
-        }
+		
+		public Vector3 Scale;
+		
+		public float Xscale
+		{
+			get => Scale.X;
+			set
+			{
+				Receive();
+				Scale.X = value;
+				Send();
+			}
+		}
+		
+		public float Yscale
+		{
+			get => Scale.Y;
+			set
+			{
+				Receive();
+				Scale.Y = value;
+				Send();
+			}
+		}
+		
+		public float Zscale
+		{
+			get => Scale.Z;
+			set
+			{
+				Receive();
+				Scale.Z = value;
+				Send();
+			}
+		}
         #endregion
 
 

@@ -14,10 +14,27 @@ namespace CMDR
         public static float Xvel;
         public static float Yvel;
         public static float Zvel;
-        public static int Width { get; internal set; }
-        public static int Height { get; internal set; }
+        public static float Width { get; internal set; }
+        public static float Height { get; internal set; }
+		
+		public static float left { get => -Width / 2;}
+		public static float Right { get => Width / 2; }
+		public static float Top { get => -Height / 2; }
+		public static float Bottom { get => Height / 2; }
+		public static float Far { get; internal set; }
+		public static float Near { get; internal set; }
 
 
+		internal static void CreateOrthographic(out Matrix4 result)
+		{
+			result.M00 = 2 / (Right - Left);
+			result.M11 = 2 / (Top - Bottom);
+			result.M22 = 2 / (Far - Near);
+			result.M30 = -(Right + Left) / (Right - Left);
+			result.M31 = -(Top + Bottom) / (Top - Bottom);
+			result.M32 = -(Far + Near) / (Far - Near);
+		}
+		
         /// <summary>
         /// Check if a Transform is within view of the camera by performing bounding box collision test.
         /// </summary>
