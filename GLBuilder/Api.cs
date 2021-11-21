@@ -20,6 +20,12 @@ namespace OpenGL
         #region B
         [DllImport(Opengl32, EntryPoint = "glBindBuffer", SetLastError = true)]
         private static extern void _bindBuffer(BUFFER_BINDING_TARGET target, uint buffer);
+		
+		[DllImport(Opengl32, EntryPoint = "glBindTexture", SetLastError = true)]
+		private static extern void _bindTexture(BUFFER_BINDING_TARGET target, uint texture);
+		
+		[DllImport(Opengl32, EntryPoint = "glBindTextures", SetLastError = true)]
+		private static extern void _bindTextures(uint first, uint count, void* textures);
 
         [DllImport(Opengl32, EntryPoint = "glBindBuffer", SetLastError = true)]
         private static extern void _bindVertexArray(uint array);
@@ -48,14 +54,25 @@ namespace OpenGL
 
 
         #endregion
-
+		
+		#region D
+		
+		[DllImport(Opengl32, EntryPoint = "glDrawElements", SetLastError = true)]
+		private static extern void _drawElements(MODE mode, uint count, Type type, void* indices);
+		
+		#endregion
+		
         #region G
 
         [BuildInfo(Opengl32, "glGenBuffers")]
         internal static void _genBuffers(int n, uint* buffers) { }
 
+		[DllImport(Opengl32, EntryPoint = "glGenTextures", SetLastError = true)]
+		private static extern void _genTextures(uint n, uint* textures);
+		
         [BuildInfo(Opengl32, "glGenVertexArrays")]
         internal static void _genVertexArrays(uint n, uint* arrays) { }
+		
         #endregion
 
         #region L
@@ -70,5 +87,12 @@ namespace OpenGL
         private static extern void _shaderSource(uint shader, int count, byte** source, int* length);
 
         #endregion
+		
+		#region T
+		
+		[DllImport(Opengl32, EntryPoint = "geTexImage2D", SetLastError = true)]
+		private static extern void _texImage2D(TEXTURE_TARGET target, uint level, uint internalformat, uint width, uint height, uint border, PIXEL_FORMAT format, Type type, void* data);
+		
+		#endregion
     }
 }

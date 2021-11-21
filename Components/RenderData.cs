@@ -32,6 +32,8 @@ namespace CMDR.Components
         public unsafe void CreateAnimation2D(string name, string[] paths, float stepSize)
         {
             Receive();
+			
+			// Is this needed with a struct?
             if (AnimationData.Equals(default(Animator2D)))
                 AnimationData = new Animator2D();
             // temp debug

@@ -21,7 +21,17 @@ namespace OpenGL
         #region B
         public static void BindBuffer(BUFFER_BINDING_TARGET target, uint buffer) { _bindBuffer(target, buffer); }
 
-        public static void BindVertexArray(uint array) { _bindVertexArray(array); }
+        public static void BindTexture(BUFFER_BINDING_TARGET target, uint texture){ _bindTexture(target, texture); }
+		
+        public static void BindTextures(uint[] textures)
+		{
+			fixed(uint* id = &texture[0])
+			{
+				_bindTextures(0, textures.Length, id);
+			}
+		}
+		
+		public static void BindVertexArray(uint array) { _bindVertexArray(array); }
 
         public static void BufferData(BUFFER_BINDING_TARGET target, int size, void* data, USAGE usage) { _bufferData(target, size, data, usage); }
         #endregion
@@ -38,6 +48,18 @@ namespace OpenGL
         public static uint CreateShader(SHADER_TYPE shaderType) { return _createShader(shaderType); }
 
         #endregion
+		
+		#region D
+		
+		public static void DrawElements(Mode mode, uint count, float[] indices)
+		{
+			fixed(uint* id = &idices[0])
+			{
+				_drawElements(mode, count, typeof(indices), id);
+			}
+		}
+		
+		#endregion
 
         #region G
         public static uint GenBuffer()
@@ -47,7 +69,7 @@ namespace OpenGL
             return id;
         }
 
-        public static uint[] GenBuffers(int n)
+        public static uint[] GenBuffers(uint n)
         {
             uint[] buffers = new uint[n];
             fixed(uint* ids = &buffers[0])
@@ -56,7 +78,23 @@ namespace OpenGL
             }
             return buffers;
         }
+		
+		public static uint GenTexture()
+		{
+			uint id;
+			_genTextures(1, &id);
+			return id;
+		}
 
+		public static uint[] GenTextures(uint n)
+		{
+			uint[] buffers = new uint[n];
+			fixed(uint* ids = &buffers[0])
+			{
+				_genTextures(n, ids);
+			}
+			return buffers;
+		}
         public static uint GenVertexArray()
         {
             uint id;
@@ -97,5 +135,20 @@ namespace OpenGL
         }
 
         #endregion
+		
+		#region T
+		
+		public static void TexImage2D(TEXTURE_TARGET target, uint level, uint internalformat, uint width, uint height, PIXEL_FORMAT format, float[] data)
+		{
+			if (target == TEXTURE_TARGET.GL_TEXTURE_RECTANGLE || target == TEXTURE_TARGET.GL_PROXY_TEXTURE_RECTANGLE)
+				level = 0;
+			
+			fixed(uint* id = &data[0])
+			{
+				_texImage2D(target, level, internalformat, width, height, 0, format, typeof(float), id);
+			}
+		}
+		
+		#endregion
     }
 }

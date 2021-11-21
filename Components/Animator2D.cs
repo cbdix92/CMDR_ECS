@@ -8,7 +8,7 @@ namespace CMDR.Components
     {
         internal long lastFrame;
         internal int nextFrame;
-
+		internal Dictionary<string, List<Texture>> data;
 
         // Backing field is set to the number of ticks to wait between frames. Not Milliseconds!
         private float _stepSize;
@@ -24,8 +24,6 @@ namespace CMDR.Components
                 _stepSize = value * (Stopwatch.Frequency / 1000);
             }
         }
-
-        internal Dictionary<string, List<Texture>> data;
 
         internal Texture Get(long ticks, string name)
         {
