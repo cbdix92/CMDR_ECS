@@ -128,6 +128,7 @@
     <Compile Include="ImageDecoder\Exceptions.cs" />
     <Compile Include="ImageDecoder\Load.cs" />
     <Compile Include="ImageDecoder\Util.cs" />
+    <Compile Include="MathHelper.cs" />
     <Compile Include="Matrix4.cs" />
     <Compile Include="OpenGLAbstractions\ShaderProgram.cs" />
     <Compile Include="OpenGLAbstractions\VAO.cs" />

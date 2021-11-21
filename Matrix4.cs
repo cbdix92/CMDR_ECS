@@ -164,11 +164,7 @@ namespace CMDR
 
         public static Matrix4 CreateOrthographic()
         {
-            Matrix4 result = Identity;
-			
-			Camera.CreateOrthographic(out result);
-
-            return result;
+			return Camera.CreateOrthographic(Identity);
         }
 
         public static Matrix4 CreateTranslation(Vector3 vec)
