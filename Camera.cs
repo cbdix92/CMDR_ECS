@@ -52,14 +52,26 @@ namespace CMDR
         /// </summary>
         /// <param name="transforms"> Array of transforms that are checked.</param>
         /// <returns></returns>
-        internal static IEnumerable<SGameObject> GetRenderable(Transform[] transforms)
+        internal static IEnumerable<SGameObject> GetRenderable(SGameObject[] gameObjects, Transform[] transforms)
         {
             // TODO ... LINQ is very slow. Do something better.
-            IEnumerable<SGameObject> _ = SceneManager.ActiveScene.GameObjects.Get().AsQueryable().Where(gameObject => gameObject.Contains<RenderData>()
-            &&
-            CameraRectCheck(transforms[gameObject.Get<Transform>()]));
+            //IEnumerable<SGameObject> _ = SceneManager.ActiveScene.GameObjects.Get().AsQueryable().Where(gameObject => gameObject.Contains<RenderData>()
+            //&&
+            //CameraRectCheck(transforms[gameObject.Get<Transform>()]));
+			
+			SGameObject[] result = new SGameObjects[gameObjects.Length];
+			int count;
+			for(int i = 0; i < gameObjects.Length; i++)
+			{
+				SGameObject g = gameObjects[i];
+				if(g.Contains<RenderData>() && CameraRectCheck(transforms[g.Get<Transform>()]))
+				{
+					result[count++] = gameObjects[i];
+				}	
+			}
+			Array.Resize<SGameObject>(result, count);
 
-            return _;
+            return result;
 
         }
     }
