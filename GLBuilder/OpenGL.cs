@@ -51,6 +51,8 @@ namespace OpenGL
 		
 		#region D
 		
+		public static void DisableVertexAttribArray(uint index) { _disabelVertexAttribArray(index); }
+		
 		public static void DrawElements(Mode mode, uint count, float[] indices)
 		{
 			fixed(uint* id = &idices[0])
@@ -58,6 +60,12 @@ namespace OpenGL
 				_drawElements(mode, count, typeof(indices), id);
 			}
 		}
+		
+		#endregion
+		
+		#region E
+		
+		public static void EnableVertexAttribArray(uint index) { _enableVertexAttribArray(index); }
 		
 		#endregion
 
@@ -147,6 +155,15 @@ namespace OpenGL
 			{
 				_texImage2D(target, level, internalformat, width, height, 0, format, typeof(float), id);
 			}
+		}
+		
+		#endregion
+		
+		#region V
+		
+		public static void VertexAttribPointer(uint index, int size, Type type, bool normalized, void* pointer) 
+		{
+			_vertexAttribPointer(index, size, type, normalized, size * sizeof(float), pointer);
 		}
 		
 		#endregion

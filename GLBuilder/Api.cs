@@ -57,8 +57,18 @@ namespace OpenGL
 		
 		#region D
 		
+		[DllImport(Opengl32, EntryPoint = "glDisableVertexAttribArray". SetLastError = true)]
+		private static extern void _disableVertexAttribArray(uint index);
+		
 		[DllImport(Opengl32, EntryPoint = "glDrawElements", SetLastError = true)]
 		private static extern void _drawElements(MODE mode, uint count, Type type, void* indices);
+		
+		#endregion
+		
+		#region E
+		
+		[DllImport(Opengl32, EntryPoint = "glEnableVertexAttribArray", SetLastError = true)]
+		private static extern void _enableVertexAttribArray(uint index);
 		
 		#endregion
 		
@@ -90,8 +100,15 @@ namespace OpenGL
 		
 		#region T
 		
-		[DllImport(Opengl32, EntryPoint = "geTexImage2D", SetLastError = true)]
+		[DllImport(Opengl32, EntryPoint = "glTexImage2D", SetLastError = true)]
 		private static extern void _texImage2D(TEXTURE_TARGET target, uint level, uint internalformat, uint width, uint height, uint border, PIXEL_FORMAT format, Type type, void* data);
+		
+		#endregion
+		
+		#region V
+		
+		[DllImport(Opengl32, EntryPoint = "glVertexAttribPointer", SetLastError = true)]
+		private static extern void _vertexAttribPointer(uint index, int size, Type type, bool normalized, int stride, void* pointer);
 		
 		#endregion
     }
