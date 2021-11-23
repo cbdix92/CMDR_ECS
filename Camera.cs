@@ -59,8 +59,8 @@ namespace CMDR
             //&&
             //CameraRectCheck(transforms[gameObject.Get<Transform>()]));
 			
-			SGameObject[] result = new SGameObjects[gameObjects.Length];
-			int count;
+			SGameObject[] result = new SGameObject[gameObjects.Length];
+			int count = 0;
 			for(int i = 0; i < gameObjects.Length; i++)
 			{
 				SGameObject g = gameObjects[i];
@@ -69,7 +69,7 @@ namespace CMDR
 					result[count++] = gameObjects[i];
 				}	
 			}
-			Array.Resize<SGameObject>(result, count);
+			Array.Resize<SGameObject>(ref result, count);
 
             return result;
 
