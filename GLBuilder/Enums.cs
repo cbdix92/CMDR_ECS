@@ -3,7 +3,7 @@
 namespace OpenGL
 {
 	
-	public enum GL
+	public enum Enums
 	{
 		#region BUFFER_BINDING_TARGET
 		ARRAY_BUFFER =               0x8892,
