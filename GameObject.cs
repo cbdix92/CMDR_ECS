@@ -75,7 +75,6 @@ namespace CMDR
                 //WILL IT PLACE A DEFAULT VALUE STRUCT AT THE END OF THE ARRAY
                 //Components[i] = new KeyValuePair<Type, int>();
                 //Components[i] = default(KeyValuePair<Type, int>);
-                Components[i] = default;
                 Array.Sort(Components);
                 ///////////////////////////////////////////
             }

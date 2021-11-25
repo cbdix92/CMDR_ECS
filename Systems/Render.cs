@@ -26,9 +26,9 @@ namespace CMDR.Systems
 
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();
-            IEnumerable<SGameObject> gameObjects = Camera.GetRenderable(transforms);
+            SGameObject[] gameObjects = Camera.GetRenderable(Scene.GameObjects.Get(), transforms);
 
-            foreach(SGameObject gameObject in Camera.GetRenderable(transforms))
+            foreach(SGameObject gameObject in gameObjects)
             {
                 int tex_ID = gameObject.Get<RenderData>();
                 Texture texture = renderables[tex_ID].GetRender(ticks);

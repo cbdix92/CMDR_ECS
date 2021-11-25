@@ -52,7 +52,7 @@ namespace CMDR
         /// </summary>
         /// <param name="transforms"> Array of transforms that are checked.</param>
         /// <returns></returns>
-        internal static IEnumerable<SGameObject> GetRenderable(SGameObject[] gameObjects, Transform[] transforms)
+        internal static SGameObject[] GetRenderable(SGameObject[] gameObjects, Transform[] transforms)
         {
             // TODO ... LINQ is very slow. Do something better.
             //IEnumerable<SGameObject> _ = SceneManager.ActiveScene.GameObjects.Get().AsQueryable().Where(gameObject => gameObject.Contains<RenderData>()
