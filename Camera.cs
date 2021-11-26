@@ -14,16 +14,51 @@ namespace CMDR
         public static float Xvel;
         public static float Yvel;
         public static float Zvel;
-        public static float Width { get; internal set; }
-        public static float Height { get; internal set; }
-		
-		public static float Left { get => -Width / 2;}
-		public static float Right { get => Width / 2; }
-		public static float Top { get => -Height / 2; }
-		public static float Bottom { get => Height / 2; }
-		public static float Far { get; set; }
-		public static float Near { get; set; }
 
+        private static float _width;
+        private static float _height;
+        public static float Width
+        {
+            get => _width;
+            set
+            {
+                _width = value * 1;
+                Projection = CreateOrthographic(Matrix4.Identity);
+            }
+        }
+        public static float Height
+        {
+            get => _height;
+            set
+            {
+                _height = value * 1;
+                Projection = CreateOrthographic(Matrix4.Identity);
+            }
+        }
+		
+		public static float Left { get => -(Zoom * Width) / 2;}
+		public static float Right { get => (Zoom * Width) / 2; }
+		public static float Top { get => -(Zoom * Height) / 2; }
+		public static float Bottom { get => (Zoom * Height) / 2; }
+        
+        public static readonly float Far = 2;
+        public static readonly float Near = 0;
+
+        public static Matrix4 Projection;
+
+        private static float _zoom;
+        public static float Zoom
+        {
+            get => _zoom;
+            set
+            {
+                if(value != _zoom & value != 0)
+                {
+                    _zoom = value;
+                    Projection = CreateOrthographic(Matrix4.Identity);
+                }
+            }
+        }
 
 		internal static Matrix4 CreateOrthographic(Matrix4 result)
 		{
