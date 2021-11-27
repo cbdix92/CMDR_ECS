@@ -23,7 +23,7 @@ namespace CMDR
         public int Get(Type type)
         {
             if (!Data.Types.Contains(type))
-                throw new ArgumentException($"{type} is not a Component");
+                throw new ArgumentException($"{type} does not implement the IComponent interface");
 
             for (int i = 0; i < NumberOfComponents; i++)
             {
@@ -70,13 +70,10 @@ namespace CMDR
             if (i != -1)
             {
                 Scene.Destroy(Components[i]);
-                NumberOfComponents--;
-                ////////////////////////////////////////////// DOES THIS WORK? 
-                //WILL IT PLACE A DEFAULT VALUE STRUCT AT THE END OF THE ARRAY
-                //Components[i] = new KeyValuePair<Type, int>();
-                //Components[i] = default(KeyValuePair<Type, int>);
-                Array.Sort(Components);
-                ///////////////////////////////////////////
+
+                // Replace the element at the end of the array with the one to be deleted and then resize the array.
+                Components[i] = Components[--NumberOfComponents];
+                Array.Resize<KeyValuePair<Type, int>>(ref Components, NumberOfComponents);
             }
         }
 		
