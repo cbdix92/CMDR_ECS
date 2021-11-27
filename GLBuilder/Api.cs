@@ -102,12 +102,22 @@ namespace OpenGL
 		
 		[DllImport(Opengl32, EntryPoint = "glTexImage2D", SetLastError = true)]
 		private static extern void _texImage2D(TEXTURE_TARGET target, uint level, uint internalformat, uint width, uint height, uint border, PIXEL_FORMAT format, Type type, void* data);
-		
-		#endregion
-		
-		#region V
-		
-		[DllImport(Opengl32, EntryPoint = "glVertexAttribPointer", SetLastError = true)]
+
+        #endregion
+
+        #region U
+
+        [DllImport(Opengl32, EntryPoint = "glUseProgram", SetLastError = true)]
+        private static extern void _useProgram(uint program);
+
+        [DllImport(Opengl32, EntryPoint = "glUniformMatrix4fv", SetLastError = true)]
+        private static extern void _uniformMatrix4fv(int location, int count, bool transpose, float* value);
+
+        #endregion
+
+        #region V
+
+        [DllImport(Opengl32, EntryPoint = "glVertexAttribPointer", SetLastError = true)]
 		private static extern void _vertexAttribPointer(uint index, int size, Type type, bool normalized, int stride, void* pointer);
 		
 		#endregion

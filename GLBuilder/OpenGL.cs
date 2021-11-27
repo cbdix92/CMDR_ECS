@@ -156,12 +156,24 @@ namespace OpenGL
 				_texImage2D(target, level, internalformat, width, height, 0, format, typeof(float), id);
 			}
 		}
-		
-		#endregion
-		
-		#region V
-		
-		public static void VertexAttribPointer(uint index, int size, Type type, bool normalized, void* pointer) 
+
+        #endregion
+
+        #region U
+        public static void UseProgram(uint program) { _useProgram(program); }
+
+        public static void UniformMatrix4fv(int location, int count, bool transpose, float[] value)
+        {
+            fixed(float* id = &value[0])
+            {
+                _uniformMatrix4fv(location, count, transpose, id);
+            }
+        }
+        #endregion
+
+        #region V
+
+        public static void VertexAttribPointer(uint index, int size, Type type, bool normalized, void* pointer) 
 		{
 			_vertexAttribPointer(index, size, type, normalized, size * sizeof(float), pointer);
 		}

@@ -2,13 +2,13 @@ using System;
 using System.IO;
 using OpenGL;
 
-public struct ShaderProgram
+public struct Shader
 {
     uint ID;
     uint VertID;
     uint FragID;
 
-    public ShaderProgram(string pathVert, string pathFrag)
+    public Shader(string pathVert, string pathFrag)
     {
 
         // Shader IDs
@@ -39,5 +39,10 @@ public struct ShaderProgram
         // ...
 
 
+    }
+
+    public void Use()
+    {
+        GL.UseProgram(ID);
     }
 }

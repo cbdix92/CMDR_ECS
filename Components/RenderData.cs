@@ -16,6 +16,8 @@ namespace CMDR.Components
 
         public bool Static { get; set; }
 
+        public Shader Shader;
+
         public Texture ImgData { get; internal set; }
 
         internal Animator2D AnimationData;
@@ -57,6 +59,7 @@ namespace CMDR.Components
 
             Send();
         }
+
 
         public Texture GetRender(long ticks)
         {
