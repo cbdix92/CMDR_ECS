@@ -48,8 +48,7 @@ namespace CMDR
 		
 		public void Bind()
 		{
-			// TODO... 
-			// Bind this texture to opengl and prepare it to be drawn.
+			GL.BindTexture(BUFFER_BINDING_TARGET.GL_TEXTURE_2D, ID);
 		}
     }
 

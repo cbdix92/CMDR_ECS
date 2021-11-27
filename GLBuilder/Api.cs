@@ -76,12 +76,24 @@ namespace OpenGL
 
         [BuildInfo(Opengl32, "glGenBuffers")]
         internal static void _genBuffers(int n, uint* buffers) { }
+		
+		[DllImport(Opengl32, EntryPoint = "getGetShaderiv", SetLastError = true)]
+		private static extern void _getShaderiv(uint shader, PNAME pname, byte* param);
+		
+		[DllImport(Opengl32, EntryPoint = "GetShaderInfoLog", SetLastError = true)]
+		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
 		[DllImport(Opengl32, EntryPoint = "glGenTextures", SetLastError = true)]
 		private static extern void _genTextures(uint n, uint* textures);
 		
         [BuildInfo(Opengl32, "glGenVertexArrays")]
         internal static void _genVertexArrays(uint n, uint* arrays) { }
+		
+		[DllImport(Opengl32, EntryPoint = "glGetUniformfv", SetLastError = true)]
+		private static extern void _getUniformfv(uint program, int location, float* param);
+		
+		[DllImport(Opengl32, EntryPoint = "glGetUniformLocation", SetLastError = true)]	
+		private static extern int _getUniformLocation(uint program, char* name);
 		
         #endregion
 
@@ -107,11 +119,17 @@ namespace OpenGL
 
         #region U
 
-        [DllImport(Opengl32, EntryPoint = "glUseProgram", SetLastError = true)]
-        private static extern void _useProgram(uint program);
+		[DllImport(Opengl32, EntryPoint = "glUniform3f", SetLastError = true)]
+		private static extern void _uniform3f(int location, float v0, float v1, float v2);
+		
+		[DllImport(Opengl32, EntryPoint = "glUniform4f", SetLastError = true)]
+        private static extern void _uniform4f(int location, float v0, float v1, float v2, float v3);
 
         [DllImport(Opengl32, EntryPoint = "glUniformMatrix4fv", SetLastError = true)]
         private static extern void _uniformMatrix4fv(int location, int count, bool transpose, float* value);
+		
+		[DllImport(Opengl32, EntryPoint = "glUseProgram", SetLastError = true)]
+        private static extern void _useProgram(uint program);
 
         #endregion
 

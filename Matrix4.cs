@@ -156,6 +156,16 @@ namespace CMDR
                     + ( M02 * M11 * M23 * M30 ) - ( M02 * M11 * M20 * M33 ) - ( M03 * M10 * M21 * M32 ) + ( M03 * M10 * M22 * M31 )
                     - ( M03 * M11 * M22 * M30 ) + ( M03 * M11 * M20 * M32 ) - ( M03 * M12 * M20 * M31 ) + ( M03 * M12 * M21 * M30 );
         }
+		
+		public float[] ToArray()
+		{
+			return new float[]{
+				m00, m01, m02, m03
+				m10, m11, m12, m13
+				m20, m21, m22, m23
+				m30, m31, m32, m33
+			};
+		}
 
         public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
         {

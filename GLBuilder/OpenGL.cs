@@ -118,6 +118,38 @@ namespace OpenGL
             }
             return buffers;
         }
+		
+		public static void GetShaderiv(uint shader, PNAME pname, out object obj)
+		{
+			_getShaderiv(shader, pname, &obj);
+		}
+		
+		public static string GetShaderInfoLog(uint shader)
+		{
+			byte buffer = new byte[1024];
+			fixed(byte* ptr = &buffer[0])
+			{
+				_getShaderInfoLog(Shader, buffer.Length, (void*)0, ptr);
+			}
+			return Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+		}
+		
+		public static void GetUniformfv(uint program, int location, out float param)
+		{
+			fixed(float* result = &param)
+			{
+				_getUniformfv(program, location, result);
+			}
+		}
+		
+		public static int GetUniformLocation(uint program, string name)
+		{
+			byte[] bytes = Encoding.ASCII.GetBytes(name);
+			fixed(byte* ptr = &bytes[0])
+			{
+				return _getUniformLocation(program, ptr);
+			}
+		}
         #endregion
 
         #region L
@@ -160,16 +192,28 @@ namespace OpenGL
         #endregion
 
         #region U
-        public static void UseProgram(uint program) { _useProgram(program); }
 
-        public static void UniformMatrix4fv(int location, int count, bool transpose, float[] value)
+		public static void Uniform3f(int location, Vector3 vec)
+		{
+			_uniform3f(location, vec[0], vec[1], vec[2]);
+		}
+		
+		public static void Uniform4f(int location, Vector4 vec)
+		{
+			_uniform4f(location, vec[0], vec[1], vec[2], vec[3]);
+		}
+		
+        public static void UniformMatrix4fv(int location, int count, bool transpose, Matrix4 matrix)
         {
-            fixed(float* id = &value[0])
+            fixed(float* ptr = &matrix.ToArray()[0])
             {
-                _uniformMatrix4fv(location, count, transpose, id);
+                _uniformMatrix4fv(location, count, transpose, ptr);
             }
         }
-        #endregion
+		
+		public static void UseProgram(uint program) { _useProgram(program); }
+        
+		#endregion
 
         #region V
 

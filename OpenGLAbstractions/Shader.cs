@@ -26,20 +26,56 @@ public struct Shader
 
         GL.ShaderSource(VertID, vertRead);
         GL.CompileShader(VertID);
+		CheckCompileErrors();
 
         GL.ShaderSource(FragID, fragRead);
         GL.CompileShader(FragID);
+		CheckCompileErrors();
 
         ID = GL.CreateProgram();
         GL.AttachShader(ID, VertID);
         GL.AttachShader(ID, FragID);
         GL.LinkProgram(ID);
-
-        //TODO Check for GLSL compile errors here
-        // ...
-
-
+		CheckLinkErrors();
+		
+		
     }
+	
+	public static void CheckCompileErrors()
+	{
+		object compiled;
+		GL.GetShaderiv(ID, PNAME.GL_COMPILE_STATUS, out compiled);
+		
+		if(!(bool)compiled)
+		{
+			throw new Exception(GL.GetShaderInfoLog(ID));
+		}
+	}
+	
+	public static void CheckLinkErrors()
+	{
+		object linked;
+		GL.GetShaderiv(ID, PNAME.GL_LINK_STATUS, out linked);
+		if(!(bool)linked)
+		{
+			throw new Exception(GL.GetShaderInfoLog(ID));
+		}
+	}
+	
+	public void SetUniformMatrix4(string name, Matrix4 matrix)
+	{
+		GL.UniformMatrix4fv(GL.GetUniformLocation(ID, name), 16, false, matrix);
+	}
+	
+	public void SetUniformVec3(string name, Vector3 vec)
+	{
+		GL.Uniform3f(GL.GetUniformLocation(ID, name), vec);
+	}
+	
+	public void SetUniformVec4(string name, Vector4 vec)
+	{
+		Gl.Uniform4f(GL.GetUniformLocation(ID, name), vec);
+	}
 
     public void Use()
     {

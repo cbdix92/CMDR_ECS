@@ -5,6 +5,7 @@ namespace OpenGL
 	
 	public enum Enums
 	{
+		
 		#region BUFFER_BINDING_TARGET
 		ARRAY_BUFFER =               0x8892,
         ATOMIC_COUNTER_BUFFER =      0x92C0,
@@ -114,6 +115,16 @@ namespace OpenGL
         TRANSFORM_FEEDBACK_BUFFER =  0x8C8E,
         UNIFORM_BUFFER =             0x8A11
     }
+	
+	public enum PNAME
+	{
+		GL_SHADER_TYPE = 0x8B4F,
+		GL_DELETE_STATUS = 0x8B80,
+		GL_COMPILE_STATUS = 0x8B81,
+		GL_INFO_LOG_LENGTH = 0x8B84,
+		GL_SHADER_SOURCE_LENGTH = 0x8B88,
+		GL_LINK_STATUS = 0x8B82
+	}
 
     public enum USAGE
     {

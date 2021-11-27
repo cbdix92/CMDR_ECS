@@ -11,6 +11,40 @@ namespace CMDR.Systems
     {
         internal static Scene Scene { get => SceneManager.ActiveScene; }
 		
+		internal static float[] Vertices;
+		
+		internal static uint VBO;
+		internal static uint VAO;
+		
+		
+		internal static void Init()
+		{
+			Vertices new float[] = { 
+			// pos      // tex
+			0.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f, 
+		
+			0.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 1.0f, 1.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 0.0f
+			};
+			
+			VAO = GL.GenVertexArray();
+			VBO = GL.GenBuffer();
+			
+			GL.BindBuffer(BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
+			GL.BufferData(BUFFER_BINDING_TARGET.ARRAY_BUFFER, sizeof(Vertices), &Vertices, USAGE.STATIC_DRAW);
+			
+			GL.BindVertexArray(VAO);
+			GL.EnableVertexAttribArray(0);
+			GL.VertexAttribPointer(0, 4, typeof(float), false, (void*)0);
+			
+			// Unbind VAO and VBO
+			GL.BindBuffer(BUFFER_BINDING_TARGET.ARRAY_BUFFER, 0);
+			GL.BindVertexArray(0);
+		}
+		
         internal static void ClearScreen()
         {
             GL.Clear(BUFFER_MASK.COLOR_BUFFER_BIT | BUFFER_MASK.DEPTH_BUFFER_BIT);
@@ -28,14 +62,29 @@ namespace CMDR.Systems
             foreach(SGameObject gameObject in gameObjects)
             {
 
-                int tex_ID = gameObject.Get<RenderData>();
-                Texture texture = renderables[tex_ID].GetRender(ticks);
-                Transform transform = transforms[gameObject.Get<Transform>()];
-
-
-
-                Debugger.DrawBoundingBox(gameObject);
+				int renderDataID = gameObject.Get<RenderData>();
+				int transformID = gameObject.Get<Transform>();
+                
+				RenderData renderData = renderables[renderDataID];
+                
+				Texture texture = renderData.GetRender(ticks);
+                
+				Transform transform = transforms[transformID];
+				
+				Matrix4 model = transform.GenerateModel();
+				
+				renderData.Shader.SetUniformMatrix4("model", model);
+				renderData.Shader.SetUniformVec4("color", renderData.Color);
+				
+				GL.ActiveTexture(GL_TEXTURE0);
+				texture.Bind();
+				
+				Gl.BindVertexArray(VAO);
+				GL.DrawArrays(MODE.GL_TRIANGLES, 0, 6);
+				GL.BindVertexArray(0);
             }
+			
+			Debugger.DrawBoundingBox(gameObject);
         }
         internal static void Update(long ticks)
         {
