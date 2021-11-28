@@ -25,7 +25,7 @@ namespace OpenGL
 		private static extern void _bindTexture(BUFFER_BINDING_TARGET target, uint texture);
 		
 		[DllImport(Opengl32, EntryPoint = "glBindTextures", SetLastError = true)]
-		private static extern void _bindTextures(uint first, uint count, void* textures);
+		private static extern void _bindTextures(uint first, int count, void* textures);
 
         [DllImport(Opengl32, EntryPoint = "glBindBuffer", SetLastError = true)]
         private static extern void _bindVertexArray(uint array);
@@ -57,11 +57,14 @@ namespace OpenGL
 		
 		#region D
 		
-		[DllImport(Opengl32, EntryPoint = "glDisableVertexAttribArray". SetLastError = true)]
+		[DllImport(Opengl32, EntryPoint = "glDisableVertexAttribArray", SetLastError = true)]
 		private static extern void _disableVertexAttribArray(uint index);
+
+		[DllImport(Opengl32, EntryPoint = "glDrawArrays", SetLastError = true)]
+		private static extern void _drawArrays(MODE mode, int first, int count);
 		
 		[DllImport(Opengl32, EntryPoint = "glDrawElements", SetLastError = true)]
-		private static extern void _drawElements(MODE mode, uint count, Type type, void* indices);
+		private static extern void _drawElements(MODE mode, int count, Type type, void* indices);
 		
 		#endregion
 		
@@ -84,7 +87,7 @@ namespace OpenGL
 		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
 		[DllImport(Opengl32, EntryPoint = "glGenTextures", SetLastError = true)]
-		private static extern void _genTextures(uint n, uint* textures);
+		private static extern void _genTextures(int n, uint* textures);
 		
         [BuildInfo(Opengl32, "glGenVertexArrays")]
         internal static void _genVertexArrays(uint n, uint* arrays) { }
@@ -93,7 +96,7 @@ namespace OpenGL
 		private static extern void _getUniformfv(uint program, int location, float* param);
 		
 		[DllImport(Opengl32, EntryPoint = "glGetUniformLocation", SetLastError = true)]	
-		private static extern int _getUniformLocation(uint program, char* name);
+		private static extern int _getUniformLocation(uint program, byte* name);
 		
         #endregion
 

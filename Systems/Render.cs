@@ -17,9 +17,9 @@ namespace CMDR.Systems
 		internal static uint VAO;
 		
 		
-		internal static void Init()
+		internal unsafe static void Init()
 		{
-			Vertices new float[] = { 
+			Vertices = new float[] { 
 			// pos      // tex
 			0.0f, 1.0f, 0.0f, 1.0f,
 			1.0f, 0.0f, 1.0f, 0.0f,
@@ -34,7 +34,7 @@ namespace CMDR.Systems
 			VBO = GL.GenBuffer();
 			
 			GL.BindBuffer(BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
-			GL.BufferData(BUFFER_BINDING_TARGET.ARRAY_BUFFER, sizeof(Vertices), &Vertices, USAGE.STATIC_DRAW);
+			GL.BufferData(BUFFER_BINDING_TARGET.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, USAGE.STATIC_DRAW);
 			
 			GL.BindVertexArray(VAO);
 			GL.EnableVertexAttribArray(0);
@@ -79,12 +79,13 @@ namespace CMDR.Systems
 				GL.ActiveTexture(GL_TEXTURE0);
 				texture.Bind();
 				
-				Gl.BindVertexArray(VAO);
+				GL.BindVertexArray(VAO);
 				GL.DrawArrays(MODE.GL_TRIANGLES, 0, 6);
 				GL.BindVertexArray(0);
+				
+				Debugger.DrawBoundingBox(gameObject);
             }
 			
-			Debugger.DrawBoundingBox(gameObject);
         }
         internal static void Update(long ticks)
         {

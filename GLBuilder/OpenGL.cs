@@ -25,7 +25,7 @@ namespace OpenGL
 		
         public static void BindTextures(uint[] textures)
 		{
-			fixed(uint* id = &texture[0])
+			fixed(uint* id = &textures[0])
 			{
 				_bindTextures(0, textures.Length, id);
 			}
@@ -33,7 +33,14 @@ namespace OpenGL
 		
 		public static void BindVertexArray(uint array) { _bindVertexArray(array); }
 
-        public static void BufferData(BUFFER_BINDING_TARGET target, int size, void* data, USAGE usage) { _bufferData(target, size, data, usage); }
+        public static void BufferData(BUFFER_BINDING_TARGET target, int size, float[] data, USAGE usage) 
+		{
+			fixed(float* ptr = &data[0])
+            {
+				_bufferData(target, size, ptr, usage);
+            }
+		
+		}
         #endregion
 
         #region C
@@ -51,13 +58,16 @@ namespace OpenGL
 		
 		#region D
 		
-		public static void DisableVertexAttribArray(uint index) { _disabelVertexAttribArray(index); }
+		public static void DisableVertexAttribArray(uint index) { _disableVertexAttribArray(index); }
+
+
+		public static void DrawArrays(MODE mode, int first, int count) { _drawArrays(mode, first, count); }
 		
-		public static void DrawElements(Mode mode, uint count, float[] indices)
+		public static void DrawElements(MODE mode, int count, float[] indices)
 		{
-			fixed(uint* id = &idices[0])
+			fixed(float* id = &indices[0])
 			{
-				_drawElements(mode, count, typeof(indices), id);
+				_drawElements(mode, count, typeof(float), id);
 			}
 		}
 		
@@ -77,12 +87,12 @@ namespace OpenGL
             return id;
         }
 
-        public static uint[] GenBuffers(uint n)
+        public static uint[] GenBuffers(int n)
         {
             uint[] buffers = new uint[n];
-            fixed(uint* ids = &buffers[0])
+            fixed(uint* ptr = &buffers[0])
             {
-                _genBuffers(n, ids);
+                _genBuffers(n, ptr);
             }
             return buffers;
         }
@@ -94,12 +104,12 @@ namespace OpenGL
 			return id;
 		}
 
-		public static uint[] GenTextures(uint n)
+		public static uint[] GenTextures(int n)
 		{
 			uint[] buffers = new uint[n];
-			fixed(uint* ids = &buffers[0])
+			fixed(uint* ptr = &buffers[0])
 			{
-				_genTextures(n, ids);
+				_genTextures(n, ptr);
 			}
 			return buffers;
 		}
@@ -126,10 +136,10 @@ namespace OpenGL
 		
 		public static string GetShaderInfoLog(uint shader)
 		{
-			byte buffer = new byte[1024];
+			byte[] buffer = new byte[1024];
 			fixed(byte* ptr = &buffer[0])
 			{
-				_getShaderInfoLog(Shader, buffer.Length, (void*)0, ptr);
+				_getShaderInfoLog(shader, buffer.Length, null, ptr);
 			}
 			return Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 		}
@@ -183,9 +193,9 @@ namespace OpenGL
 			if (target == TEXTURE_TARGET.GL_TEXTURE_RECTANGLE || target == TEXTURE_TARGET.GL_PROXY_TEXTURE_RECTANGLE)
 				level = 0;
 			
-			fixed(uint* id = &data[0])
+			fixed(float* ptr = &data[0])
 			{
-				_texImage2D(target, level, internalformat, width, height, 0, format, typeof(float), id);
+				_texImage2D(target, level, internalformat, width, height, 0, format, typeof(float), ptr);
 			}
 		}
 

@@ -18,6 +18,7 @@ namespace CMDR.Components
 
         public Shader Shader;
 
+        public Vector4 Color;
         public Texture ImgData { get; internal set; }
 
         internal Animator2D AnimationData;
