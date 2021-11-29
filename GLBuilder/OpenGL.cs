@@ -14,7 +14,7 @@ namespace OpenGL
 
         #region A
 
-		public static void ActiveTexture(int texture) { _activeTexture(texture); }
+		public static void ActiveTexture(GLenum texture) { _activeTexture(texture); }
         public static void AttachShader(uint program, uint shader) { _attachShader(program, shader); }
 
         #endregion
@@ -192,7 +192,7 @@ namespace OpenGL
 		
 		public static void TexImage2D(GLenum target, int level, int internalformat, int width, int height, GLenum format, float[] data)
 		{
-			if (target == GLenum.GL_TEXTURE_RECTANGLE || target == GLenum.GL_PROXY_TEXTURE_RECTANGLE)
+			if (target == GLenum.TEXTURE_RECTANGLE || target == GLenum.PROXY_TEXTURE_RECTANGLE)
 				level = 0;
 			
 			fixed(float* ptr = &data[0])

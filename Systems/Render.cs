@@ -76,11 +76,11 @@ namespace CMDR.Systems
 				renderData.Shader.SetUniformMatrix4("model", model);
 				renderData.Shader.SetUniformVec4("color", renderData.Color);
 				
-				GL.ActiveTexture(GLenum.GL_TEXTURE0);
+				GL.ActiveTexture(GLenum.TEXTURE0);
 				texture.Bind();
 				
 				GL.BindVertexArray(VAO);
-				GL.DrawArrays(GLenum.GL_TRIANGLES, 0, 6);
+				GL.DrawArrays(GLenum.TRIANGLES, 0, 6);
 				GL.BindVertexArray(0);
 				
 				Debugger.DrawBoundingBox(gameObject);

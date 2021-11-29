@@ -64,7 +64,6 @@ namespace CMDR.Components
 
         public Texture GetRender(long ticks)
         {
-            //return AnimationData.Get(ticks, currentState);
             return Static ? ImgData : AnimationData.Get(ticks, currentState);
         }
 

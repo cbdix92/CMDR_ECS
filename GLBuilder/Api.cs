@@ -12,7 +12,7 @@ namespace OpenGL
 
 		#region A
 		[DllImport(Opengl32, EntryPoint = "glActiveTexture", SetLastError = true)]
-		private static extern void _activeTexture(int texture);
+		private static extern void _activeTexture(GLenum texture);
 
         [DllImport(Opengl32, EntryPoint = "glAttachShader", SetLastError = true)]
         private static extern void _attachShader(uint program, uint shader);
