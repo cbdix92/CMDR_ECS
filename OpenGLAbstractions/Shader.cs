@@ -46,10 +46,9 @@ namespace CMDR
 
 		public void CheckCompileErrors()
 		{
-			object compiled;
-			GL.GetShaderiv(ID, GLenum.COMPILE_STATUS, out compiled);
+			GL.GetShaderiv(ID, GLenum.COMPILE_STATUS, out int compiled);
 
-			if (!(bool)compiled)
+			if (compiled == 0)
 			{
 				throw new Exception(GL.GetShaderInfoLog(ID));
 			}
@@ -57,9 +56,8 @@ namespace CMDR
 
 		public void CheckLinkErrors()
 		{
-			object linked;
-			GL.GetShaderiv(ID, GLenum.LINK_STATUS, out linked);
-			if (!(bool)linked)
+			GL.GetShaderiv(ID, GLenum.LINK_STATUS, out int linked);
+			if (linked == 0)
 			{
 				throw new Exception(GL.GetShaderInfoLog(ID));
 			}

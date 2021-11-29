@@ -95,7 +95,7 @@ namespace OpenGL
 		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
 		[DllImport(Opengl32, EntryPoint = "getGetShaderiv", SetLastError = true)]
-		private static extern void _getShaderiv(uint shader, GLenum pname, byte* param);
+		private static extern void _getShaderiv(uint shader, GLenum pname, int* param);
 
 		[DllImport(Opengl32, EntryPoint = "glGetUniformfv", SetLastError = true)]
 		private static extern void _getUniformfv(uint program, int location, float* param);

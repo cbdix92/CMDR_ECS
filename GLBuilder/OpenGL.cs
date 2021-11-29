@@ -131,9 +131,12 @@ namespace OpenGL
             return buffers;
         }
 		
-		public static void GetShaderiv(uint shader, GLenum pname, out object obj)
+		public static void GetShaderiv(uint shader, GLenum pname, out int output)
 		{
-			_getShaderiv(shader, pname, &obj);
+			fixed(int* ptr = &output)
+            {
+				_getShaderiv(shader, pname, ptr);
+            }
 		}
 		
 		public static string GetShaderInfoLog(uint shader)
