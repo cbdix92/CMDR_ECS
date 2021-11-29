@@ -10,7 +10,9 @@ namespace OpenGL
         private const string Kernel32 = "kernel32.dll";
         private const string Opengl32 = "opengl32.dll";
 
-        #region A
+		#region A
+		[DllImport(Opengl32, EntryPoint = "glActiveTexture", SetLastError = true)]
+		private static extern void _activeTexture(int texture);
 
         [DllImport(Opengl32, EntryPoint = "glAttachShader", SetLastError = true)]
         private static extern void _attachShader(uint program, uint shader);
@@ -19,10 +21,10 @@ namespace OpenGL
 
         #region B
         [DllImport(Opengl32, EntryPoint = "glBindBuffer", SetLastError = true)]
-        private static extern void _bindBuffer(BUFFER_BINDING_TARGET target, uint buffer);
+        private static extern void _bindBuffer(GLenum target, uint buffer);
 		
 		[DllImport(Opengl32, EntryPoint = "glBindTexture", SetLastError = true)]
-		private static extern void _bindTexture(BUFFER_BINDING_TARGET target, uint texture);
+		private static extern void _bindTexture(GLenum target, uint texture);
 		
 		[DllImport(Opengl32, EntryPoint = "glBindTextures", SetLastError = true)]
 		private static extern void _bindTextures(uint first, int count, void* textures);
@@ -31,7 +33,7 @@ namespace OpenGL
         private static extern void _bindVertexArray(uint array);
 
         [DllImport(Opengl32, EntryPoint = "glBufferData", SetLastError = true)]
-        private static extern void _bufferData(BUFFER_BINDING_TARGET target, int size, void* data, USAGE usage);
+        private static extern void _bufferData(GLenum target, int size, void* data, GLenum usage);
         #endregion
 
         #region C
@@ -49,7 +51,7 @@ namespace OpenGL
         private static extern uint _createProgram();
 
         [DllImport(Opengl32, EntryPoint = "glCreateShader", SetLastError = true)]
-        private static extern uint _createShader(SHADER_TYPE shaderType);
+        private static extern uint _createShader(GLenum shaderType);
 
 
 
@@ -61,10 +63,10 @@ namespace OpenGL
 		private static extern void _disableVertexAttribArray(uint index);
 
 		[DllImport(Opengl32, EntryPoint = "glDrawArrays", SetLastError = true)]
-		private static extern void _drawArrays(MODE mode, int first, int count);
+		private static extern void _drawArrays(GLenum mode, int first, int count);
 		
 		[DllImport(Opengl32, EntryPoint = "glDrawElements", SetLastError = true)]
-		private static extern void _drawElements(MODE mode, int count, Type type, void* indices);
+		private static extern void _drawElements(GLenum mode, int count, Type type, void* indices);
 		
 		#endregion
 		
@@ -72,26 +74,29 @@ namespace OpenGL
 		
 		[DllImport(Opengl32, EntryPoint = "glEnableVertexAttribArray", SetLastError = true)]
 		private static extern void _enableVertexAttribArray(uint index);
-		
-		#endregion
-		
-        #region G
 
-        [BuildInfo(Opengl32, "glGenBuffers")]
-        internal static void _genBuffers(int n, uint* buffers) { }
-		
-		[DllImport(Opengl32, EntryPoint = "getGetShaderiv", SetLastError = true)]
-		private static extern void _getShaderiv(uint shader, PNAME pname, byte* param);
-		
-		[DllImport(Opengl32, EntryPoint = "GetShaderInfoLog", SetLastError = true)]
-		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
+		#endregion
+
+		#region G
+
+		[DllImport(Opengl32, EntryPoint = "glGenBuffers", SetLastError = true)]
+		private static extern void _genBuffers(int n, uint* buffers);
+
+		[BuildInfo(Opengl32, "glGenerateMipmap")]
+		internal static void _generateMipMap(GLenum target) { }
 
 		[DllImport(Opengl32, EntryPoint = "glGenTextures", SetLastError = true)]
 		private static extern void _genTextures(int n, uint* textures);
 		
         [BuildInfo(Opengl32, "glGenVertexArrays")]
         internal static void _genVertexArrays(uint n, uint* arrays) { }
-		
+
+		[DllImport(Opengl32, EntryPoint = "GetShaderInfoLog", SetLastError = true)]
+		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
+
+		[DllImport(Opengl32, EntryPoint = "getGetShaderiv", SetLastError = true)]
+		private static extern void _getShaderiv(uint shader, GLenum pname, byte* param);
+
 		[DllImport(Opengl32, EntryPoint = "glGetUniformfv", SetLastError = true)]
 		private static extern void _getUniformfv(uint program, int location, float* param);
 		
@@ -116,7 +121,7 @@ namespace OpenGL
 		#region T
 		
 		[DllImport(Opengl32, EntryPoint = "glTexImage2D", SetLastError = true)]
-		private static extern void _texImage2D(TEXTURE_TARGET target, uint level, uint internalformat, uint width, uint height, uint border, PIXEL_FORMAT format, Type type, void* data);
+		private static extern void _texImage2D(GLenum target, int level, int internalformat, int width, int height, int border, GLenum format, Type type, void* data);
 
         #endregion
 

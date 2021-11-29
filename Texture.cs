@@ -23,13 +23,13 @@ namespace CMDR
             (ColorData, Width, Height, Stride) = (colorData, width, height, stride);
 			
 			ID = GL.GenTexture();
-			GL.BindTexture(TEXTURE_TARGET.GL_TEXTURE_2D, ID);
-			GL.TextureImage2D(TEXTURE_TARGET.GL_TEXTURE_2D, 0, PIXEL_FORMAT.GL_RGBA, Width, Height, 0, PIXEL_FORMAT.GL_RGBA, ColorData);
-			GL.GenerateMipMap(TEXTURE_TARGET.GL_TEXTURE_2D);
+			GL.BindTexture(GLenum.GL_TEXTURE_2D, ID);
+			GL.TexImage2D(GLenum.GL_TEXTURE_2D, 0, 0, Width, Height, GLenum.GL_RGBA, ColorData);
+			GL.GenerateMipMap(GLenum.GL_TEXTURE_2D);
 			
 			
 			// Unbind Texture when finished
-			GL.BindTexture(TEXTURE_TARGET.GL_TEXTURE_2D, 0);
+			GL.BindTexture(GLenum.GL_TEXTURE_2D, 0);
         }
 
         public Pixel GetPixel(int x, int y)
@@ -48,7 +48,7 @@ namespace CMDR
 		
 		public void Bind()
 		{
-			GL.BindTexture(BUFFER_BINDING_TARGET.GL_TEXTURE_2D, ID);
+			GL.BindTexture(GLenum.GL_TEXTURE_2D, ID);
 		}
     }
 

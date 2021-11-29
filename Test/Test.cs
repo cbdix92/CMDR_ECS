@@ -54,7 +54,7 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
-            RenderData.CreateAnimation("Test", paths, 80);
+            RenderData.CreateAnimation2D("Test", paths, 80);
             RenderData.FromFile("assets/character/ninja_male_assets/Run__000.png");
             Collider.SetBounds(RenderData);
             Collider.GenerateColData("assets/character/ninja_male_assets/Run__000.png");
@@ -86,7 +86,7 @@ namespace Test
             Input.AddKeyBind(Key.D, () => { Transform.Xvel += _speed; }, () => { Transform.Xvel -= _speed; });
             Input.AddKeyBind(Key.Q, () => { Transform.RotDeg = -15; }, () => { Transform.RotDeg = 0; });
             Input.AddKeyBind(Key.E, () => { Transform.RotDeg = 90; }, () => { Transform.RotDeg = 0; });
-            Input.AddKeyBind(Key.H, () => { Transform.Scale = 0.1f; }, ()=> { Transform.Scale = 0; });
+            Input.AddKeyBind(Key.H, () => { Transform.Scale = new Vector3(0.1f); }, ()=> { Transform.Scale = new Vector3(0); });
             Input.AddKeyBind(Key.Up, () => { Camera.Yvel += -_speed; }, () => { Camera.Yvel -= -_speed; });
             Input.AddKeyBind(Key.Down, () => { Camera.Yvel += _speed; }, () => { Camera.Yvel -= _speed; });
             Input.AddKeyBind(Key.Left, () => { Camera.Xvel += -_speed; }, () => { Camera.Xvel -= -_speed; });

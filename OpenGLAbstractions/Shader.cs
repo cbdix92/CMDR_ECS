@@ -15,8 +15,8 @@ namespace CMDR
 		{
 
 			// Shader IDs
-			VertID = GL.CreateShader(SHADER_TYPE.GL_VERTEX_SHADER);
-			FragID = GL.CreateShader(SHADER_TYPE.GL_FRAGMENT_SHADER);
+			VertID = GL.CreateShader(GLenum.GL_VERTEX_SHADER);
+			FragID = GL.CreateShader(GLenum.GL_FRAGMENT_SHADER);
 
 			// Read shader source code
 			var vertRead = File.ReadAllText(pathVert);
@@ -44,10 +44,10 @@ namespace CMDR
 
 		}
 
-		public static void CheckCompileErrors()
+		public void CheckCompileErrors()
 		{
 			object compiled;
-			GL.GetShaderiv(ID, PNAME.GL_COMPILE_STATUS, out compiled);
+			GL.GetShaderiv(ID, GLenum.GL_COMPILE_STATUS, out compiled);
 
 			if (!(bool)compiled)
 			{
@@ -55,10 +55,10 @@ namespace CMDR
 			}
 		}
 
-		public static void CheckLinkErrors()
+		public void CheckLinkErrors()
 		{
 			object linked;
-			GL.GetShaderiv(ID, PNAME.GL_LINK_STATUS, out linked);
+			GL.GetShaderiv(ID, GLenum.GL_LINK_STATUS, out linked);
 			if (!(bool)linked)
 			{
 				throw new Exception(GL.GetShaderInfoLog(ID));

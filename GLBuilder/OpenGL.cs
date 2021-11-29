@@ -14,14 +14,15 @@ namespace OpenGL
 
         #region A
 
+		public static void ActiveTexture(int texture) { _activeTexture(texture); }
         public static void AttachShader(uint program, uint shader) { _attachShader(program, shader); }
 
         #endregion
 
         #region B
-        public static void BindBuffer(BUFFER_BINDING_TARGET target, uint buffer) { _bindBuffer(target, buffer); }
+        public static void BindBuffer(GLenum target, uint buffer) { _bindBuffer(target, buffer); }
 
-        public static void BindTexture(BUFFER_BINDING_TARGET target, uint texture){ _bindTexture(target, texture); }
+        public static void BindTexture(GLenum target, uint texture){ _bindTexture(target, texture); }
 		
         public static void BindTextures(uint[] textures)
 		{
@@ -33,7 +34,7 @@ namespace OpenGL
 		
 		public static void BindVertexArray(uint array) { _bindVertexArray(array); }
 
-        public static void BufferData(BUFFER_BINDING_TARGET target, int size, float[] data, USAGE usage) 
+        public static void BufferData(GLenum target, int size, float[] data, GLenum usage) 
 		{
 			fixed(float* ptr = &data[0])
             {
@@ -52,7 +53,7 @@ namespace OpenGL
 
         public static uint CreateProgram() { return _createProgram(); }
 
-        public static uint CreateShader(SHADER_TYPE shaderType) { return _createShader(shaderType); }
+        public static uint CreateShader(GLenum shaderType) { return _createShader(shaderType); }
 
         #endregion
 		
@@ -61,9 +62,9 @@ namespace OpenGL
 		public static void DisableVertexAttribArray(uint index) { _disableVertexAttribArray(index); }
 
 
-		public static void DrawArrays(MODE mode, int first, int count) { _drawArrays(mode, first, count); }
+		public static void DrawArrays(GLenum mode, int first, int count) { _drawArrays(mode, first, count); }
 		
-		public static void DrawElements(MODE mode, int count, float[] indices)
+		public static void DrawElements(GLenum mode, int count, float[] indices)
 		{
 			fixed(float* id = &indices[0])
 			{
@@ -97,6 +98,7 @@ namespace OpenGL
             return buffers;
         }
 		
+		public static void GenerateMipMap(GLenum target) { _generateMipMap(target); }
 		public static uint GenTexture()
 		{
 			uint id;
@@ -129,7 +131,7 @@ namespace OpenGL
             return buffers;
         }
 		
-		public static void GetShaderiv(uint shader, PNAME pname, out object obj)
+		public static void GetShaderiv(uint shader, GLenum pname, out object obj)
 		{
 			_getShaderiv(shader, pname, &obj);
 		}
@@ -188,9 +190,9 @@ namespace OpenGL
 		
 		#region T
 		
-		public static void TexImage2D(TEXTURE_TARGET target, uint level, uint internalformat, uint width, uint height, PIXEL_FORMAT format, float[] data)
+		public static void TexImage2D(GLenum target, int level, int internalformat, int width, int height, GLenum format, float[] data)
 		{
-			if (target == TEXTURE_TARGET.GL_TEXTURE_RECTANGLE || target == TEXTURE_TARGET.GL_PROXY_TEXTURE_RECTANGLE)
+			if (target == GLenum.GL_TEXTURE_RECTANGLE || target == GLenum.GL_PROXY_TEXTURE_RECTANGLE)
 				level = 0;
 			
 			fixed(float* ptr = &data[0])

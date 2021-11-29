@@ -6,7 +6,7 @@ namespace CMDR
 	{
 		public static float Cos(float num)
 		{
-			return (float)Math.Cos((double)num)
+			return (float)Math.Cos((double)num);
 		}
 		
 		public static float Sin(float num)

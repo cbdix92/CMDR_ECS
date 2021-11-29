@@ -33,15 +33,15 @@ namespace CMDR.Systems
 			VAO = GL.GenVertexArray();
 			VBO = GL.GenBuffer();
 			
-			GL.BindBuffer(BUFFER_BINDING_TARGET.ARRAY_BUFFER, VBO);
-			GL.BufferData(BUFFER_BINDING_TARGET.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, USAGE.STATIC_DRAW);
+			GL.BindBuffer(GLenum.ARRAY_BUFFER, VBO);
+			GL.BufferData(GLenum.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, GLenum.STATIC_DRAW);
 			
 			GL.BindVertexArray(VAO);
 			GL.EnableVertexAttribArray(0);
 			GL.VertexAttribPointer(0, 4, typeof(float), false, (void*)0);
 			
 			// Unbind VAO and VBO
-			GL.BindBuffer(BUFFER_BINDING_TARGET.ARRAY_BUFFER, 0);
+			GL.BindBuffer(GLenum.ARRAY_BUFFER, 0);
 			GL.BindVertexArray(0);
 		}
 		
@@ -76,11 +76,11 @@ namespace CMDR.Systems
 				renderData.Shader.SetUniformMatrix4("model", model);
 				renderData.Shader.SetUniformVec4("color", renderData.Color);
 				
-				GL.ActiveTexture(GL_TEXTURE0);
+				GL.ActiveTexture(GLenum.GL_TEXTURE0);
 				texture.Bind();
 				
 				GL.BindVertexArray(VAO);
-				GL.DrawArrays(MODE.GL_TRIANGLES, 0, 6);
+				GL.DrawArrays(GLenum.GL_TRIANGLES, 0, 6);
 				GL.BindVertexArray(0);
 				
 				Debugger.DrawBoundingBox(gameObject);

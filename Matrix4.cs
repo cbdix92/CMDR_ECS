@@ -160,11 +160,11 @@ namespace CMDR
 		public float[] ToArray()
 		{
 			return new float[]{
-				m00, m01, m02, m03
-				m10, m11, m12, m13
-				m20, m21, m22, m23
-				m30, m31, m32, m33
-			};
+				M00, M01, M02, M03,
+                M10, M11, M12, M13,
+                M20, M21, M22, M23,
+                M30, M31, M32, M33
+            };
 		}
 
         public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
