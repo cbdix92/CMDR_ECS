@@ -45,7 +45,7 @@ namespace CMDR.Components
 
         }
 
-        internal void InsertFrames(string name, Texture[] images, float stepSize)
+        internal void InsertAnimation(string name, Texture[] images, float stepSize)
         {
             StepSize = stepSize;
 
@@ -54,8 +54,6 @@ namespace CMDR.Components
 
             if (!data.ContainsKey(name))
                 data.Add(name, new List<Texture>(images));
-
-
         }
 
     }

@@ -12,16 +12,19 @@ namespace CMDR.Components
         public Scene Scene { get; set; }
         #endregion
 
+
+        // Specifies if the this RenderData is to return a static image or animation
         public bool Static { get; set; }
 
         public Shader Shader;
 
         public Vector4 Color;
+
         public Texture ImgData { get; internal set; }
 
         internal Animator2D AnimationData;
 
-        public string currentState;
+        public string currentAnimation;
 
         public void FromFile(string src)
         {
@@ -30,15 +33,15 @@ namespace CMDR.Components
             Send();
         }
 
-        public unsafe void CreateAnimation2D(string name, string[] paths, float stepSize)
+        public unsafe void CreateAnimation(string name, string[] paths, float stepSize)
         {
             Receive();
 			
 			// Is this needed with a struct?
             if (AnimationData.Equals(default(Animator2D)))
                 AnimationData = new Animator2D();
-            // temp debug
-            currentState = name;
+            
+            currentAnimation = name;
 
             Texture[] _ = new Texture[paths.Length];
 
@@ -54,7 +57,7 @@ namespace CMDR.Components
                 }
             }
 
-            AnimationData.InsertFrames(name, _, stepSize);
+            AnimationData.InsertAnimation(name, _, stepSize);
 
             Send();
         }
@@ -62,7 +65,7 @@ namespace CMDR.Components
 
         public Texture GetRender(long ticks)
         {
-            return Static ? ImgData : AnimationData.Get(ticks, currentState);
+            return Static ? ImgData : AnimationData.Get(ticks, currentAnimation);
         }
 
         public void Receive()
