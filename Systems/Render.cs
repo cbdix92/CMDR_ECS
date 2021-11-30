@@ -1,7 +1,6 @@
 ﻿using System;
 using GLFW;
 using OpenGL;
-using System.Collections.Generic;
 
 using CMDR.Components;
 
@@ -33,21 +32,21 @@ namespace CMDR.Systems
 			VAO = GL.GenVertexArray();
 			VBO = GL.GenBuffer();
 			
-			GL.BindBuffer(GLenum.ARRAY_BUFFER, VBO);
-			GL.BufferData(GLenum.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, GLenum.STATIC_DRAW);
+			GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
+			GL.BufferData(GL.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, GL.STATIC_DRAW);
 			
 			GL.BindVertexArray(VAO);
 			GL.EnableVertexAttribArray(0);
 			GL.VertexAttribPointer(0, 4, typeof(float), false, (void*)0);
 			
 			// Unbind VAO and VBO
-			GL.BindBuffer(GLenum.ARRAY_BUFFER, 0);
+			GL.BindBuffer(GL.ARRAY_BUFFER, 0);
 			GL.BindVertexArray(0);
 		}
 		
         internal static void ClearScreen()
         {
-            GL.Clear(BUFFER_MASK.COLOR_BUFFER_BIT | BUFFER_MASK.DEPTH_BUFFER_BIT);
+            GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
         }
 		
         internal static void ScreenBuffer(long ticks)
@@ -76,11 +75,11 @@ namespace CMDR.Systems
 				renderData.Shader.SetUniformMatrix4("model", model);
 				renderData.Shader.SetUniformVec4("color", renderData.Color);
 				
-				GL.ActiveTexture(GLenum.TEXTURE0);
+				GL.ActiveTexture(GL.TEXTURE0);
 				texture.Bind();
 				
 				GL.BindVertexArray(VAO);
-				GL.DrawArrays(GLenum.TRIANGLES, 0, 6);
+				GL.DrawArrays(GL.TRIANGLES, 0, 6);
 				GL.BindVertexArray(0);
 				
 				Debugger.DrawBoundingBox(gameObject);

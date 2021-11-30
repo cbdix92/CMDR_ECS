@@ -55,7 +55,6 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Components\Animator2D.cs" />
-    <Compile Include="Components\Common\Handlers.cs" />
     <Compile Include="Components\RenderData.cs" />
     <Compile Include="DataSys\ComponentTable.cs" />
     <Compile Include="Display.cs">
@@ -136,8 +135,6 @@
     <Compile Include="DataSys\ComponentCollection.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Common\IComponent.cs" />
-    <Compile Include="Components\Common\IProfiler.cs" />
-    <Compile Include="Components\Common\ParentList.cs" />
     <Compile Include="Components\Transform.cs" />
     <Compile Include="DataSys\Data.cs" />
     <Compile Include="GameObject.cs" />

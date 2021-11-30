@@ -12,7 +12,7 @@ namespace OpenGL
 
 		#region A
 		[DllImport(Opengl32, EntryPoint = "glActiveTexture", SetLastError = true)]
-		private static extern void _activeTexture(GLenum texture);
+		private static extern void _activeTexture(int texture);
 
         [DllImport(Opengl32, EntryPoint = "glAttachShader", SetLastError = true)]
         private static extern void _attachShader(uint program, uint shader);
@@ -21,10 +21,10 @@ namespace OpenGL
 
         #region B
         [DllImport(Opengl32, EntryPoint = "glBindBuffer", SetLastError = true)]
-        private static extern void _bindBuffer(GLenum target, uint buffer);
+        private static extern void _bindBuffer(int target, uint buffer);
 		
 		[DllImport(Opengl32, EntryPoint = "glBindTexture", SetLastError = true)]
-		private static extern void _bindTexture(GLenum target, uint texture);
+		private static extern void _bindTexture(int target, uint texture);
 		
 		[DllImport(Opengl32, EntryPoint = "glBindTextures", SetLastError = true)]
 		private static extern void _bindTextures(uint first, int count, void* textures);
@@ -33,13 +33,13 @@ namespace OpenGL
         private static extern void _bindVertexArray(uint array);
 
         [DllImport(Opengl32, EntryPoint = "glBufferData", SetLastError = true)]
-        private static extern void _bufferData(GLenum target, int size, void* data, GLenum usage);
+        private static extern void _bufferData(int target, int size, void* data, int usage);
         #endregion
 
         #region C
 
         [DllImport(Opengl32, EntryPoint = "glClear", SetLastError = true)]
-        private static extern void _clear(BUFFER_MASK mask);
+        private static extern void _clear(int mask);
 
         [DllImport(Opengl32, EntryPoint = "glClearColor", SetLastError = true)]
         private static extern void _clearColor(float red, float green, float blue, float alpha);
@@ -51,7 +51,7 @@ namespace OpenGL
         private static extern uint _createProgram();
 
         [DllImport(Opengl32, EntryPoint = "glCreateShader", SetLastError = true)]
-        private static extern uint _createShader(GLenum shaderType);
+        private static extern uint _createShader(int shaderType);
 
 
 
@@ -63,10 +63,10 @@ namespace OpenGL
 		private static extern void _disableVertexAttribArray(uint index);
 
 		[DllImport(Opengl32, EntryPoint = "glDrawArrays", SetLastError = true)]
-		private static extern void _drawArrays(GLenum mode, int first, int count);
+		private static extern void _drawArrays(int mode, int first, int count);
 		
 		[DllImport(Opengl32, EntryPoint = "glDrawElements", SetLastError = true)]
-		private static extern void _drawElements(GLenum mode, int count, Type type, void* indices);
+		private static extern void _drawElements(int mode, int count, Type type, void* indices);
 		
 		#endregion
 		
@@ -83,7 +83,7 @@ namespace OpenGL
 		private static extern void _genBuffers(int n, uint* buffers);
 
 		[BuildInfo(Opengl32, "glGenerateMipmap")]
-		internal static void _generateMipMap(GLenum target) { }
+		internal static void _generateMipMap(int target) { }
 
 		[DllImport(Opengl32, EntryPoint = "glGenTextures", SetLastError = true)]
 		private static extern void _genTextures(int n, uint* textures);
@@ -95,7 +95,7 @@ namespace OpenGL
 		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
 		[DllImport(Opengl32, EntryPoint = "getGetShaderiv", SetLastError = true)]
-		private static extern void _getShaderiv(uint shader, GLenum pname, int* param);
+		private static extern void _getShaderiv(uint shader, int pname, int* param);
 
 		[DllImport(Opengl32, EntryPoint = "glGetUniformfv", SetLastError = true)]
 		private static extern void _getUniformfv(uint program, int location, float* param);
@@ -121,7 +121,7 @@ namespace OpenGL
 		#region T
 		
 		[DllImport(Opengl32, EntryPoint = "glTexImage2D", SetLastError = true)]
-		private static extern void _texImage2D(GLenum target, int level, int internalformat, int width, int height, int border, GLenum format, Type type, void* data);
+		private static extern void _texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, void* data);
 
         #endregion
 

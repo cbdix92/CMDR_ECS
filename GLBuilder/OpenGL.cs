@@ -14,15 +14,15 @@ namespace OpenGL
 
         #region A
 
-		public static void ActiveTexture(GLenum texture) { _activeTexture(texture); }
+		public static void ActiveTexture(int texture) { _activeTexture(texture); }
         public static void AttachShader(uint program, uint shader) { _attachShader(program, shader); }
 
         #endregion
 
         #region B
-        public static void BindBuffer(GLenum target, uint buffer) { _bindBuffer(target, buffer); }
+        public static void BindBuffer(int target, uint buffer) { _bindBuffer(target, buffer); }
 
-        public static void BindTexture(GLenum target, uint texture){ _bindTexture(target, texture); }
+        public static void BindTexture(int target, uint texture){ _bindTexture(target, texture); }
 		
         public static void BindTextures(uint[] textures)
 		{
@@ -34,7 +34,7 @@ namespace OpenGL
 		
 		public static void BindVertexArray(uint array) { _bindVertexArray(array); }
 
-        public static void BufferData(GLenum target, int size, float[] data, GLenum usage) 
+        public static void BufferData(int target, int size, float[] data, int usage) 
 		{
 			fixed(float* ptr = &data[0])
             {
@@ -45,7 +45,7 @@ namespace OpenGL
         #endregion
 
         #region C
-        public static void Clear(BUFFER_MASK mask) { _clear(mask); }
+        public static void Clear(int mask) { _clear(mask); }
 
         public static void ClearColor(Color color) { _clearColor(color.R, color.G, color.B, color.A); }
 
@@ -53,7 +53,7 @@ namespace OpenGL
 
         public static uint CreateProgram() { return _createProgram(); }
 
-        public static uint CreateShader(GLenum shaderType) { return _createShader(shaderType); }
+        public static uint CreateShader(int shaderType) { return _createShader(shaderType); }
 
         #endregion
 		
@@ -62,9 +62,9 @@ namespace OpenGL
 		public static void DisableVertexAttribArray(uint index) { _disableVertexAttribArray(index); }
 
 
-		public static void DrawArrays(GLenum mode, int first, int count) { _drawArrays(mode, first, count); }
+		public static void DrawArrays(int mode, int first, int count) { _drawArrays(mode, first, count); }
 		
-		public static void DrawElements(GLenum mode, int count, float[] indices)
+		public static void DrawElements(int mode, int count, float[] indices)
 		{
 			fixed(float* id = &indices[0])
 			{
@@ -98,7 +98,7 @@ namespace OpenGL
             return buffers;
         }
 		
-		public static void GenerateMipMap(GLenum target) { _generateMipMap(target); }
+		public static void GenerateMipMap(int target) { _generateMipMap(target); }
 		public static uint GenTexture()
 		{
 			uint id;
@@ -131,7 +131,7 @@ namespace OpenGL
             return buffers;
         }
 		
-		public static void GetShaderiv(uint shader, GLenum pname, out int output)
+		public static void GetShaderiv(uint shader, int pname, out int output)
 		{
 			fixed(int* ptr = &output)
             {
@@ -193,14 +193,14 @@ namespace OpenGL
 		
 		#region T
 		
-		public static void TexImage2D(GLenum target, int level, int internalformat, int width, int height, GLenum format, float[] data)
+		public static void TexImage2D(int target, int level, int internalformat, int width, int height, int format, float[] data)
 		{
-			if (target == GLenum.TEXTURE_RECTANGLE || target == GLenum.PROXY_TEXTURE_RECTANGLE)
+			if (target == TEXTURE_RECTANGLE || target == PROXY_TEXTURE_RECTANGLE)
 				level = 0;
 			
 			fixed(float* ptr = &data[0])
 			{
-				_texImage2D(target, level, internalformat, width, height, 0, format, typeof(float), ptr);
+				_texImage2D(target, level, internalformat, width, height, 0, format, GL.FLOAT, ptr);
 			}
 		}
 
