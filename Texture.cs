@@ -41,6 +41,10 @@ namespace CMDR
 
         public Pixel GetPixel(int x, int y)
         {
+			// Adjust for zero based indexing and filter out negative numbers
+			x = Math.Max(0, --x);
+			y = Math.Max(0, --y);
+			
             if (x > Width || y > Height)
                 throw new ArgumentOutOfRangeException("The specified pixel is outside of the bounds of this texture.");
 
