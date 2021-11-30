@@ -204,6 +204,8 @@ namespace OpenGL
 			}
 		}
 
+		public static void TexParameteri(int target, int pname, int param) { _texParameteri(target, pname, param); }
+
         #endregion
 
         #region U
