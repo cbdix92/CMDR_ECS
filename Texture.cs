@@ -22,6 +22,16 @@ namespace CMDR
 			ID = GL.GenTexture();
 			GL.BindTexture(GL.TEXTURE_2D, ID);
 			GL.TexImage2D(GL.TEXTURE_2D, 0, 0, Width, Height, GL.RGBA, ColorData);
+
+            // Texture Wrapping settings
+            GL.TexParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
+            GL.TexParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
+
+            // Interpolation settings
+            GL.TexParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST);
+            GL.TexParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
+
+            // Generate MipMaps
 			GL.GenerateMipMap(GL.TEXTURE_2D);
 			
 			

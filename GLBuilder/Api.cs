@@ -123,9 +123,12 @@ namespace OpenGL
 		[DllImport(Opengl32, EntryPoint = "glTexImage2D", SetLastError = true)]
 		private static extern void _texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, void* data);
 
-        #endregion
+		[DllImport(Opengl32, EntryPoint = "glTexParameteri", SetLastError = true)]
+		private static extern void _texParameteri(int target, int pname, int param);
 
-        #region U
+		#endregion
+
+		#region U
 
 		[DllImport(Opengl32, EntryPoint = "glUniform3f", SetLastError = true)]
 		private static extern void _uniform3f(int location, float v0, float v1, float v2);
