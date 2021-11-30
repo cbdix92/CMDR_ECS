@@ -1,10 +1,34 @@
 using System;
 using System.IO;
 using OpenGL;
+using System.Collections.Generic;
 
 
 namespace CMDR
 {
+
+	internal static class ShaderManager
+    {
+		internal static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>();
+
+		/// <summary>
+		/// Determines whether shader has already been loaded previously.
+		/// </summary>
+		/// <param name="vert"> Path to vertex shader. </param>
+		/// <param name="frag"> Path to Fragment shader. </param>
+		/// <param name="shader"> Current shader instance that is attempting to load. </param>
+		/// <returns></returns>
+		internal static int Exist(string vert, string frag, ref Shader shader)
+        {
+			int hashKey = String.Concat(vert,frag).GetHashCode();
+			if(Shaders.ContainsKey(hashKey))
+            {
+				shader = Shaders[hashKey];
+				return hashKey;
+            }
+			return 0;
+        }
+    }
 	public struct Shader
 	{
 		uint ID;
@@ -13,6 +37,12 @@ namespace CMDR
 
 		public Shader(string pathVert, string pathFrag)
 		{
+			(ID, VertID, FragID) = (0, 0, 0);
+
+			// Check if this shader program has already been loaded
+			int hashKey = ShaderManager.Exist(pathVert, pathFrag, ref this);
+			if (hashKey != 0)
+				return;
 
 			// Shader IDs
 			VertID = GL.CreateShader(GL.VERTEX_SHADER);
@@ -41,7 +71,7 @@ namespace CMDR
 			GL.LinkProgram(ID);
 			CheckLinkErrors();
 
-
+			ShaderManager.Shaders.Add(hashKey, this);
 		}
 
 		public void CheckCompileErrors()
