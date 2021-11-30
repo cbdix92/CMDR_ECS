@@ -206,7 +206,17 @@ namespace OpenGL
 
 		public static void TexParameteri(int target, int pname, int param) { _texParameteri(target, pname, param); }
 
-        #endregion
+		public static void TexStorage2D(int target, int levels, int internalFormat, int width, int height) { _texStorage2D(target, levels, internalFormat, width, height);}
+        
+		public static void TexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, float[] pixels)
+		{
+			fixed(float* ptr = &pixels[0])
+			{
+				_texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, ptr)
+			}
+		}
+		
+		#endregion
 
         #region U
 
