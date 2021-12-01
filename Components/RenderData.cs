@@ -25,6 +25,7 @@ namespace CMDR.Components
         internal Animator2D AnimationData;
 
         public string currentAnimation;
+		
 
         public void FromFile(string src)
         {

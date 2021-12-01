@@ -9,6 +9,7 @@ namespace CMDR
 
 	internal static class ShaderManager
     {
+		
 		internal static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>();
 
 		/// <summary>

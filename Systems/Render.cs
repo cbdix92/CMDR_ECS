@@ -44,9 +44,6 @@ namespace CMDR.Systems
 			// Unbind VAO and VBO
 			GL.BindBuffer(GL.ARRAY_BUFFER, 0);
 			GL.BindVertexArray(0);
-
-			// Create Default Shader
-			DefaultShader = new Shader("", ""); // TODO.. Create vertex and frag shader files for the default shader program
 		}
 		
         internal static void ClearScreen()
