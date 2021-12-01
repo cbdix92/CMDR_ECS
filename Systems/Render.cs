@@ -79,6 +79,7 @@ namespace CMDR.Systems
 				
 				Matrix4 model = transform.GenerateModel();
 				
+				renderData.Shader.Use();
 				renderData.Shader.SetUniformMatrix4("model", model);
 				renderData.Shader.SetUniformMatrix4("projection", projection);
 				renderData.Shader.SetUniformVec4("color", renderData.Color);

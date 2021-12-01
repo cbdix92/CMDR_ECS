@@ -603,6 +603,11 @@ namespace CMDR
             (R, G, B, A) = (r, g, b, a);
         }
 		
+		public Color(Color color)
+		{
+			(R, G, B, A) = (color.R, color.G, color.B, color.A);
+		}
+		
 		public static Color HexToColor(int hex)
 		{
 			byte[] bytes = new byte[3];
