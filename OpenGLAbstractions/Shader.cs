@@ -24,16 +24,17 @@ namespace CMDR
 			if(Shaders.ContainsKey(hashKey))
             {
 				shader = Shaders[hashKey];
-				return hashKey;
+				return 0;
             }
-			return 0;
+			return hashKey;
         }
     }
+	
 	public struct Shader
 	{
-		uint ID;
-		uint VertID;
-		uint FragID;
+		uint ID { get; private set; }
+		uint VertID { get; private set; }
+		uint FragID { get; private set; }
 
 		public Shader(string pathVert, string pathFrag)
 		{
@@ -41,30 +42,28 @@ namespace CMDR
 
 			// Check if this shader program has already been loaded
 			int hashKey = ShaderManager.Exist(pathVert, pathFrag, ref this);
-			if (hashKey != 0)
+			if (hashKey == 0)
 				return;
 
-			// Shader IDs
+			// Shader IDs generation
 			VertID = GL.CreateShader(GL.VERTEX_SHADER);
 			FragID = GL.CreateShader(GL.FRAGMENT_SHADER);
 
-			// Read shader source code
+			// Read shaders source codes
 			var vertRead = File.ReadAllText(pathVert);
 			var fragRead = File.ReadAllText(pathFrag);
 
-			//temp debug
-			ID = 0;
-			VertID = 0;
-			FragID = 0;
-
+			// Vertex Shader
 			GL.ShaderSource(VertID, vertRead);
 			GL.CompileShader(VertID);
 			CheckCompileErrors();
 
+			// Frag Shader
 			GL.ShaderSource(FragID, fragRead);
 			GL.CompileShader(FragID);
 			CheckCompileErrors();
 
+			
 			ID = GL.CreateProgram();
 			GL.AttachShader(ID, VertID);
 			GL.AttachShader(ID, FragID);
