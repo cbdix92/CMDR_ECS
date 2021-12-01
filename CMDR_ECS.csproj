@@ -154,6 +154,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Shaders\FragDefault.frag" />
+    <None Include="Shaders\VertDefault.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GLFW\Strings.resx" />
