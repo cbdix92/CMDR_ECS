@@ -32,9 +32,9 @@ namespace CMDR
 	
 	public struct Shader
 	{
-		uint ID { get; private set; }
-		uint VertID { get; private set; }
-		uint FragID { get; private set; }
+		public uint ID { get; private set; }
+		public uint VertID { get; private set; }
+		public uint FragID { get; private set; }
 
 		public Shader(string pathVert, string pathFrag)
 		{

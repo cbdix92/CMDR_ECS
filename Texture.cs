@@ -32,7 +32,9 @@ namespace CMDR
             GL.TexParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
 
             // Generate MipMaps
-			GL.GenerateMipMap(GL.TEXTURE_2D);
+            // Doesn't work yet due to TEXTURE_MAG_FILTER setting.
+            // Will fix this in the future.
+            // GL.GenerateMipMap(GL.TEXTURE_2D);
 			
 			
 			// Unbind Texture when finished

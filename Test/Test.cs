@@ -54,7 +54,7 @@ namespace Test
             Collider = TestScene.Generate<Collider>();
             Transform = TestScene.Generate<Transform>();
             RenderData = TestScene.Generate<RenderData>();
-            RenderData.CreateAnimation2D("Test", paths, 80);
+            RenderData.CreateAnimation("Test", paths, 80);
             RenderData.FromFile("assets/character/ninja_male_assets/Run__000.png");
             Collider.SetBounds(RenderData);
             Collider.GenerateColData("assets/character/ninja_male_assets/Run__000.png");

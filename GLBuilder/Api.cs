@@ -129,7 +129,7 @@ namespace OpenGL
 		[BuildInfo(Opengl32, "glTexStorage2D")]
 		internal static void _texStorage2D(int target, int levels, int internalFormat, int width, int height){ }
 
-		[DllImport(Opengl32, EntryPoint = "glTexSubImage2D", SetLastError = true]
+		[DllImport(Opengl32, EntryPoint = "glTexSubImage2D", SetLastError = true)]
 		private static extern void _texSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, void* pixels);
 		#endregion
 

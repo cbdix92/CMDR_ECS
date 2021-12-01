@@ -212,7 +212,7 @@ namespace OpenGL
 		{
 			fixed(float* ptr = &pixels[0])
 			{
-				_texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, ptr)
+				_texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, ptr);
 			}
 		}
 		

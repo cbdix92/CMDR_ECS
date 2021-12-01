@@ -44,9 +44,9 @@ namespace CMDR.Systems
 			// Unbind VAO and VBO
 			GL.BindBuffer(GL.ARRAY_BUFFER, 0);
 			GL.BindVertexArray(0);
-			
+
 			// Create Default Shader
-			DefaultShader = new Shader("", "") // TODO.. Create vertex and frag shader files for the default shader program
+			DefaultShader = new Shader("", ""); // TODO.. Create vertex and frag shader files for the default shader program
 		}
 		
         internal static void ClearScreen()
@@ -58,6 +58,8 @@ namespace CMDR.Systems
         {
 
             Debugger.Draw(ticks);
+
+			Matrix4 projection = Camera.Projection;
 
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();
@@ -78,6 +80,7 @@ namespace CMDR.Systems
 				Matrix4 model = transform.GenerateModel();
 				
 				renderData.Shader.SetUniformMatrix4("model", model);
+				renderData.Shader.SetUniformMatrix4("projection", projection);
 				renderData.Shader.SetUniformVec4("color", renderData.Color);
 				
 				GL.ActiveTexture(GL.TEXTURE0);
