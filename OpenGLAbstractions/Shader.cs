@@ -108,6 +108,10 @@ namespace CMDR
 		{
 			GL.Uniform4f(GL.GetUniformLocation(ID, name), vec);
 		}
+		public void SetUniformVec4(string name, Color color)
+        {
+			GL.Uniform4f(GL.GetUniformLocation(ID, name), color);
+        }
 
 		public void Use()
 		{

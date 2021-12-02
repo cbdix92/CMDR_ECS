@@ -601,7 +601,35 @@ namespace CMDR
         {
             (R, G, B, A) = (r, g, b, a);
         }
-		
+
+		public float this[int index]
+		{
+			get
+			{
+				if (index == 0)
+					return R;
+				else if (index == 1)
+					return G;
+				else if (index == 2)
+					return B;
+				else if (index == 3)
+					return A;
+				throw new IndexOutOfRangeException($"index of {index} is out of range of Color(RGBA)!");
+			}
+			set
+			{
+				if (index == 0)
+					R = value;
+				else if (index == 1)
+					G = value;
+				else if (index == 2)
+					B = value;
+				else if (index == 3)
+					A = value;
+				throw new IndexOutOfRangeException($"index of {index} is out of range of Color(RGBA)!");
+			}
+		}
+
 		public static Color HexToColor(int hex)
 		{
 			byte[] bytes = new byte[3];

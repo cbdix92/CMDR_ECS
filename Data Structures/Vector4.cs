@@ -37,7 +37,7 @@ namespace CMDR
                     return Z;
                 else if (index == 3)
                     return W;
-                throw new IndexOutOfRangeException($"index of {index} is out of range of Vector4!");
+                throw new IndexOutOfRangeException($"index of {index} is out of range of Vector4(XYZW)!");
             }
             set
             {
@@ -49,7 +49,7 @@ namespace CMDR
                     Z = value;
                 else if (index == 3)
                     W = value;
-                throw new IndexOutOfRangeException($"index of {index} is out of range of Vector4!");
+                throw new IndexOutOfRangeException($"index of {index} is out of range of Vector4(XYZW)!");
             }
         }
 

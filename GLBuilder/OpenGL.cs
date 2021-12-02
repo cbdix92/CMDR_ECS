@@ -227,8 +227,13 @@ namespace OpenGL
 		
 		public static void Uniform4f(int location, Vector4 vec)
 		{
-			_uniform4f(location, vec[0], vec[1], vec[2], vec[3]);
+			_uniform4f(location, vec.X, vec.Y, vec.Z, vec.W);
 		}
+
+		public static void Uniform4f(int location, Color color)
+        {
+			_uniform4f(location, color.R, color.G, color.B, color.A);
+        }
 		
         public static void UniformMatrix4fv(int location, int count, bool transpose, Matrix4 matrix)
         {
