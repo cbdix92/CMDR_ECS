@@ -18,14 +18,13 @@ namespace CMDR.Components
 
         public Shader Shader;
 
-        public Vector4 Color;
+        public Color Color;
 
         public Texture ImgData { get; internal set; }
 
         internal Animator2D AnimationData;
 
         public string currentAnimation;
-		
 
         public void FromFile(string src)
         {

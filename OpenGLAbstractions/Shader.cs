@@ -21,13 +21,13 @@ namespace CMDR
 		/// <returns></returns>
 		internal static int Exist(string vert, string frag, ref Shader shader)
         {
-			int hashKey = String.Concat(vert,frag).GetHashCode();
-			if(Shaders.ContainsKey(hashKey))
+			int key = String.Concat(vert,frag).GetHashCode();
+			if(Shaders.ContainsKey(key))
             {
-				shader = Shaders[hashKey];
+				shader = Shaders[key];
 				return 0;
             }
-			return hashKey;
+			return key;
         }
     }
 	
@@ -37,13 +37,14 @@ namespace CMDR
 		public uint VertID { get; private set; }
 		public uint FragID { get; private set; }
 
+
 		public Shader(string pathVert, string pathFrag)
 		{
 			(ID, VertID, FragID) = (0, 0, 0);
 
 			// Check if this shader program has already been loaded
-			int hashKey = ShaderManager.Exist(pathVert, pathFrag, ref this);
-			if (hashKey == 0)
+			int key = ShaderManager.Exist(pathVert, pathFrag, ref this);
+			if (key == 0)
 				return;
 
 			// Shader IDs generation
@@ -71,7 +72,7 @@ namespace CMDR
 			GL.LinkProgram(ID);
 			CheckLinkErrors();
 
-			ShaderManager.Shaders.Add(hashKey, this);
+			ShaderManager.Shaders.Add(key, this);
 		}
 
 		public void CheckCompileErrors()

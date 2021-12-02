@@ -15,8 +15,6 @@ namespace CMDR.Systems
 		internal static uint VBO;
 		internal static uint VAO;
 		
-		internal static Shader DefaultShader;
-		
 		
 		internal unsafe static void Init()
 		{
