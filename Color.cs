@@ -38,7 +38,6 @@ namespace CMDR
 		public static readonly Color Granite                   = HexToColor(0x837E7C);
 		public static readonly Color Gray                      = HexToColor(0x808080);
 		public static readonly Color BattleshipGray            = HexToColor(0x848482);
-		public static readonly Color DarkGray                  = HexToColor(0xA9A9A9);
 		public static readonly Color GrayCloud                 = HexToColor(0xB6B6B4);
 		public static readonly Color Silver                    = HexToColor(0xC0C0C0);
 		public static readonly Color PaleSilver                = HexToColor(0xC9C0BB);
@@ -603,19 +602,14 @@ namespace CMDR
             (R, G, B, A) = (r, g, b, a);
         }
 		
-		public Color(Color color)
-		{
-			(R, G, B, A) = (color.R, color.G, color.B, color.A);
-		}
-		
 		public static Color HexToColor(int hex)
 		{
 			byte[] bytes = new byte[3];
-			for(int i = 1; i >= 3; i++;)
+			for(int i = 1; i >= 3; i++)
 			{
-				bytes[i-1] = ((hex >> (8*i)) & 0xff)
+				bytes[i - 1] = (byte)((hex >> (8 * i)) & 0xff);
 			}
-			return new Color(bytes[0]/255f, bytes[1]/255f, bytes[2]/255f, 1.0);
+			return new Color(bytes[0]/255f, bytes[1]/255f, bytes[2]/255f, 1.0f);
 		}
 
         #region COLOR_OPERATORS
