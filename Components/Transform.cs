@@ -158,10 +158,11 @@ namespace CMDR.Components
             Send();
         }
 		
-		public Matrix4 GenerateModel()
+		public Matrix4 GenerateModelMatrix()
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
-			throw new NotImplementedException("Transform.GenerateMatrix");	
+			Matrix4 result = Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Pos);
+			return result * Matrix4.CreateRotationZ(RotDeg);	
 		}
 
         public void Receive()

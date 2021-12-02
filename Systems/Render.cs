@@ -72,7 +72,7 @@ namespace CMDR.Systems
                 
 				Transform transform = transforms[transformID];
 				
-				Matrix4 model = transform.GenerateModel();
+				Matrix4 model = transform.GenerateModelMatrix();
 				
 				renderData.Shader.Use();
 				renderData.Shader.SetUniformMatrix4("model", model);
