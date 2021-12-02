@@ -166,6 +166,16 @@ namespace CMDR
                 M30, M31, M32, M33
             };
 		}
+		
+		public float[] ToArrayColumnMajor()
+		{
+			return new float[]{
+				M00, M10, M20, M30,
+				M01, M11, M21, M31,
+				M02, M12, M22, M32,
+				M03, M13, M23, M33
+			};
+		}
 
         public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
         {

@@ -160,8 +160,8 @@ namespace CMDR.Components
 		
 		public Matrix4 GenerateModel()
 		{
-			// Generate the model matrix with appropiate Translate, Rotate and Scale. In that order.
-			throw new NotImplementedException("Transform.GenerateMatrix");
+			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
+			throw new NotImplementedException("Transform.GenerateMatrix");	
 		}
 
         public void Receive()

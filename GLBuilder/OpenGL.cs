@@ -237,7 +237,7 @@ namespace OpenGL
 		
         public static void UniformMatrix4fv(int location, int count, bool transpose, Matrix4 matrix)
         {
-            fixed(float* ptr = &matrix.ToArray()[0])
+            fixed(float* ptr = &matrix.ToArrayColumnMajor()[0])
             {
                 _uniformMatrix4fv(location, count, transpose, ptr);
             }
