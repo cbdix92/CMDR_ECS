@@ -7,10 +7,12 @@ using System.Collections.Generic;
 namespace CMDR
 {
 
-	internal static class ShaderManager
+	internal static class ShaderLoader
     {
 		
-		internal static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>();
+		private static Dictionary<int, Shader> _shaders = new Dictionary<int, Shader>();
+		private static Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
+		private static Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
 
 		/// <summary>
 		/// Determines whether shader has already been loaded previously.
@@ -19,63 +21,58 @@ namespace CMDR
 		/// <param name="frag"> Path to Fragment shader. </param>
 		/// <param name="shader"> Current shader instance that is attempting to load. </param>
 		/// <returns></returns>
-		internal static int Exist(string vert, string frag, ref Shader shader)
+		internal static Shader Load(string vertPath, string fragPath)
         {
-			int key = String.Concat(vert,frag).GetHashCode();
-			if(Shaders.ContainsKey(key))
-            {
-				shader = Shaders[key];
-				return 0;
-            }
-			return key;
-        }
-    }
-	
-	public struct Shader
-	{
-		public uint ID { get; private set; }
-		public uint VertID { get; private set; }
-		public uint FragID { get; private set; }
-
-
-		public Shader(string pathVert, string pathFrag)
-		{
-			(ID, VertID, FragID) = (0, 0, 0);
-
-			// Check if this shader program has already been loaded
-			int key = ShaderManager.Exist(pathVert, pathFrag, ref this);
-			if (key == 0)
-				return;
-
-			// Shader IDs generation
-			VertID = GL.CreateShader(GL.VERTEX_SHADER);
-			FragID = GL.CreateShader(GL.FRAGMENT_SHADER);
-
-			// Read shaders source codes
-			var vertRead = File.ReadAllText(pathVert);
-			var fragRead = File.ReadAllText(pathFrag);
-
-			// Vertex Shader
-			GL.ShaderSource(VertID, vertRead);
-			GL.CompileShader(VertID);
-			CheckCompileErrors();
-
-			// Frag Shader
-			GL.ShaderSource(FragID, fragRead);
-			GL.CompileShader(FragID);
-			CheckCompileErrors();
-
+			int vertKey = vert.GetHashCode();
+			int fragKey = frag.GetHashCode();
+			int programKey = String.Concat(vertPath,fragPath).GetHashCode();
 			
-			ID = GL.CreateProgram();
-			GL.AttachShader(ID, VertID);
-			GL.AttachShader(ID, FragID);
-			GL.LinkProgram(ID);
-			CheckLinkErrors();
-
-			ShaderManager.Shaders.Add(key, this);
+			if(_shaders.ContainsKey(programKey))
+            {
+				return _shaders[programKey];
+            }
+			
+			uint vertID = _vertIDs.Contains(vertKey) ? _vertIDs[vertKey] : ShadeCache(GL.VERTEX_SHADER, vertKey, vertPath);
+			uint fragID = _fragIDs.Contains(fragKey) ? _fragIDs[fragKey] : ShadeCache(GL.FRAGMENT_SHADER, fragKey, fragPath);
+			
+			return ProgramCache(programKey, vertID, fragID);
+        }
+		
+		private static uint ShaderCache(int shaderType, int key, string path)
+		{
+			uint id = GL.CreateShader(shaderType);
+			
+			var read = File.ReadAllText(path);
+			
+			GL.ShaderSource(shaderType, read);
+			GL.CompileShader(shaderType);
+			CheckCompileErrors();
+			
+			switch(shaderType)
+			{
+				case GL.VERTEX_SHADER:
+					_vertIDs.Add(key, id);
+				
+				case GL.FRAGMENT_SHADER:
+					_fragIDs.Add(key, id);
+			}
+			return id;
 		}
-
-		public void CheckCompileErrors()
+		
+		private static Shader ProgramCache(int key, uint vertID, uint fragID)
+		{
+			uint id = GL.CreateProgram();
+			GL.AttachShader(id, vertID);
+			GL.AttachShader(id, fragID);
+			GL.LinkProgram(id);
+			CheckLinkErrors();
+			
+			Shader shader = new Shader(id, vertID, fragID);
+			_shaders.Add(key, shader);
+			return shader;
+		}
+		
+		private void CheckCompileErrors()
 		{
 			GL.GetShaderiv(ID, GL.COMPILE_STATUS, out int compiled);
 
@@ -84,14 +81,27 @@ namespace CMDR
 				throw new Exception(GL.GetShaderInfoLog(ID));
 			}
 		}
-
-		public void CheckLinkErrors()
+		
+		private void CheckLinkErrors()
 		{
 			GL.GetShaderiv(ID, GL.LINK_STATUS, out int linked);
 			if (linked == 0)
 			{
 				throw new Exception(GL.GetShaderInfoLog(ID));
 			}
+		}
+    }
+	
+	public struct Shader
+	{
+		public readonly uint ID;
+		public readonly uint VertID;
+		public readonly uint FragID;
+
+
+		internal Shader(uint id, uint vertID, uint fragID)
+		{
+			(ID, VertID, FragID) = (id, vertID, fragID);
 		}
 
 		public void SetUniformMatrix4(string name, Matrix4 matrix)

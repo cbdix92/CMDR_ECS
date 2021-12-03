@@ -13,6 +13,7 @@ namespace CMDR
 
         #region CONSTANTS
 
+		public static readonly Color Transparent			   = new Color(0);
         public static readonly Color Black                     = HexToColor(0x000000);
 		public static readonly Color Night                     = HexToColor(0x0C090A);
 		public static readonly Color Charcoal                  = HexToColor(0x34282C);
