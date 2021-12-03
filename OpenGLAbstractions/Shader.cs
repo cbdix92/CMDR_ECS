@@ -7,27 +7,27 @@ using System.Collections.Generic;
 namespace CMDR
 {
 
-	internal static class ShaderLoader
+	public static class ShaderLoader
     {
 		
-		private static Dictionary<int, Shader> _shaders = new Dictionary<int, Shader>();
+		public static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>() { get; private set; }
 		private static Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
 		private static Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
 
 		
-		internal static Shader Load(string vertPath, string fragPath)
+		public static Shader Load(string vertPath, string fragPath)
         {
 			int vertKey = vert.GetHashCode();
 			int fragKey = frag.GetHashCode();
 			int programKey = String.Concat(vertPath,fragPath).GetHashCode();
 			
-			if(_shaders.ContainsKey(programKey))
+			if(Shaders.ContainsKey(programKey))
             {
-				return _shaders[programKey];
+				return Shaders[programKey];
             }
 			
-			uint vertID = _vertIDs.Contains(vertKey) ? _vertIDs[vertKey] : ShadeCache(GL.VERTEX_SHADER, vertKey, vertPath);
-			uint fragID = _fragIDs.Contains(fragKey) ? _fragIDs[fragKey] : ShadeCache(GL.FRAGMENT_SHADER, fragKey, fragPath);
+			uint vertID = _vertIDs.Contains(vertKey) ? _vertIDs[vertKey] : ShaderCache(GL.VERTEX_SHADER, vertKey, vertPath);
+			uint fragID = _fragIDs.Contains(fragKey) ? _fragIDs[fragKey] : ShaderCache(GL.FRAGMENT_SHADER, fragKey, fragPath);
 			
 			return ProgramCache(programKey, vertID, fragID);
         }
@@ -62,7 +62,7 @@ namespace CMDR
 			CheckLinkErrors();
 			
 			Shader shader = new Shader(id, vertID, fragID);
-			_shaders.Add(key, shader);
+			Shaders.Add(key, shader);
 			return shader;
 		}
 		
