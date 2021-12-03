@@ -16,7 +16,7 @@ namespace CMDR.Components
         {
             get
             {
-                return _static == 1 ? true : false;
+                return _static == 1;
             }
             set
             {

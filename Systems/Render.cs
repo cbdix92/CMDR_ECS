@@ -62,15 +62,12 @@ namespace CMDR.Systems
 
             foreach(SGameObject gameObject in gameObjects)
             {
-
-				int renderDataID = gameObject.Get<RenderData>();
-				int transformID = gameObject.Get<Transform>();
                 
-				RenderData renderData = renderables[renderDataID];
+				Transform transform = transforms[gameObject.Get<Transform>()];
+				RenderData renderData = renderables[gameObject.Get<RenderData>()];
                 
 				Texture texture = renderData.GetRender(ticks);
                 
-				Transform transform = transforms[transformID];
 				
 				Matrix4 model = transform.GenerateModelMatrix();
 				
