@@ -14,13 +14,7 @@ namespace CMDR
 		private static Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
 		private static Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
 
-		/// <summary>
-		/// Determines whether shader has already been loaded previously.
-		/// </summary>
-		/// <param name="vert"> Path to vertex shader. </param>
-		/// <param name="frag"> Path to Fragment shader. </param>
-		/// <param name="shader"> Current shader instance that is attempting to load. </param>
-		/// <returns></returns>
+		
 		internal static Shader Load(string vertPath, string fragPath)
         {
 			int vertKey = vert.GetHashCode();
