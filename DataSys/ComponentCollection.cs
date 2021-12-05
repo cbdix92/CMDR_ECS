@@ -25,19 +25,20 @@ namespace CMDR
         {
             if (Count == _data.Length)
                 Array.Resize(ref _data, _data.Length + Data.StorageScale);
+
+            _data[Count++] = component;
+            component.Init();
             
-            _data[Count] = component;
-            
-            Count++;
-            return component;// Count - 1;
+            return component;
         }
         public void Remove(int component)
         {
             // The last component in the array will overwrite the one that we want to remove.
-            _data[component] = _data[Count--];
+            _data[component] = _data[--Count];
 
             // Tell the moved components parent of it's new position
-            SceneManager.ActiveScene.GameObjects[_data[component].Parent].ComponentMoved(typeof(T), Count);
+            int parent = _data[component].Parent;
+            SceneManager.ActiveScene.GameObjects[parent].ComponentMoved(typeof(T), Count);
         }
 
         public void Update(T component)

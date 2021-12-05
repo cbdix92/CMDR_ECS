@@ -57,6 +57,11 @@ namespace CMDR.Components
 				Send();
 			}
 		}
+		
+		public void Init()
+        {
+
+        }
 		public void SetBounds(RenderData renderData)
         {
 			Receive();

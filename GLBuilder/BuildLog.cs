@@ -4,6 +4,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using CMDR;
 
 namespace OpenGL
 {
@@ -37,6 +38,13 @@ namespace OpenGL
             using (StreamWriter SR = new StreamWriter(_logPath, true, Encoding.UTF8))
             {
                 SR.WriteLine(error);
+            }
+        }
+        internal static void LogMatrix4(Matrix4 matrix, string name)
+        {
+            using (StreamWriter sr = new StreamWriter(_logPath, true, Encoding.UTF8))
+            {
+                sr.WriteLine("Name:"+name+"\n"+matrix.ToString());
             }
         }
     }

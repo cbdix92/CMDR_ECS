@@ -26,6 +26,11 @@ namespace CMDR.Components
 
         public string currentAnimation;
 
+        public void Init()
+        {
+
+        }
+
         public void FromFile(string src)
         {
             Receive();

@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenGL;
 
 namespace CMDR.Components
 {
@@ -14,10 +15,7 @@ namespace CMDR.Components
         private int _static;
         public bool Static
         {
-            get
-            {
-                return _static == 1;
-            }
+            get => _static == 1;
             set
             {
                 Receive();
@@ -27,35 +25,35 @@ namespace CMDR.Components
         }
 
         #region POSITION_PROPERTIES
-		public Vector3 Pos;
+		private Vector3 _pos;
 		
         public float X
         {
-            get => Pos.X;
+            get => _pos.X;
             internal set
             {
                 Receive();
-                Pos.X = value;
+                _pos.X = value;
                 Send();
             }
         }
         public float Y
         {
-            get => Pos.Y;
+            get => _pos.Y;
             internal set
             {
                 Receive();
-                Pos.Y = value;
+                _pos.Y = value;
                 Send();
             }
         }
         public float Z
         {
-            get => Pos.Z;
+            get => _pos.Z;
             internal set
             {
                 Receive();
-                Pos.Z = value;
+                _pos.Z = value;
                 Send();
             }
         }
@@ -106,64 +104,83 @@ namespace CMDR.Components
 
         #region SCALE_PROPERTIES
 		
-		public Vector3 Scale;
+		private Vector3 _scale;
 		
 		public float Xscale
 		{
-			get => Scale.X;
+			get => _scale.X;
 			set
 			{
 				Receive();
-				Scale.X = value;
+				_scale.X = value;
 				Send();
 			}
 		}
 		
 		public float Yscale
 		{
-			get => Scale.Y;
+			get => _scale.Y;
 			set
 			{
 				Receive();
-				Scale.Y = value;
+				_scale.Y = value;
 				Send();
 			}
 		}
 		
 		public float Zscale
 		{
-			get => Scale.Z;
+			get => _scale.Z;
 			set
 			{
 				Receive();
-				Scale.Z = value;
+				_scale.Z = value;
 				Send();
 			}
 		}
         #endregion
 
 
+        public void Init()
+        {
+            Xscale = 1;
+            Yscale = 1;
+            Zscale = 1;
+        }
         public void Move(float x, float y)
         {
-            Receive();
             X += x;
-            Y += y;
-            Send();   
+            Y += y;   
         }
         public void Teleport(float x, float y)
         {
-            Receive();
             X = x;
             Y = y;
-            Send();
+        }
+        public void Scale(float n)
+        {
+            (Xscale, Yscale, Zscale) = (n, n, n);
         }
 		
-		public Matrix4 GenerateModelMatrix()
+		public Matrix4 GenerateModelMatrix1()
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
-			Matrix4 result = Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Pos);
-			return result * Matrix4.CreateRotationZ(RotDeg);	
+			Matrix4 result = Matrix4.CreateScale(_scale) * Matrix4.CreateTranslation(_pos);
+            return result * Matrix4.CreateRotationZ(RotDeg);	
 		}
+
+        public Matrix4 GenerateModelMatrix()
+        {
+            Matrix4 scale = Matrix4.CreateScale(_scale);
+            Matrix4 trans = Matrix4.CreateTranslation(_pos);
+            Matrix4 rot = Matrix4.CreateRotationZ(RotDeg);
+
+            Log.LogMatrix4(scale,"Scale");
+            Log.LogMatrix4(trans, "Translation");
+            Log.LogMatrix4(rot, "RotationZ");
+            Log.LogMatrix4(scale * trans * rot, "Result");
+            return scale * trans * rot;
+        }
 
         public void Receive()
         {

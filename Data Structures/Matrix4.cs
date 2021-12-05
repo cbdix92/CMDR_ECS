@@ -120,25 +120,25 @@ namespace CMDR
         {
             Matrix4 result = new Matrix4
             {
-                M00 = mat1.M00 * mat2.M00 + mat1.M01 * mat2.M10 + mat1.M02 * mat2.M20 + mat1.M03 * mat2.M30,
-                M01 = mat1.M00 * mat2.M01 + mat1.M01 * mat2.M11 + mat1.M02 * mat2.M21 + mat1.M03 * mat2.M31,
-                M02 = mat1.M00 * mat2.M02 + mat1.M01 * mat2.M12 + mat1.M02 * mat2.M22 + mat1.M03 * mat2.M32,
-                M03 = mat1.M00 * mat2.M03 + mat1.M01 * mat2.M13 + mat1.M02 * mat2.M23 + mat1.M03 * mat2.M33,
+                M00 = (mat1.M00 * mat2.M00) + (mat1.M01 * mat2.M10) + (mat1.M02 * mat2.M20) + (mat1.M03 * mat2.M30),
+                M01 = (mat1.M00 * mat2.M01) + (mat1.M01 * mat2.M11) + (mat1.M02 * mat2.M21) + (mat1.M03 * mat2.M31),
+                M02 = (mat1.M00 * mat2.M02) + (mat1.M01 * mat2.M12) + (mat1.M02 * mat2.M22) + (mat1.M03 * mat2.M32),
+                M03 = (mat1.M00 * mat2.M03) + (mat1.M01 * mat2.M13) + (mat1.M02 * mat2.M23) + (mat1.M03 * mat2.M33),
 
-                M10 = mat1.M10 * mat2.M00 + mat1.M11 * mat2.M10 + mat1.M12 * mat2.M20 + mat1.M13 * mat2.M30,
-                M11 = mat1.M10 * mat2.M01 + mat1.M11 * mat2.M11 + mat1.M12 * mat2.M21 + mat1.M13 * mat2.M31,
-                M12 = mat1.M10 * mat2.M02 + mat1.M11 * mat2.M12 + mat1.M12 * mat2.M22 + mat1.M13 * mat2.M32,
-                M13 = mat1.M10 * mat2.M03 + mat1.M11 * mat2.M13 + mat1.M12 * mat2.M23 + mat1.M13 * mat2.M33,
+                M10 = (mat1.M10 * mat2.M00) + (mat1.M11 * mat2.M10) + (mat1.M12 * mat2.M20) + (mat1.M13 * mat2.M30),
+                M11 = (mat1.M10 * mat2.M01) + (mat1.M11 * mat2.M11) + (mat1.M12 * mat2.M21) + (mat1.M13 * mat2.M31),
+                M12 = (mat1.M10 * mat2.M02) + (mat1.M11 * mat2.M12) + (mat1.M12 * mat2.M22) + (mat1.M13 * mat2.M32),
+                M13 = (mat1.M10 * mat2.M03) + (mat1.M11 * mat2.M13) + (mat1.M12 * mat2.M23) + (mat1.M13 * mat2.M33),
 
-                M20 = mat1.M20 * mat2.M00 + mat1.M21 * mat2.M10 + mat1.M22 * mat2.M20 + mat1.M23 * mat2.M30,
-                M21 = mat1.M20 * mat2.M01 + mat1.M21 * mat2.M11 + mat1.M22 * mat2.M21 + mat1.M23 * mat2.M31,
-                M22 = mat1.M20 * mat2.M02 + mat1.M21 * mat2.M12 + mat1.M22 * mat2.M22 + mat1.M23 * mat2.M32,
-                M23 = mat1.M20 * mat2.M03 + mat1.M21 * mat2.M13 + mat1.M22 * mat2.M23 + mat1.M23 * mat2.M33,
+                M20 = (mat1.M20 * mat2.M00) + (mat1.M21 * mat2.M10) + (mat1.M22 * mat2.M20) + (mat1.M23 * mat2.M30),
+                M21 = (mat1.M20 * mat2.M01) + (mat1.M21 * mat2.M11) + (mat1.M22 * mat2.M21) + (mat1.M23 * mat2.M31),
+                M22 = (mat1.M20 * mat2.M02) + (mat1.M21 * mat2.M12) + (mat1.M22 * mat2.M22) + (mat1.M23 * mat2.M32),
+                M23 = (mat1.M20 * mat2.M03) + (mat1.M21 * mat2.M13) + (mat1.M22 * mat2.M23) + (mat1.M23 * mat2.M33),
 
-                M30 = mat1.M30 * mat2.M00 + mat1.M31 * mat2.M10 + mat1.M32 * mat2.M20 + mat1.M33 * mat2.M30,
-                M31 = mat1.M30 * mat2.M01 + mat1.M31 * mat2.M11 + mat1.M32 * mat2.M21 + mat1.M33 * mat2.M31,
-                M32 = mat1.M30 * mat2.M02 + mat1.M31 * mat2.M12 + mat1.M32 * mat2.M22 + mat1.M33 * mat2.M32,
-                M33 = mat1.M30 * mat2.M03 + mat1.M31 * mat2.M13 + mat1.M32 * mat2.M23 + mat1.M33 * mat2.M33
+                M30 = (mat1.M30 * mat2.M00) + (mat1.M31 * mat2.M10) + (mat1.M32 * mat2.M20) + (mat1.M33 * mat2.M30),
+                M31 = (mat1.M30 * mat2.M01) + (mat1.M31 * mat2.M11) + (mat1.M32 * mat2.M21) + (mat1.M33 * mat2.M31),
+                M32 = (mat1.M30 * mat2.M02) + (mat1.M31 * mat2.M12) + (mat1.M32 * mat2.M22) + (mat1.M33 * mat2.M32),
+                M33 = (mat1.M30 * mat2.M03) + (mat1.M31 * mat2.M13) + (mat1.M32 * mat2.M23) + (mat1.M33 * mat2.M33)
             };
 
             return result;
@@ -254,8 +254,12 @@ namespace CMDR
 			result.Row2.Z = z;
 			return result;
 		}
-		
-		public bool Equals(Matrix4 other)
+
+        public override string ToString()
+        {
+            return $"{M00}, {M10}, {M20}, {M30},\n{M01}, {M11}, {M21}, {M31},\n{M02}, {M12}, {M22}, {M32},\n{M03}, {M13}, {M23}, {M33}\n";
+        }
+        public bool Equals(Matrix4 other)
 		{
 			return Row0.Equals(other.Row0) && Row1.Equals(other.Row1) && Row2.Equals(other.Row2) && Row3.Equals(other.Row3);
 		}

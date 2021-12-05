@@ -11,6 +11,8 @@ namespace CMDR.Components
 
         void Receive();
         void Send();
+
+        void Init();
     }
     public interface IComponent<T> : IComponent { }
 }

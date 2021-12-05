@@ -9,16 +9,15 @@ namespace CMDR
 
 	public static class ShaderLoader
     {
-		
-		public static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>() { get; private set; }
+
+		public static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>();
 		private static Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
 		private static Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
-
 		
 		public static Shader Load(string vertPath, string fragPath)
         {
-			int vertKey = vert.GetHashCode();
-			int fragKey = frag.GetHashCode();
+			int vertKey = vertPath.GetHashCode();
+			int fragKey = fragPath.GetHashCode();
 			int programKey = String.Concat(vertPath,fragPath).GetHashCode();
 			
 			if(Shaders.ContainsKey(programKey))
@@ -26,8 +25,8 @@ namespace CMDR
 				return Shaders[programKey];
             }
 			
-			uint vertID = _vertIDs.Contains(vertKey) ? _vertIDs[vertKey] : ShaderCache(GL.VERTEX_SHADER, vertKey, vertPath);
-			uint fragID = _fragIDs.Contains(fragKey) ? _fragIDs[fragKey] : ShaderCache(GL.FRAGMENT_SHADER, fragKey, fragPath);
+			uint vertID = _vertIDs.ContainsKey(vertKey) ? _vertIDs[vertKey] : ShaderCache(GL.VERTEX_SHADER, vertKey, vertPath);
+			uint fragID = _fragIDs.ContainsKey(fragKey) ? _fragIDs[fragKey] : ShaderCache(GL.FRAGMENT_SHADER, fragKey, fragPath);
 			
 			return ProgramCache(programKey, vertID, fragID);
         }
@@ -38,17 +37,19 @@ namespace CMDR
 			
 			var read = File.ReadAllText(path);
 			
-			GL.ShaderSource(shaderType, read);
-			GL.CompileShader(shaderType);
-			CheckCompileErrors();
+			GL.ShaderSource(id, read);
+			GL.CompileShader(id);
+			CheckCompileErrors(id);
 			
 			switch(shaderType)
 			{
 				case GL.VERTEX_SHADER:
 					_vertIDs.Add(key, id);
+					break;
 				
 				case GL.FRAGMENT_SHADER:
 					_fragIDs.Add(key, id);
+					break;
 			}
 			return id;
 		}
@@ -59,29 +60,29 @@ namespace CMDR
 			GL.AttachShader(id, vertID);
 			GL.AttachShader(id, fragID);
 			GL.LinkProgram(id);
-			CheckLinkErrors();
+			CheckLinkErrors(id);
 			
 			Shader shader = new Shader(id, vertID, fragID);
 			Shaders.Add(key, shader);
 			return shader;
 		}
 		
-		private void CheckCompileErrors()
+		private static void CheckCompileErrors(uint id)
 		{
-			GL.GetShaderiv(ID, GL.COMPILE_STATUS, out int compiled);
+			GL.GetShaderiv(id, GL.COMPILE_STATUS, out int compiled);
 
 			if (compiled == 0)
 			{
-				throw new Exception(GL.GetShaderInfoLog(ID));
+				throw new Exception(GL.GetShaderInfoLog(id));
 			}
 		}
 		
-		private void CheckLinkErrors()
+		private static void CheckLinkErrors(uint id)
 		{
-			GL.GetShaderiv(ID, GL.LINK_STATUS, out int linked);
+			GL.GetShaderiv(id, GL.LINK_STATUS, out int linked);
 			if (linked == 0)
 			{
-				throw new Exception(GL.GetShaderInfoLog(ID));
+				throw new Exception(GL.GetShaderInfoLog(id));
 			}
 		}
     }
