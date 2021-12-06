@@ -8,6 +8,8 @@ namespace OpenGL
     {
         public static void Init()
         {
+			Build();
+			ClearColor(Color.Red);
         }
 
         #region A

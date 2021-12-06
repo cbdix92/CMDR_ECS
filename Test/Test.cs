@@ -43,6 +43,8 @@ namespace Test
         [STAThread]
         static void Main(string[] args)
         {
+            Display = new Display(800, 600, "Test Game!");
+
             Debugger.EnableDebugger = true;
             Debugger.DrawBounds = true;
             Debugger.DrawStats = true;
@@ -78,7 +80,7 @@ namespace Test
             Transform2.Teleport(180, 256);
             Transform2.Static = false;
 
-            Display = new Display(1000, 1000, "Test Game!");
+            
 
             Input.AddKeyBind(Key.W, () => { Transform.Yvel += -_speed; }, () => { Transform.Yvel -= -_speed; });
             Input.AddKeyBind(Key.A, () => { Transform.Xvel += -_speed; }, () => { Transform.Xvel -= -_speed; });

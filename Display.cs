@@ -32,18 +32,15 @@ namespace CMDR
 
             Glfw.MakeContextCurrent(Window);
 
+            Log.Init();
+            GL.Build();
+            GL.Init();
+            Render.Init();
+
         }
 
         public void Start()
         {
-            Log.Init();
-            
-            GL.Build();
-            GL.Init();
-            
-            Render.Init();
-
-
             GameLoop.Start();
         }
     }
