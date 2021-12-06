@@ -66,7 +66,7 @@ namespace OpenGL
 		{
 			fixed(float* id = &indices[0])
 			{
-				_drawElements(mode, count, typeof(float), id);
+				_drawElements(mode, count, FLOAT, id);
 			}
 		}
 		
@@ -119,7 +119,7 @@ namespace OpenGL
             _genVertexArrays(1, &id);
             return id;
         }
-        public static uint[] GenVertexArrays(uint n)
+        public static uint[] GenVertexArrays(int n)
         {
             uint[] buffers = new uint[n];
             fixed(uint* id = &buffers[0])

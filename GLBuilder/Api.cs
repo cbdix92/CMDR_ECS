@@ -25,7 +25,7 @@ namespace OpenGL
 		private static _bindTextureDelegate _bindTexture;
 
 
-		private delegate void _bindTexturesDelegate(uint first, int count, IntPtr textures);
+		private delegate void _bindTexturesDelegate(uint first, int count, void* textures);
 		private static _bindTexturesDelegate _bindTextures;
 
 
@@ -33,7 +33,7 @@ namespace OpenGL
 		private static _bindVertexArrayDelegate _bindVertexArray;
 
 
-		private delegate void _bufferDataDelegate(int target, int size, IntPtr data, int usage);
+		private delegate void _bufferDataDelegate(int target, int size, void* data, int usage);
 		private static _bufferDataDelegate _bufferData;
 		#endregion
 
@@ -72,7 +72,7 @@ namespace OpenGL
 		private static _drawArraysDelegate _drawArrays;
 
 
-		private delegate void _drawElementsDelegate(int mode, int count, int type, IntPtr indices);
+		private delegate void _drawElementsDelegate(int mode, int count, int type, void* indices);
 		private static _drawElementsDelegate _drawElements;
 
 		#endregion
@@ -137,7 +137,7 @@ namespace OpenGL
 		#region T
 
 
-		private delegate void _texImage2DDelegate(int target, int level, int internalformat, int width, int height, int border, int format, int type, IntPtr data);
+		private delegate void _texImage2DDelegate(int target, int level, int internalformat, int width, int height, int border, int format, int type, void* data);
 		private static _texImage2DDelegate _texImage2D;
 
 
@@ -149,7 +149,7 @@ namespace OpenGL
 		private static _texStorage2DDelegate _texStorage2D;
 
 
-		private delegate void _texSubImage2DDelegate(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, IntPtr pixels);
+		private delegate void _texSubImage2DDelegate(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, void* pixels);
 		private static _texSubImage2DDelegate _texSubImage2D;
 		#endregion
 
@@ -174,7 +174,7 @@ namespace OpenGL
 
 		#region V
 
-		private delegate void _vertexAttribPointerDelegate(uint index, int size, Type type, bool normalized, int stride, IntPtr pointer);
+		private delegate void _vertexAttribPointerDelegate(uint index, int size, Type type, bool normalized, int stride, void* pointer);
 		private static _vertexAttribPointerDelegate _vertexAttribPointer;
 		
 		#endregion
