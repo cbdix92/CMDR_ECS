@@ -31,6 +31,7 @@ namespace CMDR.Systems
 		}
 		public static void RemoveKeyBind(Key key)
 		{
+			throw new NotImplementedException("Systems.Input.RemoveKeyBind");
 			// Remove KeyBind Here
 			// ...
 		}

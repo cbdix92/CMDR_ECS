@@ -8,48 +8,6 @@ using GLFW;
 
 namespace CMDR.Systems
 {
-    /*
-    public class Update
-    {
-        public event EventHandler<EventArgs> Handler;
-        private Timer _timer;
-        public int Interval { get => _timer.Interval; set => _timer.Interval = value; }
-        public Update(int interval)
-        {
-            _timer = new Timer();
-            Interval = interval;
-            _timer.Tick += OnTimeUp;
-            _timer.Start();
-        }
-        private void OnTimeUp(object caller, EventArgs e)
-        {
-            if (Handler != null)
-            {
-                Handler(this, e);
-            }
-        }
-        public void Dispose()
-        {
-            _timer.Dispose();
-        }
-    }
-    internal static class UpdatePump
-    {
-        public static Update RenderUpdates;
-        public static Update PhysicsUpdates;
-
-        public static void Init()
-        {
-            RenderUpdates = new Update(10);
-            PhysicsUpdates = new Update(10);
-
-            //RenderUpdates.Handler += Render.Update;
-            //PhysicsUpdates.Handler += Physics.Update;
-            //PhysicsUpdates.Handler += Input.DetectKeys;
-
-        }
-    }
-    */
 
 
     public delegate void UpdateHandler(long ticks);
@@ -118,10 +76,10 @@ namespace CMDR.Systems
         }
         public static void CreateUpdater(long persecond, UpdateHandler update)
         {
-            Updater foo = new Updater();
-            foo.PerSecond = persecond;
-            foo.Handler += update;
-            Updaters.Add(foo);
+            Updater updater = new Updater();
+            updater.PerSecond = persecond;
+            updater.Handler += update;
+            Updaters.Add(updater);
         }
     }
 }

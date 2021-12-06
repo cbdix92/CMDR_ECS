@@ -11,7 +11,7 @@ namespace CMDR
         // BitCollider is responsible for generating collison data from images, 
         // and detecting collisions between two pairs of collision data.
 		
-		public static byte AlphaThreshold = 60;
+		internal static byte AlphaThreshold = 60;
 		
 		internal static bool BitColliderCheck(Transform t1, Transform t2, Collider c1, Collider c2)
 		{

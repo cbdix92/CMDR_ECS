@@ -28,6 +28,20 @@ namespace OpenGL
 		[DllImport(Kernel32, SetLastError = true)]
 		internal static extern bool FreeLibrary(IntPtr hModule);
 		
+		internal static void Build()
+        {
+			Assembly assembly = Assembly.GetExecutingAssembly();
+			MethodInfo[] methods = assembly.GetTypes().SelectMany(
+				x => x.GetMethods(BindingFlags.Static | BindingFlags.NonPublic)).Where(
+				y => y.GetCustomAttributes(typeof(BuildInfo), false).Length > 0).ToArray();
+
+			LoadLibs();
+
+			foreach(MethodInfo method in methods)
+            {
+
+            }
+		}
 		internal unsafe static bool Start()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly();

@@ -6,8 +6,6 @@ namespace CMDR.Systems
 {
     public static class Physics
     {
-        readonly static Type _transformT = typeof(Transform);
-        readonly static Type _colliderT = typeof(Collider);
 
         public static void Update(long ticks)
         {
