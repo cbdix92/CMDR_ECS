@@ -11,7 +11,7 @@ namespace CMDR
         private static Scene _activeScene;
         public static Scene ActiveScene { get => _activeScene; }
 
-        private static List<Scene> _loadedScenes = new List<Scene>();
+        private static readonly List<Scene> _loadedScenes = new List<Scene>();
 
         internal static void LoadScene(Scene scene)
         {
@@ -32,8 +32,8 @@ namespace CMDR
     {
         public int ID { get; set; }
 
-        private object _threadLockGameObject = new object();
-        private object _threadLockComponent = new object();
+        private readonly object _threadLockGameObject = new object();
+        private readonly object _threadLockComponent = new object();
 
         internal GameObjectCollection GameObjects = new GameObjectCollection();
         internal ComponentTable Components = new ComponentTable();

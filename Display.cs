@@ -10,7 +10,7 @@ namespace CMDR
         internal static Window Window;
         public Display(int width, int height, string title)
         {
-            (Camera.Width, Camera.Height) = ((float)width, (float)height);
+            (Camera.Width, Camera.Height) = (width, height);
 
 
             if (!Glfw.Init())
@@ -36,8 +36,10 @@ namespace CMDR
 
         public void Start()
         {
+            Log.Init();
+            Builder.Build();
             GL.Init();
-            GL.ClearColor(Color.Red);
+
 
             GameLoop.Start();
         }

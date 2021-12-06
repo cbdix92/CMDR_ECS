@@ -11,14 +11,14 @@ namespace CMDR
     {
 
 		public static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>();
-		private static Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
-		private static Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
+		private static readonly Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
+		private static readonly Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
 		
 		public static Shader Load(string vertPath, string fragPath)
         {
 			int vertKey = vertPath.GetHashCode();
 			int fragKey = fragPath.GetHashCode();
-			int programKey = String.Concat(vertPath,fragPath).GetHashCode();
+			int programKey = string.Concat(vertPath,fragPath).GetHashCode();
 			
 			if(Shaders.ContainsKey(programKey))
             {

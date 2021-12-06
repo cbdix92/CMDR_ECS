@@ -6,10 +6,8 @@ namespace OpenGL
 {
     public static unsafe partial class GL
     {
-        public static bool Init()
+        public static void Init()
         {
-            Log.Init();
-            return Builder.Start();
         }
 
         #region A
