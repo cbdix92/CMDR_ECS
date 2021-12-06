@@ -40,6 +40,11 @@ namespace OpenGL
                 SR.WriteLine(error);
             }
         }
+        /// <summary>
+        /// Log the contents of a matrix.
+        /// </summary>
+        /// <param name="matrix"> Matrix to be logged. </param>
+        /// <param name="name"> Name of the Matrix. </param>
         internal static void LogMatrix4(Matrix4 matrix, string name)
         {
             using (StreamWriter sr = new StreamWriter(_logPath, true, Encoding.UTF8))

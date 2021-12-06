@@ -37,8 +37,11 @@ namespace CMDR
         public void Start()
         {
             Log.Init();
-            Builder.Build();
+            
+            GL.Build();
             GL.Init();
+            
+            Render.Init();
 
 
             GameLoop.Start();

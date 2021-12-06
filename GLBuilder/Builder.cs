@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using GLFW;
 
 namespace OpenGL
 {
@@ -27,21 +28,7 @@ namespace OpenGL
 		
 		[DllImport(Kernel32, SetLastError = true)]
 		internal static extern bool FreeLibrary(IntPtr hModule);
-		
-		internal static void Build()
-        {
-			Assembly assembly = Assembly.GetExecutingAssembly();
-			MethodInfo[] methods = assembly.GetTypes().SelectMany(
-				x => x.GetMethods(BindingFlags.Static | BindingFlags.NonPublic)).Where(
-				y => y.GetCustomAttributes(typeof(BuildInfo), false).Length > 0).ToArray();
 
-			LoadLibs();
-
-			foreach(MethodInfo method in methods)
-            {
-
-            }
-		}
 		internal unsafe static bool Start()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly();
@@ -82,9 +69,6 @@ namespace OpenGL
 				}
 				
 			}
-
-			//if(FreeLibs())
-			//throw new Exception("Libs failed to unload!");
 			return true;
 		}
 		
@@ -114,41 +98,28 @@ namespace OpenGL
 			return result;
 		}
 		
-		private static IntPtr GetProcFromBuildInfo(BuildInfo info)
+		internal static IntPtr GetProcFromBuildInfo(BuildInfo info)
 		{
-			IntPtr result;
-			int error;
-			if (info.Lib == Opengl32)
-			{
-				result = wglGetProcAddress(info.Name);
-				error = Marshal.GetLastWin32Error();
-				if (error == 0)
-                {
-					var pointer = (Int64)result;
-					if(pointer != 0 || pointer != 1 || pointer != 2 || pointer != 3 || pointer != -1)
-						return result;
+			IntPtr result = Glfw.GetProcAddress(info.Name);
+			int error = Marshal.GetLastWin32Error();
 
-                }
-
-				Log.LogWin32Error(error, info.Name, true);
-
-				result = GetProcAddress(Libs[Opengl32], info.Name);
-				error = Marshal.GetLastWin32Error();
-				if (error == 0)
+			if (error == 0)
+            {
+				var pointer = (Int64)result;
+				if(pointer != 0 || pointer != 1 || pointer != 2 || pointer != 3 || pointer != -1)
 					return result;
 
-				Log.LogWin32Error(error, info.Name);
+            }
 
-			}
-			else
-			{
-				result = GetProcAddress(Libs[Opengl32], info.Name);
-				error = Marshal.GetLastWin32Error();
-				if (error == 0)
-					return result;
+			Log.LogWin32Error(error, info.Name, true);
 
-				Log.LogWin32Error(error, info.Name);
-			}
+			result = GetProcAddress(Libs[Opengl32], info.Name);
+			error = Marshal.GetLastWin32Error();
+			if (error == 0)
+				return result;
+
+			Log.LogWin32Error(error, info.Name);
+
 			throw new TypeLoadException("Builder Failure! See Log!");
 
 

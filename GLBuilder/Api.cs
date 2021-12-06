@@ -1,190 +1,181 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace OpenGL
 {
     public static unsafe partial class GL
     {
-		
+
 
 		#region A
-		
-		[BuildInfo("glActiveTexture")]
-		private static extern void _activeTexture(int texture);
-
-        
-        [BuildInfo("glAttachShader")]
-		private static extern void _attachShader(uint program, uint shader);
-
-        #endregion
-
-        #region B
-        
-        [BuildInfo("glBindBuffer")]
-		private static extern void _bindBuffer(int target, uint buffer);
-		
-		
-		[BuildInfo("glBindTexture")]
-		private static extern void _bindTexture(int target, uint texture);
-		
-		
-		[BuildInfo("glBindTextures")]
-		private static extern void _bindTextures(uint first, int count, void* textures);
-
-        
-		[BuildInfo("glBindBuffer")]
-		private static extern void _bindVertexArray(uint array);
-
-        
-		[BuildInfo("glBufferData")]
-		private static extern void _bufferData(int target, int size, void* data, int usage);
-        #endregion
-
-        #region C
-
-        
-		[BuildInfo("glClear")]
-		private static extern void _clear(int mask);
-
-        
-		[BuildInfo("glClearColor")]
-		private static extern void _clearColor(float red, float green, float blue, float alpha);
-
-        
-		[BuildInfo("glCompileShader")]
-		private static extern void _compileShader(uint shader);
-
-        
-		[BuildInfo("glCreateProgram")]
-		private static extern uint _createProgram();
-
-        
-		[BuildInfo("glCreateShader")]
-		private static extern uint _createShader(int shaderType);
+		private delegate void _activeTextureDelegate(int texture);
+		private static _activeTextureDelegate _activeTexture;
 
 
+		private delegate void _attachShaderDelegate(uint program, uint shader);
+		private static _attachShaderDelegate _attachShader;
 
-        #endregion
-		
-		#region D
-		
-		
-		[BuildInfo("glDisableVertexAttribArray")]
-		private static extern void _disableVertexAttribArray(uint index);
-
-		
-		[BuildInfo("glDrawArrays")]
-		private static extern void _drawArrays(int mode, int first, int count);
-		
-		
-		[BuildInfo("glDrawElements")]
-		private static extern void _drawElements(int mode, int count, Type type, void* indices);
-		
 		#endregion
-		
+
+		#region B
+		private delegate void _bindBufferDelegate(int target, uint buffer);
+		private static _bindBufferDelegate _bindBuffer;
+
+
+		private delegate void _bindTextureDelegate(int target, uint texture);
+		private static _bindTextureDelegate _bindTexture;
+
+
+		private delegate void _bindTexturesDelegate(uint first, int count, IntPtr textures);
+		private static _bindTexturesDelegate _bindTextures;
+
+
+		private delegate void _bindVertexArrayDelegate(uint array);
+		private static _bindVertexArrayDelegate _bindVertexArray;
+
+
+		private delegate void _bufferDataDelegate(int target, int size, IntPtr data, int usage);
+		private static _bufferDataDelegate _bufferData;
+		#endregion
+
+		#region C
+
+		private delegate void _clearDelegate(int mask);
+		private static _clearDelegate _clear;
+
+
+		private delegate void _clearColorDelegate(float red, float green, float blue, float alpha);
+		private static _clearColorDelegate _clearColor;
+
+
+		private delegate void _compileShaderDelegate(uint shader);
+		private static _compileShaderDelegate _compileShader;
+
+
+		private delegate uint _createProgramDelegate();
+		private static _createProgramDelegate _createProgram;
+
+
+		private delegate uint _createShaderDelegate(int shaderType);
+		private static _createShaderDelegate _createShader;
+
+
+
+		#endregion
+
+		#region D
+
+		private delegate void _disableVertexAttribArrayDelegate(uint index);
+		private static _disableVertexAttribArrayDelegate _disableVertexAttribArray;
+
+
+		private delegate void _drawArraysDelegate(int mode, int first, int count);
+		private static _drawArraysDelegate _drawArrays;
+
+
+		private delegate void _drawElementsDelegate(int mode, int count, int type, IntPtr indices);
+		private static _drawElementsDelegate _drawElements;
+
+		#endregion
+
 		#region E
-		
-		
+
+		private delegate void _enableVertexAttribArrayDelegate(uint index);
 		[BuildInfo("glEnableVertexAttribArray")]
-		private static extern void _enableVertexAttribArray(uint index);
+		private static _enableVertexAttribArrayDelegate _enableVertexAttribArray;
 
 		#endregion
 
 		#region G
 
-		
-		[BuildInfo("glGenBuffers")]
-		private static extern void _genBuffers(int n, uint* buffers);
+		private delegate void _genBuffersDelegate(int n, uint* buffers);
+		private static _genBuffersDelegate _genBuffers;
 
-		
-		[BuildInfo("glGenerateMipmap")]
-		internal static void _generateMipMap(int target) { }
 
-		
-		[BuildInfo("glGenTextures")]
-		private static extern void _genTextures(int n, uint* textures);
-		
-        
-		[BuildInfo("glGenVertexArrays")]
-		internal static void _genVertexArrays(uint n, uint* arrays) { }
+		private delegate void _generateMipMapDelegate(int target);
+		private static _generateMipMapDelegate _generateMipMap;
 
-		
-		[BuildInfo("GetShaderInfoLog")]
-		private static extern void _getShaderInfoLog(uint shader, int maxLength, int* length, byte* infoLog);
 
-		
-		[BuildInfo("getGetShaderiv")]
-		private static extern void _getShaderiv(uint shader, int pname, int* param);
+		private delegate void _genTexturesDelegate(int n, uint* textures);
+		private static _genTexturesDelegate _genTextures;
 
-		
-		[BuildInfo("glGetUniformfv")]
-		private static extern void _getUniformfv(uint program, int location, float* param);
-		
-		
-		[BuildInfo("glGetUniformLocation")]
-		private static extern int _getUniformLocation(uint program, byte* name);
-		
-        #endregion
 
-        #region L
-        
-		[BuildInfo("glLinkProgram")]
-		private static extern void _linkProgram(uint program);
+		private delegate void _genVertexArraysDelegate(int n, uint* arrays);
+		private static _genVertexArraysDelegate _genVertexArrays;
 
-        #endregion
 
-        #region S
+		private delegate void _getShaderInfoLogDelegate(uint shader, int maxLength, int* length, byte* infoLog);
+		private static _getShaderInfoLogDelegate _getShaderInfoLog;
 
-        
-		[BuildInfo("glShaderSource")]
-		private static extern void _shaderSource(uint shader, int count, byte** source, int* length);
 
-        #endregion
+		private delegate void _getShaderivDelegate(uint shader, int pname, int* param);
+		private static _getShaderivDelegate _getShaderiv;
+
+
+		private delegate void _getUniformfvDelegate(uint program, int location, float* param);
+		private static _getUniformfvDelegate _getUniformfv;
 		
+		
+		private delegate int _getUniformLocationDelegate(uint program, byte* name);
+		private static _getUniformLocationDelegate _getUniformLocation;
+
+		#endregion
+
+		#region L
+
+		private delegate void _linkProgramDelegate(uint program);
+		private static _linkProgramDelegate _linkProgram;
+
+		#endregion
+
+		#region S
+
+		private delegate void _shaderSourceDelegate(uint shader, int count, byte** source, int* length);
+		private static _shaderSourceDelegate _shaderSource;
+
+		#endregion
+
 		#region T
-		
-		
-		[BuildInfo("glTexImage2D")]
-		private static extern void _texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, void* data);
 
-		
-		[BuildInfo("glTexParameteri")]
-		private static extern void _texParameteri(int target, int pname, int param);
-		
-		
-		[BuildInfo("glTexStorage2D")]
-		internal static void _texStorage2D(int target, int levels, int internalFormat, int width, int height){ }
 
-		
-		[BuildInfo("glTexSubImage2D")]
-		private static extern void _texSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, void* pixels);
+		private delegate void _texImage2DDelegate(int target, int level, int internalformat, int width, int height, int border, int format, int type, IntPtr data);
+		private static _texImage2DDelegate _texImage2D;
+
+
+		private delegate void _texParameteriDelegate(int target, int pname, int param);
+		private static _texParameteriDelegate _texParameteri;
+
+
+		private delegate void _texStorage2DDelegate(int target, int levels, int internalFormat, int width, int height);
+		private static _texStorage2DDelegate _texStorage2D;
+
+
+		private delegate void _texSubImage2DDelegate(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, IntPtr pixels);
+		private static _texSubImage2DDelegate _texSubImage2D;
 		#endregion
 
 		#region U
 
-		
-		[BuildInfo("glUniform3f")]
-		private static extern void _uniform3f(int location, float v0, float v1, float v2);
-		
-		
-		[BuildInfo("glUniform4f")]
-		private static extern void _uniform4f(int location, float v0, float v1, float v2, float v3);
+		private delegate void _uniform3fDelegate(int location, float v0, float v1, float v2);
+		private static _uniform3fDelegate _uniform3f;
 
-        
-		[BuildInfo("glUniformMatrix4fv")]
-		private static extern void _uniformMatrix4fv(int location, int count, bool transpose, float* value);
-		
-		
-		[BuildInfo("glUseProgram")]
-		private static extern void _useProgram(uint program);
 
-        #endregion
+		private delegate void _uniform4fDelegate(int location, float v0, float v1, float v2, float v3);
+		private static _uniform4fDelegate _uniform4f;
 
-        #region V
 
-        
-		[BuildInfo("glVertexAttribPointer")]
-		private static extern void _vertexAttribPointer(uint index, int size, Type type, bool normalized, int stride, void* pointer);
+		private delegate void _uniformMatrix4fvDelegate(int location, int count, bool transpose, float* value);
+		private static _uniformMatrix4fvDelegate _uniformMatrix4fv;
+
+
+		private delegate void _useProgramDelegate(uint program);
+		private static _useProgramDelegate _useProgram;
+
+		#endregion
+
+		#region V
+
+		private delegate void _vertexAttribPointerDelegate(uint index, int size, Type type, bool normalized, int stride, IntPtr pointer);
+		private static _vertexAttribPointerDelegate _vertexAttribPointer;
 		
 		#endregion
     }
