@@ -28,13 +28,14 @@ namespace CMDR.Components
 
         public void Init()
         {
-
+            Shader = ShaderManager.DefaultShader();
+            Color = Color.Red;
         }
 
         public void FromFile(string src)
         {
             Receive();
-            ImgData = Load.LoadFromFile(src);
+            ImgData = Decoder.LoadFromFile(src);
             Send();
         }
 
@@ -54,7 +55,7 @@ namespace CMDR.Components
             {
                 try
                 {
-                    _[i] = Load.LoadFromFile(paths[i]);
+                    _[i] = Decoder.LoadFromFile(paths[i]);
                 }
                 catch (FileNotFoundException)
                 {

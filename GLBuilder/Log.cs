@@ -13,11 +13,11 @@ namespace OpenGL
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern void SetLastError(uint dwErrorCode);
 
-        //private static string _path = @"\temp\Log.txt";
-        private static string _tempDir = @"temp\";
-        private static string _dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        private static string _path = Path.Combine(_dir, _tempDir);
-        private static string _logPath = Path.Combine(_path, "log.txt");
+
+        private static readonly string _tempDir = @"temp\";
+        private static readonly string _dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static readonly string _path = Path.Combine(_dir, _tempDir);
+        private static readonly string _logPath = Path.Combine(_path, "log.txt");
         internal static void Init()
         {
             if (!Directory.Exists(_path))

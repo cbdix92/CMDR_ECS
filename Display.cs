@@ -36,6 +36,7 @@ namespace CMDR
             GL.Build();
             GL.Init();
             Render.Init();
+            ShaderManager.Init();
 
         }
 

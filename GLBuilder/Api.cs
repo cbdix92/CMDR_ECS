@@ -103,6 +103,14 @@ namespace OpenGL
 		private static _genVertexArraysDelegate _genVertexArrays;
 
 
+		private delegate void _getProgramInfoLogDelegate(uint program, int maxLength, int* length, byte* infoLog);
+		private static _getProgramInfoLogDelegate _getProgramInfoLog;
+
+
+		private delegate void _getProgramivDelegate(uint program, int pname, int* param);
+		private static _getProgramivDelegate _getProgramiv;
+
+
 		private delegate void _getShaderInfoLogDelegate(uint shader, int maxLength, int* length, byte* infoLog);
 		private static _getShaderInfoLogDelegate _getShaderInfoLog;
 

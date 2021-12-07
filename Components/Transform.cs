@@ -162,14 +162,14 @@ namespace CMDR.Components
             (Xscale, Yscale, Zscale) = (n, n, n);
         }
 		
-		public Matrix4 GenerateModelMatrix1()
+		public Matrix4 GenerateModelMatrix()
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
 			Matrix4 result = Matrix4.CreateScale(_scale) * Matrix4.CreateTranslation(_pos);
             return result * Matrix4.CreateRotationZ(RotDeg);	
 		}
 
-        public Matrix4 GenerateModelMatrix()
+        public Matrix4 GenerateModelMatrixTest()
         {
             Matrix4 scale = Matrix4.CreateScale(_scale);
             Matrix4 trans = Matrix4.CreateTranslation(_pos);

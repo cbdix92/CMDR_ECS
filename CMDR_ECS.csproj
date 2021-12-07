@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Display.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
+    <Compile Include="OpenGLAbstractions\ShaderManager.cs" />
     <Compile Include="Systems\Camera.cs" />
     <Compile Include="Data Structures\Color.cs" />
     <Compile Include="Data Structures\Animator.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="ImageDecoder\DecoderPNG.cs" />
     <Compile Include="ImageDecoder\enums.cs" />
     <Compile Include="ImageDecoder\Exceptions.cs" />
-    <Compile Include="ImageDecoder\Load.cs" />
+    <Compile Include="ImageDecoder\Decoder.cs" />
     <Compile Include="ImageDecoder\Util.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Data Structures\Matrix4.cs" />
@@ -153,8 +154,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Shaders\FragDefault.frag" />
-    <None Include="Shaders\VertDefault.vert" />
+    <None Include="Shaders\FragDefault.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\VertDefault.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GLFW\Strings.resx" />

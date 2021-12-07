@@ -131,13 +131,23 @@ namespace OpenGL
             return buffers;
         }
 		
-		public static void GetShaderiv(uint shader, int pname, out int output)
-		{
+		public static string GetProgramInfoLog(uint program)
+        {
+			byte[] buffer = new byte[1024];
+			fixed(byte* ptr = &buffer[0])
+            {
+				_getProgramInfoLog(program, buffer.Length, null, ptr);
+            }
+			return Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+        }
+
+		public static void GetProgramiv(uint program, int pname, out int output)
+        {
 			fixed(int* ptr = &output)
             {
-				_getShaderiv(shader, pname, ptr);
+				_getProgramiv(program, pname, ptr);
             }
-		}
+        }
 		
 		public static string GetShaderInfoLog(uint shader)
 		{
@@ -148,7 +158,14 @@ namespace OpenGL
 			}
 			return Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 		}
-		
+		public static void GetShaderiv(uint shader, int pname, out int output)
+		{
+			fixed (int* ptr = &output)
+			{
+				_getShaderiv(shader, pname, ptr);
+			}
+		}
+
 		public static void GetUniformfv(uint program, int location, out float param)
 		{
 			fixed(float* result = &param)

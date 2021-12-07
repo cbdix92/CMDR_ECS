@@ -43,6 +43,8 @@ namespace OpenGL
             _generateMipMap = Marshal.GetDelegateForFunctionPointer<_generateMipMapDelegate>(Glfw.GetProcAddress("glGenerateMipmap"));
             _genTextures = Marshal.GetDelegateForFunctionPointer<_genTexturesDelegate>(Glfw.GetProcAddress("glGenTextures"));
             _genVertexArrays = Marshal.GetDelegateForFunctionPointer<_genVertexArraysDelegate>(Glfw.GetProcAddress("glGenVertexArrays"));
+            _getProgramInfoLog = Marshal.GetDelegateForFunctionPointer<_getProgramInfoLogDelegate>(Glfw.GetProcAddress("glGetProgramInfoLog"));
+            _getProgramiv = Marshal.GetDelegateForFunctionPointer<_getProgramivDelegate>(Glfw.GetProcAddress("glGetProgramiv"));
             _getShaderInfoLog = Marshal.GetDelegateForFunctionPointer<_getShaderInfoLogDelegate>(Glfw.GetProcAddress("glGetShaderInfoLog"));
             _getShaderiv = Marshal.GetDelegateForFunctionPointer<_getShaderivDelegate>(Glfw.GetProcAddress("glGetShaderiv"));
             _getUniformfv = Marshal.GetDelegateForFunctionPointer<_getUniformfvDelegate>(Glfw.GetProcAddress("glGetUniformfv"));

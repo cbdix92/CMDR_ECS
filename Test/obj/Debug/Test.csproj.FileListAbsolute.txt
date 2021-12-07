@@ -41,3 +41,5 @@ C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\CMDR_ECS.dll.config
 C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.pdb
 C:\Users\Coleton\Desktop\CMDR_ECS\Test\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\Shaders\FragDefault.frag
+C:\Users\cbdix\Desktop\CMDR_ECS\Test\bin\Debug\Shaders\VertDefault.vert

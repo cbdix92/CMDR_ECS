@@ -6,7 +6,7 @@ using System.IO;
 
 namespace CMDR
 {
-    public static class Load
+    public static class Decoder
     {
 
         internal static readonly UInt64 PNG_SIGNATURE = 0x89504E470D0A1A0A;
