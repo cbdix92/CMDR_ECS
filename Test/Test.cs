@@ -40,7 +40,7 @@ namespace Test
             "assets/character/ninja_male_assets/Run__009.png"
         };
 
-        [STAThread]
+        //[STAThread]
         static void Main(string[] args)
         {
             Display = new Display(800, 600, "Test Game!");

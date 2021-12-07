@@ -46,7 +46,7 @@ namespace CMDR
 
         public static Matrix4 Projection;
 
-        private static float _zoom;
+        private static float _zoom = 1;
         public static float Zoom
         {
             get => _zoom;

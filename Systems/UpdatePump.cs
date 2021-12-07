@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
@@ -51,7 +50,6 @@ namespace CMDR.Systems
 
         internal static void Start()
         {
-
             thread = new Thread(() =>
                 {
                     Time = new Stopwatch();
@@ -69,9 +67,10 @@ namespace CMDR.Systems
                         Glfw.PollEvents();
                     }
                     Glfw.Terminate();
-            });
+                });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
+
 
         }
         public static void CreateUpdater(long persecond, UpdateHandler update)

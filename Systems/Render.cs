@@ -46,7 +46,7 @@ namespace CMDR.Systems
 		
         internal static void ClearScreen()
         {
-            GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+			GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
         }
 		
         internal static void ScreenBuffer(long ticks)
@@ -70,7 +70,6 @@ namespace CMDR.Systems
                 
 				
 				Matrix4 model = transform.GenerateModelMatrix();
-				//Log.LogMatrix4(model, "FinalModel");
 				
 				renderData.Shader.Use();
 				renderData.Shader.SetUniformMatrix4("model", model);

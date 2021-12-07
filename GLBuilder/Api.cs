@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenGL
 {
@@ -162,19 +163,19 @@ namespace OpenGL
 		#endregion
 
 		#region U
-
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		private delegate void _uniform3fDelegate(int location, float v0, float v1, float v2);
 		private static _uniform3fDelegate _uniform3f;
 
-
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		private delegate void _uniform4fDelegate(int location, float v0, float v1, float v2, float v3);
 		private static _uniform4fDelegate _uniform4f;
 
-
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		private delegate void _uniformMatrix4fvDelegate(int location, int count, bool transpose, float* value);
 		private static _uniformMatrix4fvDelegate _uniformMatrix4fv;
 
-
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		private delegate void _useProgramDelegate(uint program);
 		private static _useProgramDelegate _useProgram;
 

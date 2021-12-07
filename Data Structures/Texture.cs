@@ -21,7 +21,7 @@ namespace CMDR
 			
 			ID = GL.GenTexture();
 			GL.BindTexture(GL.TEXTURE_2D, ID);
-			GL.TexImage2D(GL.TEXTURE_2D, 0, 0, Width, Height, GL.RGBA, ColorData);
+			GL.TexImage2D(GL.TEXTURE_2D, 1, GL.RGBA, Width, Height, GL.RGBA, ColorData);
 
             // Texture Wrapping settings
             GL.TexParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);

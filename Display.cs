@@ -18,12 +18,15 @@ namespace CMDR
                 GLFW.Exception.GetErrorMessage(Glfw.GetError(out string error));
                 throw new System.Exception(error);
             }
-            Glfw.WindowHint(Hint.ContextVersionMajor, 4);
-            Glfw.WindowHint(Hint.ContextVersionMinor, 5);
+
             Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
+            Glfw.WindowHint(Hint.ContextVersionMajor, 3);
+            Glfw.WindowHint(Hint.ContextVersionMinor, 3);
             Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
-            Glfw.WindowHint(Hint.Doublebuffer, 1);
-            Glfw.WindowHint(Hint.ScaleToMonitor, 0);
+            Glfw.WindowHint(Hint.Doublebuffer, true);
+            Glfw.WindowHint(Hint.Decorated, true);
+            Glfw.WindowHint(Hint.OpenglForwardCompatible, true);
+            //Glfw.WindowHint(Hint.ScaleToMonitor, 0);
 
             Window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
 
@@ -31,6 +34,11 @@ namespace CMDR
                 throw new NullReferenceException("Window returned Null");
 
             Glfw.MakeContextCurrent(Window);
+
+            var screen = Glfw.PrimaryMonitor.WorkArea;
+            var x = (screen.Width - width) / 2;
+            var y = (screen.Height - height) / 2;
+            Glfw.SetWindowPosition(Window, x, y);
 
             Log.Init();
             GL.Build();
