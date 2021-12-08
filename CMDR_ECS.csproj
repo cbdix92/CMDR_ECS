@@ -150,7 +150,6 @@
     <Compile Include="Data Structures\Vector3.cs" />
     <Compile Include="Data Structures\Vector4.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -163,6 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GLFW\Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
