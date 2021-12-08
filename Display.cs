@@ -12,14 +12,6 @@ namespace CMDR
         {
             (Camera.Width, Camera.Height) = (width, height);
 
-            /*
-            if (!Glfw.Init())
-            {
-                GLFW.Exception.GetErrorMessage(Glfw.GetError(out string error));
-                throw new System.Exception(error);
-            }
-            */
-
             Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
             Glfw.WindowHint(Hint.ContextVersionMajor, 3);
             Glfw.WindowHint(Hint.ContextVersionMinor, 3);
@@ -43,7 +35,6 @@ namespace CMDR
 
 
             Log.Init();
-            GL.Build();
             GL.Init();
             Render.Init();
             ShaderManager.Init();

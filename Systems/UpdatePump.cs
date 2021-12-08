@@ -44,15 +44,15 @@ namespace CMDR.Systems
 
         internal static List<Updater> Updaters = new List<Updater>();
 
-        internal static Thread thread;
+        //internal static Thread thread;
 
         public static long GameTime => Time.ElapsedTicks;
 
         internal static void Start()
         {
+            /*
             thread = new Thread(() =>
                 {
-                    //Time = new Stopwatch();
                     Time.Start();
 
                     CreateUpdater(100L, Render.Update);
@@ -70,7 +70,23 @@ namespace CMDR.Systems
                 });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
+            */
 
+            Time.Start();
+
+            CreateUpdater(1000L, Render.Update);
+            CreateUpdater(100L, Physics.Update);
+            // Input requires STA apartment state. This seems to break OpenGL for whatever reason.
+            //CreateUpdater(100L, Input.Update);
+
+            while (!Glfw.WindowShouldClose(Display.Window))
+            {
+                foreach (Updater updater in Updaters)
+                    updater.Update(GameTime);
+
+                Glfw.PollEvents();
+            }
+            Glfw.Terminate();
 
         }
         public static void CreateUpdater(long persecond, UpdateHandler update)

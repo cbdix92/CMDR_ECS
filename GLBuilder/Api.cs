@@ -122,8 +122,8 @@ namespace OpenGL
 
 		private delegate void _getUniformfvDelegate(uint program, int location, float* param);
 		private static _getUniformfvDelegate _getUniformfv;
-		
-		
+
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		private delegate int _getUniformLocationDelegate(uint program, byte* name);
 		private static _getUniformLocationDelegate _getUniformLocation;
 

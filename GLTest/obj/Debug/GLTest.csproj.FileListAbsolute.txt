@@ -1,0 +1,16 @@
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\Shaders\FragDefault.frag
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\Shaders\VertDefault.vert
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\GLTest.exe.config
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\GLTest.exe
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\GLTest.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\CMDR_ECS.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\CMDR_ECS.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\CMDR_ECS.dll.config
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\obj\Debug\GLTest.csprojAssemblyReference.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\obj\Debug\GLTest.csproj.CoreCompileInputs.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\obj\Debug\GLTest.csproj.CopyComplete
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\obj\Debug\GLTest.exe
+C:\Users\cbdix\Desktop\CMDR_ECS\GLTest\obj\Debug\GLTest.pdb

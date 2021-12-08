@@ -634,11 +634,11 @@ namespace CMDR
 		public static Color HexToColor(int hex)
 		{
 			byte[] bytes = new byte[3];
-			for(int i = 1; i >= 3; i++)
+			for(int i = 0; i <= 2; i++)
 			{
-				bytes[i - 1] = (byte)((hex >> (8 * i)) & 0xff);
+				bytes[i] = (byte)((hex >> (8 * i)) & 0xff);
 			}
-			return new Color(bytes[0]/255f, bytes[1]/255f, bytes[2]/255f, 1.0f);
+			return new Color(bytes[2]/255f, bytes[1]/255f, bytes[0]/255f, 1.0f);
 		}
 
         #region COLOR_OPERATORS

@@ -18,7 +18,7 @@ namespace CMDR
 
 		public void SetUniformMatrix4(string name, Matrix4 matrix)
 		{
-			GL.UniformMatrix4fv(GL.GetUniformLocation(ID, name), 16, false, matrix);
+			GL.UniformMatrix4fv(GL.GetUniformLocation(ID, name), false, matrix);
 		}
 
 		public void SetUniformVec3(string name, Vector3 vec)

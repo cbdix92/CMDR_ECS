@@ -9,7 +9,7 @@ namespace OpenGL
         public static void Init()
         {
 			Build();
-			ClearColor(Color.Red);
+			ClearColor(Color.BabyBlue);
         }
 
         #region A
@@ -252,11 +252,16 @@ namespace OpenGL
 			_uniform4f(location, color.R, color.G, color.B, color.A);
         }
 		
-        public static void UniformMatrix4fv(int location, int count, bool transpose, Matrix4 matrix)
+        public static void UniformMatrix4fv(int location, bool transpose, Matrix4 matrix)
         {
-            fixed(float* ptr = &matrix.ToArrayColumnMajor()[0])
+			if (location == -1)
+				return;
+
+			float[] buffer = matrix.ToArrayColumnMajor();
+			//float[] buffer = matrix.ToArray();
+            fixed(float* ptr = &buffer[0])
             {
-                _uniformMatrix4fv(location, count, transpose, ptr);
+                _uniformMatrix4fv(location, buffer.Length, transpose, ptr);
             }
         }
 		
