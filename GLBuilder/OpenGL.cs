@@ -266,7 +266,7 @@ namespace OpenGL
 
         #region V
 
-        public static void VertexAttribPointer(uint index, int size, Type type, bool normalized, void* pointer) 
+        public static void VertexAttribPointer(uint index, int size, int type, bool normalized, void* pointer) 
 		{
 			_vertexAttribPointer(index, size, type, normalized, size * sizeof(float), pointer);
 		}

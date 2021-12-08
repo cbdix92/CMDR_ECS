@@ -183,7 +183,7 @@ namespace OpenGL
 
 		#region V
 
-		private delegate void _vertexAttribPointerDelegate(uint index, int size, Type type, bool normalized, int stride, void* pointer);
+		private delegate void _vertexAttribPointerDelegate(uint index, int size, int type, bool normalized, int stride, void* pointer);
 		private static _vertexAttribPointerDelegate _vertexAttribPointer;
 		
 		#endregion

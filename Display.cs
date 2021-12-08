@@ -12,12 +12,13 @@ namespace CMDR
         {
             (Camera.Width, Camera.Height) = (width, height);
 
-
+            /*
             if (!Glfw.Init())
             {
                 GLFW.Exception.GetErrorMessage(Glfw.GetError(out string error));
                 throw new System.Exception(error);
             }
+            */
 
             Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
             Glfw.WindowHint(Hint.ContextVersionMajor, 3);
@@ -26,19 +27,20 @@ namespace CMDR
             Glfw.WindowHint(Hint.Doublebuffer, true);
             Glfw.WindowHint(Hint.Decorated, true);
             Glfw.WindowHint(Hint.OpenglForwardCompatible, true);
-            //Glfw.WindowHint(Hint.ScaleToMonitor, 0);
 
             Window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
 
             if (Window == null)
-                throw new NullReferenceException("Window returned Null");
+                throw new NullReferenceException("Window is Null");
 
             Glfw.MakeContextCurrent(Window);
 
+            // Center the game window on the monitor
             var screen = Glfw.PrimaryMonitor.WorkArea;
             var x = (screen.Width - width) / 2;
             var y = (screen.Height - height) / 2;
             Glfw.SetWindowPosition(Window, x, y);
+
 
             Log.Init();
             GL.Build();

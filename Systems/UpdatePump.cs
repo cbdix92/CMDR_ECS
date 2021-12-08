@@ -40,7 +40,7 @@ namespace CMDR.Systems
     public static class GameLoop
     {
         internal static bool Running = true;
-        internal static Stopwatch Time;
+        internal static Stopwatch Time = new Stopwatch();
 
         internal static List<Updater> Updaters = new List<Updater>();
 
@@ -52,7 +52,7 @@ namespace CMDR.Systems
         {
             thread = new Thread(() =>
                 {
-                    Time = new Stopwatch();
+                    //Time = new Stopwatch();
                     Time.Start();
 
                     CreateUpdater(100L, Render.Update);
