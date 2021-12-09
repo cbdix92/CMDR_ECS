@@ -29,7 +29,7 @@ namespace CMDR.Components
         public void Init()
         {
             Shader = ShaderManager.DefaultShader();
-            Color = Color.Purple;
+            Color = Color.Magenta;
         }
 
         public void FromFile(string src)

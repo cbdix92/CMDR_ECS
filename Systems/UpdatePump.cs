@@ -40,7 +40,7 @@ namespace CMDR.Systems
     public static class GameLoop
     {
         internal static bool Running = true;
-        internal static Stopwatch Time = new Stopwatch();
+        public static Stopwatch Time = new Stopwatch();
 
         internal static List<Updater> Updaters = new List<Updater>();
 

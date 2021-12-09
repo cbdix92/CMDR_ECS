@@ -36,17 +36,17 @@ namespace CMDR
             }
         }
 		
-		public static float Left { get => -(Zoom * Width) / 2;}
-		public static float Right { get => (Zoom * Width) / 2; }
-		public static float Top { get => -(Zoom * Height) / 2; }
-		public static float Bottom { get => (Zoom * Height) / 2; }
+		public static float Left { get => -(Zoom * Width);}
+		public static float Right { get => (Zoom * Width); }
+		public static float Top { get => -(Zoom * Height); }
+		public static float Bottom { get => (Zoom * Height); }
         
-        public static readonly float Far = 1000;
-        public static readonly float Near = 1;
+        public static readonly float Far = 1f;
+        public static readonly float Near = 0;
 
         public static Matrix4 Projection;
 
-        private static float _zoom = 1;
+        private static float _zoom = 1f;
         public static float Zoom
         {
             get => _zoom;

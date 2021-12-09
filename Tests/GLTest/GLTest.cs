@@ -14,7 +14,8 @@ namespace GLTest
     class GLtest
     {
         public static Window Window;
-
+        public static float Width = 35;
+        public static float Height = 35;
         /*
         private static float[] _vertices = new float[] { 
 			// pos      // tex
@@ -27,16 +28,28 @@ namespace GLTest
 			1.0f, 0.0f, 1.0f, 0.0f
 			};
         */
-        private static float[] _vertices = new float[] { 
-			// pos      // tex
-			-1.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, 1.0f, 1.0f, 0.0f,
-            -1.0f, -1.0f, 0.0f, 0.0f,
+        private static float[] _vertices = new float[] 
+        { 
+			// X     Y
+			-1.0f,  1.0f, 
+             1.0f,  1.0f,
+            -1.0f, -1.0f,
 
-            1.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, -1.0f, 1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f, 0.0f
-            };
+             1.0f,  1.0f,
+             1.0f, -1.0f, 
+            -1.0f, -1.0f
+        };
+
+        private static float[] _testVerts = new float[]
+        {
+            -Width, Height,
+            Width, Height,
+            -Width, -Height,
+
+            Width, Height,
+            Width, -Height,
+            -Width, -Height
+        };
 
         public static uint VAO;
         public static uint VBO;
@@ -61,52 +74,62 @@ namespace GLTest
             VBO = GL.GenBuffer();
 
             GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
+            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
+            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _testVerts.Length, _testVerts, GL.STATIC_DRAW);
 
             GL.BindVertexArray(VAO);
-            GL.VertexAttribPointer(0, 4, GL.FLOAT, false, (void*)0);
+            GL.VertexAttribPointer(0, 2, GL.FLOAT, false, (void*)0);
             GL.EnableVertexAttribArray(0);
 
 
             // Shaders
-            //Shader shader = ShaderManager.Load(@"Shaders\Vert.vert", @"Shaders\Frag.frag");
+            Shader shader = ShaderManager.Load(@"Shaders\Vert.vert", @"Shaders\Frag.frag");
             ShaderManager.Init();
-            Shader shader = ShaderManager.DefaultShader();
+            //Shader shader = ShaderManager.DefaultShader();
             GL.ClearColor(Color.BabyBlue);
 
             float[] pixels = GenPixels(50, 50);
             Texture texture = new Texture(pixels, 50, 50, 4);
+            
             Camera.Width = 800;
             Camera.Height = 600;
 
-            Matrix4 projection = Camera.Projection;
 
             Scene scene = new Scene();
             SGameObject gameObject = scene.GenerateGameObject();
             Transform transform = scene.Generate<Transform>();
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
-            renderData.Color = Color.Red;
-            transform.Teleport(50, 50);
+            transform.Teleport(1, 0);
             gameObject.Use(transform);
             gameObject.Use(renderData);
 
             Matrix4 model = transform.GenerateModelMatrix();
-
+            GameLoop.Time.Start();
+            float counter = 0;
             while (!Glfw.WindowShouldClose(Window))
             {
                 GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
-
+                if (counter > 60)
+                {
+                    renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
+                    transform.Teleport(MathHelper.Cos(GameLoop.GameTime) * 100, -MathHelper.Sin(GameLoop.GameTime) * 100);
+                    model = transform.GenerateModelMatrix();
+                    Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
+                    counter = 0;
+                }
+                counter++;
                 shader.Use();
                 shader.SetUniformMatrix4("model", false, model);
-                shader.SetUniformMatrix4("projection", false, projection);
+                shader.SetUniformMatrix4("projection", false, Camera.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
                 
-                GL.ActiveTexture(GL.TEXTURE0);
-                texture.Bind();
+                //GL.ActiveTexture(GL.TEXTURE0);
+                //texture.Bind();
 
                 GL.BindVertexArray(VAO);
-                GL.DrawArrays(GL.TRIANGLES, 0, 3);
+                GL.DrawArrays(GL.TRIANGLES, 0, 6);
+                GL.BindVertexArray(0);
                 Glfw.SwapBuffers(Window);
                 Glfw.PollEvents();
             }
