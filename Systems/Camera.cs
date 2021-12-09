@@ -23,7 +23,7 @@ namespace CMDR
             set
             {
                 _width = value * 1;
-                Projection = CreateOrthographic(Matrix4.Identity);
+                Projection = CreateOrthographic();
             }
         }
         public static float Height
@@ -32,7 +32,7 @@ namespace CMDR
             set
             {
                 _height = value * 1;
-                Projection = CreateOrthographic(Matrix4.Identity);
+                Projection = CreateOrthographic();
             }
         }
 		
@@ -42,7 +42,7 @@ namespace CMDR
 		public static float Bottom { get => (Zoom * Height) / 2; }
         
         public static readonly float Far = 2;
-        public static readonly float Near = 0;
+        public static readonly float Near = 1;
 
         public static Matrix4 Projection;
 
@@ -55,20 +55,33 @@ namespace CMDR
                 if(value != _zoom & value != 0)
                 {
                     _zoom = value;
-                    Projection = CreateOrthographic(Matrix4.Identity);
+                    Projection = CreateOrthographic();
                 }
             }
         }
 
-		internal static Matrix4 CreateOrthographic(Matrix4 result)
+		internal static Matrix4 CreateOrthographic()
 		{
+            Matrix4 result = Matrix4.Identity;
 
+            float w_inv = 1.0f / (Right - Left);
+            float h_inv = 1.0f / (Bottom - Top);
+            float d_inv = 1.0f / (Far - Near);
+            result.M00 = 2.0f * w_inv;
+            result.M11 = 2.0f * h_inv;
+            result.M22 = d_inv;
+            result.M03 = -(Right + Left) * w_inv;
+            result.M13 = -(Bottom + Top) * h_inv;
+            result.M23 = -Near * d_inv;
+            //Console.WriteLine(result.ToString());
+            /*
             result.M00 = 2 / (Right - Left);
 			result.M11 = 2 / (Top - Bottom);
-			result.M22 = 2 / (Far - Near);
+			result.M22 = -2 / (Far - Near);
 			result.M30 = -(Right + Left) / (Right - Left);
 			result.M31 = -(Top + Bottom) / (Top - Bottom);
 			result.M32 = -(Far + Near) / (Far - Near);
+            */
             return result;
 		}
 		

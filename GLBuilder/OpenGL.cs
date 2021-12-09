@@ -254,14 +254,11 @@ namespace OpenGL
 		
         public static void UniformMatrix4fv(int location, bool transpose, Matrix4 matrix)
         {
-			if (location == -1)
-				return;
-
 			float[] buffer = matrix.ToArrayColumnMajor();
-			//float[] buffer = matrix.ToArray();
+
             fixed(float* ptr = &buffer[0])
             {
-                _uniformMatrix4fv(location, buffer.Length, transpose, ptr);
+				_uniformMatrix4fv(location, 1, transpose, ptr);
             }
         }
 		

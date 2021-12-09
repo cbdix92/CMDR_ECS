@@ -152,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="bin\Debug\Shaders\FragDefault.frag" />
+    <None Include="bin\Debug\Shaders\VertDefault.vert" />
     <None Include="packages.config" />
     <None Include="Shaders\FragDefault.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -164,7 +166,6 @@
     <EmbeddedResource Include="GLFW\Strings.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

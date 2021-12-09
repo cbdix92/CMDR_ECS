@@ -16,9 +16,9 @@ namespace CMDR
 			(ID, VertID, FragID) = (id, vertID, fragID);
 		}
 
-		public void SetUniformMatrix4(string name, Matrix4 matrix)
+		public void SetUniformMatrix4(string name, bool transpose, Matrix4 matrix)
 		{
-			GL.UniformMatrix4fv(GL.GetUniformLocation(ID, name), false, matrix);
+			GL.UniformMatrix4fv(GL.GetUniformLocation(ID, name), transpose, matrix);
 		}
 
 		public void SetUniformVec3(string name, Vector3 vec)

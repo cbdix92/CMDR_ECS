@@ -20,7 +20,7 @@ namespace CMDR.Components
 
         public Color Color;
 
-        public Texture ImgData { get; internal set; }
+        public Texture ImgData { get; set; }
 
         internal Animator Animator;
 

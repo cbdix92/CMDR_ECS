@@ -15,7 +15,7 @@ namespace CMDR
         // How many floats per pixel
         public int Stride;
 
-        internal Texture(float[] colorData, int width, int height, int stride)
+        public Texture(float[] colorData, int width, int height, int stride)
         {
             (ColorData, Width, Height, Stride) = (colorData, width, height, stride);
 			

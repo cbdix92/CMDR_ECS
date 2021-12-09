@@ -157,6 +157,10 @@ namespace CMDR
                     - ( M03 * M11 * M22 * M30 ) + ( M03 * M11 * M20 * M32 ) - ( M03 * M12 * M20 * M31 ) + ( M03 * M12 * M21 * M30 );
         }
 		
+        /// <summary>
+        /// Return a float[16] in row major for the current Matrix4.
+        /// </summary>
+        /// <returns></returns>
 		public float[] ToArray()
 		{
 			return new float[]{
@@ -167,6 +171,10 @@ namespace CMDR
             };
 		}
 		
+        /// <summary>
+        /// Return a float[16] in coulumn major for the current Matrix4.
+        /// </summary>
+        /// <returns></returns>
 		public float[] ToArrayColumnMajor()
 		{
 			return new float[]{
@@ -184,7 +192,7 @@ namespace CMDR
 
         public static Matrix4 CreateOrthographic()
         {
-			return Camera.CreateOrthographic(Identity);
+			return Camera.CreateOrthographic();
         }
 
         public static Matrix4 CreateTranslation(Vector3 vec)
@@ -257,7 +265,7 @@ namespace CMDR
 
         public override string ToString()
         {
-            return $"{M00}, {M10}, {M20}, {M30},\n{M01}, {M11}, {M21}, {M31},\n{M02}, {M12}, {M22}, {M32},\n{M03}, {M13}, {M23}, {M33}\n";
+            return $"{M00}, {M01}, {M02}, {M03},\n{M10}, {M11}, {M12}, {M13},\n{M20}, {M21}, {M22}, {M23},\n{M30}, {M31}, {M32}, {M33}\n";
         }
         public bool Equals(Matrix4 other)
 		{
