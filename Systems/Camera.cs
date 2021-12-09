@@ -41,7 +41,7 @@ namespace CMDR
 		public static float Top { get => -(Zoom * Height) / 2; }
 		public static float Bottom { get => (Zoom * Height) / 2; }
         
-        public static readonly float Far = 2;
+        public static readonly float Far = 1000;
         public static readonly float Near = 1;
 
         public static Matrix4 Projection;

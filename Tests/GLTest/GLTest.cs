@@ -15,6 +15,7 @@ namespace GLTest
     {
         public static Window Window;
 
+        /*
         private static float[] _vertices = new float[] { 
 			// pos      // tex
 			0.0f, 1.0f, 0.0f, 1.0f,
@@ -25,8 +26,19 @@ namespace GLTest
 			1.0f, 1.0f, 1.0f, 1.0f,
 			1.0f, 0.0f, 1.0f, 0.0f
 			};
+        */
+        private static float[] _vertices = new float[] { 
+			// pos      // tex
+			-1.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 0.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f,
 
-    public static uint VAO;
+            1.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, -1.0f, 1.0f, 1.0f,
+            -1.0f, -1.0f, 1.0f, 0.0f
+            };
+
+        public static uint VAO;
         public static uint VBO;
         static unsafe void Main(string[] args)
         {
@@ -66,6 +78,7 @@ namespace GLTest
             Texture texture = new Texture(pixels, 50, 50, 4);
             Camera.Width = 800;
             Camera.Height = 600;
+
             Matrix4 projection = Camera.Projection;
 
             Scene scene = new Scene();
@@ -73,6 +86,7 @@ namespace GLTest
             Transform transform = scene.Generate<Transform>();
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
+            renderData.Color = Color.Red;
             transform.Teleport(50, 50);
             gameObject.Use(transform);
             gameObject.Use(renderData);
@@ -86,7 +100,7 @@ namespace GLTest
                 shader.Use();
                 shader.SetUniformMatrix4("model", false, model);
                 shader.SetUniformMatrix4("projection", false, projection);
-                shader.SetUniformVec4("color", Color.Caramel);
+                shader.SetUniformVec4("color", renderData.Color);
                 
                 GL.ActiveTexture(GL.TEXTURE0);
                 texture.Bind();

@@ -6,19 +6,17 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using GLFW;
 
+
+
 namespace OpenGL
 {
-	internal static class Builder
+	internal static class Native
 	{
 		
 		private const string User32 = "user32.dll";
         private const string Kernel32 = "kernel32.dll";
-        private const string Opengl32 = "opengl32.dll";
 		
 		internal static Dictionary<string, IntPtr> Libs = new Dictionary<string, IntPtr>();
-		
-		[DllImport(Opengl32, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        internal static extern IntPtr wglGetProcAddress([MarshalAs(UnmanagedType.LPStr)]string name);
 
         [DllImport(Kernel32, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         internal static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
@@ -75,8 +73,6 @@ namespace OpenGL
 		internal static void LoadLibs()
 		{
 			Log.SetLastError(0);
-			Libs.Add(Opengl32, LoadLibrary(Opengl32));
-			CheckError(Opengl32);
 			Libs.Add(Kernel32, LoadLibrary(Kernel32));
 			CheckError(Kernel32);
 			Libs.Add(User32, LoadLibrary(User32));
@@ -113,7 +109,7 @@ namespace OpenGL
 
 			Log.LogWin32Error(error, info.Name, true);
 
-			result = GetProcAddress(Libs[Opengl32], info.Name);
+			//result = GetProcAddress(Libs[Opengl32], info.Name);
 			error = Marshal.GetLastWin32Error();
 			if (error == 0)
 				return result;

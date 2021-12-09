@@ -61,11 +61,11 @@
     <Compile Include="Components\RenderData.cs" />
     <Compile Include="DataSys\ComponentTable.cs" />
     <Compile Include="GLBuilder\Api.cs" />
-    <Compile Include="GLBuilder\Builder.cs" />
+    <Compile Include="GLBuilder\Native.cs" />
     <Compile Include="GLBuilder\BuildInfo.cs" />
     <Compile Include="GLBuilder\Log.cs" />
     <Compile Include="GLBuilder\Enums.cs" />
-    <Compile Include="GLBuilder\OpenGL.cs" />
+    <Compile Include="GLBuilder\GLWrapper.cs" />
     <Compile Include="GLFW\CharEventArgs.cs" />
     <Compile Include="GLFW\ContentScaleEventArgs.cs" />
     <Compile Include="GLFW\Delegates.cs" />
@@ -163,9 +163,6 @@
   <ItemGroup>
     <EmbeddedResource Include="GLFW\Strings.resx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\Shaders\" />
-    <Folder Include="Tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

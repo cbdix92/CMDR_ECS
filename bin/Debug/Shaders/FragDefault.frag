@@ -8,5 +8,5 @@ uniform vec4 color;
 void main()
 {    
     //colorOut = color * texture(image, TexCoords);
-    //colorOut = color;
+    colorOut = color;
 }  
