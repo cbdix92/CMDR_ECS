@@ -49,8 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\Shaders\FragDefault.frag" />
-    <None Include="bin\Debug\Shaders\VertDefault.vert" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CMDR_ECS.csproj">

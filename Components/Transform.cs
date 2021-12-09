@@ -169,19 +169,6 @@ namespace CMDR.Components
             return result * Matrix4.CreateRotationZ(RotDeg);	
 		}
 
-        public Matrix4 GenerateModelMatrixTest()
-        {
-            Matrix4 scale = Matrix4.CreateScale(_scale);
-            Matrix4 trans = Matrix4.CreateTranslation(_pos);
-            Matrix4 rot = Matrix4.CreateRotationZ(RotDeg);
-
-            Log.LogMatrix4(scale,"Scale");
-            Log.LogMatrix4(trans, "Translation");
-            Log.LogMatrix4(rot, "RotationZ");
-            Log.LogMatrix4(scale * trans * rot, "Result");
-            return scale * trans * rot;
-        }
-
         public void Receive()
         {
             this = Scene.Get<Transform>(ID);

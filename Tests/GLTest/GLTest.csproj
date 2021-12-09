@@ -49,16 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\Shaders\Frag.frag" />
-    <None Include="bin\Debug\Shaders\FragDefault.frag" />
-    <None Include="bin\Debug\Shaders\Vert.vert" />
-    <None Include="bin\Debug\Shaders\VertDefault.vert" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CMDR_ECS.csproj">
       <Project>{bddeeb19-2347-449b-8641-50e2cd586444}</Project>
       <Name>CMDR_ECS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
