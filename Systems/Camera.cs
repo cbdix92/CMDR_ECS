@@ -77,10 +77,10 @@ namespace CMDR
             /*
             result.M00 = 2 / (Right - Left);
 			result.M11 = 2 / (Top - Bottom);
-			result.M22 = -2 / (Far - Near);
-			result.M30 = -(Right + Left) / (Right - Left);
-			result.M31 = -(Top + Bottom) / (Top - Bottom);
-			result.M32 = -(Far + Near) / (Far - Near);
+			result.M22 = -(2 / (Far - Near));
+			result.M03 = -((Right + Left) / (Right - Left));
+			result.M13 = -((Top + Bottom) / (Top - Bottom));
+			result.M23 = -((Far + Near) / (Far - Near));
             */
             return result;
 		}
