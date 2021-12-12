@@ -41,6 +41,9 @@ namespace CMDR
             byte CompressionMethod = BR.ReadByte();
             byte filterMethod = BR.ReadByte();
             byte interlaceMethod = BR.ReadByte();
+			
+			// Storage for ancillary chunk data
+			Dictionary<string, byte[]> chunkData = new Dictionary<string, byte[]>();
             
             // Skip IHDR CRC
             BR.BaseStream.Position += 4;
@@ -62,7 +65,19 @@ namespace CMDR
                 switch(chunk)
                 {
                     case PLTE:
-                        throw new NotImplementedException("PLTE");
+					if(length%3 != 0)
+						throw new Exception("PNG PLTE CHUNK LENGTH NOT DIVISIBLE BY 3");
+					if (colorType == 3)
+					{
+						throw new NotImplementedException("PLTE");
+						break;
+					}
+					else if (colorType == 2 || colorType == 6)
+					{
+						throw new NotImplementedException("PLTE");
+						break;
+					}
+                        throw new Exception("colorType not set!");
 
                     case IDAT:
                         // Combine all IDAT chunks to form the ZLIB
@@ -81,113 +96,80 @@ namespace CMDR
                             }
                         }
 
-                        float[] _ = Array.ConvertAll<byte, float>(DecodedColorData, new Converter<byte, float>(ByteToF));
+                        float[] imgDataf = Array.ConvertAll<byte, float>(DecodedColorData, new Converter<byte, float>(ByteToF));
 
                         //string debug = String.Join(",", _.Select(p => p.ToString()).ToArray());
                         //File.WriteAllText("Decoded.txt", debug);
 
-                        return new Texture(_, width, height, dataStride);
+                        return new Texture(imgDataf, width, height, dataStride);
 
                     case bKGD:
-                        throw new NotImplementedException("bKGD");
+						chunkData.Add("bKGD", BR.ReadBytes(length));
+						break;
 
                     case cHRM:
-                        throw new NotImplementedException("cHRM");
+                        chunkData.Add("cHRM", BR.ReadBytes(length));
+						break;
 
                     case dSIG:
-                        throw new NotImplementedException("dSIG");
-
+                        chunkData.Add("dSIG", BR.ReadBytes(length));
+						break;
+						
                     case eXIf:
-                        throw new NotImplementedException("eXIf");
+                        chunkData.Add("eXIf", BR.ReadBytes(length));
+						break;
 
                     case gAMA:
-                        UInt32 Gamma = (UInt32)BR.ReadBytes(4).ConvertInt(BitCount.Bit32);
-                        break;
+                        chunkData.Add("gAMA", BR.ReadBytes(length));
+						break;
 
                     case hIST:
-                        throw new NotImplementedException("hIST");
+                        chunkData.Add("hIST", BR.ReadBytes(length));
+						break;
 
                     case iCCP:
-                        throw new NotImplementedException("iCCP");
+                        chunkData.Add("iCCP", BR.ReadBytes(length));
+						break;
 
                     case iTXt:
-                        throw new NotImplementedException("iTXt");
+                        chunkData.Add("iTXt", BR.ReadBytes(length));
+						break;
 
                     case pHYs:
-                        UInt32 pixelsPerUnitX = (UInt32)BR.ReadBytes(4).ConvertInt(BitCount.Bit32);
-                        UInt32 pixelsPerUnitY = (UInt32)BR.ReadBytes(4).ConvertInt(BitCount.Bit32);
-                        bool unitSpecifier = BR.ReadByte().ToBool();
+                        chunkData.Add("pHYS", BR.ReadBytes(length));
                         break;
 
                     case sBIT:
-                        switch(colorType)
-                        {
-                            case 0:
-                                bitShift = new byte[1];
-                                bitShift[0] = (byte)(bitDepth - BR.ReadByte());
-                                break;
-                            case 2:
-                                bitShift = new byte[3];
-                                bitShift[0] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[1] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[2] = (byte)(bitDepth - BR.ReadByte());
-                                dataStride = 3;
-                                break;
-                            case 3:
-                                bitShift = new byte[3];
-                                bitShift[0] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[1] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[2] = (byte)(bitDepth - BR.ReadByte());
-                                dataStride = 3;
-                                break;
-                            case 4:
-                                bitShift = new byte[2];
-                                bitShift[0] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[1] = (byte)(bitDepth - BR.ReadByte());
-                                dataStride = 2;
-                                break;
-                            case 6:
-                                bitShift = new byte[4];
-                                bitShift[0] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[1] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[2] = (byte)(bitDepth - BR.ReadByte());
-                                bitShift[3] = (byte)(bitDepth - BR.ReadByte());
-                                dataStride = 4;
-                                break;
-                        }
+                        chunkData.Add("sBIT", BR.ReadBytes(length));
                         break;
 
                     case sPLT:
-                        throw new NotImplementedException("sPLT");
+                        chunkData.Add("sPLT", BR.ReadBytes(length));
+						break;
 
                     case sRGB:
-                        int RenderingIntent = BR.ReadByte();
+                        chunkData.Add("sRGB", BR.ReadBytes(length));
                         break;
-                        //throw new NotImplementedException("sRGB");
 
                     case sTER:
-                        throw new NotImplementedException("sTER");
+                        chunkData.Add("sTER", BR.ReadBytes(length));
+						break;
 
                     case tEXt:
-                        throw new NotImplementedException("tEXt");
+                        chunkData.Add("tEXt", BR.ReadBytes(length));
+						break;
 
                     case tIME:
-                        throw new NotImplementedException("tIME");
+                        chunkData.Add("tIME", BR.ReadBytes(length));
+						break;
 
                     case tRNS:
-                        switch(colorType)
-                        {
-                            case 0:
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                break;
-                        }
-                        throw new InvalidDataException($"tRNS chunk found for color type {colorType}: " + (colorType == 4 ? "Greyscale with alpha" : "Truecolour with alpha"));
+                        chunkData.Add("tRNS", BR.ReadBytes(length));
+						break;
                     
                     case zTXt:
-                        throw new NotImplementedException("zTXt");
+                        chunkData.Add("zTXt", BR.ReadBytes(length));
+						break;
 
                 }
                 // Skip CRC for now ...
@@ -200,7 +182,8 @@ namespace CMDR
 
         internal static float ByteToF(byte b)
         {
-            return (float)b;
+			// Return a normalized float
+            return (float)b/255f;
         }
     }
 }

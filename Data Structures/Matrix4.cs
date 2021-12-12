@@ -185,9 +185,9 @@ namespace CMDR
 			};
 		}
 
-        public static Matrix4 CreatePerspectiveFOV(float fovy, float aspect, float depthNear, float depthFar)
+        public static Matrix4 CreatePerspective()
         {
-            throw new NotImplementedException("CreatePerspectiveFOV");
+            return Camera.CreatePerspective();
         }
 
         public static Matrix4 CreateOrthographic()

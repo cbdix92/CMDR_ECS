@@ -69,7 +69,7 @@ namespace CMDR.Systems
 				Texture texture = renderData.GetRender(ticks);
                 
 				
-				Matrix4 model = transform.GenerateModelMatrix();
+				Matrix4 model = transform.GenerateModelMatrix(texture);
 				
 				renderData.Shader.Use();
 				renderData.Shader.SetUniformMatrix4("model", false, model); ;

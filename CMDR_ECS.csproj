@@ -52,6 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data Structures\Vector2.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
     <Compile Include="OpenGLAbstractions\ShaderManager.cs" />

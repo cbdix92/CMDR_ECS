@@ -30,7 +30,7 @@ namespace CMDR.Components
         public float X
         {
             get => _pos.X;
-            internal set
+            set
             {
                 Receive();
                 _pos.X = value;
@@ -60,24 +60,24 @@ namespace CMDR.Components
         #endregion
 
         #region VELOCITY_PROPERTIES
-        private float _xvel, _yvel;
+        private Vector2 _vel;
         public float Xvel
         {
-            get => _xvel;
+            get => _vel.X;
             set
             {
                 Receive();
-                _xvel = value * _static;
+                _vel.X = value * _static;
                 Send();
             }
         }
         public float Yvel
         {
-            get => _yvel;
+            get => _vel.Y;
             set
             {
                 Receive();
-                _yvel = value * _static;
+                _vel.Y = value * _static;
                 Send();
             }
         }
@@ -97,7 +97,7 @@ namespace CMDR.Components
         }
         public float RotRad
         {
-            get => _rotD / 180.0F * (float)Math.PI;
+			get => _rotD * 0.01745329f;
         }
 
         #endregion
@@ -162,11 +162,11 @@ namespace CMDR.Components
             (Xscale, Yscale, Zscale) = (n, n, n);
         }
 		
-		public Matrix4 GenerateModelMatrix()
+		public Matrix4 GenerateModelMatrix(Texture texture)
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
-			Matrix4 result = Matrix4.CreateScale(_scale) * Matrix4.CreateTranslation(_pos);
-            return result * Matrix4.CreateRotationZ(RotDeg);	
+			Matrix4 result = Matrix4.CreateScale(Xscale*texture.Width, Yscale*texture.Height, 1f) * Matrix4.CreateTranslation(_pos);
+            return result * Matrix4.CreateRotationZ(RotRad);	
 		}
 
         public void Receive()

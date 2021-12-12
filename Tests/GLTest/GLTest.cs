@@ -31,24 +31,24 @@ namespace GLTest
         private static float[] _vertices = new float[] 
         { 
 			// X     Y
-			 0.0f,  0.0f, // Top left 
-             1.0f,  0.0f, // Top right
-             0.0f, 1.0f, // Bottom left
+			-1.0f,  1.0f, 
+             1.0f,  1.0f,
+            -1.0f, -1.0f,
 
-             0.0f,  1.0f, // Bottom left
-             1.0f,  0.0f, // Top right
-             1.0f,  1.0f // Bottom right
+             1.0f,  1.0f,
+             1.0f, -1.0f, 
+            -1.0f, -1.0f
         };
 
         private static float[] _testVerts = new float[]
         {
-            -Width, Height,
-            Width, Height,
-            -Width, -Height,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            0.0f, 0.0f,
 
-            Width, Height,
-            Width, -Height,
-            -Width, -Height
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
         };
 
         public static uint VAO;
@@ -88,8 +88,8 @@ namespace GLTest
             //Shader shader = ShaderManager.DefaultShader();
             GL.ClearColor(Color.BabyBlue);
 
-            float[] pixels = GenPixels(50, 50);
-            Texture texture = new Texture(pixels, 50, 50, 4);
+            float[] pixels = GenPixels(100, 100);
+            Texture texture = new Texture(pixels, 100, 100, 4);
             
             Camera.Width = 800;
             Camera.Height = 600;
@@ -100,23 +100,28 @@ namespace GLTest
             Transform transform = scene.Generate<Transform>();
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
-            transform.Teleport(1, 0);
+            transform.Teleport(0, 0);
             gameObject.Use(transform);
             gameObject.Use(renderData);
 
-            Matrix4 model = transform.GenerateModelMatrix();
+            Matrix4 model = transform.GenerateModelMatrix(texture);
             GameLoop.Time.Start();
             float counter = 0;
             while (!Glfw.WindowShouldClose(Window))
             {
                 GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
-                if (counter > 60)
+                
+                if (counter > 30)
                 {
+                    transform.RotDeg++;
+                    if (transform.X >= 10)
+                        transform.X = 0;
+                    //transform.X++;
+                    Console.WriteLine(transform.RotDeg);
                     renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
-                    transform.Teleport(MathHelper.Cos(GameLoop.GameTime) * 100, -MathHelper.Sin(GameLoop.GameTime) * 100);
-                    transform.RotDeg = (MathHelper.Sin(GameLoop.GameTime+MathHelper.Cos(GameLoop.GameTime)));
-                    model = transform.GenerateModelMatrix();
-                    Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
+                    //transform.Teleport(MathHelper.Cos(GameLoop.GameTime), -MathHelper.Sin(GameLoop.GameTime));
+                    model = transform.GenerateModelMatrix(texture);
+                    //Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
                     counter = 0;
                 }
                 counter++;
@@ -125,8 +130,8 @@ namespace GLTest
                 shader.SetUniformMatrix4("projection", false, Camera.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
                 
-                GL.ActiveTexture(GL.TEXTURE0);
-                texture.Bind();
+                //GL.ActiveTexture(GL.TEXTURE0);
+                //texture.Bind();
 
                 GL.BindVertexArray(VAO);
                 GL.DrawArrays(GL.TRIANGLES, 0, 6);

@@ -40,9 +40,9 @@ namespace CMDR
 		public static float Right { get => (Zoom * Width); }
 		public static float Top { get => -(Zoom * Height); }
 		public static float Bottom { get => (Zoom * Height); }
-
+        
         public static readonly float Far = 1f;
-        public static readonly float Near = -1f;
+        public static readonly float Near = -1;
 
         public static Matrix4 Projection;
 
@@ -59,6 +59,20 @@ namespace CMDR
                 }
             }
         }
+		public static Matrix4 CreatePerspective()
+		{
+			Matrix4 result = Matrix4.Identity;
+			
+			result.M00 = (2f * Near) / (Right - Left);
+			result.M11 = (2f * Near) / (Top - Bottom);
+			result.M22 = -(Far - Near) / (Far - Near);
+			result.M02 = (Right + Left) / (Right - Left);
+			result.M12 = (Top + Bottom) / (Top - Bottom);
+            result.M23 = -(2f * Far * Near) / (Far - Near);
+			result.M32 = -1f;
+			
+			return result;
+		}
 
 		internal static Matrix4 CreateOrthographic()
 		{
