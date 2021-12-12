@@ -31,13 +31,13 @@ namespace GLTest
         private static float[] _vertices = new float[] 
         { 
 			// X     Y
-			-1.0f,  1.0f, 
-             1.0f,  1.0f,
-            -1.0f, -1.0f,
+			 0.0f,  0.0f, // Top left 
+             1.0f,  0.0f, // Top right
+             0.0f, 1.0f, // Bottom left
 
-             1.0f,  1.0f,
-             1.0f, -1.0f, 
-            -1.0f, -1.0f
+             0.0f,  1.0f, // Bottom left
+             1.0f,  0.0f, // Top right
+             1.0f,  1.0f // Bottom right
         };
 
         private static float[] _testVerts = new float[]
@@ -74,8 +74,8 @@ namespace GLTest
             VBO = GL.GenBuffer();
 
             GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
-            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _testVerts.Length, _testVerts, GL.STATIC_DRAW);
+            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
+            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _testVerts.Length, _testVerts, GL.STATIC_DRAW);
 
             GL.BindVertexArray(VAO);
             GL.VertexAttribPointer(0, 2, GL.FLOAT, false, (void*)0);
@@ -114,6 +114,7 @@ namespace GLTest
                 {
                     renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
                     transform.Teleport(MathHelper.Cos(GameLoop.GameTime) * 100, -MathHelper.Sin(GameLoop.GameTime) * 100);
+                    transform.RotDeg = (MathHelper.Sin(GameLoop.GameTime+MathHelper.Cos(GameLoop.GameTime)));
                     model = transform.GenerateModelMatrix();
                     Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
                     counter = 0;
@@ -124,8 +125,8 @@ namespace GLTest
                 shader.SetUniformMatrix4("projection", false, Camera.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
                 
-                //GL.ActiveTexture(GL.TEXTURE0);
-                //texture.Bind();
+                GL.ActiveTexture(GL.TEXTURE0);
+                texture.Bind();
 
                 GL.BindVertexArray(VAO);
                 GL.DrawArrays(GL.TRIANGLES, 0, 6);
