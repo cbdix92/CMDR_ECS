@@ -36,10 +36,10 @@ namespace CMDR
             }
         }
 		
-		public static float Left { get => -(Zoom * Width);}
-		public static float Right { get => (Zoom * Width); }
-		public static float Top { get => -(Zoom * Height); }
-		public static float Bottom { get => (Zoom * Height); }
+		public static float Left { get => -(Zoom * (Width / 2));}
+		public static float Right { get => (Zoom * (Width / 2)); }
+		public static float Top { get => -(Zoom * (Height / 2)); }
+		public static float Bottom { get => (Zoom * (Height / 2)); }
         
         public static readonly float Far = 1f;
         public static readonly float Near = -1;
@@ -78,6 +78,7 @@ namespace CMDR
 		{
             Matrix4 result = Matrix4.Identity;
 
+			/*
             float w_inv = 1.0f / (Right - Left);
             float h_inv = 1.0f / (Bottom - Top);
             float d_inv = 1.0f / (Far - Near);
@@ -87,15 +88,15 @@ namespace CMDR
             result.M03 = -(Right + Left) * w_inv;
             result.M13 = -(Bottom + Top) * h_inv;
             result.M23 = -Near * d_inv;
-            //Console.WriteLine(result.ToString());
-            /*
+			*/
+			
             result.M00 = 2 / (Right - Left);
 			result.M11 = 2 / (Top - Bottom);
 			result.M22 = -(2 / (Far - Near));
 			result.M03 = -((Right + Left) / (Right - Left));
 			result.M13 = -((Top + Bottom) / (Top - Bottom));
 			result.M23 = -((Far + Near) / (Far - Near));
-            */
+            
             return result;
 		}
 		
