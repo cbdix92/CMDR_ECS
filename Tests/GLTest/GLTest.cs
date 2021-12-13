@@ -88,8 +88,11 @@ namespace GLTest
             //Shader shader = ShaderManager.DefaultShader();
             GL.ClearColor(Color.BabyBlue);
 
-            float[] pixels = GenPixels(100, 100);
-            Texture texture = new Texture(pixels, 100, 100, 4);
+            int texWidth = 50;
+            int texHeight = 50;
+
+            float[] pixels = GenPixels(texWidth, texHeight);
+            Texture texture = new Texture(pixels, texWidth, texHeight, 4);
             
             Camera.Width = 800;
             Camera.Height = 600;
@@ -113,14 +116,14 @@ namespace GLTest
                 
                 if (counter > 30)
                 {
-                    transform.RotDeg++;
+                    //transform.RotDeg++;
                     if (transform.X >= 10)
                         transform.X = 0;
                     //transform.X++;
-                    Console.WriteLine(transform.RotDeg);
-                    renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
+                    //Console.WriteLine(transform.RotDeg);
+                    //renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
                     //transform.Teleport(MathHelper.Cos(GameLoop.GameTime), -MathHelper.Sin(GameLoop.GameTime));
-                    model = transform.GenerateModelMatrix(texture);
+                    //model = transform.GenerateModelMatrix(texture);
                     //Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
                     counter = 0;
                 }
