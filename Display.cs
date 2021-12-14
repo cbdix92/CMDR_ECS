@@ -8,8 +8,55 @@ namespace CMDR
     public sealed class Display
     {
         internal static Window Window;
+
+        private static float _width;
+        private static float _height;
+        public static float Width
+        {
+            get => _width;
+            set
+            {
+                _width = value * 1;
+                Projection = CreateOrthographic();
+            }
+        }
+        public static float Height
+        {
+            get => _height;
+            set
+            {
+                _height = value * 1;
+                Projection = CreateOrthographic();
+            }
+        }
+
+        public static float Left { get => -(Zoom * (Width / 2)); }
+        public static float Right { get => (Zoom * (Width / 2)); }
+        public static float Top { get => -(Zoom * (Height / 2)); }
+        public static float Bottom { get => (Zoom * (Height / 2)); }
+
+        public static readonly float Far = 1f;
+        public static readonly float Near = -1;
+
+        public static Matrix4 Projection;
+
+        private static float _zoom = 1f;
+        public static float Zoom
+        {
+            get => _zoom;
+            set
+            {
+                if (value != _zoom & value != 0)
+                {
+                    _zoom = value;
+                    Projection = CreateOrthographic();
+                }
+            }
+        }
+
         public Display(int width, int height, string title)
         {
+            (Width, Height) = (width, height);
             (Camera.Width, Camera.Height) = (width, height);
 
             Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
@@ -39,6 +86,16 @@ namespace CMDR
             Render.Init();
             ShaderManager.Init();
 
+        }
+
+        internal static Matrix4 CreateOrthographic()
+        {
+            return Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
+        }
+
+        public static Matrix4 CreatePerspective()
+        {
+            return Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
         }
 
         public void Start()

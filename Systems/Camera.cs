@@ -61,44 +61,13 @@ namespace CMDR
         }
 		public static Matrix4 CreatePerspective()
 		{
-			Matrix4 result = Matrix4.Identity;
-			
-			result.M00 = (2f * Near) / (Right - Left);
-			result.M11 = (2f * Near) / (Top - Bottom);
-			result.M22 = -(Far - Near) / (Far - Near);
-			result.M02 = (Right + Left) / (Right - Left);
-			result.M12 = (Top + Bottom) / (Top - Bottom);
-            result.M23 = -(2f * Far * Near) / (Far - Near);
-			result.M32 = -1f;
-			
-			return result;
+            return Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
 		}
 
 		internal static Matrix4 CreateOrthographic()
 		{
-            Matrix4 result = Matrix4.Identity;
-
-			/*
-            float w_inv = 1.0f / (Right - Left);
-            float h_inv = 1.0f / (Bottom - Top);
-            float d_inv = 1.0f / (Far - Near);
-            result.M00 = 2.0f * w_inv;
-            result.M11 = 2.0f * h_inv;
-            result.M22 = d_inv;
-            result.M03 = -(Right + Left) * w_inv;
-            result.M13 = -(Bottom + Top) * h_inv;
-            result.M23 = -Near * d_inv;
-			*/
-			
-            result.M00 = 2 / (Right - Left);
-			result.M11 = 2 / (Top - Bottom);
-			result.M22 = -(2 / (Far - Near));
-			result.M03 = -((Right + Left) / (Right - Left));
-			result.M13 = -((Top + Bottom) / (Top - Bottom));
-			result.M23 = -((Far + Near) / (Far - Near));
-            
-            return result;
-		}
+            return Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
+        }
 		
         /// <summary>
         /// Check if a Transform is within view of the camera by performing bounding box collision test.

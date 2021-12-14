@@ -185,14 +185,45 @@ namespace CMDR
 			};
 		}
 
-        public static Matrix4 CreatePerspective()
+        public static Matrix4 CreatePerspective(float top, float bottom, float left, float right, float far, float near)
         {
-            return Camera.CreatePerspective();
+            Matrix4 result = Matrix4.Identity;
+
+            result.M00 = (2f * near) / (right - left);
+            result.M11 = (2f * near) / (top - bottom);
+            result.M22 = -(far - near) / (far - near);
+            result.M02 = (right + left) / (right - left);
+            result.M12 = (top + bottom) / (top - bottom);
+            result.M23 = -(2f * far * near) / (far - near);
+            result.M32 = -1f;
+
+            return result;
         }
 
-        public static Matrix4 CreateOrthographic()
+        public static Matrix4 CreateOrthographic(float top, float bottom, float left, float right, float far, float near)
         {
-			return Camera.CreateOrthographic();
+            Matrix4 result = Matrix4.Identity;
+
+            /*
+            float w_inv = 1.0f / (Right - Left);
+            float h_inv = 1.0f / (Bottom - Top);
+            float d_inv = 1.0f / (Far - Near);
+            result.M00 = 2.0f * w_inv;
+            result.M11 = 2.0f * h_inv;
+            result.M22 = d_inv;
+            result.M03 = -(Right + Left) * w_inv;
+            result.M13 = -(Bottom + Top) * h_inv;
+            result.M23 = -Near * d_inv;
+			*/
+
+            result.M00 = 2 / (right - left);
+            result.M11 = 2 / (top - bottom);
+            result.M22 = -(2 / (far - near));
+            result.M03 = -((right + left) / (right - left));
+            result.M13 = -((top + bottom) / (top - bottom));
+            result.M23 = -((far + near) / (far - near));
+
+            return result;
         }
 
         public static Matrix4 CreateTranslation(Vector3 vec)
