@@ -7,46 +7,78 @@ namespace CMDR
 {
     public static class Camera
     {
-        public static float X;
-        public static float Y;
-        public static float Z;
 
-        public static float Xvel;
-        public static float Yvel;
-        public static float Zvel;
 
-        private static float _width;
-        private static float _height;
+        private static Vector2 _size;
+        private static Vector2 _velocity;
+        private static Vector3 _pos;
+        private static float _zoom = 1f;
+
+        #region SIZE
         public static float Width
         {
-            get => _width;
+            get => _size.X;
             set
             {
-                _width = value * 1;
-                Projection = CreateOrthographic();
+                _size.X = value * 1;
+                ChangeState = true;
             }
         }
+
         public static float Height
         {
-            get => _height;
+            get => _size.Y;
             set
             {
-                _height = value * 1;
-                Projection = CreateOrthographic();
+                _size.Y = value * 1;
+                ChangeState = true;
             }
         }
-		
-		public static float Left { get => -(Zoom * (Width / 2));}
-		public static float Right { get => (Zoom * (Width / 2)); }
-		public static float Top { get => -(Zoom * (Height / 2)); }
-		public static float Bottom { get => (Zoom * (Height / 2)); }
-        
-        public static readonly float Far = 1f;
-        public static readonly float Near = -1;
+        #endregion
 
-        public static Matrix4 Projection;
+        #region VELOCITY
+        public static float Xvel
+        {
+            get => _velocity.X;
+            set
+            {
+                _velocity.X = value;
+            }
+        }
 
-        private static float _zoom = 1f;
+        public static float Yvel
+        {
+            get => _velocity.Y;
+            set
+            {
+                _velocity.Y = value;
+            }
+        }
+        #endregion
+
+        #region POSITION
+        public static float X
+        {
+            get => _pos.X;
+            set
+            {
+                _pos.X = value;
+                ChangeState = true; ;
+            }
+        }
+
+        public static float Y
+        {
+            get => _pos.Y;
+            set
+            {
+                _pos.Y = value;
+                ChangeState = true;
+            }
+        }
+        #endregion
+
+
         public static float Zoom
         {
             get => _zoom;
@@ -55,18 +87,27 @@ namespace CMDR
                 if(value != _zoom & value != 0)
                 {
                     _zoom = value;
-                    Projection = CreateOrthographic();
+                    ChangeState = true;
                 }
             }
         }
-		public static Matrix4 CreatePerspective()
-		{
-            return Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
-		}
 
-		internal static Matrix4 CreateOrthographic()
+        public static Matrix4 View;
+
+        /// <summary>
+        /// Determine if the View matrix needs to be recalculated
+        /// </summary>
+        public static bool ChangeState { get; private set; }
+
+        /// <summary>
+        /// Called by the renderer if ChangeSate is set true to calculate the new View Matrix.
+        /// </summary>
+		internal static void CreateView()
 		{
-            return Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
+            Matrix4 identity = Matrix4.Identity;
+
+            View = identity * Matrix4.CreateTranslation(_pos);
+            ChangeState = false;
         }
 		
         /// <summary>

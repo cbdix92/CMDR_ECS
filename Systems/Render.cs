@@ -54,7 +54,7 @@ namespace CMDR.Systems
 
             Debugger.Draw(ticks);
 
-			Matrix4 projection = Camera.Projection;
+			Matrix4 projection = Display.Projection;
 
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();

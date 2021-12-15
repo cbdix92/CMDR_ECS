@@ -7,64 +7,58 @@ namespace CMDR
 {
     public sealed class Display
     {
-        internal static Window Window;
+        public static Window Window;
 
-        private static float _width;
-        private static float _height;
-        public static float Width
+        private static Vector2 _size;
+
+        #region SIZE
+        public static int Width
         {
-            get => _width;
+            get => (int)_size.X;
             set
             {
-                _width = value * 1;
+                _size.X = value * 1;
                 Projection = CreateOrthographic();
             }
         }
-        public static float Height
+        public static int Height
         {
-            get => _height;
+            get => (int)_size.Y;
             set
             {
-                _height = value * 1;
+                _size.Y = value * 1;
                 Projection = CreateOrthographic();
             }
         }
 
-        public static float Left { get => -(Zoom * (Width / 2)); }
-        public static float Right { get => (Zoom * (Width / 2)); }
-        public static float Top { get => -(Zoom * (Height / 2)); }
-        public static float Bottom { get => (Zoom * (Height / 2)); }
+        #endregion
 
+
+        public static float Left { get => 0; }
+        public static float Right { get => Width; }
+        public static float Top { get => 0; }
+        public static float Bottom { get => Height; }
         public static readonly float Far = 1f;
         public static readonly float Near = -1;
 
+        //public static float Left { get => -Width / 2; }
+        //public static float Right { get => Width / 2; }
+        //public static float Top { get => -Height / 2; }
+        //public static float Bottom { get => Height / 2; }
+
+
         public static Matrix4 Projection;
 
-        private static float _zoom = 1f;
-        public static float Zoom
+        public Display(int width, int height, string title, bool doubleBuffer = true, bool decorated = true)
         {
-            get => _zoom;
-            set
-            {
-                if (value != _zoom & value != 0)
-                {
-                    _zoom = value;
-                    Projection = CreateOrthographic();
-                }
-            }
-        }
-
-        public Display(int width, int height, string title)
-        {
-            (Width, Height) = (width, height);
-            (Camera.Width, Camera.Height) = (width, height);
+            ((Width, Camera.Width), (Height, Camera.Height)) = ((width, width), (height, height));
 
             Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
             Glfw.WindowHint(Hint.ContextVersionMajor, 3);
             Glfw.WindowHint(Hint.ContextVersionMinor, 3);
             Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
-            Glfw.WindowHint(Hint.Doublebuffer, true);
-            Glfw.WindowHint(Hint.Decorated, true);
+            Glfw.WindowHint(Hint.Doublebuffer, doubleBuffer);
+            Glfw.WindowHint(Hint.Decorated, decorated);
             Glfw.WindowHint(Hint.OpenglForwardCompatible, true);
 
             Window = Glfw.CreateWindow(width, height, title, Monitor.None, Window.None);
@@ -74,11 +68,7 @@ namespace CMDR
 
             Glfw.MakeContextCurrent(Window);
 
-            // Center the game window on the monitor
-            var screen = Glfw.PrimaryMonitor.WorkArea;
-            var x = (screen.Width - width) / 2;
-            var y = (screen.Height - height) / 2;
-            Glfw.SetWindowPosition(Window, x, y);
+            CenterGameWindow();
 
 
             Log.Init();
@@ -96,6 +86,14 @@ namespace CMDR
         public static Matrix4 CreatePerspective()
         {
             return Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
+        }
+
+        public static void CenterGameWindow()
+        {
+            var screen = Glfw.PrimaryMonitor.WorkArea;
+            int x = (screen.Width - Width) / 2;
+            int y = (screen.Height - Height) / 2;
+            Glfw.SetWindowPosition(Window, x, y);
         }
 
         public void Start()

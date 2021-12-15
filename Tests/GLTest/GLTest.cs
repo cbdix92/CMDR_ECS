@@ -13,21 +13,11 @@ namespace GLTest
 {
     class GLtest
     {
-        public static Window Window;
         public static float Width = 35;
         public static float Height = 35;
-        /*
-        private static float[] _vertices = new float[] { 
-			// pos      // tex
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f, 
-		
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, 1.0f, 1.0f,
-			1.0f, 0.0f, 1.0f, 0.0f
-			};
-        */
+
+        public static Display Display;
+
         private static float[] _vertices = new float[] 
         { 
 			// X     Y
@@ -40,42 +30,29 @@ namespace GLTest
             -1.0f, -1.0f
         };
 
-        private static float[] _testVerts = new float[]
+        private static float[] _verts = new float[]
         {
-            0.0f, 1.0f,
-            1.0f, 0.0f,
-            0.0f, 0.0f,
+            -1.0f,  1.0f,
+            1.0f,  1.0f,
+            -1.0f, -1.0f,
 
-            0.0f, 1.0f,
+            -1.0f,  -1.0f,
             1.0f, 1.0f,
-            1.0f, 0.0f,
+            1.0f, -1.0f
         };
 
         public static uint VAO;
         public static uint VBO;
         static unsafe void Main(string[] args)
         {
-
-            Glfw.WindowHint(Hint.ClientApi, ClientApi.OpenGL);
-            Glfw.WindowHint(Hint.ContextVersionMajor, 3);
-            Glfw.WindowHint(Hint.ContextVersionMinor, 3);
-            Glfw.WindowHint(Hint.OpenglProfile, Profile.Core);
-            Glfw.WindowHint(Hint.Doublebuffer, true);
-            Glfw.WindowHint(Hint.Decorated, true);
-            Glfw.WindowHint(Hint.OpenglForwardCompatible, true);
-
-            Window = Glfw.CreateWindow(800, 600, "Test Title", Monitor.None, Window.None);
-
-            Glfw.MakeContextCurrent(Window);
-
-            GL.Init();
+            Display = new Display(800, 600, "Test title");
 
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
 
             GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _testVerts.Length, _testVerts, GL.STATIC_DRAW);
+            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
+            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _verts.Length, _verts, GL.STATIC_DRAW);
 
             GL.BindVertexArray(VAO);
             GL.VertexAttribPointer(0, 2, GL.FLOAT, false, (void*)0);
@@ -103,43 +80,44 @@ namespace GLTest
             Transform transform = scene.Generate<Transform>();
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
-            transform.Teleport(0, 0);
+            transform.Teleport(2, 2);
+            transform.Scale(1f);
             gameObject.Use(transform);
             gameObject.Use(renderData);
 
             Matrix4 model = transform.GenerateModelMatrix(texture);
             GameLoop.Time.Start();
             float counter = 0;
-            while (!Glfw.WindowShouldClose(Window))
+            while (!Glfw.WindowShouldClose(Display.Window))
             {
                 GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
                 
-                if (counter > 30)
+                if (counter > 60)
                 {
                     //transform.RotDeg++;
-                    if (transform.X >= 10)
-                        transform.X = 0;
-                    //transform.X++;
+                    //transform.X = transform.X == 1f ? 0 : 1f;
                     //Console.WriteLine(transform.RotDeg);
                     //renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
                     //transform.Teleport(MathHelper.Cos(GameLoop.GameTime), -MathHelper.Sin(GameLoop.GameTime));
-                    //model = transform.GenerateModelMatrix(texture);
+                    //transform.RotDeg = MathHelper.Sin(GameLoop.GameTime);
                     //Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
+                    model = transform.GenerateModelMatrix(texture);
                     counter = 0;
                 }
                 counter++;
                 shader.Use();
                 shader.SetUniformMatrix4("model", false, model);
-                shader.SetUniformMatrix4("projection", false, Camera.Projection);
+                shader.SetUniformMatrix4("projection", false, Display.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
-                
+                shader.SetUniformVec4("pos", new Vector4(transform.X, transform.Y, Camera.Width, Camera.Height));
+
                 //GL.ActiveTexture(GL.TEXTURE0);
                 //texture.Bind();
 
                 GL.BindVertexArray(VAO);
                 GL.DrawArrays(GL.TRIANGLES, 0, 6);
                 GL.BindVertexArray(0);
-                Glfw.SwapBuffers(Window);
+                Glfw.SwapBuffers(Display.Window);
                 Glfw.PollEvents();
             }
 
