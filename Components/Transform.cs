@@ -152,10 +152,11 @@ namespace CMDR.Components
             X += x;
             Y += y;   
         }
-        public void Teleport(float x, float y)
+        public void Teleport(float x, float y, float z)
         {
             X = x;
             Y = y;
+            Z = z;
         }
         public void Scale(float n)
         {
@@ -166,7 +167,10 @@ namespace CMDR.Components
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
 			Matrix4 result = Matrix4.CreateScale(Xscale*texture.Width, Yscale*texture.Height, 1f) * Matrix4.CreateTranslation(_pos);
-            return result * Matrix4.CreateRotationZ(RotRad);	
+			
+            // For testing cube render
+            //Matrix4 result = Matrix4.CreateScale(Xscale, Yscale, 1f) * Matrix4.CreateTranslation(_pos);
+            return result * Matrix4.CreateRotationZ(RotRad) * Matrix4.CreateRotationX(RotRad) * Matrix4.CreateRotationY(RotRad);	
 		}
 
         public void Receive()

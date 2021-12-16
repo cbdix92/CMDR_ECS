@@ -19,6 +19,7 @@ namespace CMDR
             {
                 _size.X = value * 1;
                 Projection = CreateOrthographic();
+                //Projection = CreatePerspective();
             }
         }
         public static int Height
@@ -28,6 +29,7 @@ namespace CMDR
             {
                 _size.Y = value * 1;
                 Projection = CreateOrthographic();
+                //Projection = CreatePerspective();
             }
         }
 
@@ -38,8 +40,8 @@ namespace CMDR
         public static float Right { get => Width; }
         public static float Top { get => 0; }
         public static float Bottom { get => Height; }
+        public static readonly float Near = 0;
         public static readonly float Far = 1f;
-        public static readonly float Near = -1;
 
         //public static float Left { get => -Width / 2; }
         //public static float Right { get => Width / 2; }
