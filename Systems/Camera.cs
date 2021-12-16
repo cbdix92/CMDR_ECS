@@ -10,9 +10,10 @@ namespace CMDR
 
 
         private static Vector2 _size;
-        private static Vector2 _velocity;
+        private static Vector3 _velocity;
         private static Vector3 _pos;
         private static float _zoom = 1f;
+        private static Matrix4 _view;
 
         #region SIZE
         public static float Width
@@ -54,6 +55,15 @@ namespace CMDR
                 _velocity.Y = value;
             }
         }
+
+        public static float Zvel
+        {
+            get => _velocity.Z;
+            set
+            {
+                _velocity.Z = value;
+            }
+        }
         #endregion
 
         #region POSITION
@@ -76,6 +86,16 @@ namespace CMDR
                 ChangeState = true;
             }
         }
+
+        public static float Z
+        {
+            get => _pos.Z;
+            set
+            {
+                _pos.Z = value;
+                ChangeState = true;
+            }
+        }
         #endregion
 
 
@@ -92,7 +112,15 @@ namespace CMDR
             }
         }
 
-        public static Matrix4 View;
+        public static Matrix4 View
+        {
+            get
+            {
+                if (ChangeState)
+                    CreateView();
+                return _view;
+            }
+        }
 
         /// <summary>
         /// Determine if the View matrix needs to be recalculated
@@ -106,7 +134,7 @@ namespace CMDR
 		{
             Matrix4 identity = Matrix4.Identity;
 
-            View = identity * Matrix4.CreateTranslation(_pos);
+            _view = identity * Matrix4.CreateScale(new Vector3(Zoom)) * Matrix4.CreateTranslation(_pos);
             ChangeState = false;
         }
 		

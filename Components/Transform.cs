@@ -166,10 +166,10 @@ namespace CMDR.Components
 		public Matrix4 GenerateModelMatrix(Texture texture)
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
-			Matrix4 result = Matrix4.CreateScale(Xscale*texture.Width, Yscale*texture.Height, 1f) * Matrix4.CreateTranslation(_pos);
+			//Matrix4 result = Matrix4.CreateScale(Xscale*texture.Width, Yscale*texture.Height, 1f) * Matrix4.CreateTranslation(_pos);
 			
             // For testing cube render
-            //Matrix4 result = Matrix4.CreateScale(Xscale, Yscale, 1f) * Matrix4.CreateTranslation(_pos);
+            Matrix4 result = Matrix4.CreateScale(Xscale, Yscale, 1f) * Matrix4.CreateTranslation(_pos);
             return result * Matrix4.CreateRotationZ(RotRad) * Matrix4.CreateRotationX(RotRad) * Matrix4.CreateRotationY(RotRad);	
 		}
 

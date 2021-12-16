@@ -189,7 +189,7 @@ namespace CMDR
 
             result.M00 = (2f * near) / (right - left);
             result.M11 = (2f * near) / (top - bottom);
-            result.M22 = -(far - near) / (far - near);
+            result.M22 = -(far + near) / (far - near);
             result.M02 = (right + left) / (right - left);
             result.M12 = (top + bottom) / (top - bottom);
             result.M23 = -(2f * far * near) / (far - near);

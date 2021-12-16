@@ -168,33 +168,38 @@ namespace GLTest
             Transform transform = scene.Generate<Transform>();
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
-            transform.Teleport(1, 1, 0);
-            transform.Scale(2f);
+            transform.Teleport(0, 0, 0);
+            transform.Scale(1f);
             gameObject.Use(transform);
             gameObject.Use(renderData);
 
             Matrix4 model = transform.GenerateModelMatrix(texture);
+            Matrix4 view = Camera.View;
             GameLoop.Time.Start();
             float counter = 0;
+            Glfw.SetKeyCallback(Display.Window, keyinput);
             while (!Glfw.WindowShouldClose(Display.Window))
             {
                 GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
                 
-                if (counter > 5)
+                if (counter > 60)
                 {
                     transform.RotDeg++;
+                    //Camera.Z;
                     //transform.X = transform.X == 1f ? 0 : 1f;
-                    //Console.WriteLine(transform.RotDeg);
                     //renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
                     //transform.Teleport(MathHelper.Cos(GameLoop.GameTime), -MathHelper.Sin(GameLoop.GameTime));
                     //transform.RotDeg = MathHelper.Sin(GameLoop.GameTime);
                     //Camera.Zoom = MathHelper.Sin(GameLoop.GameTime);
-                    model = transform.GenerateModelMatrix(texture);
                     counter = 0;
                 }
                 counter++;
+                
+                model = transform.GenerateModelMatrix(texture);
+                view = Camera.View;
                 shader.Use();
                 shader.SetUniformMatrix4("model", false, model);
+                shader.SetUniformMatrix4("view", false, view);
                 shader.SetUniformMatrix4("projection", false, Display.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
                 shader.SetUniformVec4("pos", new Vector4(transform.X, transform.Y, Camera.Width, Camera.Height));
@@ -225,6 +230,23 @@ namespace GLTest
                 pixels[i+3] = color.A;
             }
             return pixels;
+        }
+        public static void keyinput(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
+        {
+            float speed = 0.01f;
+            if(key == Keys.W)
+            {
+                Camera.Z += speed;
+            }
+            else if(key == Keys.S)
+            {
+                Camera.Z += -speed;
+            }
+            else if(key == Keys.Q)
+            {
+                Camera.Z = 0;
+            }
+            Console.WriteLine(Camera.Z);
         }
     }
 }

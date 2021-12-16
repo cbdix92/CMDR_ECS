@@ -18,8 +18,8 @@ namespace CMDR
             set
             {
                 _size.X = value * 1;
-                Projection = CreateOrthographic();
-                //Projection = CreatePerspective();
+                //Projection = CreateOrthographic();
+                Projection = CreatePerspective();
             }
         }
         public static int Height
@@ -28,26 +28,26 @@ namespace CMDR
             set
             {
                 _size.Y = value * 1;
-                Projection = CreateOrthographic();
-                //Projection = CreatePerspective();
+                //Projection = CreateOrthographic();
+                Projection = CreatePerspective();
             }
         }
 
         #endregion
 
 
-        public static float Left { get => 0; }
-        public static float Right { get => Width; }
-        public static float Top { get => 0; }
-        public static float Bottom { get => Height; }
-        public static readonly float Near = 0;
+        //public static float Left { get => 0; }
+        //public static float Right { get => Width; }
+        //public static float Top { get => 0; }
+        //public static float Bottom { get => Height; }
+
+        public static float Left { get => -Width / 2; }
+        public static float Right { get => Width / 2; }
+        public static float Top { get => -Height / 2; }
+        public static float Bottom { get => Height / 2; }
+
+        public static readonly float Near = -1;
         public static readonly float Far = 1f;
-
-        //public static float Left { get => -Width / 2; }
-        //public static float Right { get => Width / 2; }
-        //public static float Top { get => -Height / 2; }
-        //public static float Bottom { get => Height / 2; }
-
 
         public static Matrix4 Projection;
 
