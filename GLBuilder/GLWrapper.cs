@@ -42,6 +42,22 @@ namespace OpenGL
             }
 		
 		}
+
+		public static void BufferData(int target, int size, int[] data, int usage)
+        {
+			fixed (int* ptr = &data[0])
+			{
+				_bufferData(target, size, ptr, usage);
+			}
+		}
+
+		public static void BufferData(int target, int size, byte[] data, int usage)
+        {
+			fixed (byte* ptr = &data[0])
+            {
+				_bufferData(target, size, ptr, usage);
+            }
+        }
         #endregion
 
         #region C
@@ -268,9 +284,9 @@ namespace OpenGL
 
         #region V
 
-        public static void VertexAttribPointer(uint index, int size, int type, bool normalized, void* pointer) 
+        public static void VertexAttribPointer(uint index, int size, int type, bool normalized, int stride, void* pointer) 
 		{
-			_vertexAttribPointer(index, size, type, normalized, size * sizeof(float), pointer);
+			_vertexAttribPointer(index, size, type, normalized, stride, pointer);
 		}
 		
 		#endregion

@@ -36,7 +36,7 @@ namespace CMDR.Systems
 			GL.BufferData(GL.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, GL.STATIC_DRAW);
 			
 			GL.BindVertexArray(VAO);
-			GL.VertexAttribPointer(0, 4, GL.FLOAT, false, (void*)0);
+			GL.VertexAttribPointer(0, 4, GL.FLOAT, false, 0, (void*)0);
 			GL.EnableVertexAttribArray(0);
 			
 			// Unbind VAO and VBO

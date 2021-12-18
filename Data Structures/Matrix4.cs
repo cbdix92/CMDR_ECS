@@ -197,6 +197,16 @@ namespace CMDR
 
             return result;
         }
+        public static Matrix4 CreatePerspectiveFOV(float fov, float aspect, float far, float near)
+        {
+            Matrix4 result = Identity;
+            result.M00 = 1 / aspect * MathHelper.Tan((fov * 0.01745329f) / 2);
+            result.M11 = 1 / MathHelper.Tan((fov * 0.01745329f) / 2);
+            result.M22 = -((far + near) / (far - near));
+            result.M32 = -1f;
+            result.M23 = -((2 * far * near) / (far - near));
+            return result;
+        }
 
         public static Matrix4 CreateOrthographic(float top, float bottom, float left, float right, float far, float near)
         {

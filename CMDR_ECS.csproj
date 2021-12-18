@@ -55,6 +55,8 @@
     <Compile Include="Data Structures\Vector2.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
+    <Compile Include="OpenGLAbstractions\Mesh.cs" />
+    <Compile Include="OpenGLAbstractions\MeshManager.cs" />
     <Compile Include="OpenGLAbstractions\ShaderManager.cs" />
     <Compile Include="Systems\Camera.cs" />
     <Compile Include="Data Structures\Color.cs" />

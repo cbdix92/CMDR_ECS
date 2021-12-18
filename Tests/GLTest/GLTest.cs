@@ -86,47 +86,42 @@ namespace GLTest
 
         private static float[] cube = new float[]
         {
-            -0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f, -0.5f,
-             0.5f,  0.5f, -0.5f,
-             0.5f,  0.5f, -0.5f,
-            -0.5f,  0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-
-            -0.5f, -0.5f,  0.5f,
-             0.5f, -0.5f,  0.5f,
-             0.5f,  0.5f,  0.5f,
-             0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f,
-            -0.5f, -0.5f,  0.5f,
-
-            -0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-            -0.5f, -0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f,
-
-             0.5f,  0.5f,  0.5f,
-             0.5f,  0.5f, -0.5f,
-             0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f,  0.5f,
-             0.5f,  0.5f,  0.5f,
-
-            -0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f, -0.5f,
-             0.5f, -0.5f,  0.5f,
-             0.5f, -0.5f,  0.5f,
-            -0.5f, -0.5f,  0.5f,
-            -0.5f, -0.5f, -0.5f,
-
-            -0.5f,  0.5f, -0.5f,
-             0.5f,  0.5f, -0.5f,
-             0.5f,  0.5f,  0.5f,
-             0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f,  0.5f,
-            -0.5f,  0.5f, -0.5f
+            -1.0f,-1.0f,-1.0f,
+            -1.0f,-1.0f, 1.0f,
+            -1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f,-1.0f, 
+            -1.0f,-1.0f,-1.0f,
+            -1.0f, 1.0f,-1.0f,
+            1.0f,-1.0f, 1.0f,
+            -1.0f,-1.0f,-1.0f,
+            1.0f,-1.0f,-1.0f,
+            1.0f, 1.0f,-1.0f,
+            1.0f,-1.0f,-1.0f,
+            -1.0f,-1.0f,-1.0f,
+            -1.0f,-1.0f,-1.0f,
+            -1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f,-1.0f,
+            1.0f,-1.0f, 1.0f,
+            -1.0f,-1.0f, 1.0f,
+            -1.0f,-1.0f,-1.0f,
+            -1.0f, 1.0f, 1.0f,
+            -1.0f,-1.0f, 1.0f,
+            1.0f,-1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f,-1.0f,-1.0f,
+            1.0f, 1.0f,-1.0f,
+            1.0f,-1.0f,-1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f,-1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f,-1.0f,
+            -1.0f, 1.0f,-1.0f,
+            1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f,-1.0f,
+            -1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f, 1.0f,
+            1.0f,-1.0f, 1.0f
         };
         #endregion
         public static uint VAO;
@@ -148,7 +143,7 @@ namespace GLTest
             GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * cube.Length, cube, GL.STATIC_DRAW);
 
             GL.BindVertexArray(VAO);
-            GL.VertexAttribPointer(0, 3, GL.FLOAT, false, (void*)0);
+            GL.VertexAttribPointer(0, 3, GL.FLOAT, false, 0, (void*)0);
             GL.EnableVertexAttribArray(0);
 
 
@@ -169,9 +164,10 @@ namespace GLTest
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
             transform.Teleport(0, 0, 0);
-            transform.Scale(1f);
+            transform.Scale(100f);
             gameObject.Use(transform);
             gameObject.Use(renderData);
+            Camera.Z = -100f;
 
             Matrix4 model = transform.GenerateModelMatrix(texture);
             Matrix4 view = Camera.View;
@@ -202,7 +198,6 @@ namespace GLTest
                 shader.SetUniformMatrix4("view", false, view);
                 shader.SetUniformMatrix4("projection", false, Display.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
-                shader.SetUniformVec4("pos", new Vector4(transform.X, transform.Y, Camera.Width, Camera.Height));
 
                 //GL.ActiveTexture(GL.TEXTURE0);
                 //texture.Bind();
@@ -233,7 +228,7 @@ namespace GLTest
         }
         public static void keyinput(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
         {
-            float speed = 0.01f;
+            float speed = 0.1f;
             if(key == Keys.W)
             {
                 Camera.Z += speed;

@@ -10,6 +10,7 @@ namespace CMDR
         public static Window Window;
 
         private static Vector2 _size;
+        private static int _fov;
 
         #region SIZE
         public static int Width
@@ -19,7 +20,8 @@ namespace CMDR
             {
                 _size.X = value * 1;
                 //Projection = CreateOrthographic();
-                Projection = CreatePerspective();
+                //Projection = CreatePerspective();
+                Projection = CreatePerspectiveFOV();
             }
         }
         public static int Height
@@ -29,12 +31,20 @@ namespace CMDR
             {
                 _size.Y = value * 1;
                 //Projection = CreateOrthographic();
-                Projection = CreatePerspective();
+                Projection = CreatePerspectiveFOV();
             }
         }
 
         #endregion
 
+        public static int FOV
+        {
+            get => _fov;
+            set
+            {
+                _fov = value;
+            }
+        }
 
         //public static float Left { get => 0; }
         //public static float Right { get => Width; }
@@ -46,8 +56,8 @@ namespace CMDR
         public static float Top { get => -Height / 2; }
         public static float Bottom { get => Height / 2; }
 
-        public static readonly float Near = -1;
-        public static readonly float Far = 1f;
+        public static readonly float Near = 1f;
+        public static readonly float Far = 1000f;
 
         public static Matrix4 Projection;
 
@@ -88,6 +98,13 @@ namespace CMDR
         public static Matrix4 CreatePerspective()
         {
             return Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
+        }
+
+        public static Matrix4 CreatePerspectiveFOV()
+        {
+            if (Height == 0)
+                return default(Matrix4);
+            return Matrix4.CreatePerspectiveFOV(90, Width / Height, Far, Near);
         }
 
         public static void CenterGameWindow()
