@@ -124,8 +124,10 @@ namespace GLTest
             1.0f,-1.0f, 1.0f
         };
         #endregion
+		
         public static uint VAO;
         public static uint VBO;
+		
         static unsafe void Main(string[] args)
         {
             Display = new Display(800, 600, "Test title");
@@ -168,9 +170,7 @@ namespace GLTest
             gameObject.Use(transform);
             gameObject.Use(renderData);
             Camera.Z = -100f;
-
-            Matrix4 model = transform.GenerateModelMatrix(texture);
-            Matrix4 view = Camera.View;
+			
             GameLoop.Time.Start();
             float counter = 0;
             Glfw.SetKeyCallback(Display.Window, keyinput);
@@ -180,7 +180,7 @@ namespace GLTest
                 
                 if (counter > 60)
                 {
-                    transform.RotDeg++;
+                    transform.Xrot++;
                     //Camera.Z;
                     //transform.X = transform.X == 1f ? 0 : 1f;
                     //renderData.Color = new Color(MathHelper.Cos(GameLoop.GameTime), MathHelper.Tan(GameLoop.GameTime), MathHelper.Sin(GameLoop.GameTime), 1f);
@@ -191,11 +191,10 @@ namespace GLTest
                 }
                 counter++;
                 
-                model = transform.GenerateModelMatrix(texture);
                 view = Camera.View;
                 shader.Use();
-                shader.SetUniformMatrix4("model", false, model);
-                shader.SetUniformMatrix4("view", false, view);
+                shader.SetUniformMatrix4("model", false, transform.model);
+                shader.SetUniformMatrix4("view", false, Camera.view);
                 shader.SetUniformMatrix4("projection", false, Display.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
 

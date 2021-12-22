@@ -12,7 +12,28 @@ namespace CMDR.Components
         public Scene Scene { get; set; }
         #endregion
 
+		private Matrix4 _model;
         private int _static;
+		private Vector3 _pos;
+		private Vector3 _vel;
+		private Vector3 _scale;
+		private Vector3 _rot;
+		
+		/// <summary>
+        /// Determine if the Model matrix needs to be recalculated
+        /// </summary>
+        public bool ChangeState { get; private set; }
+		
+		public Matrix4 Model
+		{
+			get
+			{
+				if (ChangeState)
+					GenerateModelMatrix();
+				return _model;
+			}
+		}
+		
         public bool Static
         {
             get => _static == 1;
@@ -25,7 +46,6 @@ namespace CMDR.Components
         }
 
         #region POSITION_PROPERTIES
-		private Vector3 _pos;
 		
         public float X
         {
@@ -34,6 +54,7 @@ namespace CMDR.Components
             {
                 Receive();
                 _pos.X = value;
+				ChangeState = true;
                 Send();
             }
         }
@@ -44,6 +65,7 @@ namespace CMDR.Components
             {
                 Receive();
                 _pos.Y = value;
+				ChangeState = true;
                 Send();
             }
         }
@@ -54,13 +76,95 @@ namespace CMDR.Components
             {
                 Receive();
                 _pos.Z = value;
+				ChangeState = true;
                 Send();
             }
         }
         #endregion
 
-        #region VELOCITY_PROPERTIES
-        private Vector2 _vel;
+        #region ROTATION_PROPERTIES
+		// Rotation properties get and receive rotation expressed in degrees.
+		// These values are stored in the backig field in radians.
+		// When calculating the model matrix, rotation values should be retrived from the backing field or readonly radian properties.
+		public float Xrot
+		{
+			get => 0.01745329f / _rot.X;
+			set
+			{
+				Receive();
+				_rot.X = value * 0.01745329f;
+				ChangeState = true;
+				Send();
+			}
+		}
+		public float Yrot
+		{
+			get => 0.01745329f / _rot.Y;
+			set
+			{
+				Receive();
+				_rot.Y = value * 0.01745329f;
+				ChangeState = true;
+				Send();
+			}
+		}
+		public float Zrot
+		{
+			get => 0.01745329f / _rot.Z;
+			set
+			{
+				Receive();
+				_rot.Z = value * 0.01745329f;
+				ChangeState = true;
+				Send();
+			}
+		}
+		public float Xradians { get => _rot.X; }
+		public float Yradians { get => _rot.Y; }
+		public float Zradians { get => _rot.Z; }
+		
+        #endregion
+
+        #region SCALE_PROPERTIES
+		
+		public float Xscale
+		{
+			get => _scale.X;
+			set
+			{
+				Receive();
+				_scale.X = value;
+				ChangeState = true;
+				Send();
+			}
+		}
+		
+		public float Yscale
+		{
+			get => _scale.Y;
+			set
+			{
+				Receive();
+				_scale.Y = value;
+				ChangeState = true;
+				Send();
+			}
+		}
+		
+		public float Zscale
+		{
+			get => _scale.Z;
+			set
+			{
+				Receive();
+				_scale.Z = value;
+				ChangeState = true;
+				Send();
+			}
+		}
+        #endregion
+		
+		#region VELOCITY_PROPERTIES
         public float Xvel
         {
             get => _vel.X;
@@ -81,65 +185,17 @@ namespace CMDR.Components
                 Send();
             }
         }
-        #endregion
-
-        #region ROTATION_PROPERTIES
-        private float _rotD;
-        public float RotDeg
-        {
-            get => _rotD;
-            set
-            {
-                Receive();
-                _rotD = value;
-                Send();
-            }
-        }
-        public float RotRad
-        {
-			get => _rotD * 0.01745329f;
-        }
-
-        #endregion
-
-        #region SCALE_PROPERTIES
-		
-		private Vector3 _scale;
-		
-		public float Xscale
+		public float Zvel
 		{
-			get => _scale.X;
+			get => _vel.Z;
 			set
 			{
 				Receive();
-				_scale.X = value;
-				Send();
-			}
-		}
-		
-		public float Yscale
-		{
-			get => _scale.Y;
-			set
-			{
-				Receive();
-				_scale.Y = value;
-				Send();
-			}
-		}
-		
-		public float Zscale
-		{
-			get => _scale.Z;
-			set
-			{
-				Receive();
-				_scale.Z = value;
-				Send();
+				_vel.Z = value * _static;
+				send();
 			}
 		}
         #endregion
-
 
         public void Init()
         {
@@ -147,10 +203,11 @@ namespace CMDR.Components
             Yscale = 1;
             Zscale = 1;
         }
-        public void Move(float x, float y)
+        public void Move(float x, float y, float z)
         {
             X += x;
-            Y += y;   
+            Y += y;
+			Z += z;
         }
         public void Teleport(float x, float y, float z)
         {
@@ -163,14 +220,14 @@ namespace CMDR.Components
             (Xscale, Yscale, Zscale) = (n, n, n);
         }
 		
-		public Matrix4 GenerateModelMatrix(Texture texture)
+		private void GenerateModelMatrix()
 		{
 			// Generate the model matrix with appropiate Scale, Rotate, Translate. In that order.
 			//Matrix4 result = Matrix4.CreateScale(Xscale*texture.Width, Yscale*texture.Height, 1f) * Matrix4.CreateTranslation(_pos);
 			
             // For testing cube render
-            Matrix4 result = Matrix4.CreateScale(Xscale, Yscale, 1f) * Matrix4.CreateTranslation(_pos);
-            return result * Matrix4.CreateRotationZ(RotRad) * Matrix4.CreateRotationX(RotRad) * Matrix4.CreateRotationY(RotRad);	
+            _model = Matrix4.CreateScale(Xscale, Yscale, 1f) * Matrix4.CreateTranslation(_pos) * Matrix4.CreateRotationZ(Zradians) * Matrix4.CreateRotationX(Xradians) * Matrix4.CreateRotationY(Yradians);
+			ChangeState = false;
 		}
 
         public void Receive()

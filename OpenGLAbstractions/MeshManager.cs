@@ -9,44 +9,90 @@ namespace CMDR
 {
     public static class MeshManager
     {
+		private static int _comment = 0x23;     // # ->comment line
+		private static int _vertex = 0x76;      // v ->vertex data
+		private static int _normal = 0x766e; // vn ->vertex normal
+		private static int _face = 0x66;    // f ->face
+		private static int _name = 0x6f;    // o ->objects name
+		private static int _group = 0x67;   // g ->group name
+		private static int _smooth = 0x73;  // s ->smooth shading
+		private static long _mtl = 0x6d746c6c6962; // mtllib ->materials file
+		
         public static Mesh Load(string path)
         {
-            string[] data = File.ReadAllLines(path);
 
             List<float> vertOut = new List<float>();
             List<float> normalOut = new List<float>();
+			List<float> texOut = new List<float>();
             List<int> indiceOut = new List<int>();
+			string nameOut;
 
             uint VAO = 0;
             uint VBO = 0;
             uint EBO = 0;
-            
-            foreach(string line in data)
-            {
-                if (string.Concat(line[0], line[1]) == "vn")
-                    ParseFloat(line, normalOut);
+			
+			using(StreamReader sr = new StreamReader(path))
+			{
+				string line;
+				while((line = sr.ReadLine()) != null)
+				{
+					string[] data = line.Split(' ');
+					
+					switch(data[0])
+					{
+						case "#":
+							break;
+							
+						case "v":
+							ParseVertexData(data, 3, vertOut);
+							break;
+							
+						case "vt":
+							ParseVertexData(data, 2, texOut);
+							break;
+							
+						case "vn":
+							ParseVertexData(data, 3, normalOut);
+							break;
+						
+						case "f":
+							break;
+						
+						case "mtllib":
+							break;
+						
+						case "o":
+							nameOut = data[1];
+							break;
+						
+						case "g":
+							break;
 
-                else if (line[0] == 'v')
-                    ParseFloat(line, vertOut);
-
-                else if (line[0] == 'f')
-                    ParseInt(line, indiceOut);
-            }
-
+						case "usemtl":
+							break;
+						
+						case "s":
+							break;
+					}
+				}
+			}
 
 
 
             return new Mesh(VAO, VBO, EBO, vertOut.ToArray(), normalOut.ToArray(), indiceOut.ToArray());
         }
 
-        private static void ParseFloat(string line, List<float> output)
+        private static void ParseVertexData(string[] lines, int count, List<float> output)
         {
-
+			for(int i = 1; i <= count; i++)
+			{		
+				output.Add(float.Parse(lines[i]));
+			}
         }
 
-        private static void ParseInt(string line, List<int> output)
+        private static void ParseFaceData(string[] lines, List<int> output)
         {
-
+			
         }
     }
 }

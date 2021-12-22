@@ -11,6 +11,9 @@ namespace CMDR
 
         private static Vector2 _size;
         private static int _fov;
+		private static Matrix4 _projection;
+		
+		public static bool ChangeState { get; private set; }
 
         #region SIZE
         public static int Width
@@ -19,9 +22,7 @@ namespace CMDR
             set
             {
                 _size.X = value * 1;
-                //Projection = CreateOrthographic();
-                //Projection = CreatePerspective();
-                Projection = CreatePerspectiveFOV();
+                ChangeState = true;
             }
         }
         public static int Height
@@ -30,8 +31,7 @@ namespace CMDR
             set
             {
                 _size.Y = value * 1;
-                //Projection = CreateOrthographic();
-                Projection = CreatePerspectiveFOV();
+                ChangeState = true;
             }
         }
 
@@ -43,6 +43,7 @@ namespace CMDR
             set
             {
                 _fov = value;
+				ChangeState = true;
             }
         }
 
@@ -59,7 +60,15 @@ namespace CMDR
         public static readonly float Near = 1f;
         public static readonly float Far = 1000f;
 
-        public static Matrix4 Projection;
+        public static Matrix4 Projection
+		{
+			get
+			{
+				if (ChangeState)
+					_projection = CreatePerspectiveFOV();
+				return _projection;
+			}
+		}
 
         public Display(int width, int height, string title, bool doubleBuffer = true, bool decorated = true)
         {
@@ -80,8 +89,8 @@ namespace CMDR
 
             Glfw.MakeContextCurrent(Window);
 
-            CenterGameWindow();
-
+            CenterWindow();
+			Glfw.SetWindowSizeCallback(Window, WindowSizeCallback);
 
             Log.Init();
             GL.Init();
@@ -89,25 +98,34 @@ namespace CMDR
             ShaderManager.Init();
 
         }
+		
+		internal static void WindowSizeCallback(Window window, int width, int size)
+		{
+			((Width, Camera.Width), (Height, Camera.Height)) = ((width, width), (height, height));
+			Glfw.SetWindowSize(window, width, height);
+		}
 
-        internal static Matrix4 CreateOrthographic()
+        internal static void CreateOrthographic()
         {
-            return Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
+            Projection = Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
+			ChangeState = false;
         }
 
-        public static Matrix4 CreatePerspective()
+        public static void CreatePerspective()
         {
-            return Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
+            Projection = Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
+			ChangeState = false;
         }
 
-        public static Matrix4 CreatePerspectiveFOV()
+        public static void CreatePerspectiveFOV()
         {
             if (Height == 0)
-                return default(Matrix4);
-            return Matrix4.CreatePerspectiveFOV(90, Width / Height, Far, Near);
+                Projection = default(Matrix4);
+            Projection = Matrix4.CreatePerspectiveFOV(90, Width / Height, Far, Near);
+			ChangeState = false;
         }
 
-        public static void CenterGameWindow()
+        public static void CenterWindow()
         {
             var screen = Glfw.PrimaryMonitor.WorkArea;
             int x = (screen.Width - Width) / 2;

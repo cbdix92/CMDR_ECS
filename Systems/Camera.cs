@@ -15,6 +15,17 @@ namespace CMDR
         private static float _zoom = 1f;
         private static Matrix4 _view;
 
+		public static Matrix4 View
+        {
+            get
+            {
+                if (ChangeState)
+                    CreateView();
+                return _view;
+            }
+        }
+		
+		
         #region SIZE
         public static float Width
         {
@@ -109,16 +120,6 @@ namespace CMDR
                     _zoom = value;
                     ChangeState = true;
                 }
-            }
-        }
-
-        public static Matrix4 View
-        {
-            get
-            {
-                if (ChangeState)
-                    CreateView();
-                return _view;
             }
         }
 
