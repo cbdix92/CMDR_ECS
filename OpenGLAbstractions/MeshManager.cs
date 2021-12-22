@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using OpenGL;
 
 namespace CMDR
 {
@@ -77,9 +78,24 @@ namespace CMDR
 				}
 			}
 
+			VAO = GL.GenVertexArray();
+			VBO = GL.GenBuffer();
+			EBO = GL.GenBuffer();
+
+			GL.BindVertexArray(VAO);
+
+			GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
+
+			GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * vertOut.Count, vertOut.ToArray(), GL.STATIC_DRAW);
+
+			GL.BindBuffer(GL.ELEMENT_ARRAY_BUFFER, EBO);
+			GL.BufferData(GL.ELEMENT_ARRAY_BUFFER, sizeof(int) * indiceOut.Count, indiceOut.ToArray(), GL.STATIC_DRAW);
 
 
-            return new Mesh(VAO, VBO, EBO, vertOut.ToArray(), normalOut.ToArray(), indiceOut.ToArray());
+
+			Mesh output = new Mesh(VAO, VBO, EBO, vertOut.ToArray(), normalOut.ToArray(), indiceOut.ToArray());
+
+			return output;
         }
 
         private static void ParseVertexData(string[] lines, int count, List<float> output)

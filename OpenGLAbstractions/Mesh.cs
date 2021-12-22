@@ -28,18 +28,6 @@ namespace CMDR
             _normals = normals;
             _indices = indices;
 
-            VBO = GL.GenBuffer();
-            EBO = GL.GenBuffer();
-
-            GL.BindVertexArray(VAO);
-
-            GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-
-            GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertices.Length, _vertices, GL.STATIC_DRAW);
-
-            GL.BindBuffer(GL.ELEMENT_ARRAY_BUFFER, EBO);
-            GL.BufferData(GL.ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.Length, _indices, GL.STATIC_DRAW);
-
 
         }
     }
