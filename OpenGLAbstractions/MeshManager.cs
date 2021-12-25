@@ -17,19 +17,20 @@ namespace CMDR
             List<float> vertOut = new List<float>();
             List<float> normalOut = new List<float>();
 			List<float> texOut = new List<float>();
-            List<uint> indiceOut = new List<uint>();
+
+            List<int> vertexIndice = new List<int>();
+            List<int> texIndice = new List<int>();
+            List<int> normalIndice = new List<int>();
 
 			List<float> bufferOut = new List<float>();
+
+			bool texture = false;
+			bool normal = false;
 			
 			string nameOut;
 
-			byte bufferBit = 0x00;
-			byte textureMask = 0x0f;
-			byte normalMask = 0xf0;
-
-            uint VAO = 0;
-            uint VBO = 0;
-            uint EBO = 0;
+            uint VAO;
+            uint VBO;
 			
 			using(StreamReader sr = new StreamReader(path))
 			{
@@ -49,17 +50,26 @@ namespace CMDR
 							break;
 							
 						case "vt":
-							bufferBit |= textureMask;
+							texture = true;
 							ParseVertexData(data, 2, texOut);
 							break;
 							
 						case "vn":
-							bufferBit |= normalMask;
+							normal = true;
 							ParseVertexData(data, 3, normalOut);
 							break;
 						
 						case "f":
-							ParseFaceData(data, indiceOut);
+							for (int i = 1; i < data.Length; i++)
+							{
+								string[] indice = data[i].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+								vertexIndice.Add(int.Parse(indice[0]) - 1);
+
+								if (texture)
+									texIndice.Add(int.Parse(indice[1]) - 1);
+								if (normal)
+									normalIndice.Add(int.Parse(indice[texture?2:1]) - 1);
+							}
 							break;
 						
 						case "mtllib":
@@ -84,11 +94,20 @@ namespace CMDR
 			if (vertOut.Count == 0)
 				throw new Exception($"OBJ at '{path}' did not contain vertices!");
 
-			ConsolidateData(vertOut, texOut, normalOut, bufferOut);
+			// Consolidate Data
+			bufferOut.AddRange(Index(vertOut, vertexIndice, 3));
+			int numVertex = bufferOut.Count;
+
+			if (texture)
+				bufferOut.AddRange(Index(texOut, texIndice, 2));
+
+			if (normal)
+				bufferOut.AddRange(Index(normalOut, normalIndice, 3));
+
+
 
 			VAO = GL.GenVertexArray();
 			VBO = GL.GenBuffer();
-			EBO = GL.GenBuffer();
 
 			GL.BindVertexArray(VAO);
 
@@ -98,7 +117,7 @@ namespace CMDR
 
 			// Setup VertexAttribPointers
 			int texOffset = 3 * sizeof(float);
-			int normalOffset = (bufferBit & 0x0f) == 0x0f ? 5 * sizeof(float) : 3 * sizeof(float);
+			int normalOffset = texture ? 5 * sizeof(float) : 3 * sizeof(float);
 
 			// Vertices (layout 0) 
 			GL.VertexAttribPointer(0, 3, GL.FLOAT, false, 0, (void*)0);
@@ -108,23 +127,15 @@ namespace CMDR
 			GL.VertexAttribPointer(2, 3, GL.FLOAT, false, 0, (void*)normalOffset);
 
 			// Enable VertexAttribPointers
-			GL.EnableVertexAttribArray(0); // Vertices
+			GL.EnableVertexAttribArray(0);
 
-			if ((bufferBit & 0x0f) == 0x0f) // Textures
+			if (texture)
 				GL.EnableVertexAttribArray(1);
-			if ((bufferBit & 0xf0) == 0xf0) // Normals
+			if (normal)
 				GL.EnableVertexAttribArray(2);
 
 
-			// Buffer indices
-			if (indiceOut.Count != 0)
-            {
-				GL.BindBuffer(GL.ELEMENT_ARRAY_BUFFER, EBO);
-				GL.BufferData(GL.ELEMENT_ARRAY_BUFFER, sizeof(int) * indiceOut.Count, indiceOut.ToArray(), GL.STATIC_DRAW);
-            }
-
-
-			Mesh output = new Mesh(VAO, VBO, EBO, vertOut.Count);
+			Mesh output = new Mesh(VAO, VBO, numVertex);
 
 			return output;
         }
@@ -137,25 +148,16 @@ namespace CMDR
 			}
         }
 
-        private static void ParseFaceData(string[] lines, List<uint> output)
+		private static List<float> Index(List<float> data, List<int> indices, int stride)
         {
-			for (int i = 1; i < lines.Length; i++)
+			List<float> output = new List<float>();
+			
+			foreach(int i in indices)
             {
-				string[] indice = lines[i].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-				for(int j = 0; j < indice.Length; j++)
-					output.Add(uint.Parse(indice[j]) - 1);
+				output.AddRange(data.GetRange(i*stride, stride));
+
             }
-        }
-
-		private static void ConsolidateData(List<float> verts, List<float> texCoords, List<float> normals, List<float> output)
-        {
-			output.AddRange(verts);
-
-			if(texCoords.Count != 0)
-				output.AddRange(texCoords);
-				
-			if(normals.Count != 0)
-				output.AddRange(normals);
+			return output;
         }
     }
 }

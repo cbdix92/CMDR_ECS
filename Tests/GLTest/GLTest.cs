@@ -64,18 +64,12 @@ namespace GLTest
 		
         static unsafe void Main(string[] args)
         {
-            Display = new Display(800, 600, "Test title");
+            Display = new Display(1920, 1080, "Test title");
 
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
 
             GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertFull.Length, _vertFull, GL.STATIC_DRAW);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertTopLeft.Length, _vertTopLeft, GL.STATIC_DRAW);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertTopRight.Length, _vertTopRight, GL.STATIC_DRAW);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertBottomLeft.Length, _vertBottomLeft, GL.STATIC_DRAW);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _vertBottomRight.Length, _vertBottomRight, GL.STATIC_DRAW);
-            //GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * _testVertices.Length, _testVertices, GL.STATIC_DRAW);
             GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * cube.Length, cube, GL.STATIC_DRAW);
 
             GL.BindVertexArray(VAO);
@@ -101,7 +95,7 @@ namespace GLTest
             RenderData renderData = scene.Generate<RenderData>();
             renderData.ImgData = texture;
             transform.Teleport(0, 0, 0);
-            transform.Scale(3f);
+            transform.Scale(1f);
             gameObject.Use(transform);
             gameObject.Use(renderData);
             //Camera.Z = -100f;
@@ -111,7 +105,9 @@ namespace GLTest
             Glfw.SetKeyCallback(Display.Window, keyinput);
 
             //Mesh mesh = MeshManager.Load(@"Assets\FinalBaseMesh.OBJ");
-            Mesh mesh = MeshManager.Load(@"Assets\tree_obj.OBJ");
+            //Mesh mesh = MeshManager.Load(@"Assets\tree_obj.OBJ");
+            Mesh mesh = MeshManager.Load(@"Assets\male.OBJ");
+            //Mesh mesh = MeshManager.Load(@"Assets\tree.OBJ");
             GL.BindVertexArray(mesh.VAO);
 
             GL.Enable(GL.DEPTH_TEST);
@@ -140,19 +136,22 @@ namespace GLTest
                 shader.SetUniformMatrix4("view", false, Camera.View);
                 shader.SetUniformMatrix4("projection", false, Display.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
+                
+                shader.SetUniformVec3("lightPos", new Vector3(3f));
+                shader.SetUniformVec4("lightColor", Color.White);
 
                 //GL.ActiveTexture(GL.TEXTURE0);
                 //texture.Bind();
 
                 // Cube Draw
-                GL.BindVertexArray(VAO);
-                GL.DrawArrays(GL.TRIANGLES, 0, 36);
-                GL.BindVertexArray(0);
-                GL.BindVertexArray(mesh.VAO);
+                //GL.BindVertexArray(VAO);
+                //GL.DrawArrays(GL.TRIANGLES, 0, 36);
+                //GL.BindVertexArray(0);
                 
                 // mesh Draw
-                //GL.DrawArrays(GL.TRIANGLES, 0, mesh.NumVertices);
-                GL.DrawElements(GL.TRIANGLES, mesh.NumVertices, (void*)0);
+                GL.BindVertexArray(mesh.VAO);
+                GL.DrawArrays(GL.TRIANGLES, 0, mesh.NumVertices);
+                //GL.DrawElements(GL.TRIANGLES, mesh.NumVertices, (void*)0);
                 Glfw.SwapBuffers(Display.Window);
                 GL.BindVertexArray(0);
                 Glfw.PollEvents();
