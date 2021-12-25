@@ -88,7 +88,7 @@ namespace CMDR.Components
 		// When calculating the model matrix, rotation values should be retrived from the backing field or readonly radian properties.
 		public float Xrot
 		{
-			get => 0.01745329f / _rot.X;
+			get => _rot.X / 0.01745329f;
 			set
 			{
 				Receive();
@@ -99,7 +99,7 @@ namespace CMDR.Components
 		}
 		public float Yrot
 		{
-			get => 0.01745329f / _rot.Y;
+			get => _rot.Y / 0.01745329f;
 			set
 			{
 				Receive();
@@ -110,7 +110,7 @@ namespace CMDR.Components
 		}
 		public float Zrot
 		{
-			get => 0.01745329f / _rot.Z;
+			get => _rot.Z / 0.01745329f;
 			set
 			{
 				Receive();
@@ -192,7 +192,7 @@ namespace CMDR.Components
 			{
 				Receive();
 				_vel.Z = value * _static;
-				send();
+				Send();
 			}
 		}
         #endregion

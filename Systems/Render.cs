@@ -69,10 +69,8 @@ namespace CMDR.Systems
 				Texture texture = renderData.GetRender(ticks);
                 
 				
-				Matrix4 model = transform.GenerateModelMatrix(texture);
-				
 				renderData.Shader.Use();
-				renderData.Shader.SetUniformMatrix4("model", false, model); ;
+				renderData.Shader.SetUniformMatrix4("model", false, transform.Model); ;
 				renderData.Shader.SetUniformMatrix4("projection", false, projection);
 				renderData.Shader.SetUniformVec4("color", renderData.Color);
 				

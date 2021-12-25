@@ -1,34 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using OpenGL;
 
 namespace CMDR
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct Mesh
     {
         public uint VAO { get; private set; }
         public uint VBO { get; private set; }
         public uint EBO { get; private set; }
 
-        private float[] _vertices;
-        private float[] _normals;
-        private int[] _indices;
+        public readonly int NumVertices;
 
 
-        public Mesh(uint vao, uint vbo, uint ebo, float[] verts, float[] normals, int[] indices)
+        public Mesh(uint vao, uint vbo, uint ebo, int numVertices)
         {
             VAO = vao;
             VBO = vbo;
             EBO = ebo;
-
-            _vertices = verts;
-            _normals = normals;
-            _indices = indices;
-
-
+            NumVertices = numVertices;
         }
     }
 }

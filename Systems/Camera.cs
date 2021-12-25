@@ -12,6 +12,7 @@ namespace CMDR
         private static Vector2 _size;
         private static Vector3 _velocity;
         private static Vector3 _pos;
+        private static Vector3 _rot;
         private static float _zoom = 1f;
         private static Matrix4 _view;
 
@@ -109,6 +110,38 @@ namespace CMDR
         }
         #endregion
 
+        #region ROTATION
+
+        public static float Xrot
+        {
+            get => _rot.X / 0.01745329f;
+            set
+            {
+                _rot.X = value * 0.01745329f;
+                ChangeState = true;
+            }
+        }
+        public static float Yrot
+        {
+            get => _rot.Y / 0.01745329f;
+            set
+            {
+                _rot.Y = value * 0.01745329f;
+                ChangeState = true;
+            }
+        }
+        public static float Zrot
+        {
+            get => _rot.Z / 0.01745329f;
+            set
+            {
+                _rot.Z = value * 0.01745329f;
+                ChangeState = true;
+            }
+        }
+
+        #endregion
+
 
         public static float Zoom
         {
@@ -135,7 +168,7 @@ namespace CMDR
 		{
             Matrix4 identity = Matrix4.Identity;
 
-            _view = identity * Matrix4.CreateScale(new Vector3(Zoom)) * Matrix4.CreateTranslation(_pos);
+            _view = identity * Matrix4.CreateScale(new Vector3(Zoom)) * Matrix4.CreateTranslation(_pos) * Matrix4.CreateRotationX(Xrot) * Matrix4.CreateRotationY(Yrot);
             ChangeState = false;
         }
 		

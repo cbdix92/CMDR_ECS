@@ -65,7 +65,7 @@ namespace CMDR
 			get
 			{
 				if (ChangeState)
-					_projection = CreatePerspectiveFOV();
+					CreatePerspectiveFOV();
 				return _projection;
 			}
 		}
@@ -99,7 +99,7 @@ namespace CMDR
 
         }
 		
-		internal static void WindowSizeCallback(Window window, int width, int size)
+		internal static void WindowSizeCallback(Window window, int width, int height)
 		{
 			((Width, Camera.Width), (Height, Camera.Height)) = ((width, width), (height, height));
 			Glfw.SetWindowSize(window, width, height);
@@ -107,21 +107,21 @@ namespace CMDR
 
         internal static void CreateOrthographic()
         {
-            Projection = Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
+            _projection = Matrix4.CreateOrthographic(Top, Bottom, Left, Right, Far, Near);
 			ChangeState = false;
         }
 
         public static void CreatePerspective()
         {
-            Projection = Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
+            _projection = Matrix4.CreatePerspective(Top, Bottom, Left, Right, Far, Near);
 			ChangeState = false;
         }
 
         public static void CreatePerspectiveFOV()
         {
             if (Height == 0)
-                Projection = default(Matrix4);
-            Projection = Matrix4.CreatePerspectiveFOV(90, Width / Height, Far, Near);
+                _projection = default(Matrix4);
+            _projection = Matrix4.CreatePerspectiveFOV(90, Width / Height, Far, Near);
 			ChangeState = false;
         }
 

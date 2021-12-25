@@ -8,25 +8,24 @@ using OpenGL;
 
 namespace CMDR
 {
-    public static class MeshManager
+    public static unsafe class MeshManager
     {
-		private static int _comment = 0x23;     // # ->comment line
-		private static int _vertex = 0x76;      // v ->vertex data
-		private static int _normal = 0x766e; // vn ->vertex normal
-		private static int _face = 0x66;    // f ->face
-		private static int _name = 0x6f;    // o ->objects name
-		private static int _group = 0x67;   // g ->group name
-		private static int _smooth = 0x73;  // s ->smooth shading
-		private static long _mtl = 0x6d746c6c6962; // mtllib ->materials file
 		
         public static Mesh Load(string path)
         {
-
+			
             List<float> vertOut = new List<float>();
             List<float> normalOut = new List<float>();
 			List<float> texOut = new List<float>();
-            List<int> indiceOut = new List<int>();
+            List<uint> indiceOut = new List<uint>();
+
+			List<float> bufferOut = new List<float>();
+			
 			string nameOut;
+
+			byte bufferBit = 0x00;
+			byte textureMask = 0x0f;
+			byte normalMask = 0xf0;
 
             uint VAO = 0;
             uint VBO = 0;
@@ -37,8 +36,9 @@ namespace CMDR
 				string line;
 				while((line = sr.ReadLine()) != null)
 				{
-					string[] data = line.Split(' ');
-					
+					string[] data = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+					if (data.Length == 0)
+						continue;
 					switch(data[0])
 					{
 						case "#":
@@ -49,14 +49,17 @@ namespace CMDR
 							break;
 							
 						case "vt":
+							bufferBit |= textureMask;
 							ParseVertexData(data, 2, texOut);
 							break;
 							
 						case "vn":
+							bufferBit |= normalMask;
 							ParseVertexData(data, 3, normalOut);
 							break;
 						
 						case "f":
+							ParseFaceData(data, indiceOut);
 							break;
 						
 						case "mtllib":
@@ -78,22 +81,50 @@ namespace CMDR
 				}
 			}
 
+			if (vertOut.Count == 0)
+				throw new Exception($"OBJ at '{path}' did not contain vertices!");
+
+			ConsolidateData(vertOut, texOut, normalOut, bufferOut);
+
 			VAO = GL.GenVertexArray();
 			VBO = GL.GenBuffer();
 			EBO = GL.GenBuffer();
 
 			GL.BindVertexArray(VAO);
 
+			// Buffer combined data
 			GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
+			GL.BufferData(GL.ARRAY_BUFFER, bufferOut.Count * sizeof(float), bufferOut.ToArray(), GL.STATIC_DRAW);
 
-			GL.BufferData(GL.ARRAY_BUFFER, sizeof(float) * vertOut.Count, vertOut.ToArray(), GL.STATIC_DRAW);
+			// Setup VertexAttribPointers
+			int texOffset = 3 * sizeof(float);
+			int normalOffset = (bufferBit & 0x0f) == 0x0f ? 5 * sizeof(float) : 3 * sizeof(float);
 
-			GL.BindBuffer(GL.ELEMENT_ARRAY_BUFFER, EBO);
-			GL.BufferData(GL.ELEMENT_ARRAY_BUFFER, sizeof(int) * indiceOut.Count, indiceOut.ToArray(), GL.STATIC_DRAW);
+			// Vertices (layout 0) 
+			GL.VertexAttribPointer(0, 3, GL.FLOAT, false, 0, (void*)0);
+			// Texture coords (layout 1)
+			GL.VertexAttribPointer(1, 2, GL.FLOAT, false, 0, (void*)texOffset);
+			// Normals (layout 2)
+			GL.VertexAttribPointer(2, 3, GL.FLOAT, false, 0, (void*)normalOffset);
+
+			// Enable VertexAttribPointers
+			GL.EnableVertexAttribArray(0); // Vertices
+
+			if ((bufferBit & 0x0f) == 0x0f) // Textures
+				GL.EnableVertexAttribArray(1);
+			if ((bufferBit & 0xf0) == 0xf0) // Normals
+				GL.EnableVertexAttribArray(2);
 
 
+			// Buffer indices
+			if (indiceOut.Count != 0)
+            {
+				GL.BindBuffer(GL.ELEMENT_ARRAY_BUFFER, EBO);
+				GL.BufferData(GL.ELEMENT_ARRAY_BUFFER, sizeof(int) * indiceOut.Count, indiceOut.ToArray(), GL.STATIC_DRAW);
+            }
 
-			Mesh output = new Mesh(VAO, VBO, EBO, vertOut.ToArray(), normalOut.ToArray(), indiceOut.ToArray());
+
+			Mesh output = new Mesh(VAO, VBO, EBO, vertOut.Count);
 
 			return output;
         }
@@ -106,9 +137,25 @@ namespace CMDR
 			}
         }
 
-        private static void ParseFaceData(string[] lines, List<int> output)
+        private static void ParseFaceData(string[] lines, List<uint> output)
         {
-			
+			for (int i = 1; i < lines.Length; i++)
+            {
+				string[] indice = lines[i].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+				for(int j = 0; j < indice.Length; j++)
+					output.Add(uint.Parse(indice[j]) - 1);
+            }
+        }
+
+		private static void ConsolidateData(List<float> verts, List<float> texCoords, List<float> normals, List<float> output)
+        {
+			output.AddRange(verts);
+
+			if(texCoords.Count != 0)
+				output.AddRange(texCoords);
+				
+			if(normals.Count != 0)
+				output.AddRange(normals);
         }
     }
 }

@@ -35,7 +35,10 @@ namespace OpenGL
             #endregion
 
             #region E
+
+            _enable = Marshal.GetDelegateForFunctionPointer<_enableDelegate>(Glfw.GetProcAddress("glEnable"));
             _enableVertexAttribArray = Marshal.GetDelegateForFunctionPointer<_enableVertexAttribArrayDelegate>(Glfw.GetProcAddress("glEnableVertexAttribArray"));
+            
             #endregion
 
             #region G

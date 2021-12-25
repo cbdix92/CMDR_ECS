@@ -80,8 +80,10 @@ namespace OpenGL
 
 		#region E
 
+		private delegate void _enableDelegate(int cap);
+		private static _enableDelegate _enable;
+
 		private delegate void _enableVertexAttribArrayDelegate(uint index);
-		[BuildInfo("glEnableVertexAttribArray")]
 		private static _enableVertexAttribArrayDelegate _enableVertexAttribArray;
 
 		#endregion

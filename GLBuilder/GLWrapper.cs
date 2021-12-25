@@ -51,6 +51,14 @@ namespace OpenGL
 			}
 		}
 
+		public static void BufferData(int target, int size, uint[] data, int usage)
+		{
+			fixed (uint* ptr = &data[0])
+			{
+				_bufferData(target, size, ptr, usage);
+			}
+		}
+
 		public static void BufferData(int target, int size, byte[] data, int usage)
         {
 			fixed (byte* ptr = &data[0])
@@ -80,18 +88,16 @@ namespace OpenGL
 
 		public static void DrawArrays(int mode, int first, int count) { _drawArrays(mode, first, count); }
 		
-		public static void DrawElements(int mode, int count, float[] indices)
+		public static void DrawElements(int mode, int count, void* indices)
 		{
-			fixed(float* id = &indices[0])
-			{
-				_drawElements(mode, count, FLOAT, id);
-			}
+			_drawElements(mode, count, GL.UNSIGNED_INT, indices);
 		}
-		
+
 		#endregion
-		
+
 		#region E
-		
+
+		public static void Enable(int cap) { _enable(cap); }
 		public static void EnableVertexAttribArray(uint index) { _enableVertexAttribArray(index); }
 		
 		#endregion
