@@ -79,6 +79,7 @@ namespace CMDR
         #endregion
 
         #region POSITION
+        public static Vector3 CameraPos { get => _pos; }
         public static float X
         {
             get => _pos.X;
@@ -169,6 +170,7 @@ namespace CMDR
             Matrix4 identity = Matrix4.Identity;
 
             _view = identity * Matrix4.CreateScale(new Vector3(Zoom)) * Matrix4.CreateTranslation(_pos) * Matrix4.CreateRotationX(Xrot) * Matrix4.CreateRotationY(Yrot);
+            //_view = Matrix4.CreateRotationY(Yrot) * Matrix4.CreateRotationX(Xrot) * Matrix4.CreateTranslation(_pos) * Matrix4.CreateScale(new Vector3(Zoom)) * identity;
             ChangeState = false;
         }
 		

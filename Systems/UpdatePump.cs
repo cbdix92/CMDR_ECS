@@ -15,8 +15,8 @@ namespace CMDR.Systems
     {
         private long _lastUpdate;
         private long _target;
-        private long _perSecond;
-        internal long PerSecond
+        private int _perSecond;
+        internal int PerSecond
         {
             get { return _perSecond; }
             set
@@ -74,10 +74,9 @@ namespace CMDR.Systems
 
             Time.Start();
 
-            CreateUpdater(1000L, Render.Update);
-            CreateUpdater(100L, Physics.Update);
-            // Input requires STA apartment state. This seems to break OpenGL for whatever reason.
-            //CreateUpdater(100L, Input.Update);
+            CreateUpdater(1000, Render.Update);
+            CreateUpdater(100, Physics.Update);
+            CreateUpdater(100, Input.Update);
 
             while (!Glfw.WindowShouldClose(Display.Window))
             {
@@ -89,7 +88,7 @@ namespace CMDR.Systems
             Glfw.Terminate();
 
         }
-        public static void CreateUpdater(long persecond, UpdateHandler update)
+        public static void CreateUpdater(int persecond, UpdateHandler update)
         {
             Updater updater = new Updater();
             updater.PerSecond = persecond;

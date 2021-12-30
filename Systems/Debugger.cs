@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Diagnostics;
-using System.Windows.Input;
+using GLFW;
 using CMDR.Components;
 
 namespace CMDR.Systems
@@ -17,9 +17,9 @@ namespace CMDR.Systems
                 if (value != _enableDebugger)
                 {
                     if (value)
-                        Input.AddKeyBind(Key.F5, () => { _drawSpatialLines = !_drawSpatialLines; });
+                        Input.AddKeyBind(Keys.F5, () => { _drawSpatialLines = !_drawSpatialLines; });
                     else if (!value)
-                        Input.RemoveKeyBind(Key.F5);
+                        Input.RemoveKeyBind(Keys.F5);
                 }
                 _enableDebugger = value;
             }

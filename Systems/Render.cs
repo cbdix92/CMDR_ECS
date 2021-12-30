@@ -10,38 +10,10 @@ namespace CMDR.Systems
     {
         internal static Scene Scene { get => SceneManager.ActiveScene; }
 		
-		internal static float[] Vertices;
-		
-		internal static uint VBO;
-		internal static uint VAO;
-		
 		
 		internal unsafe static void Init()
 		{
-			Vertices = new float[] { 
-			// pos      // tex
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f, 
-		
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, 1.0f, 1.0f,
-			1.0f, 0.0f, 1.0f, 0.0f
-			};
-			
-			VAO = GL.GenVertexArray();
-			VBO = GL.GenBuffer();
-			
-			GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-			GL.BufferData(GL.ARRAY_BUFFER, sizeof(float)*Vertices.Length, Vertices, GL.STATIC_DRAW);
-			
-			GL.BindVertexArray(VAO);
-			GL.VertexAttribPointer(0, 4, GL.FLOAT, false, 0, (void*)0);
-			GL.EnableVertexAttribArray(0);
-			
-			// Unbind VAO and VBO
-			GL.BindBuffer(GL.ARRAY_BUFFER, 0);
-			GL.BindVertexArray(0);
+
 		}
 		
         internal static void ClearScreen()
@@ -55,10 +27,13 @@ namespace CMDR.Systems
             Debugger.Draw(ticks);
 
 			Matrix4 projection = Display.Projection;
+			Matrix4 view = Camera.View;
+            Vector3 cameraPos = Camera.CameraPos;
 
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();
-            SGameObject[] gameObjects = Camera.GetRenderable(Scene.GameObjects.Get(), transforms);
+			// Todo: frustum culling
+			SGameObject[] gameObjects = Scene.GameObjects.Get();// Camera.GetRenderable(Scene.GameObjects.Get(), transforms);
 
             foreach(SGameObject gameObject in gameObjects)
             {
@@ -67,19 +42,29 @@ namespace CMDR.Systems
 				RenderData renderData = renderables[gameObject.Get<RenderData>()];
                 
 				Texture texture = renderData.GetRender(ticks);
-                
-				
-				renderData.Shader.Use();
-				renderData.Shader.SetUniformMatrix4("model", false, transform.Model); ;
-				renderData.Shader.SetUniformMatrix4("projection", false, projection);
-				renderData.Shader.SetUniformVec4("color", renderData.Color);
-				
-				GL.ActiveTexture(GL.TEXTURE0);
-				texture.Bind();
-				
-				GL.BindVertexArray(VAO);
-				GL.DrawArrays(GL.TRIANGLES, 0, 6);
-				GL.BindVertexArray(0);
+
+                Shader shader = renderData.Shader;
+
+                shader.Use();
+                shader.SetUniformMatrix4("model", false, transform.Model);
+                shader.SetUniformMatrix4("view", false, view);
+                shader.SetUniformMatrix4("projection", false, projection);
+                shader.SetUniformVec4("color", renderData.Color);
+
+                shader.SetUniformVec3("lightPos", new Vector3(3f));
+                shader.SetUniformVec4("lightColor", Color.White);
+
+                shader.SetUniformVec3("viewPos", cameraPos);
+
+                //GL.ActiveTexture(GL.TEXTURE0);
+                //texture.Bind();
+
+
+                renderData.Draw();
+                GL.BindVertexArray(0);
+				//GL.BindVertexArray(VAO);
+				//GL.DrawArrays(GL.TRIANGLES, 0, 6);
+				//GL.BindVertexArray(0);
 				
 				Debugger.DrawBoundingBox(gameObject);
             }

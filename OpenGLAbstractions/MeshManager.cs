@@ -24,13 +24,11 @@ namespace CMDR
 
 			List<float> bufferOut = new List<float>();
 
-			bool texture = false;
+			bool uv = false;
 			bool normal = false;
 			
 			string nameOut;
-
-            uint VAO;
-            uint VBO;
+			bool smooth = false;
 			
 			using(StreamReader sr = new StreamReader(path))
 			{
@@ -50,7 +48,7 @@ namespace CMDR
 							break;
 							
 						case "vt":
-							texture = true;
+							uv = true;
 							ParseVertexData(data, 2, texOut);
 							break;
 							
@@ -65,10 +63,10 @@ namespace CMDR
 								string[] indice = data[i].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 								vertexIndice.Add(int.Parse(indice[0]) - 1);
 
-								if (texture)
+								if (uv)
 									texIndice.Add(int.Parse(indice[1]) - 1);
 								if (normal)
-									normalIndice.Add(int.Parse(indice[texture?2:1]) - 1);
+									normalIndice.Add(int.Parse(indice[uv?2:1]) - 1);
 							}
 							break;
 						
@@ -86,6 +84,8 @@ namespace CMDR
 							break;
 						
 						case "s":
+							if (data[1] == "1")
+								smooth = true;
 							break;
 					}
 				}
@@ -96,48 +96,16 @@ namespace CMDR
 
 			// Consolidate Data
 			bufferOut.AddRange(Index(vertOut, vertexIndice, 3));
-			int numVertex = bufferOut.Count;
+			int numVertices = bufferOut.Count;
 
-			if (texture)
+			if (uv)
 				bufferOut.AddRange(Index(texOut, texIndice, 2));
 
 			if (normal)
 				bufferOut.AddRange(Index(normalOut, normalIndice, 3));
 
 
-
-			VAO = GL.GenVertexArray();
-			VBO = GL.GenBuffer();
-
-			GL.BindVertexArray(VAO);
-
-			// Buffer combined data
-			GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
-			GL.BufferData(GL.ARRAY_BUFFER, bufferOut.Count * sizeof(float), bufferOut.ToArray(), GL.STATIC_DRAW);
-
-			// Setup VertexAttribPointers
-			int texOffset = 3 * sizeof(float);
-			int normalOffset = texture ? 5 * sizeof(float) : 3 * sizeof(float);
-
-			// Vertices (layout 0) 
-			GL.VertexAttribPointer(0, 3, GL.FLOAT, false, 0, (void*)0);
-			// Texture coords (layout 1)
-			GL.VertexAttribPointer(1, 2, GL.FLOAT, false, 0, (void*)texOffset);
-			// Normals (layout 2)
-			GL.VertexAttribPointer(2, 3, GL.FLOAT, false, 0, (void*)normalOffset);
-
-			// Enable VertexAttribPointers
-			GL.EnableVertexAttribArray(0);
-
-			if (texture)
-				GL.EnableVertexAttribArray(1);
-			if (normal)
-				GL.EnableVertexAttribArray(2);
-
-
-			Mesh output = new Mesh(VAO, VBO, numVertex);
-
-			return output;
+			return BufferData(bufferOut, numVertices, uv, normal);
         }
 
         private static void ParseVertexData(string[] lines, int count, List<float> output)
@@ -155,9 +123,45 @@ namespace CMDR
 			foreach(int i in indices)
             {
 				output.AddRange(data.GetRange(i*stride, stride));
-
             }
 			return output;
         }
+
+		private static Mesh BufferData(List<float> data, int numVertices, bool uv, bool normal)
+        {
+			uint VAO;
+			uint VBO;
+
+			VAO = GL.GenVertexArray();
+			VBO = GL.GenBuffer();
+
+			GL.BindVertexArray(VAO);
+
+			// Buffer combined data
+			GL.BindBuffer(GL.ARRAY_BUFFER, VBO);
+			GL.BufferData(GL.ARRAY_BUFFER, data.Count * sizeof(float), data.ToArray(), GL.STATIC_DRAW);
+
+			// Setup VertexAttribPointers
+			int uvOffset = 3 * sizeof(float);
+			int normalOffset = uv ? 5 * sizeof(float) : 3 * sizeof(float);
+
+			// Vertices (layout 0) 
+			GL.VertexAttribPointer(0, 3, GL.FLOAT, false, 0, (void*)0);
+			// Texture coords (layout 1)
+			GL.VertexAttribPointer(1, 2, GL.FLOAT, false, 0, (void*)uvOffset);
+			// Normals (layout 2)
+			GL.VertexAttribPointer(2, 3, GL.FLOAT, false, 0, (void*)normalOffset);
+
+			// Enable VertexAttribPointers
+			GL.EnableVertexAttribArray(0);
+
+			if (uv)
+				GL.EnableVertexAttribArray(1);
+			if (normal)
+				GL.EnableVertexAttribArray(2);
+
+
+			return new Mesh(VAO, VBO, numVertices, uv, normal);
+		}
     }
 }

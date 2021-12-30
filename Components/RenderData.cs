@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using OpenGL;
 
 namespace CMDR.Components
 {
@@ -15,6 +16,8 @@ namespace CMDR.Components
 
         // Specifies if the this RenderData is to return a static image or animation
         public bool Static { get; set; }
+
+        public Mesh Mesh;
 
         public Shader Shader;
 
@@ -32,6 +35,21 @@ namespace CMDR.Components
             Color = Color.Gray;
         }
 
+
+        public void LoadMesh(string path)
+        {
+            Receive();
+            Mesh = MeshManager.Load(path);
+            Send();
+        }
+
+        public void Draw()
+        {
+            GL.BindVertexArray(Mesh.VAO);
+            GL.DrawArrays(GL.TRIANGLES, 0, Mesh.NumVertices);
+        }
+
+        #region DEPRECATED 2D CODE
         public void FromFile(string src)
         {
             Receive();
@@ -73,7 +91,7 @@ namespace CMDR.Components
         {
             return Static ? ImgData : Animator.Get(ticks, currentAnimation);
         }
-
+        #endregion
         public void Receive()
         {
             this = Scene.Get<RenderData>(ID);

@@ -64,7 +64,7 @@ namespace GLTest
 		
         static unsafe void Main(string[] args)
         {
-            Display = new Display(1920, 1080, "Test title");
+            Display = new Display(800, 600, "Test title");
 
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
@@ -102,12 +102,12 @@ namespace GLTest
 			
             GameLoop.Time.Start();
             float counter = 0;
-            Glfw.SetKeyCallback(Display.Window, keyinput);
+            Glfw.SetKeyCallback(Display.Window, Keyinput);
 
             //Mesh mesh = MeshManager.Load(@"Assets\FinalBaseMesh.OBJ");
             //Mesh mesh = MeshManager.Load(@"Assets\tree_obj.OBJ");
-            Mesh mesh = MeshManager.Load(@"Assets\male.OBJ");
-            //Mesh mesh = MeshManager.Load(@"Assets\tree.OBJ");
+            //Mesh mesh = MeshManager.Load(@"Assets\male.OBJ");
+            Mesh mesh = MeshManager.Load(@"Assets\tree.OBJ");
             GL.BindVertexArray(mesh.VAO);
 
             GL.Enable(GL.DEPTH_TEST);
@@ -139,6 +139,8 @@ namespace GLTest
                 
                 shader.SetUniformVec3("lightPos", new Vector3(3f));
                 shader.SetUniformVec4("lightColor", Color.White);
+
+                shader.SetUniformVec3("viewPos", new Vector3(Camera.X, Camera.Y, Camera.Z));
 
                 //GL.ActiveTexture(GL.TEXTURE0);
                 //texture.Bind();
@@ -174,7 +176,7 @@ namespace GLTest
             }
             return pixels;
         }
-        public static void keyinput(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
+        public static void Keyinput(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
         {
             float speed = 1f;
 
