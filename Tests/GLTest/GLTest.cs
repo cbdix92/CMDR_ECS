@@ -183,10 +183,10 @@ namespace GLTest
             switch(key)
             {
                 case Keys.W:
-                    Camera.Z += speed;
+                    Camera.Zvel = speed;
                     break;
                 case Keys.S:
-                    Camera.Z += -speed;
+                    Camera.Zvel = -speed;
                     break;
                 case Keys.A:
                     Camera.X += speed;

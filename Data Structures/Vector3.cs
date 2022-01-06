@@ -47,6 +47,12 @@ namespace CMDR
         {
             return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
         }
+        public static Vector3 Cross(Vector3 v1, Vector3 v2)
+        {
+            return new Vector3((v1.Y * v2.Z) - (v1.Z * v2.Y),
+                               (v1.Z * v2.X) - (v1.X * v2.Z),
+                               (v1.X * v2.Y) - (v1.Y * v2.X));
+        }
         public static Vector3 Normalize(Vector3 v)
         {
             return v / v.Magnitude();
@@ -142,6 +148,11 @@ namespace CMDR
         public bool Equals(Vector3 other)
         {
             return (X == other.X && Y == other.Y && Z == other.Z);
+        }
+
+        public float[] ToArray()
+        {
+            return new float[] { X, Y, Z };
         }
     }
 }

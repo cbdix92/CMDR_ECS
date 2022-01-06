@@ -9,7 +9,8 @@ namespace CMDR.Systems
 
         public static void Update(long ticks)
         {
-            MoveCamera();
+            bool cameraMoved = MoveCamera(ticks);
+
             Scene scene = SceneManager.ActiveScene;
 
             SGameObject[] gameObjects = scene.GameObjects.Get();
@@ -133,10 +134,12 @@ namespace CMDR.Systems
             transform.Y += transform.Yvel;
             return transform.Xvel != 0 || transform.Yvel != 0;
         }
-        public static void MoveCamera()
+        public static bool MoveCamera(long ticks)
         {
             Camera.X += Camera.Xvel;
             Camera.Y += Camera.Yvel;
+            Camera.Z += Camera.Zvel;
+            return Camera.Xvel + Camera.Yvel + Camera.Zvel != 0;
         }
         public static bool CanMove(Transform transform)
         {

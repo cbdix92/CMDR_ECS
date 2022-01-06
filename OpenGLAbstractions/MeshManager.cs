@@ -97,12 +97,13 @@ namespace CMDR
 			// Consolidate Data
 			bufferOut.AddRange(Index(vertOut, vertexIndice, 3));
 			int numVertices = bufferOut.Count;
+			bufferOut.AddRange(GenerateNormals(bufferOut, smooth));
 
 			if (uv)
 				bufferOut.AddRange(Index(texOut, texIndice, 2));
 
-			if (normal)
-				bufferOut.AddRange(Index(normalOut, normalIndice, 3));
+			//if (normal)
+				//bufferOut.AddRange(Index(normalOut, normalIndice, 3));
 
 
 			return BufferData(bufferOut, numVertices, uv, normal);
@@ -126,6 +127,41 @@ namespace CMDR
             }
 			return output;
         }
+
+		private static List<float> GenerateNormals(List<float> vertices, bool smooth)
+        {
+			List<float> normalOut = new List<float>();
+
+			for (int i = 0; i < vertices.Count;)
+			{
+				Vector3 v1 = new Vector3(vertices[i++], vertices[i++], vertices[i++]);
+				Vector3 v2 = new Vector3(vertices[i++], vertices[i++], vertices[i++]);
+				Vector3 v3 = new Vector3(vertices[i++], vertices[i++], vertices[i++]);
+				Vector3 cross = Vector3.Cross((v2 - v1), (v3 - v1));
+
+				if (smooth)
+				{
+					Vector3 vn1 = Vector3.Normalize(v1 + cross);
+					Vector3 vn2 = Vector3.Normalize(v1 + cross);
+					Vector3 vn3 = Vector3.Normalize(v1 + cross);
+
+					normalOut.AddRange(vn1.ToArray());
+					normalOut.AddRange(vn2.ToArray());
+					normalOut.AddRange(vn3.ToArray());
+					continue;
+				}
+
+				float[] fn = Vector3.Normalize(cross).ToArray();
+
+				normalOut.AddRange(fn);
+				normalOut.AddRange(fn);
+				normalOut.AddRange(fn);
+
+			}
+
+
+			return normalOut;
+        } 
 
 		private static Mesh BufferData(List<float> data, int numVertices, bool uv, bool normal)
         {
