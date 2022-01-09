@@ -53,6 +53,11 @@ namespace CMDR
             }
         }
 
+        public void Invert()
+        {
+            (X, Y, Z, W) = (-X, -Y, -Z, -W);
+        }
+
         public float Magnitude()
         {
             return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);

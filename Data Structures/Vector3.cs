@@ -43,25 +43,34 @@ namespace CMDR
             }
         }
 
+        public void Invert()
+        {
+            (X, Y, Z) = (-X, -Y, -Z);
+        }
+
         public float Magnitude()
         {
             return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
         }
+
         public static Vector3 Cross(Vector3 v1, Vector3 v2)
         {
             return new Vector3((v1.Y * v2.Z) - (v1.Z * v2.Y),
                                (v1.Z * v2.X) - (v1.X * v2.Z),
                                (v1.X * v2.Y) - (v1.Y * v2.X));
         }
+
         public static Vector3 Normalize(Vector3 v)
         {
             return v / v.Magnitude();
         }
+
         public static float Distance(Vector3 vec1, Vector3 vec2)
         {
             Vector3 result = vec1 - vec2;
             return result.Magnitude();
         }
+
         #region VECTOR_OPERATORS
         public static Vector3 operator +(Vector3 vec1, Vector3 vec2)
         {
