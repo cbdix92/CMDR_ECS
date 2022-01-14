@@ -120,7 +120,10 @@ namespace CMDR
                     direction = Vector3.Backward;
 
                 direction = Quaternion.RotateDirection(_rot, direction);
-                _pos = _pos * (direction * value);
+                Vector3 debug1 = direction * value;
+                Vector3 debug = _pos + (direction * value);
+                _pos = _pos + (direction * value);
+                Console.WriteLine(_pos.Z);
                 //_pos.Z = value;
                 ChangeState = true;
             }
