@@ -28,7 +28,7 @@ namespace CMDR.Systems
 
 			Matrix4 projection = Display.Projection;
 			Matrix4 view = Camera.View;
-            Vector3 cameraPos = Camera.CameraPos;
+            Vector3 cameraPos = Camera.Pos;
 
             Transform[] transforms = Scene.Components.Get<Transform>();
             RenderData[] renderables = Scene.Components.Get<RenderData>();

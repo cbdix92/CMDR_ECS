@@ -258,33 +258,33 @@ namespace CMDR
 			throw new NotImplementedException("CreateRotation");
 		}
 		
-		public static Matrix4 CreateRotationX(float rotation)
+		public static Matrix4 CreateRotationX(float pitch)
 		{
 			Matrix4 result = Identity;
-			result.M11 = MathHelper.Cos(rotation);
-			result.M12 = -MathHelper.Sin(rotation);
-			result.M21 = MathHelper.Sin(rotation);
-			result.M22 = MathHelper.Cos(rotation);
+			result.M11 = MathHelper.Cos(pitch);
+			result.M12 = -MathHelper.Sin(pitch);
+			result.M21 = MathHelper.Sin(pitch);
+			result.M22 = MathHelper.Cos(pitch);
 			return result;
 		}
 		
-		public static Matrix4 CreateRotationY(float rotation)
+		public static Matrix4 CreateRotationY(float yaw)
 		{
 			Matrix4 result = Identity;
-			result.M00 = MathHelper.Cos(rotation);
-			result.M02 = MathHelper.Sin(rotation);
-			result.M20 = -MathHelper.Sin(rotation);
-			result.M22 = MathHelper.Cos(rotation);
+			result.M00 = MathHelper.Cos(yaw);
+			result.M02 = MathHelper.Sin(yaw);
+			result.M20 = -MathHelper.Sin(yaw);
+			result.M22 = MathHelper.Cos(yaw);
 			return result;
 		}
 		
-		public static Matrix4 CreateRotationZ(float rotation)
+		public static Matrix4 CreateRotationZ(float roll)
 		{
 			Matrix4 result = Identity;
-			result.M00 = MathHelper.Cos(rotation);
-			result.M01 = -MathHelper.Sin(rotation);
-			result.M10 = MathHelper.Sin(rotation);
-			result.M11 = MathHelper.Cos(rotation);
+			result.M00 = MathHelper.Cos(roll);
+			result.M01 = -MathHelper.Sin(roll);
+			result.M10 = MathHelper.Sin(roll);
+			result.M11 = MathHelper.Cos(roll);
 			return result;
 		}
 		

@@ -79,13 +79,18 @@ namespace CMDR
         #endregion
 
         #region POSITION
-        public static Vector3 CameraPos { get => _pos; }
+        public static Vector3 Pos { get => _pos; }
         public static float X
         {
             get => _pos.X;
             set
             {
-                _pos.X = value;
+                Vector3 direction = Vector3.Up;
+                if (value < 0)
+                    direction = Vector3.Down;
+                direction = Quaternion.RotateDirection(_rot, direction);
+                _pos = _pos * (direction * value);
+                //_pos.X = value;
                 ChangeState = true; ;
             }
         }
@@ -95,7 +100,12 @@ namespace CMDR
             get => _pos.Y;
             set
             {
-                _pos.Y = value;
+                Vector3 direction = Vector3.Right;
+                if (value < 0)
+                    direction = Vector3.Left;
+                direction = Quaternion.RotateDirection(_rot, direction);
+                _pos = _pos * (direction * value);
+                //_pos.Y = value;
                 ChangeState = true;
             }
         }
@@ -105,7 +115,13 @@ namespace CMDR
             get => _pos.Z;
             set
             {
-                _pos.Z = value;
+                Vector3 direction = Vector3.Forward;
+                if (value < 0)
+                    direction = Vector3.Backward;
+
+                direction = Quaternion.RotateDirection(_rot, direction);
+                _pos = _pos * (direction * value);
+                //_pos.Z = value;
                 ChangeState = true;
             }
         }
@@ -169,8 +185,29 @@ namespace CMDR
 		{
             Matrix4 identity = Matrix4.Identity;
 
-            _view = identity * Matrix4.CreateScale(new Vector3(Zoom)) * Matrix4.CreateTranslation(_pos) * Matrix4.CreateRotationX(Xrot) * Matrix4.CreateRotationY(Yrot);
-            //_view = Matrix4.CreateRotationY(Yrot) * Matrix4.CreateRotationX(Xrot) * Matrix4.CreateTranslation(_pos) * Matrix4.CreateScale(new Vector3(Zoom)) * identity;
+            Matrix4 rotX = Matrix4.CreateRotationX(_rot.X);
+            Matrix4 rotY = Matrix4.CreateRotationY(_rot.Y);
+            Matrix4 rotation = rotX * rotY;
+
+            Quaternion point = Quaternion.QuaternionFromPoint(Vector3.Forward);
+            Quaternion x = Quaternion.CreateRotationQuaternion(_rot.X);
+            Quaternion y = Quaternion.CreateRotationQuaternion(_rot.Y);
+            point = (y * point * y.Conjugate);
+            point = (x * point * x.Conjugate);
+            //Matrix4 rotation = point.ToMatrix();
+
+
+            Matrix4 translation = Matrix4.CreateTranslation(_pos);
+            _view = rotation * translation * identity;
+
+            //Quaternion point = Quaternion.QuaternionFromPoint(_pos);
+            //Quaternion euler = Quaternion.QuaternionFromEuler(_rot);
+            //Matrix4 rotMat = (euler.GetConjugate() * point * euler).ToMatrix();
+            //Matrix4 scale = Matrix4.CreateScale(new Vector3(Zoom));
+            //Matrix4 pos = Matrix4.CreateTranslation(_pos);
+            //_view = rotMat * pos * scale * identity;
+
+
             ChangeState = false;
         }
 		
@@ -210,6 +247,15 @@ namespace CMDR
 
             return result;
 
+        }
+        /// <summary>
+        /// Checks if direction is negative or positive.
+        /// </summary>
+        /// <param name="value">float value to be checked</param>
+        /// <returns></returns>
+        private static bool DetectDirection(float value)
+        {
+            return value > 0;
         }
     }
 }

@@ -183,10 +183,10 @@ namespace GLTest
             switch(key)
             {
                 case Keys.W:
-                    Camera.Zvel = speed;
+                    Camera.Z += speed;
                     break;
                 case Keys.S:
-                    Camera.Zvel = -speed;
+                    Camera.Z += -speed;
                     break;
                 case Keys.A:
                     Camera.X += speed;
@@ -207,10 +207,10 @@ namespace GLTest
                     Camera.Yrot += -speed/2;
                     break;
                 case Keys.T:
-                    Camera.Zoom += speed;
+                    Camera.Xrot += speed;
                     break;
                 case Keys.Y:
-                    Camera.Zoom += -speed;
+                    Camera.Xrot += -speed;
                     break;
             }
             //Console.WriteLine(Camera.Z);
