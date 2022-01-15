@@ -66,9 +66,10 @@ namespace CMDR
             Quaternion qy = CreateRotationQuaternion(angles.Y);
             Quaternion qz = CreateRotationQuaternion(angles.Z);
 
-            p = qx.Conjugate * p * qx;
-            p = qy.Conjugate * p * qy;
-            p = qz.Conjugate * p * qz;
+            p = qx.Conjugate * qy.Conjugate * p * qx * qy;
+            //p = qx * p * qx.Conjugate;
+            //p = qy * p * qy.Conjugate;
+            //p = qz * p * qz.Conjugate;
             return Vector3.Normalize(p.Vec);
         }
 
@@ -161,6 +162,15 @@ namespace CMDR
             result.X = (q1.W * q2.X) + (q1.X * q2.W) + (q1.Y * q2.Z) - (q1.Z * q2.Y);
             result.Y = (q1.W * q2.Y) - (q1.X * q2.Z) + (q1.Y * q2.W) + (q1.Z * q2.X);
             result.Z = (q1.W * q2.Z) + (q1.X * q2.Y) - (q1.Y * q2.X) + (q1.Z * q2.W);
+            return result;
+        }
+        public static Vector3 operator*(Quaternion q, Vector3 v)
+        {
+            Vector3 result;
+            result.X = (q.W * v.X) + (q.Y * v.Z) - (q.Z * v.Y);
+            result.Y = (q.W * v.Y) - (q.X * v.Z) + (q.Z * v.X);
+            result.Z = (q.W * v.Z) + (q.X * v.Y) - (q.Y * v.X);
+
             return result;
         }
     }

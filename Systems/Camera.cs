@@ -120,10 +120,15 @@ namespace CMDR
                     direction = Vector3.Backward;
 
                 direction = Quaternion.RotateDirection(_rot, direction);
-                Vector3 debug1 = direction * value;
-                Vector3 debug = _pos + (direction * value);
-                _pos = _pos + (direction * value);
-                Console.WriteLine(_pos.Z);
+
+
+                _pos = (direction * MathHelper.Abs(value));
+
+
+                Console.WriteLine(value);
+                Console.WriteLine($"rotation:{_rot}");
+                Console.WriteLine($"direction:{direction}");
+                Console.WriteLine($"pos:{_pos}\n");
                 //_pos.Z = value;
                 ChangeState = true;
             }
@@ -250,15 +255,6 @@ namespace CMDR
 
             return result;
 
-        }
-        /// <summary>
-        /// Checks if direction is negative or positive.
-        /// </summary>
-        /// <param name="value">float value to be checked</param>
-        /// <returns></returns>
-        private static bool DetectDirection(float value)
-        {
-            return value > 0;
         }
     }
 }

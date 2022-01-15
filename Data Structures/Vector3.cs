@@ -188,5 +188,10 @@ namespace CMDR
         {
             return new float[] { X, Y, Z };
         }
+
+        public override string ToString()
+        {
+            return $"X:{X}, Y:{Y}, Z:{Z}";
+        }
     }
 }
