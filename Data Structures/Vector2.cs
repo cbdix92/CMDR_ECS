@@ -47,15 +47,32 @@ namespace CMDR
         {
             return MathHelper.Sqrt(X * X + Y * Y);
         }
+		
+		#region STATIC_METHODS
+		
+		public static float Dot(Vector2 v1, Vector2 v2)
+        {
+            return v1.X * v2.X + v1.Y * v2.Y;
+        }
+		
         public static Vector2 Normalize(Vector2 v)
         {
             return v / v.Magnitude();
         }
+		
+		public static Vector2 Invert(Vector2 vec)
+		{
+			return new Vector2(){ X = -vec.X, Y = -vec.Y };
+		}
+		
         public static float Distance(Vector2 vec1, Vector2 vec2)
         {
             Vector2 result = vec1 - vec2;
             return result.Magnitude();
         }
+		
+		#endregion
+		
         #region VECTOR_OPERATORS
         public static Vector2 operator +(Vector2 vec1, Vector2 vec2)
         {
@@ -138,6 +155,16 @@ namespace CMDR
         public bool Equals(Vector2 other)
         {
             return (X == other.X && Y == other.Y);
+        }
+		
+		public float[] ToArray()
+        {
+            return new float[] { X, Y};
+        }
+		
+		public override string ToString()
+        {
+            return $"X:{X}, Y:{Y}";
         }
     }
 }

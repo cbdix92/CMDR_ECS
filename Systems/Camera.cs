@@ -85,12 +85,7 @@ namespace CMDR
             get => _pos.X;
             set
             {
-                Vector3 direction = Vector3.Up;
-                if (value < 0)
-                    direction = Vector3.Down;
-                direction = Quaternion.RotateDirection(_rot, direction);
-                _pos = _pos * (direction * value);
-                //_pos.X = value;
+                _pos.X = value;
                 ChangeState = true; ;
             }
         }
@@ -100,12 +95,7 @@ namespace CMDR
             get => _pos.Y;
             set
             {
-                Vector3 direction = Vector3.Right;
-                if (value < 0)
-                    direction = Vector3.Left;
-                direction = Quaternion.RotateDirection(_rot, direction);
-                _pos = _pos * (direction * value);
-                //_pos.Y = value;
+                _pos.Y = value;
                 ChangeState = true;
             }
         }
@@ -115,34 +105,24 @@ namespace CMDR
             get => _pos.Z;
             set
             {
-                Vector3 direction = Vector3.Forward;
-                if (value < 0)
-                    direction = Vector3.Backward;
-
-                direction = Quaternion.RotateDirection(_rot, direction);
-
-
-                _pos = (direction * MathHelper.Abs(value));
-
-
-                Console.WriteLine(value);
-                Console.WriteLine($"rotation:{_rot}");
-                Console.WriteLine($"direction:{direction}");
-                Console.WriteLine($"pos:{_pos}\n");
-                //_pos.Z = value;
+                _pos.Z = value;
                 ChangeState = true;
             }
         }
         #endregion
 
         #region ROTATION
-
+		
         public static float Xrot
         {
             get => _rot.X / 0.01745329f;
             set
             {
-                _rot.X = value * 0.01745329f;
+                float rads = value * 0.01745329f;
+                // Check if camera is beyond 90 degrees
+                if(MathHelper.Abs(rads) < 1.5708f)
+                    _rot.X = rads;
+
                 ChangeState = true;
             }
         }
@@ -167,6 +147,14 @@ namespace CMDR
 
         #endregion
 
+		public static Vector3 Forward
+		{
+			get
+			{
+				return Quaternion.RotatePoint(_rot, Vector3.Forward);
+			}
+		}
+
 
         public static float Zoom
         {
@@ -185,6 +173,31 @@ namespace CMDR
         /// Determine if the View matrix needs to be recalculated
         /// </summary>
         public static bool ChangeState { get; private set; }
+		
+        public static void ResetRotation()
+        {
+            _rot = new Vector3();
+            ChangeState = true;
+        }
+		public static void MoveCamera(Vector3 direction, float distance)
+		{
+			//Vector3 point = Quaternion.RotatePoint(_rot, direction) * distance;
+
+            Vector3 p = Forward * distance;
+            p.X = -p.X;
+			
+            _pos += p;
+            ChangeState = true;
+		}
+
+        public static void StrafeCamera(Vector3 direction, float distance)
+        {
+            Vector3 point = Quaternion.RotatePoint(_rot, direction) * distance;
+
+            _pos += point;
+            ChangeState = true;
+        }
+		
 
         /// <summary>
         /// Called by the renderer if ChangeSate is set true to calculate the new View Matrix.
@@ -198,8 +211,8 @@ namespace CMDR
             Matrix4 rotation = rotX * rotY;
 
             Quaternion point = Quaternion.QuaternionFromPoint(Vector3.Forward);
-            Quaternion x = Quaternion.CreateRotationQuaternion(_rot.X);
-            Quaternion y = Quaternion.CreateRotationQuaternion(_rot.Y);
+            Quaternion x = Quaternion.CreateRotation(Vector3.Right, _rot.X);
+            Quaternion y = Quaternion.CreateRotation(Vector3.Down, _rot.Y);
             point = (y * point * y.Conjugate);
             point = (x * point * x.Conjugate);
             //Matrix4 rotation = point.ToMatrix();

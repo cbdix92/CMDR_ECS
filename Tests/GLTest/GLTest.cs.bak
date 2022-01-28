@@ -142,8 +142,8 @@ namespace GLTest
 
                 shader.SetUniformVec3("viewPos", new Vector3(Camera.X, Camera.Y, Camera.Z));
 
-                GL.ActiveTexture(GL.TEXTURE0);
-                texture.Bind();
+                //GL.ActiveTexture(GL.TEXTURE0);
+                //texture.Bind();
 
                 // Cube Draw
                 //GL.BindVertexArray(VAO);
@@ -183,42 +183,34 @@ namespace GLTest
             switch(key)
             {
                 case Keys.W:
-                    Camera.MoveCamera(Vector3.Forward, speed);
+                    Camera.MoveCamera(Vector3.Forward, speed)
                     break;
                 case Keys.S:
-                    Camera.MoveCamera(Vector3.Backward, -speed);
+                    Camera.MoveCamera(Vector3.Backward, speed);
                     break;
                 case Keys.A:
-                    Camera.StrafeCamera(Vector3.Left, speed);
+                    Camera.MoveCamera(Vector3.Left, speed);
                     break;
                 case Keys.D:
-                    Camera.StrafeCamera(Vector3.Right, speed);
+                    Camera.MoveCamera(Vector3.Right, speed);
                     break;
                 case Keys.Q:
-                    Camera.Y += speed;
+                    Camera.MoveCamera(Vector3.Up, speed);
                     break;
                 case Keys.E:
-                    Camera.Y += -speed;
+                    Camera.MoveCamera(Vector3.Down, speed);
                     break;
                 case Keys.Z:
-                    Camera.Yrot += speed;
+                    Camera.Yrot += speed/2;
                     break;
                 case Keys.C:
-                    Camera.Yrot += -speed;
+                    Camera.Yrot += -speed/2;
                     break;
                 case Keys.T:
                     Camera.Xrot += speed;
                     break;
                 case Keys.Y:
                     Camera.Xrot += -speed;
-                    break;
-                case Keys.F:
-                    Console.Clear();
-                    Console.WriteLine(Camera.Forward);
-                    Console.WriteLine(Camera.Forward.Magnitude);
-                    break;
-                case Keys.G:
-                    Camera.ResetRotation();
                     break;
             }
             //Console.WriteLine(Camera.Z);

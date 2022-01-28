@@ -52,6 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data Structures\BoolArray.cs" />
     <Compile Include="Data Structures\Quaternion.cs" />
     <Compile Include="Data Structures\Vector2.cs" />
     <Compile Include="Display.cs" />

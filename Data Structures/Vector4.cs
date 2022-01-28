@@ -62,15 +62,32 @@ namespace CMDR
         {
             return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
         }
+		
+		#region STATIC_METHODS
+
+        public static float Dot(Vector4 v1, Vector4 v2)
+        {
+            return v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z + v1.W * v2.W;
+        }
+		
         public static Vector4 Normalize(Vector4 v)
         {
             return v / v.Magnitude();
         }
+		
+		public static Vector4 Invert(Vector4 vec)
+		{
+			return new Vector4(){ X = -vec.X, Y = -vec.Y, Z = -vec.Z, W = -vec.W };
+		}
+		
         public static float Distance(Vector4 vec1, Vector4 vec2)
         {
             Vector4 result = vec1 - vec2;
             return result.Magnitude();
         }
+		
+		#endregion
+		
         #region VECTOR_OPERATORS
         public static Vector4 operator +(Vector4 vec1, Vector4 vec2)
         {
@@ -157,6 +174,16 @@ namespace CMDR
             return vec / other;
         }
         #endregion
+		
+		public float[] ToArray()
+        {
+            return new float[] { X, Y, Z, W};
+        }
+		
+		public override string ToString()
+        {
+            return $"X:{X}, Y:{Y}, Z:{Z}, W:{W}";
+        }
 
         public bool Equals(Vector4 other)
         {

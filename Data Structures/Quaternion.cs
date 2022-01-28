@@ -7,6 +7,7 @@ namespace CMDR
         public Vector3 Vec;
         public float W;
 
+
         public float X
         {
             get => Vec.X;
@@ -41,7 +42,24 @@ namespace CMDR
         }
 
         public static readonly Quaternion Identity = new Quaternion() { X = 0, Y = 0, Z = 0, W = 1f };
+        public Vector4 ToAxisAngle()
+        {
+            Vector4 result;
 
+            float theta = 2 * MathHelper.Acos(W);
+
+            if(theta == 1)
+            {
+                return new Vector4(){ X = 1,Y = 0 ,Z = 0, W = theta };
+            }
+
+            result.X = Vec.X / MathHelper.Sin(theta / 2);
+            result.Y = Vec.Y / MathHelper.Sin(theta / 2);
+            result.Z = Vec.Z / MathHelper.Sin(theta / 2);
+            result.W = theta;
+
+            return result;
+        }
         public static Quaternion QuaternionFromPoint(Vector3 vec)
         {
             return QuaternionFromPoint(vec.X, vec.Y, vec.Z);
@@ -59,33 +77,33 @@ namespace CMDR
             return result;
         }
 
-        public static Vector3 RotateDirection(Vector3 angles, Vector3 direction)
+        public static Vector3 RotatePoint(Vector3 angles, Vector3 point)
         {
-            Quaternion p = Quaternion.QuaternionFromPoint(direction);
-            Quaternion qx = CreateRotationQuaternion(angles.X);
-            Quaternion qy = CreateRotationQuaternion(angles.Y);
-            Quaternion qz = CreateRotationQuaternion(angles.Z);
+            Quaternion p = QuaternionFromPoint(point);
+            Quaternion qx = CreateRotation(Vector3.Right, angles.X);
+            Quaternion qy = CreateRotation(Vector3.Down, angles.Y);
+            Quaternion qz = CreateRotation(Vector3.Forward, angles.Z);
+            
+            p = qx * qy * qz * p * qx.Conjugate * qy.Conjugate * qz.Conjugate;
 
-            p = qx.Conjugate * qy.Conjugate * p * qx * qy;
-            //p = qx * p * qx.Conjugate;
-            //p = qy * p * qy.Conjugate;
-            //p = qz * p * qz.Conjugate;
-            return Vector3.Normalize(p.Vec);
+            return p.Vec;
         }
 
-        public static Quaternion CreateRotationQuaternion(float angle)
+        public static Quaternion CreateRotation(Vector3 axis, float angle)
         {
             angle *= 0.5f;
-            Vector3 axis = new Vector3(MathHelper.Sin(angle));
-            return new Quaternion() { W = MathHelper.Cos(angle), Vec = axis };
+
+            axis *= MathHelper.Sin(angle);
+            
+			return new Quaternion() { W = MathHelper.Cos(angle), Vec = axis };
         }
 
-        public static Quaternion QuaternionFromEuler(Vector3 vec)
+        public static Quaternion FromEuler(Vector3 vec)
         {
-            return QuaternionFromEuler(vec.X, vec.Y, vec.Z);
+            return FromEuler(vec.X, vec.Y, vec.Z);
         }
 
-        public static Quaternion QuaternionFromEuler(float xRot, float yRot, float zRot)
+        public static Quaternion FromEuler(float xRot, float yRot, float zRot)
         {
             Quaternion result = Identity;
 
@@ -154,7 +172,7 @@ namespace CMDR
             Y = -Y;
             Z = -Z;
         }
-
+		/*
         public static Quaternion operator *(Quaternion q1, Quaternion q2)
         {
             Quaternion result = Quaternion.Identity;
@@ -164,6 +182,15 @@ namespace CMDR
             result.Z = (q1.W * q2.Z) + (q1.X * q2.Y) - (q1.Y * q2.X) + (q1.Z * q2.W);
             return result;
         }
+		*/
+		public static Quaternion operator *(Quaternion q1, Quaternion q2)
+		{
+			return new Quaternion()
+			{
+				W = q1.W * q2.W - Vector3.Dot(q1.Vec, q2.Vec),
+				Vec = q1.W * q2.Vec + q2.W * q1.Vec + Vector3.Cross(q1.Vec, q2.Vec)
+			};
+		}
         public static Vector3 operator*(Quaternion q, Vector3 v)
         {
             Vector3 result;

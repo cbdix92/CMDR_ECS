@@ -144,6 +144,34 @@ namespace CMDR
             return result;
         }
 
+        public static Vector3 operator *(Matrix4 mat, Vector3 vec)
+        {
+            Vector3 result;
+            result.X = mat.M00 * vec.X + mat.M01 * vec.Y + mat.M02 * vec.Z;
+            result.Y = mat.M10 * vec.X + mat.M11 * vec.Y + mat.M12 * vec.Z;
+            result.Z = mat.M20 * vec.X + mat.M21 * vec.Y + mat.M22 * vec.Z;
+            return result;
+        }
+        public static Vector3 operator *(Vector3 vec, Matrix4 mat)
+        {
+            return mat * vec;
+        }
+
+        public static Vector4 operator *(Matrix4 mat, Vector4 vec)
+        {
+            Vector4 result;
+            result.X = mat.M00 * vec.X + mat.M01 * vec.Y + mat.M02 * vec.Z + mat.M03 * vec.W;
+            result.Y = mat.M10 * vec.X + mat.M11 * vec.Y + mat.M12 * vec.Z + mat.M13 * vec.W;
+            result.Z = mat.M20 * vec.X + mat.M21 * vec.Y + mat.M22 * vec.Z + mat.M23 * vec.W;
+            result.W = mat.M30 * vec.X + mat.M31 * vec.Y + mat.M32 * vec.Z + mat.M33 * vec.W;
+            return result;
+        }
+
+        public static Vector4 operator *(Vector4 vec, Matrix4 mat)
+        {
+            return mat * vec;
+        }
+
 
         #endregion
 
