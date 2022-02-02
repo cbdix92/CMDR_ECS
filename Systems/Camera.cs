@@ -151,7 +151,10 @@ namespace CMDR
 		{
 			get
 			{
-				return Quaternion.RotatePoint(_rot, Vector3.Forward);
+                Vector3 q = Quaternion.RotatePoint(_rot, Vector3.Forward);
+                q.X = -q.X;
+                q.Y = -q.Y;
+                return q;
 			}
 		}
 
@@ -179,22 +182,21 @@ namespace CMDR
             _rot = new Vector3();
             ChangeState = true;
         }
-		public static void MoveCamera(Vector3 direction, float distance)
+		public static void MoveCamera(float distance)
 		{
-			//Vector3 point = Quaternion.RotatePoint(_rot, direction) * distance;
+            Vector3 direction = Forward * distance;
+            
+            _pos += direction;
 
-            Vector3 p = Forward * distance;
-            p.X = -p.X;
-			
-            _pos += p;
             ChangeState = true;
 		}
 
-        public static void StrafeCamera(Vector3 direction, float distance)
+        public static void StrafeCamera(float distance)
         {
-            Vector3 point = Quaternion.RotatePoint(_rot, direction) * distance;
+            Vector3 direction = Vector3.Normalize(Vector3.Cross(Forward, Vector3.Up)) * distance;
 
-            _pos += point;
+            _pos += direction;
+
             ChangeState = true;
         }
 		
@@ -210,23 +212,9 @@ namespace CMDR
             Matrix4 rotY = Matrix4.CreateRotationY(_rot.Y);
             Matrix4 rotation = rotX * rotY;
 
-            Quaternion point = Quaternion.QuaternionFromPoint(Vector3.Forward);
-            Quaternion x = Quaternion.CreateRotation(Vector3.Right, _rot.X);
-            Quaternion y = Quaternion.CreateRotation(Vector3.Down, _rot.Y);
-            point = (y * point * y.Conjugate);
-            point = (x * point * x.Conjugate);
-            //Matrix4 rotation = point.ToMatrix();
-
 
             Matrix4 translation = Matrix4.CreateTranslation(_pos);
             _view = rotation * translation * identity;
-
-            //Quaternion point = Quaternion.QuaternionFromPoint(_pos);
-            //Quaternion euler = Quaternion.QuaternionFromEuler(_rot);
-            //Matrix4 rotMat = (euler.GetConjugate() * point * euler).ToMatrix();
-            //Matrix4 scale = Matrix4.CreateScale(new Vector3(Zoom));
-            //Matrix4 pos = Matrix4.CreateTranslation(_pos);
-            //_view = rotMat * pos * scale * identity;
 
 
             ChangeState = false;

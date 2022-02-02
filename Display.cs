@@ -14,7 +14,9 @@ namespace CMDR
 		private static Matrix4 _projection;
 		
 		public static bool ChangeState { get; private set; }
-
+        
+        public static Vector2 Center;
+        
         #region SIZE
         public static int Width
         {
@@ -22,6 +24,7 @@ namespace CMDR
             set
             {
                 _size.X = value * 1;
+                Center.X = _size.X / 2;
                 ChangeState = true;
             }
         }
@@ -31,6 +34,7 @@ namespace CMDR
             set
             {
                 _size.Y = value * 1;
+                Center.Y = _size.Y / 2;
                 ChangeState = true;
             }
         }
@@ -96,6 +100,7 @@ namespace CMDR
             GL.Init();
             Render.Init();
             ShaderManager.Init();
+            Glfw.SetKeyCallback(Window, Input.KeyRecorder);
 
         }
 		

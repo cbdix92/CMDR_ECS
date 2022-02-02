@@ -183,16 +183,16 @@ namespace GLTest
             switch(key)
             {
                 case Keys.W:
-                    Camera.MoveCamera(Vector3.Forward, speed);
+                    Camera.MoveCamera(speed);
                     break;
                 case Keys.S:
-                    Camera.MoveCamera(Vector3.Backward, -speed);
+                    Camera.MoveCamera(-speed);
                     break;
                 case Keys.A:
-                    Camera.StrafeCamera(Vector3.Left, speed);
+                    Camera.StrafeCamera(speed);
                     break;
                 case Keys.D:
-                    Camera.StrafeCamera(Vector3.Right, speed);
+                    Camera.StrafeCamera(-speed);
                     break;
                 case Keys.Q:
                     Camera.Y += speed;
@@ -216,6 +216,7 @@ namespace GLTest
                     Console.Clear();
                     Console.WriteLine(Camera.Forward);
                     Console.WriteLine(Camera.Forward.Magnitude);
+                    Console.WriteLine($"CameraPos: {Camera.Pos}");
                     break;
                 case Keys.G:
                     Camera.ResetRotation();

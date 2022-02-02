@@ -1,20 +1,20 @@
 using System;
+using System.Collections.Generic;
 using GLFW;
 
 namespace CMDR.Systems
 {
-	internal struct KeyBind
-	{
-		public Keys Key;
-		public Action OnKeyUp;
-		public Action OnKeyDown;
-		public bool IsKeyDownTriggered;
-	}
+	public delegate void KeyPressCallback(byte keyData);
 		
 	public static class Input
 	{
-		private static KeyBind[] _keyBinds = new KeyBind[Data.StorageScale];
-		public static int Count { get; private set; }
+
+		private static readonly byte _altMask = 0x08;
+		private static readonly byte _shiftMask = 0x04;
+		private static readonly byte _ctrlMask = 0x02;
+		private static readonly byte _keyMask =	0x01;
+
+		private static Dictionary<Keys, List<KeyPressCallback>> _keyBinds = new Dictionary<Keys, List<KeyPressCallback>>();
 
 		public static bool UseMouse;
 		public static bool KeepCenterMouse;
@@ -22,32 +22,33 @@ namespace CMDR.Systems
 		private static double _mouseX;
 		private static double _mouseY;
 
-		public static void AddKeyBind(Keys key, Action onKeyDown, Action onKeyUp = null)
+		public static void AddKeyBind(Keys key, KeyPressCallback keyPressCallback)
 		{
-			if (Count == _keyBinds.Length)
-				Array.Resize(ref _keyBinds, _keyBinds.Length + Data.StorageScale);
+			if (!_keyBinds.ContainsKey(key))
+				_keyBinds.Add(key, new List<KeyPressCallback>());
+			
+			_keyBinds[key].Add(keyPressCallback);
 
-
-			_keyBinds[Count] = new KeyBind
-			{
-				Key = key,
-				OnKeyDown = onKeyDown,
-				OnKeyUp = onKeyUp
-			};
-			Count++;
 		}
 		public static void RemoveKeyBind(Keys key)
 		{
 			throw new NotImplementedException("Systems.Input.RemoveKeyBind");
 		}
 
+		internal static void KeyRecorder(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
+        {
+			/// Store a que of key presses that will be processed the next time Input.Update is called.
+			/// Combine action and mods into keyData byte using key mask.
+        }
+
 		public static void Update(long ticks)
         {
 			if(UseMouse)
             {
 				Glfw.GetCursorPosition(Display.Window, out _mouseX, out _mouseY);
+				
 				if(KeepCenterMouse)
-					Glfw.SetCursorPosition(Display.Window, Display.Width / 2, Display.Height / 2);
+					Glfw.SetCursorPosition(Display.Window, Display.Center.X, Display.Center.Y);
 
 			}
         }
