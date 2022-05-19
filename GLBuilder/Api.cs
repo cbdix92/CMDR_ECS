@@ -105,6 +105,8 @@ namespace OpenGL
 		private delegate void _genVertexArraysDelegate(int n, uint* arrays);
 		private static _genVertexArraysDelegate _genVertexArrays;
 
+		private delegate void _getActiveUniformNameDelegate(uint program, uint index, int bufSize, int* length, byte* unifromName);
+		private static _getActiveUniformNameDelegate _getActiveUniformName;
 
 		private delegate void _getProgramInfoLogDelegate(uint program, int maxLength, int* length, byte* infoLog);
 		private static _getProgramInfoLogDelegate _getProgramInfoLog;

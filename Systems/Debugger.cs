@@ -17,7 +17,7 @@ namespace CMDR.Systems
                 if (value != _enableDebugger)
                 {
                     if (value)
-                        Input.AddKeyBind(Keys.F5, () => { _drawSpatialLines = !_drawSpatialLines; });
+                        Input.AddKeyBind(Keys.F5, (byte KeyData) => { _drawSpatialLines = !_drawSpatialLines; });
                     else if (!value)
                         Input.RemoveKeyBind(Keys.F5);
                 }

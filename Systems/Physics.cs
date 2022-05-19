@@ -136,9 +136,9 @@ namespace CMDR.Systems
         }
         public static bool MoveCamera(long ticks)
         {
-            Camera.X += Camera.Xvel;
+            Camera.MoveCamera(Camera.Xvel);
+            Camera.StrafeCamera(Camera.Zvel);
             Camera.Y += Camera.Yvel;
-            Camera.Z += Camera.Zvel;
             return Camera.Xvel + Camera.Yvel + Camera.Zvel != 0;
         }
         public static bool CanMove(Transform transform)

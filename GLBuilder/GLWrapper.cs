@@ -153,6 +153,15 @@ namespace OpenGL
             return buffers;
         }
 		
+		public static string GetActiveUniformName(uint program, uint index, int bufSize, int length)
+        {
+			byte[] buffer = new byte[bufSize];
+			fixed(byte* ptr = &buffer[0])
+            {
+				_getActiveUniformName(program, index, bufSize, &length, ptr);
+            }
+			return Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+        }
 		public static string GetProgramInfoLog(uint program)
         {
 			byte[] buffer = new byte[1024];

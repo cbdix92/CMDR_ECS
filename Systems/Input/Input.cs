@@ -4,7 +4,6 @@ using GLFW;
 
 namespace CMDR.Systems
 {
-	public delegate void KeyPressCallback(byte keyData);
 		
 	public static class Input
 	{

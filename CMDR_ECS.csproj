@@ -146,7 +146,8 @@
     <Compile Include="DataSys\GameObjectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\Debugger.cs" />
-    <Compile Include="Systems\Input.cs" />
+    <Compile Include="Systems\Input\Input.cs" />
+    <Compile Include="Systems\Input\InputDelegates.cs" />
     <Compile Include="Systems\Physics.cs" />
     <Compile Include="Systems\Render.cs" />
     <Compile Include="Systems\SpatialIndexer.cs" />
