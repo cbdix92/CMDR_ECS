@@ -41,7 +41,7 @@ namespace CMDR.Systems
 				Transform transform = transforms[gameObject.Get<Transform>()];
 				RenderData renderData = renderables[gameObject.Get<RenderData>()];
                 
-				Texture texture = renderData.GetRender(ticks);
+				//Texture texture = renderData.GetRender(ticks);
 
                 Shader shader = renderData.Shader;
 

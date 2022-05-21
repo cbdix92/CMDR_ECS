@@ -113,6 +113,7 @@ namespace GLTest
             GL.Enable(GL.DEPTH_TEST);
             while (!Glfw.WindowShouldClose(Display.Window))
             {
+                break;
                 GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
                 
                 if (counter > 10)
@@ -158,7 +159,7 @@ namespace GLTest
                 GL.BindVertexArray(0);
                 Glfw.PollEvents();
             }
-
+            Display.Start();
             Glfw.Terminate();
         }
 

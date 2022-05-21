@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace CMDR.Components
 {
-    internal struct Animator
+    internal struct Animation2D
     {
         internal long lastFrame;
         internal int nextFrame;

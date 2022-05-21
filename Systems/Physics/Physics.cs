@@ -65,7 +65,7 @@ namespace CMDR.Systems
 
                     case false:
                         // Nothing needs to be done. Restart the loop
-                        if (colliders[colliderID].GridKeys == null)
+                        if (colliders[colliderID].GridKeys == null )
                             SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
                         continue;
                 }

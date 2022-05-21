@@ -62,7 +62,7 @@
     <Compile Include="OpenGLAbstractions\ShaderManager.cs" />
     <Compile Include="Systems\Camera.cs" />
     <Compile Include="Data Structures\Color.cs" />
-    <Compile Include="Components\Animator.cs" />
+    <Compile Include="Components\Animation2D.cs" />
     <Compile Include="Components\RenderData.cs" />
     <Compile Include="DataSys\ComponentTable.cs" />
     <Compile Include="GLBuilder\Api.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="Data Structures\Matrix4.cs" />
     <Compile Include="OpenGLAbstractions\Shader.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Systems\BitCollider.cs" />
+    <Compile Include="Systems\Physics\BitCollider.cs" />
     <Compile Include="DataSys\ComponentCollection.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Common\IComponent.cs" />
@@ -148,13 +148,15 @@
     <Compile Include="Systems\Debugger.cs" />
     <Compile Include="Systems\Input\Input.cs" />
     <Compile Include="Systems\Input\InputDelegates.cs" />
-    <Compile Include="Systems\Physics.cs" />
+    <Compile Include="Systems\Physics\Physics.cs" />
     <Compile Include="Systems\Render.cs" />
-    <Compile Include="Systems\SpatialIndexer.cs" />
-    <Compile Include="Systems\UpdatePump.cs" />
+    <Compile Include="Systems\Physics\SpatialIndexer.cs" />
+    <Compile Include="Systems\UpdatePump\Delegates.cs" />
+    <Compile Include="Systems\UpdatePump\GameLoop.cs" />
     <Compile Include="Data Structures\Texture.cs" />
     <Compile Include="Data Structures\Vector3.cs" />
     <Compile Include="Data Structures\Vector4.cs" />
+    <Compile Include="Systems\UpdatePump\Updater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

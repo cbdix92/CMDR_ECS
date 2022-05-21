@@ -25,7 +25,7 @@ namespace CMDR.Components
 
         public Texture ImgData { get; set; }
 
-        internal Animator Animator;
+        internal Animation2D Animator;
 
         public string currentAnimation;
 
@@ -62,8 +62,8 @@ namespace CMDR.Components
             Receive();
 			
 			// Is this needed with a struct?
-            if (Animator.Equals(default(Animator)))
-                Animator = new Animator();
+            if (Animator.Equals(default(Animation2D)))
+                Animator = new Animation2D();
             
             currentAnimation = name;
 
@@ -87,11 +87,11 @@ namespace CMDR.Components
         }
 
 
+        #endregion
         public Texture GetRender(long ticks)
         {
             return Static ? ImgData : Animator.Get(ticks, currentAnimation);
         }
-        #endregion
         public void Receive()
         {
             this = Scene.Get<RenderData>(ID);
