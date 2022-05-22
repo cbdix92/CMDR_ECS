@@ -47,6 +47,7 @@ namespace CMDR.Components
         {
             GL.BindVertexArray(Mesh.VAO);
             GL.DrawArrays(GL.TRIANGLES, 0, Mesh.NumVertices);
+            GL.BindVertexArray(0);
         }
 
         #region DEPRECATED 2D CODE

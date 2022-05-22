@@ -93,6 +93,7 @@ namespace GLTest
             SGameObject gameObject = scene.GenerateGameObject();
             Transform transform = scene.Generate<Transform>();
             RenderData renderData = scene.Generate<RenderData>();
+            renderData.LoadMesh(@"Assets\tree.OBJ");
             renderData.ImgData = texture;
             transform.Teleport(0, 0, 0);
             transform.Scale(1f);
@@ -143,8 +144,8 @@ namespace GLTest
 
                 shader.SetUniformVec3("viewPos", new Vector3(Camera.X, Camera.Y, Camera.Z));
 
-                GL.ActiveTexture(GL.TEXTURE0);
-                texture.Bind();
+                //GL.ActiveTexture(GL.TEXTURE0);
+                //texture.Bind();
 
                 // Cube Draw
                 //GL.BindVertexArray(VAO);

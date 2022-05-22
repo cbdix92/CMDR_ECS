@@ -28,11 +28,11 @@ namespace CMDR.Systems
 
                 #region COLLISION_LOGIC
 
-                bool result = transformID != -1 && colliderID != -1 && Move(transforms[transformID]);
+                int result = Convert.ToByte(transformID != -1) | (Convert.ToByte(colliderID != -1) << 1) | (Convert.ToByte(Move(transforms[transformID])) << 2);
 
                 switch (result)
                 {
-                    case true:
+                    case 7:
 
                         Transform transform = transforms[gameObject.Get<Transform>()];
                         Collider collider = colliders[gameObject.Get<Collider>()];
@@ -63,10 +63,12 @@ namespace CMDR.Systems
 
                         continue;
 
-                    case false:
+                    case 3:
                         // Nothing needs to be done. Restart the loop
                         if (colliders[colliderID].GridKeys == null )
                             SpatialIndexer.CalcGridPos(ref colliders[colliderID], transforms[transformID]);
+                        continue;
+                    default:
                         continue;
                 }
                 #endregion

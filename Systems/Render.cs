@@ -56,6 +56,7 @@ namespace CMDR.Systems
 
                 shader.SetUniformVec3("viewPos", cameraPos);
 
+
                 //GL.ActiveTexture(GL.TEXTURE0);
                 //texture.Bind();
 
