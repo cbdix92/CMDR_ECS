@@ -33,6 +33,7 @@ namespace CMDR.Components
         {
             Shader = ShaderManager.DefaultShader();
             Color = Color.Gray;
+            Send();
         }
 
 

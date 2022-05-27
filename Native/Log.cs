@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using CMDR;
 
-namespace OpenGL
+namespace CMDR.Native
 {
     internal static class Log
     {

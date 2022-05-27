@@ -57,6 +57,7 @@
     <Compile Include="Data Structures\Vector2.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
+    <Compile Include="Native\Enums.cs" />
     <Compile Include="OpenGLAbstractions\Mesh.cs" />
     <Compile Include="OpenGLAbstractions\MeshManager.cs" />
     <Compile Include="OpenGLAbstractions\ShaderManager.cs" />
@@ -66,9 +67,9 @@
     <Compile Include="Components\RenderData.cs" />
     <Compile Include="DataSys\ComponentTable.cs" />
     <Compile Include="GLBuilder\Api.cs" />
-    <Compile Include="GLBuilder\Native.cs" />
-    <Compile Include="GLBuilder\BuildInfo.cs" />
-    <Compile Include="GLBuilder\Log.cs" />
+    <Compile Include="Native\Native.cs" />
+    <Compile Include="Native\BuildInfo.cs" />
+    <Compile Include="Native\Log.cs" />
     <Compile Include="GLBuilder\Enums.cs" />
     <Compile Include="GLBuilder\GLWrapper.cs" />
     <Compile Include="GLFW\CharEventArgs.cs" />
@@ -149,8 +150,8 @@
     <Compile Include="Systems\Input\Input.cs" />
     <Compile Include="Systems\Input\InputDelegates.cs" />
     <Compile Include="Systems\Physics\Physics.cs" />
+    <Compile Include="Systems\Physics\SpatialIndexer3D.cs" />
     <Compile Include="Systems\Render.cs" />
-    <Compile Include="Systems\Physics\SpatialIndexer.cs" />
     <Compile Include="Systems\UpdatePump\Delegates.cs" />
     <Compile Include="Systems\UpdatePump\GameLoop.cs" />
     <Compile Include="Data Structures\Texture.cs" />

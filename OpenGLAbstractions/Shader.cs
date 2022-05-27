@@ -9,11 +9,12 @@ namespace CMDR
 		public readonly uint ID;
 		public readonly uint VertID;
 		public readonly uint FragID;
+		public readonly int ShaderKey;
 
 
-		internal Shader(uint id, uint vertID, uint fragID)
+		internal Shader(uint id, uint vertID, uint fragID, int shaderKey)
 		{
-			(ID, VertID, FragID) = (id, vertID, fragID);
+			(ID, VertID, FragID, ShaderKey) = (id, vertID, fragID, shaderKey);
 		}
 
 		public void SetUniformMatrix4(string name, bool transpose, Matrix4 matrix)

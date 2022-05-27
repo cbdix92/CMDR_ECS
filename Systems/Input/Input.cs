@@ -13,6 +13,7 @@ namespace CMDR.Systems
 		private static readonly byte _ctrlMask = 0x02;
 		private static readonly byte _keyMask =	0x01;
 
+
 		private static Dictionary<Keys, List<KeyPressCallback>> _keyBinds = new Dictionary<Keys, List<KeyPressCallback>>();
 
 		public static bool UseMouse;
@@ -33,6 +34,11 @@ namespace CMDR.Systems
 		{
 			throw new NotImplementedException("Systems.Input.RemoveKeyBind");
 		}
+
+		internal static IntPtr KeyboardCallback(int code, IntPtr wParam, IntPtr lParam)
+        {
+			return IntPtr.Zero;
+        }
 
 		internal static void KeyRecorder(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
         {

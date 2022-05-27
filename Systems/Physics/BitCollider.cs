@@ -24,7 +24,7 @@ namespace CMDR
 
 			// Find the top left and bottom right points for the insecting area between the two objects.
 			(int X, int Y) p1 = ((int)Math.Max(t1.X, t2.X), (int)Math.Max(t1.Y, t2.Y));
-			(int X, int Y) p2 = ((int)Math.Min(t1.X + c1.Width, t2.X + c2.Width), (int)Math.Min(t1.Y + c1.Height, t2.Y + c2.Height));
+			(int X, int Y) p2 = ((int)Math.Min(t1.X + c1.ScaleX, t2.X + c2.ScaleX), (int)Math.Min(t1.Y + c1.ScaleY, t2.Y + c2.ScaleY));
 			
 			int boundSize = (p2.X - p1.X) * (p2.Y - p1.Y) - 1;
 			

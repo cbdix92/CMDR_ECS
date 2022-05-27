@@ -17,12 +17,17 @@ namespace CMDR.Systems
                 if (value != _enableDebugger)
                 {
                     if (value)
-                        Input.AddKeyBind(Keys.F5, (byte KeyData) => { _drawSpatialLines = !_drawSpatialLines; });
+                        Input.AddKeyBind(Keys.F5, EnableDebuggerCallback);
                     else if (!value)
                         Input.RemoveKeyBind(Keys.F5);
                 }
                 _enableDebugger = value;
             }
+        }
+
+        private static void EnableDebuggerCallback(Keys_ keys, byte modKey, long ticks)
+        {
+            _drawSpatialLines = !_drawSpatialLines;
         }
         public static bool DrawBounds
         {
@@ -69,7 +74,7 @@ namespace CMDR.Systems
             }
             if (_drawSpatialLines)
             {
-                foreach ((int, int) i in SpatialIndexer.GridCells.Keys)
+                foreach ((int, int, int) i in SpatialIndexer.GridCells.Keys)
                 {
                     s = SpatialIndexer.CellSize;
                     x = i.Item2 * s;

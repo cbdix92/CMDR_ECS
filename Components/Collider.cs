@@ -13,7 +13,7 @@ namespace CMDR.Components
 		public Scene Scene { get; set; }
 		#endregion
 
-		public List<(int X, int Y)> GridKeys;
+		public List<(int X, int Y, int Z)> GridKeys;
 
 		public bool[,] ColData;
 
@@ -28,32 +28,47 @@ namespace CMDR.Components
 				Send();
 			}
 		}
-
-        private int _height;
-		private int _width;
-		public int Height
+		
+		
+		private Vector3 _scale;
+		public float ScaleX
 		{
-			get => _height;
+			get => _scale.X;
 			set
 			{
 				Receive();
-				_height = value;
+				_scale.X = value;
 				if(value > SpatialIndexer.CellSize && !_static)
-					SpatialIndexer.CellSize = value;
+					SpatialIndexer.CellSize = (int)value;
 
 				Send();
 			}
 		}
-		public int Width
+		
+		public float ScaleY
 		{
-			get => _width;
+			get => _scale.Y;
 			set
 			{
 				Receive();
-				_width = value;
+				_scale.Y = value;
 				if(value > SpatialIndexer.CellSize)
-					SpatialIndexer.CellSize = value;
+					SpatialIndexer.CellSize = (int)value;
 
+				Send();
+			}
+		}
+		
+		public float ScaleZ
+		{
+			get => _scale.Z;
+			set
+			{
+				Receive();
+				_scale.Z = value;
+				if(value > SpatialIndexer.CellSize)
+					SpatialIndexer.CellSize = (int)value;
+				
 				Send();
 			}
 		}
@@ -62,16 +77,10 @@ namespace CMDR.Components
         {
 
         }
-		public void SetBounds(RenderData renderData)
+		public void SetBounds(Vector3 scale)
         {
 			Receive();
-			(Width, Height) = (renderData.ImgData.Width, renderData.ImgData.Height);
-			Send();
-        }
-		public void SetBounds(int width, int height)
-        {
-			Receive();
-			(Width, Height) = (width, height);
+			(ScaleX, ScaleY, ScaleZ) = (scale.X, scale.Y, scale.Z);
 			Send();
         }
 		public void GenerateColData(string src)

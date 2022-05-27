@@ -79,7 +79,7 @@ namespace CMDR
 			GL.LinkProgram(id);
 			CheckLinkErrors(id);
 
-			Shader shader = new Shader(id, vertID, fragID);
+			Shader shader = new Shader(id, vertID, fragID, key);
 			Shaders.Add(key, shader);
 			return shader;
 		}

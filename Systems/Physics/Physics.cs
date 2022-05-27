@@ -47,10 +47,12 @@ namespace CMDR.Systems
                             Collider collider2 = colliders[gameObjects[i].Get<Collider>()];
                             // Bounding box checks
                             bool rectCol = 
-                                   transform.X <= transform2.X + collider2.Width
-                                && transform.X + collider.Width >= transform2.X
-                                && transform.Y <= transform2.Y + collider2.Height
-                                && transform.Y + collider.Height >= transform2.Y;
+                                   transform.X <= transform2.X + collider2.ScaleX
+                                && transform.X + collider.ScaleX >= transform2.X
+                                && transform.Y <= transform2.Y + collider2.ScaleY
+                                && transform.Y + collider.ScaleY >= transform2.Y
+                                && transform.Z <= transform2.Z + collider2.ScaleZ
+                                && transform.Z + collider.ScaleZ >= transform2.Z;
 
 
                             // Compare bounding box checks and then bit collider check

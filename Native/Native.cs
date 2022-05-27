@@ -5,14 +5,17 @@ using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using GLFW;
+using CMDR.Systems;
+using System.Threading;
 
 
 
-namespace OpenGL
+namespace CMDR.Native
 {
 	internal static class Native
 	{
-		
+		internal delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
+
 		private const string User32 = "user32.dll";
         private const string Kernel32 = "kernel32.dll";
 		
@@ -27,6 +30,17 @@ namespace OpenGL
 		[DllImport(Kernel32, SetLastError = true)]
 		internal static extern bool FreeLibrary(IntPtr hModule);
 
+		[DllImport(User32, SetLastError = true)]
+		internal static extern unsafe IntPtr SetWindowsHookEx(HookType hookType, HookProc lpfn, IntPtr hmod, uint dwThreadID);
+
+
+		internal static void Start()
+        {
+			SetWindowsHookEx(HookType.WH_KEYBOARD, Input.KeyboardCallback, IntPtr.Zero, (uint)Thread.CurrentThread.ManagedThreadId);
+        }
+
+        #region OLDBUILDER_CODE
+        /*
 		internal unsafe static bool Start()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly();
@@ -69,8 +83,10 @@ namespace OpenGL
 			}
 			return true;
 		}
-		
-		internal static void LoadLibs()
+		*/
+        #endregion
+
+        internal static void LoadLibs()
 		{
 			Log.SetLastError(0);
 			Libs.Add(Kernel32, LoadLibrary(Kernel32));

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenGL
+namespace CMDR.Native
 {
     public class BuildInfo : Attribute
     {
