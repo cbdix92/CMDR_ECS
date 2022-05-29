@@ -185,26 +185,38 @@ namespace GLTest
             switch(key)
             {
                 case Keys.W:
-                    Camera.Zvel = speed;
+                    Camera.Xvel = speed;
+                    if (state == 0)
+                        Camera.Xvel = 0;
                     //Camera.MoveCamera(speed);
                     break;
                 case Keys.S:
-                    Camera.Zvel = -speed;
+                    Camera.Xvel = -speed;
+                    if (state == 0)
+                        Camera.Xvel = 0;
                     //Camera.MoveCamera(-speed);
                     break;
                 case Keys.A:
-                    Camera.Xvel = speed;
+                    Camera.Zvel = speed;
+                    if (state == 0)
+                        Camera.Zvel = 0;
                     //Camera.StrafeCamera(speed);
                     break;
                 case Keys.D:
-                    Camera.Xvel = -speed;
+                    Camera.Zvel = -speed;
+                    if (state == 0)
+                        Camera.Zvel = 0;
                     //Camera.StrafeCamera(-speed);
                     break;
                 case Keys.Q:
                     Camera.Yvel = speed;
+                    if (state == 0)
+                        Camera.Yvel = 0;
                     break;
                 case Keys.E:
                     Camera.Yvel = -speed;
+                    if (state == 0)
+                        Camera.Yvel = 0;
                     break;
                 case Keys.Z:
                     Camera.Yrot += speed;

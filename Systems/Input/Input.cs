@@ -37,6 +37,9 @@ namespace CMDR.Systems
 
 		internal static IntPtr KeyboardCallback(int code, IntPtr wParam, IntPtr lParam)
         {
+			if (code < 0)
+				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
+			Console.WriteLine("test");
 			return IntPtr.Zero;
         }
 

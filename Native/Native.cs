@@ -12,9 +12,11 @@ using System.Threading;
 
 namespace CMDR.Native
 {
-	internal static class Native
+	internal static class Win
 	{
 		internal delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
+
+		internal static HookProc KeyboardHook = null;
 
 		private const string User32 = "user32.dll";
         private const string Kernel32 = "kernel32.dll";
@@ -33,10 +35,15 @@ namespace CMDR.Native
 		[DllImport(User32, SetLastError = true)]
 		internal static extern unsafe IntPtr SetWindowsHookEx(HookType hookType, HookProc lpfn, IntPtr hmod, uint dwThreadID);
 
+		[DllImport(User32, SetLastError = true)]
+		internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+
 
 		internal static void Start()
         {
-			SetWindowsHookEx(HookType.WH_KEYBOARD, Input.KeyboardCallback, IntPtr.Zero, (uint)Thread.CurrentThread.ManagedThreadId);
+			KeyboardHook = new HookProc(Input.KeyboardCallback);
+			SetWindowsHookEx(HookType.WH_KEYBOARD, KeyboardHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
         }
 
         #region OLDBUILDER_CODE
