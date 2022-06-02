@@ -7,22 +7,26 @@ namespace CMDR.Systems
 		
 	public static class Input
 	{
-
+		
 		private static readonly byte _altMask = 0x08;
 		private static readonly byte _shiftMask = 0x04;
 		private static readonly byte _ctrlMask = 0x02;
 		private static readonly byte _keyMask =	0x01;
 
 
-		private static Dictionary<Keys, List<KeyPressCallback>> _keyBinds = new Dictionary<Keys, List<KeyPressCallback>>();
+		private static Dictionary<Key, List<KeyPressCallback>> _keyBinds = new Dictionary<Key, List<KeyPressCallback>>();
 
 		public static bool UseMouse;
 		public static bool KeepCenterMouse;
 
 		private static double _mouseX;
 		private static double _mouseY;
+		
+		
+		private static byte _modKeys;
+		public static byte ModKeys => _modKeys;
 
-		public static void AddKeyBind(Keys key, KeyPressCallback keyPressCallback)
+		public static void AddKeyBind(Key key, KeyPressCallback keyPressCallback)
 		{
 			if (!_keyBinds.ContainsKey(key))
 				_keyBinds.Add(key, new List<KeyPressCallback>());
@@ -30,7 +34,7 @@ namespace CMDR.Systems
 			_keyBinds[key].Add(keyPressCallback);
 
 		}
-		public static void RemoveKeyBind(Keys key)
+		public static void RemoveKeyBind(Key key)
 		{
 			throw new NotImplementedException("Systems.Input.RemoveKeyBind");
 		}
@@ -39,11 +43,66 @@ namespace CMDR.Systems
         {
 			if (code < 0)
 				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
+			
+			key = Marshal.ReadInt32(wParam);
+			code = Marshal.ReadInt32(lParam);
+			
+			byte keyState = (code << 8) & 0xff;
+			
+			// Update Mod key states
+			switch(key)
+			{
+				case (Key.Shift):
+					keyState = keyState >> 8;
+					break;
+				case (Key.Control):
+					keyState = keyState >> 7;
+					break;
+				case (Key.Alt):
+					keyState = keyState >> 6;
+					break;
+				case (Key.LeftWindows)
+					keyState = keyState >> 5;
+					break;
+				case (Key.CapsLock):
+					// TODO .. Toggle logic for CapsLock
+					keyState = keyState >> 4;
+					break;
+				case (Key.NumLock):
+					// TODO .. Toggle logic for NumLock
+					keyState = keyState >> 3;
+					break;
+			}
+			_modKeys = _modKeys & (~keyState);
+			
+			
+			if(_keyBind.ContainsKey(key))
+			{
+				byte modCode = _modKeys;
+				modCode = (code << 6) | modCode;
+				short repeatCount = (code >> 16) &0xffff;
+				
+				KeyEventArgs args = new KeyEventArgs(key, modcode, repeatCount, GameLoop.GameTime);
+				
+				foreach(KeyPressCallback callBack in _keyBinds[key])
+					callBack(args);
+			}
+			
+			
 			Console.WriteLine("test");
+			Console.WriteLine(_modKeys);
 			return IntPtr.Zero;
         }
+		
+		internal static IntPtr MouseCallback(int code, IntPtr wParam, IntPtr lParam)
+		{
+			if (code < 0)
+				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
+			
+			return IntPtr.Zero;
+		}
 
-		internal static void KeyRecorder(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
+		internal static void KeyRecorder(Window window, Key key, int scanCode, InputState state, ModifierKeys mods)
         {
 			/// Store a que of key presses that will be processed the next time Input.Update is called.
 			/// Combine action and mods into keyData byte using key mask.

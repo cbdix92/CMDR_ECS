@@ -17,6 +17,7 @@ namespace CMDR.Native
 		internal delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
 
 		internal static HookProc KeyboardHook = null;
+		internal static HookProc MouseHook = null;
 
 		private const string User32 = "user32.dll";
         private const string Kernel32 = "kernel32.dll";
@@ -43,7 +44,9 @@ namespace CMDR.Native
 		internal static void Start()
         {
 			KeyboardHook = new HookProc(Input.KeyboardCallback);
+			MouseHook = new HookProc(Input.MouseCallback);
 			SetWindowsHookEx(HookType.WH_KEYBOARD, KeyboardHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
+			SetWindowsHookEx(HookType.WH_MOUSE, MouseHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
         }
 
         #region OLDBUILDER_CODE
