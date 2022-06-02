@@ -101,7 +101,7 @@ namespace CMDR
             GL.Init();
             Render.Init();
             ShaderManager.Init();
-            Glfw.SetKeyCallback(Window, Input.KeyRecorder);
+            //Glfw.SetKeyCallback(Window, Input.KeyRecorder);
 
         }
 		

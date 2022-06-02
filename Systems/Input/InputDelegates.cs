@@ -11,11 +11,11 @@
 		
 		public KeyEventArgs(Key key, byte modCode, short repeatCount, long time)
 		{
-			(Key, ModCode, RepeatCount, Time) = (key, modCode, repearCount, time);
+			(Key, ModCode, RepeatCount, Time) = (key, modCode, repeatCount, time);
 		}
 	}
 	
-	public enum Key
+	public enum Key : int
     {
         Backspace = 0x08,
 		Tab = 0x09,
@@ -39,7 +39,7 @@
 		Select = 0x29,
 		Print = 0x2a,
 		Execute = 0x2b,
-		PrintScreen = 02c,
+		PrintScreen = 0x2c,
 		Ins = 0x2d,
 		Del = 0x2e,
 		Help = 0x2f,

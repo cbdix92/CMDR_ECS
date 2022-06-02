@@ -17,15 +17,15 @@ namespace CMDR.Systems
                 if (value != _enableDebugger)
                 {
                     if (value)
-                        Input.AddKeyBind(Keys.F5, EnableDebuggerCallback);
+                        Input.AddKeyBind(Key.F5, EnableDebuggerCallback);
                     else if (!value)
-                        Input.RemoveKeyBind(Keys.F5);
+                        Input.RemoveKeyBind(Key.F5);
                 }
                 _enableDebugger = value;
             }
         }
 
-        private static void EnableDebuggerCallback(Keys_ keys, byte modKey, long ticks)
+        private static void EnableDebuggerCallback(KeyEventArgs args)
         {
             _drawSpatialLines = !_drawSpatialLines;
         }

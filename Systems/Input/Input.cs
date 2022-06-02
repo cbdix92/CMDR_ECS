@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using GLFW;
 
 namespace CMDR.Systems
@@ -44,45 +45,45 @@ namespace CMDR.Systems
 			if (code < 0)
 				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
 			
-			key = Marshal.ReadInt32(wParam);
-			code = Marshal.ReadInt32(lParam);
+			Key key = (Key)Marshal.ReadInt32(wParam);
+			int data = Marshal.ReadInt32(lParam);
 			
-			byte keyState = (code << 8) & 0xff;
+			byte keyState = (byte)((data << 8) & 0xff);
 			
 			// Update Mod key states
 			switch(key)
 			{
 				case (Key.Shift):
-					keyState = keyState >> 8;
+					keyState = (byte)(keyState >> 8);
 					break;
 				case (Key.Control):
-					keyState = keyState >> 7;
+					keyState = (byte)(keyState >> 7);
 					break;
 				case (Key.Alt):
-					keyState = keyState >> 6;
+					keyState = (byte)(keyState >> 6);
 					break;
-				case (Key.LeftWindows)
-					keyState = keyState >> 5;
+                case (Key.LeftWindows):
+					keyState = (byte)(keyState >> 5);
 					break;
 				case (Key.CapsLock):
 					// TODO .. Toggle logic for CapsLock
-					keyState = keyState >> 4;
+					keyState = (byte)(keyState >> 4);
 					break;
-				case (Key.NumLock):
+				case (Key.Numlock):
 					// TODO .. Toggle logic for NumLock
-					keyState = keyState >> 3;
+					keyState = (byte)(keyState >> 3);
 					break;
 			}
-			_modKeys = _modKeys & (~keyState);
+			_modKeys = (byte)(_modKeys & (~keyState));
 			
 			
-			if(_keyBind.ContainsKey(key))
+			if(_keyBinds.ContainsKey(key))
 			{
 				byte modCode = _modKeys;
-				modCode = (code << 6) | modCode;
-				short repeatCount = (code >> 16) &0xffff;
+				modCode = (byte)((code << 6) | modCode);
+				short repeatCount = (short)((code >> 16) &0xffff);
 				
-				KeyEventArgs args = new KeyEventArgs(key, modcode, repeatCount, GameLoop.GameTime);
+				KeyEventArgs args = new KeyEventArgs(key, modCode, repeatCount, GameLoop.GameTime);
 				
 				foreach(KeyPressCallback callBack in _keyBinds[key])
 					callBack(args);
@@ -98,7 +99,7 @@ namespace CMDR.Systems
 		{
 			if (code < 0)
 				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
-			
+            Console.WriteLine("MouseTest");
 			return IntPtr.Zero;
 		}
 
