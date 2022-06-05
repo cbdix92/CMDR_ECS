@@ -7,11 +7,62 @@ using System.Collections.Generic;
 using GLFW;
 using CMDR.Systems;
 using System.Threading;
-
+using System.Runtime.InteropServices;
 
 
 namespace CMDR.Native
 {
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct Point
+	{
+		int X;
+		int Y;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct MouseHookStruct
+	{
+		Point Pos;
+		int* HWND;
+		uint HitTestCode;
+		int* ExtraInfo;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct WNDCLASS
+	{
+		uint cbSize;
+		uint style;
+		int* lpfnWndProc;
+		int cbClsExtra;
+		int cbWndExtra;
+		int* hInstance;
+		int* hIcon;
+		int* hCursor;
+		int* hbrBackground;
+		[MarshalAs(UnmanagedType.LPTStr)]
+		string lpszMenuName;
+		[MarshalAs(UnmanagedType.LPTStr)]
+		string lpszClassName;
+		int* hIconSm;
+		
+		public WNDCLASS(uint style, int* lpfnWndProc, int cbClsExtra, int cbWndExtra, int* hInstance, int* hIcon, int* hCursor, int* hbrBackground, string lpszMenuName, string lpszClassName, int* hIconSm)
+		{
+			cbSize = sizeof(typeof(WNDCLASS));
+			style = style;
+			lpfnWndProc = lpfnWndProc;
+			cbClsExtra = cbClsExtra;
+			cbWndExtra = cbWndExtra;
+			hInstance = hInstance;
+			hIcon = hIcon;
+			hCursor = hCursor;
+			hbrBackground = hbrBackground;
+			lpszMenuName = lpszMenuName;
+			lpszClassName = lpszClassName;
+			hIconSm = hIconSm;
+		}
+	}
+	
 	internal static class Win
 	{
 		internal delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
@@ -38,6 +89,9 @@ namespace CMDR.Native
 
 		[DllImport(User32, SetLastError = true)]
 		internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+		
+		[DllImport(User32, SetLastError = true)]
+		internal static extern ushort RegisterClassExA([in] [MarshalAs(UnmanagedType.LPStruct)] WNDCLASS* wnd);
 
 
 
@@ -104,6 +158,7 @@ namespace CMDR.Native
 			Libs.Add(User32, LoadLibrary(User32));
 			CheckError(User32);
 		}
+		
 		private static void CheckError(string name)
         {
 			int error = Marshal.GetLastWin32Error();

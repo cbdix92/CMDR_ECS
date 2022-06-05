@@ -20,8 +20,8 @@ namespace CMDR.Systems
 		public static bool UseMouse;
 		public static bool KeepCenterMouse;
 
-		private static double _mouseX;
-		private static double _mouseY;
+		private static int _mouseX;
+		private static int _mouseY;
 		
 		
 		private static byte _modKeys;
@@ -99,7 +99,20 @@ namespace CMDR.Systems
 		{
 			if (code < 0)
 				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
-            Console.WriteLine("MouseTest");
+            
+			MouseHookStruct mouseInfo = PtrToStructure<MouseHookStruct>(lParam);
+			
+			(_mouseX, _mouseY) = (mouseInfo.Pos.X, mouseInfo.Pos.Y);
+			
+			if (KeepCenterMouse)
+			{
+				// CenterMouse on screen
+			}
+			
+			Console.WriteLine("MouseTest");
+			
+			
+			
 			return IntPtr.Zero;
 		}
 
