@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using CMDR.Native;
 using GLFW;
 
 namespace CMDR.Systems
@@ -43,7 +44,7 @@ namespace CMDR.Systems
 		internal static IntPtr KeyboardCallback(int code, IntPtr wParam, IntPtr lParam)
         {
 			if (code < 0)
-				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
+				return Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
 			
 			Key key = (Key)Marshal.ReadInt32(wParam);
 			int data = Marshal.ReadInt32(lParam);
@@ -98,9 +99,9 @@ namespace CMDR.Systems
 		internal static IntPtr MouseCallback(int code, IntPtr wParam, IntPtr lParam)
 		{
 			if (code < 0)
-				return Native.Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
-            
-			MouseHookStruct mouseInfo = PtrToStructure<MouseHookStruct>(lParam);
+				return Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
+
+			MouseHookStruct mouseInfo = Marshal.PtrToStructure<MouseHookStruct>(lParam);
 			
 			(_mouseX, _mouseY) = (mouseInfo.Pos.X, mouseInfo.Pos.Y);
 			
@@ -126,7 +127,7 @@ namespace CMDR.Systems
         {
 			if(UseMouse)
             {
-				Glfw.GetCursorPosition(Display.Window, out _mouseX, out _mouseY);
+				//Glfw.GetCursorPosition(Display.Window, out _mouseX, out _mouseY);
 				
 				if(KeepCenterMouse)
 					Glfw.SetCursorPosition(Display.Window, Display.Center.X, Display.Center.Y);

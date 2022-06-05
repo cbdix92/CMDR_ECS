@@ -14,17 +14,17 @@ namespace CMDR.Native
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct Point
 	{
-		int X;
-		int Y;
+		public int X;
+		public int Y;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
 	internal unsafe struct MouseHookStruct
 	{
-		Point Pos;
-		int* HWND;
-		uint HitTestCode;
-		int* ExtraInfo;
+		public Point Pos;
+		public int* HWND;
+		public uint HitTestCode;
+		public int* ExtraInfo;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
