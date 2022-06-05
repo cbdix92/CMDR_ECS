@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using GLFW;
 using CMDR.Systems;
 using System.Threading;
-using System.Runtime.InteropServices;
 
 
 namespace CMDR.Native
@@ -20,7 +19,7 @@ namespace CMDR.Native
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct MouseHookStruct
+	internal unsafe struct MouseHookStruct
 	{
 		Point Pos;
 		int* HWND;
@@ -29,7 +28,7 @@ namespace CMDR.Native
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct WNDCLASS
+	internal unsafe struct WNDCLASS
 	{
 		uint cbSize;
 		uint style;
@@ -45,21 +44,25 @@ namespace CMDR.Native
 		[MarshalAs(UnmanagedType.LPTStr)]
 		string lpszClassName;
 		int* hIconSm;
-		
-		public WNDCLASS(uint style, int* lpfnWndProc, int cbClsExtra, int cbWndExtra, int* hInstance, int* hIcon, int* hCursor, int* hbrBackground, string lpszMenuName, string lpszClassName, int* hIconSm)
+
+		public static unsafe WNDCLASS Create(uint style, int* lpfnWndProc, int cbClsExtra, int cbWndExtra, int* hInstance, int* hIcon, int* hCursor, int* hbrBackground, string lpszMenuName, string lpszClassName, int* hIconSm)
 		{
-			cbSize = sizeof(typeof(WNDCLASS));
-			style = style;
-			lpfnWndProc = lpfnWndProc;
-			cbClsExtra = cbClsExtra;
-			cbWndExtra = cbWndExtra;
-			hInstance = hInstance;
-			hIcon = hIcon;
-			hCursor = hCursor;
-			hbrBackground = hbrBackground;
-			lpszMenuName = lpszMenuName;
-			lpszClassName = lpszClassName;
-			hIconSm = hIconSm;
+			var _ = new WNDCLASS()
+			{
+				style = style,
+				lpfnWndProc = lpfnWndProc,
+				cbClsExtra = cbClsExtra,
+				cbWndExtra = cbWndExtra,
+				hInstance = hInstance,
+				hIcon = hIcon,
+				hCursor = hCursor,
+				hbrBackground = hbrBackground,
+				lpszMenuName = lpszMenuName,
+				lpszClassName = lpszClassName,
+				hIconSm = hIconSm,
+            };
+			_.cbSize = (uint)Marshal.SizeOf<WNDCLASS>(_);
+			return _;
 		}
 	}
 	
@@ -91,7 +94,7 @@ namespace CMDR.Native
 		internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 		
 		[DllImport(User32, SetLastError = true)]
-		internal static extern ushort RegisterClassExA([in] [MarshalAs(UnmanagedType.LPStruct)] WNDCLASS* wnd);
+		internal static unsafe extern ushort RegisterClassExA([MarshalAs(UnmanagedType.LPStruct)] [In] ref WNDCLASS wnd);
 
 
 
