@@ -15,7 +15,7 @@
 		}
 	}
 	
-	public enum Key : int
+	public enum Key : byte
     {
         Backspace = 0x08,
 		Tab = 0x09,

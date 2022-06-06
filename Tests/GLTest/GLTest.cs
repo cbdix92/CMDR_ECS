@@ -103,7 +103,7 @@ namespace GLTest
 			
             GameLoop.Time.Start();
             float counter = 0;
-            Glfw.SetKeyCallback(Display.Window, Keyinput);
+            //Glfw.SetKeyCallback(Display.Window, Keyinput);
 
             //Mesh mesh = MeshManager.Load(@"Assets\FinalBaseMesh.OBJ");
             //Mesh mesh = MeshManager.Load(@"Assets\tree_obj.OBJ");

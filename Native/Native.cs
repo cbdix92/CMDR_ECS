@@ -1,109 +1,33 @@
 using System;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GLFW;
 using CMDR.Systems;
-using System.Threading;
 
 
 namespace CMDR.Native
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct Point
-	{
-		public int X;
-		public int Y;
-	}
 	
-	[StructLayout(LayoutKind.Sequential)]
-	internal unsafe struct MouseHookStruct
+	internal static partial class Win
 	{
-		public Point Pos;
-		public int* HWND;
-		public uint HitTestCode;
-		public int* ExtraInfo;
-	}
-	
-	[StructLayout(LayoutKind.Sequential)]
-	internal unsafe struct WNDCLASS
-	{
-		uint cbSize;
-		uint style;
-		int* lpfnWndProc;
-		int cbClsExtra;
-		int cbWndExtra;
-		int* hInstance;
-		int* hIcon;
-		int* hCursor;
-		int* hbrBackground;
-		[MarshalAs(UnmanagedType.LPTStr)]
-		string lpszMenuName;
-		[MarshalAs(UnmanagedType.LPTStr)]
-		string lpszClassName;
-		int* hIconSm;
+		internal delegate IntPtr Proc(int code, IntPtr wParam, IntPtr lParam);
 
-		public static unsafe WNDCLASS Create(uint style, int* lpfnWndProc, int cbClsExtra, int cbWndExtra, int* hInstance, int* hIcon, int* hCursor, int* hbrBackground, string lpszMenuName, string lpszClassName, int* hIconSm)
-		{
-			var _ = new WNDCLASS()
-			{
-				style = style,
-				lpfnWndProc = lpfnWndProc,
-				cbClsExtra = cbClsExtra,
-				cbWndExtra = cbWndExtra,
-				hInstance = hInstance,
-				hIcon = hIcon,
-				hCursor = hCursor,
-				hbrBackground = hbrBackground,
-				lpszMenuName = lpszMenuName,
-				lpszClassName = lpszClassName,
-				hIconSm = hIconSm,
-            };
-			_.cbSize = (uint)Marshal.SizeOf<WNDCLASS>(_);
-			return _;
-		}
-	}
-	
-	internal static class Win
-	{
-		internal delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
-
-		internal static HookProc KeyboardHook = null;
-		internal static HookProc MouseHook = null;
-
-		private const string User32 = "user32.dll";
-        private const string Kernel32 = "kernel32.dll";
+		internal static Proc KeyboardHook = null;
+		internal static Proc MouseHook = null;
 		
 		internal static Dictionary<string, IntPtr> Libs = new Dictionary<string, IntPtr>();
-
-        [DllImport(Kernel32, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        internal static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
-
-		[DllImport(Kernel32, SetLastError = true)]
-        internal static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPStr)]string lpFileName);
-		
-		[DllImport(Kernel32, SetLastError = true)]
-		internal static extern bool FreeLibrary(IntPtr hModule);
-
-		[DllImport(User32, SetLastError = true)]
-		internal static extern unsafe IntPtr SetWindowsHookEx(HookType hookType, HookProc lpfn, IntPtr hmod, uint dwThreadID);
-
-		[DllImport(User32, SetLastError = true)]
-		internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-		
-		[DllImport(User32, SetLastError = true)]
-		internal static unsafe extern ushort RegisterClassExA([MarshalAs(UnmanagedType.LPStruct)] [In] ref WNDCLASS wnd);
-
 
 
 		internal static void Start()
         {
-			KeyboardHook = new HookProc(Input.KeyboardCallback);
-			MouseHook = new HookProc(Input.MouseCallback);
-			SetWindowsHookEx(HookType.WH_KEYBOARD, KeyboardHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
-			SetWindowsHookEx(HookType.WH_MOUSE, MouseHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
+			KeyboardHook = new Proc(Input.KeyboardCallback);
+			MouseHook = new Proc(Input.MouseCallback);
+			//SetWindowsHookEx(HookType.WH_KEYBOARD, KeyboardHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
+			//SetWindowsHookEx(HookType.WH_MOUSE, MouseHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
+			uint thread = (uint)Process.GetCurrentProcess().Threads[0].Id;
+			SetWindowsHookEx(WH.KEYBOARD_LL, KeyboardHook, IntPtr.Zero, thread);
+			SetWindowsHookEx(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
         }
 
         #region OLDBUILDER_CODE

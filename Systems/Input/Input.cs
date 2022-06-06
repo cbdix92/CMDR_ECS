@@ -41,13 +41,14 @@ namespace CMDR.Systems
 			throw new NotImplementedException("Systems.Input.RemoveKeyBind");
 		}
 
-		internal static IntPtr KeyboardCallback(int code, IntPtr wParam, IntPtr lParam)
+		internal static unsafe IntPtr KeyboardCallback(int code, IntPtr wParam, IntPtr lParam)
         {
 			if (code < 0)
 				return Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
 			
-			Key key = (Key)Marshal.ReadInt32(wParam);
-			int data = Marshal.ReadInt32(lParam);
+			byte t = Marshal.ReadByte(wParam);
+			Key key = (Key)Marshal.PtrToStructure<byte>(wParam);
+			int data = Marshal.PtrToStructure<int>(lParam);
 			
 			byte keyState = (byte)((data << 8) & 0xff);
 			
@@ -110,7 +111,7 @@ namespace CMDR.Systems
 				// CenterMouse on screen
 			}
 			
-			Console.WriteLine("MouseTest");
+			Console.WriteLine($"X:{mouseInfo.Pos.X}\nY:{mouseInfo.Pos.Y}");
 			
 			
 			
