@@ -28,7 +28,7 @@ namespace CMDR.Native
 		internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
 		[DllImport(User32, SetLastError = true)]
-		internal static unsafe extern ushort RegisterClassExA([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASS wnd);
+		internal static unsafe extern ushort RegisterClassExA([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASSEXA wnd);
 
 	}
 }

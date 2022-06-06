@@ -90,7 +90,7 @@ namespace CMDR.Native
         MOUSE_LL = 14
     }
 	
-	public enum WM : uint
+	public enum WM
   {
     /// <summary>
     /// The WM_NULL message performs no operation. An application sends the WM_NULL message if it wants to post a message that the recipient window will ignore.

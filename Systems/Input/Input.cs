@@ -46,12 +46,21 @@ namespace CMDR.Systems
 			if (code < 0)
 				return Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
 			
-			byte t = Marshal.ReadByte(wParam);
-			Key key = (Key)Marshal.PtrToStructure<byte>(wParam);
-			int data = Marshal.PtrToStructure<int>(lParam);
+			byte keybyte = Marshal.ReadByte(wParam);
+			int data = Marshal.ReadInt32(lParam);
 			
 			byte keyState = (byte)((data << 8) & 0xff);
-			
+
+			Key key;
+            try
+            {
+				key = (Key)keybyte;
+            }
+			catch(InvalidCastException)
+            {
+				// Unsupported key pressed
+				return IntPtr.Zero;
+            }
 			// Update Mod key states
 			switch(key)
 			{

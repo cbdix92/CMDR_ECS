@@ -26,7 +26,7 @@ namespace CMDR.Native
 			//SetWindowsHookEx(HookType.WH_KEYBOARD, KeyboardHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
 			//SetWindowsHookEx(HookType.WH_MOUSE, MouseHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
 			uint thread = (uint)Process.GetCurrentProcess().Threads[0].Id;
-			SetWindowsHookEx(WH.KEYBOARD_LL, KeyboardHook, IntPtr.Zero, thread);
+			SetWindowsHookEx(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
 			SetWindowsHookEx(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
         }
 
