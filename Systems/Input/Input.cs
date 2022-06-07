@@ -14,7 +14,7 @@ namespace CMDR.Systems
 		private static readonly byte _ctrlMask = 0x02;
 		private static readonly byte _altMask = 0x04;
 		private static readonly byte _superMask = 0x08;
-		private static readonly byte _capslockMask = 0x10;
+		private static readonly byte _capsLockMask = 0x10;
 		private static readonly byte _numsLockMask = 0x20;
 
 
@@ -49,12 +49,11 @@ namespace CMDR.Systems
 				return Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
 			
 			int keybyte = wParam.ToInt32();
-			long data = lParam.ToInt64();
+			long Lparam = lParam.ToInt64();
 
-			// Key pressed = 0, Key released = 1
-			long keyState = data & 1;
-			Console.Clear();
-			Console.WriteLine(keyState);
+            // Key pressed = 0, Key released = 1
+            uint keyState = (uint)(Lparam & 0xff000000) & 0X80000000;
+            Console.WriteLine(Convert.ToString(keyState, 2));
 
 			Key key;
             try
@@ -70,25 +69,27 @@ namespace CMDR.Systems
 			switch(key)
 			{
 				case (Key.Shift):
-					_modKeys |= (byte)((~keyState) & _shiftMask);
+                    keyState >>= 31;
+                    _modKeys &= (byte)(~_shiftMask);
+					_modKeys |= (byte)(~keyState & _shiftMask);
 					break;
 				case (Key.Control):
-					keyState <<= 1;
+                    GenerateModKeys(30, keyState, _ctrlMask);
 					break;
 				case (Key.Alt):
-					keyState <<= 2;
-					break;
+                    GenerateModKeys(29, keyState, _altMask);
+                    break;
                 case (Key.LeftWindows):
-					keyState <<= 3;
-					break;
+                    GenerateModKeys(28, keyState, _superMask);
+                    break;
 				case (Key.CapsLock):
-					// TODO .. Toggle logic for CapsLock
-					keyState <<= 4;
+                    // TODO .. Toggle logic for CapsLock
+                    GenerateModKeys(27, keyState, _capsLockMask);
 					break;
 				case (Key.Numlock):
-					// TODO .. Toggle logic for NumLock
-					keyState <<= 5;
-					break;
+                    // TODO .. Toggle logic for NumLock
+                    GenerateModKeys(26, keyState, _numsLockMask);
+                    break;
 			}
 			//_modKeys = (byte)(_modKeys | (~keyState));
 			
@@ -146,6 +147,13 @@ namespace CMDR.Systems
 					Glfw.SetCursorPosition(Display.Window, Display.Center.X, Display.Center.Y);
 
 			}
+        }
+
+        private static void GenerateModKeys(int shiftRight, uint keyState, byte keyMask)
+        {
+            keyState >>= shiftRight;
+            _modKeys &= (byte)(~keyMask);
+            _modKeys |= (byte)(~keyState & keyMask);
         }
 	}
 }
