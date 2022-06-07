@@ -10,10 +10,12 @@ namespace CMDR.Systems
 	public static class Input
 	{
 		
-		private static readonly byte _altMask = 0x08;
-		private static readonly byte _shiftMask = 0x04;
+		private static readonly byte _shiftMask = 0x01;
 		private static readonly byte _ctrlMask = 0x02;
-		private static readonly byte _keyMask =	0x01;
+		private static readonly byte _altMask = 0x04;
+		private static readonly byte _superMask = 0x08;
+		private static readonly byte _capslockMask = 0x10;
+		private static readonly byte _numsLockMask = 0x20;
 
 
 		private static Dictionary<Key, List<KeyPressCallback>> _keyBinds = new Dictionary<Key, List<KeyPressCallback>>();
@@ -46,53 +48,56 @@ namespace CMDR.Systems
 			if (code < 0)
 				return Win.CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
 			
-			byte keybyte = Marshal.ReadByte(wParam);
-			int data = Marshal.ReadInt32(lParam);
-			
-			byte keyState = (byte)((data << 8) & 0xff);
+			int keybyte = wParam.ToInt32();
+			long data = lParam.ToInt64();
+
+			// Key pressed = 0, Key released = 1
+			long keyState = data & 1;
+			Console.Clear();
+			Console.WriteLine(keyState);
 
 			Key key;
             try
             {
 				key = (Key)keybyte;
             }
-			catch(InvalidCastException)
-            {
-				// Unsupported key pressed
+			catch(InvalidCastException) // Unsupported key pressed
+			{
 				return IntPtr.Zero;
             }
+
 			// Update Mod key states
 			switch(key)
 			{
 				case (Key.Shift):
-					keyState = (byte)(keyState >> 8);
+					_modKeys |= (byte)((~keyState) & _shiftMask);
 					break;
 				case (Key.Control):
-					keyState = (byte)(keyState >> 7);
+					keyState <<= 1;
 					break;
 				case (Key.Alt):
-					keyState = (byte)(keyState >> 6);
+					keyState <<= 2;
 					break;
                 case (Key.LeftWindows):
-					keyState = (byte)(keyState >> 5);
+					keyState <<= 3;
 					break;
 				case (Key.CapsLock):
 					// TODO .. Toggle logic for CapsLock
-					keyState = (byte)(keyState >> 4);
+					keyState <<= 4;
 					break;
 				case (Key.Numlock):
 					// TODO .. Toggle logic for NumLock
-					keyState = (byte)(keyState >> 3);
+					keyState <<= 5;
 					break;
 			}
-			_modKeys = (byte)(_modKeys & (~keyState));
+			//_modKeys = (byte)(_modKeys | (~keyState));
 			
 			
 			if(_keyBinds.ContainsKey(key))
 			{
 				byte modCode = _modKeys;
 				modCode = (byte)((code << 6) | modCode);
-				short repeatCount = (short)((code >> 16) &0xffff);
+				short repeatCount = (short)((code >> 16) & 0xffff);
 				
 				KeyEventArgs args = new KeyEventArgs(key, modCode, repeatCount, GameLoop.GameTime);
 				
@@ -100,9 +105,7 @@ namespace CMDR.Systems
 					callBack(args);
 			}
 			
-			
-			Console.WriteLine("test");
-			Console.WriteLine(_modKeys);
+			Console.WriteLine($"ModKeys: {Convert.ToString(_modKeys, 2)}");
 			return IntPtr.Zero;
         }
 		
@@ -120,7 +123,7 @@ namespace CMDR.Systems
 				// CenterMouse on screen
 			}
 			
-			Console.WriteLine($"X:{mouseInfo.Pos.X}\nY:{mouseInfo.Pos.Y}");
+			//Console.WriteLine($"X:{mouseInfo.Pos.X}\nY:{mouseInfo.Pos.Y}");
 			
 			
 			
@@ -144,26 +147,5 @@ namespace CMDR.Systems
 
 			}
         }
-
-		/*
-		public static void Update(long ticks)
-		{
-			for(int i = 0; i < Count; i++)
-			{
-				if (Keyboard.IsKeyDown(_keyBinds[i].Key) && !_keyBinds[i].IsKeyDownTriggered)
-				{
-					_keyBinds[i].OnKeyDown();
-					_keyBinds[i].IsKeyDownTriggered = true;
-				}
-				else if (Keyboard.IsKeyUp(_keyBinds[i].Key) && _keyBinds[i].IsKeyDownTriggered)
-				{
-					if (_keyBinds[i].OnKeyUp != null)
-						_keyBinds[i].OnKeyUp();
-					
-					_keyBinds[i].IsKeyDownTriggered = false;
-				}
-			}
-		}
-		*/
 	}
 }

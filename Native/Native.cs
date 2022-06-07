@@ -23,8 +23,7 @@ namespace CMDR.Native
         {
 			KeyboardHook = new Proc(Input.KeyboardCallback);
 			MouseHook = new Proc(Input.MouseCallback);
-			//SetWindowsHookEx(HookType.WH_KEYBOARD, KeyboardHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
-			//SetWindowsHookEx(HookType.WH_MOUSE, MouseHook, IntPtr.Zero, (uint)AppDomain.GetCurrentThreadId());
+
 			uint thread = (uint)Process.GetCurrentProcess().Threads[0].Id;
 			SetWindowsHookEx(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
 			SetWindowsHookEx(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
