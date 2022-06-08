@@ -11,22 +11,21 @@ namespace CMDR.Native
 	
 	internal static partial class Win
 	{
-		internal delegate IntPtr Proc(int code, IntPtr wParam, IntPtr lParam);
 
-		internal static Proc KeyboardHook = null;
-		internal static Proc MouseHook = null;
+		internal static HookProc KeyboardHook = null;
+		internal static HookProc MouseHook = null;
 		
 		internal static Dictionary<string, IntPtr> Libs = new Dictionary<string, IntPtr>();
 
 
 		internal static void Start()
         {
-			KeyboardHook = new Proc(Input.KeyboardCallback);
-			MouseHook = new Proc(Input.MouseCallback);
+			KeyboardHook = new HookProc(Input.KeyboardCallback);
+			MouseHook = new HookProc(Input.MouseCallback);
 
 			uint thread = (uint)Process.GetCurrentProcess().Threads[0].Id;
-			SetWindowsHookEx(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
-			SetWindowsHookEx(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
+			SetWindowsHookExW(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
+			SetWindowsHookExW(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
         }
 
         #region OLDBUILDER_CODE
