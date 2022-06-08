@@ -6,12 +6,11 @@
 	{
 		Key Key;
 		byte ModCode;
-		short RepeatCount;
 		long Time;
 		
-		public KeyEventArgs(Key key, byte modCode, short repeatCount, long time)
+		public KeyEventArgs(Key key, byte modCode, long time)
 		{
-			(Key, ModCode, RepeatCount, Time) = (key, modCode, repeatCount, time);
+			(Key, ModCode, Time) = (key, modCode, time);
 		}
 	}
 	

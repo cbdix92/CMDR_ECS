@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace CMDR.Native
 {
@@ -13,38 +14,38 @@ namespace CMDR.Native
 	/// Contains information about a mouse event passed to a WH_MOUSE hook procedure, MouseProc.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	internal unsafe struct MouseHookStruct
+	internal struct MouseHookStruct
 	{
 		public Point Pos;
-		public int* HWND;
+		public IntPtr HWND;
 		public uint HitTestCode;
-		public int* ExtraInfo;
+		public IntPtr ExtraInfo;
 	}
 
 	/// <summary>
 	/// Contains information about a low-level mouse input event.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	internal unsafe struct MSLLHOOK
+	internal struct MSLLHOOK
     {
 		public Point Pos;
-		public int* MouseData;
-		public int* Flags;
-		public int* Time;
-		public int* ExtraInfo;
+		public IntPtr MouseData;
+		public IntPtr Flags;
+		public IntPtr Time;
+		public IntPtr ExtraInfo;
     }
 
 	/// <summary>
 	/// Contains information about a low-level keyboard input event.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	internal unsafe struct KBDLLHOOK
+	internal struct KBDLLHOOK
     {
-		public int* VkCode;
-		public int* ScaneCode;
-		public int* Flags;
-		public int* Time;
-		public int* ExtraInfo;
+		public IntPtr VkCode;
+		public IntPtr ScaneCode;
+		public IntPtr Flags;
+		public IntPtr Time;
+		public IntPtr ExtraInfo;
     }
 
 	/// <summary>
@@ -56,20 +57,21 @@ namespace CMDR.Native
 	{
 		uint cbSize;
 		uint style;
-		int* lpfnWndProc;
+		IntPtr lpfnWndProc;
 		int cbClsExtra;
 		int cbWndExtra;
-		int* hInstance;
-		int* hIcon;
-		int* hCursor;
-		int* hbrBackground;
+		IntPtr hInstance;
+		IntPtr hIcon;
+		IntPtr hCursor;
+		IntPtr hbrBackground;
 		[MarshalAs(UnmanagedType.LPTStr)]
 		string lpszMenuName;
 		[MarshalAs(UnmanagedType.LPTStr)]
 		string lpszClassName;
-		int* hIconSm;
+		IntPtr hIconSm;
 
-		public static unsafe WNDCLASSEXA Create(uint style, int* lpfnWndProc, int cbClsExtra, int cbWndExtra, int* hInstance, int* hIcon, int* hCursor, int* hbrBackground, string lpszMenuName, string lpszClassName, int* hIconSm)
+		internal static WNDCLASSEXA Create(uint style, IntPtr lpfnWndProc, int cbClsExtra, int cbWndExtra, IntPtr hInstance, 
+			IntPtr hIcon, IntPtr hCursor, IntPtr hbrBackground, string lpszMenuName, string lpszClassName, IntPtr hIconSm)
 		{
 			var _ = new WNDCLASSEXA()
 			{

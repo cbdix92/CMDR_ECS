@@ -61,6 +61,7 @@
     <Compile Include="Native\Enums.cs" />
     <Compile Include="Native\Imports.cs" />
     <Compile Include="Native\Struct.cs" />
+    <Compile Include="Native\Window.cs" />
     <Compile Include="OpenGLAbstractions\Mesh.cs" />
     <Compile Include="OpenGLAbstractions\MeshManager.cs" />
     <Compile Include="OpenGLAbstractions\ShaderManager.cs" />

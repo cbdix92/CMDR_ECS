@@ -51,9 +51,9 @@ namespace CMDR.Systems
 			int keybyte = wParam.ToInt32();
 			long Lparam = lParam.ToInt64();
 
+			Console.WriteLine(Convert.ToString(Lparam, 2));
             // Key pressed = 0, Key released = 1
             uint keyState = (uint)(Lparam & 0xff000000) & 0X80000000;
-            Console.WriteLine(Convert.ToString(keyState, 2));
 
 			Key key;
             try
@@ -91,16 +91,13 @@ namespace CMDR.Systems
                     GenerateModKeys(26, keyState, _numsLockMask);
                     break;
 			}
-			//_modKeys = (byte)(_modKeys | (~keyState));
-			
 			
 			if(_keyBinds.ContainsKey(key))
 			{
 				byte modCode = _modKeys;
-				modCode = (byte)((code << 6) | modCode);
-				short repeatCount = (short)((code >> 16) & 0xffff);
+				modCode |= (byte)(keyState >> 25);
 				
-				KeyEventArgs args = new KeyEventArgs(key, modCode, repeatCount, GameLoop.GameTime);
+				KeyEventArgs args = new KeyEventArgs(key, modCode, GameLoop.GameTime);
 				
 				foreach(KeyPressCallback callBack in _keyBinds[key])
 					callBack(args);
@@ -131,7 +128,7 @@ namespace CMDR.Systems
 			return IntPtr.Zero;
 		}
 
-		internal static void KeyRecorder(Window window, Key key, int scanCode, InputState state, ModifierKeys mods)
+		internal static void KeyRecorder(GLFW.Window window, Key key, int scanCode, InputState state, ModifierKeys mods)
         {
 			/// Store a que of key presses that will be processed the next time Input.Update is called.
 			/// Combine action and mods into keyData byte using key mask.
