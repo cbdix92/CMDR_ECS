@@ -2,6 +2,7 @@
 
 namespace CMDR.Native
 {
+    [Flags]
     internal enum WS : uint
     {
         /// <summary>Specifies a window that accepts drag-drop files.</summary>

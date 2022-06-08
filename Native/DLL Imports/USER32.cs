@@ -62,7 +62,7 @@ namespace CMDR.Native
 		/// If the function fails, the return value is zero. </returns>
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerclassexw"/> Microsoft Docs </see>
 		[DllImport(User32, SetLastError = true)]
-		internal static unsafe extern ATOM RegisterClassExW([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASSEXA wnd);
+		internal static extern ATOM RegisterClassExW([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASSEXA wnd);
 
 		/// <summary>
 		/// Installs an application-defined hook procedure into a hook chain. You would install a hook procedure to monitor the system for certain types of events.
@@ -84,6 +84,17 @@ namespace CMDR.Native
 		/// <returns> If the function succeeds, the return value is the handle to the hook procedure. If the function fails, the return value is NULL. </returns>
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw"/> Microsoft Docs </see>
 		[DllImport(User32, SetLastError = true)]
-		internal static extern unsafe HHOOK SetWindowsHookExW(WH idHook, HookProc lpfn, IntPtr hmod, uint dwThreadID);
+		internal static extern HHOOK SetWindowsHookExW(WH idHook, HookProc lpfn, IntPtr hmod, uint dwThreadID);
+
+		/// <summary>
+		/// Unregisters a window class, freeing the memory required for the class.
+		/// </summary>
+		/// <param name="lpClassName"> A null-terminated string or a class atom. If lpClassName is a string, it specifies the window class name. </param>
+		/// <param name="hInstance"> A handle to the instance of the module that created the class. </param>
+		/// <returns> If the function succeeds, the return value is nonzero. 
+		/// If the class could not be found or if a window still exists that was created with the class, the return value is zero. </returns>
+		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-unregisterclassw"/> Microsoft Docs </see>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool UnregisterClassW(string lpClassName, IntPtr hInstance);
 	}
 }
