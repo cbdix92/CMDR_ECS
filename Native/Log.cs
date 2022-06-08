@@ -10,8 +10,6 @@ namespace CMDR.Native
 {
     internal static class Log
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern void SetLastError(uint dwErrorCode);
 
 
         private static readonly string _tempDir = @"temp\";
@@ -30,7 +28,7 @@ namespace CMDR.Native
             {
                 SR.WriteLine($"WIN32 ERROR CODE {error} -> glLoad:{glLoad} Name:{name}: {new Win32Exception(error)}");
             }
-            SetLastError(0);
+            Win.SetLastError(0);
         }
 
         internal static void LogError(string error)

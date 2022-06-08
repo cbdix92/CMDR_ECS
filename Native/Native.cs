@@ -77,7 +77,7 @@ namespace CMDR.Native
 
         internal static void LoadLibs()
 		{
-			Log.SetLastError(0);
+			SetLastError(0);
 			Libs.Add(Kernel32, LoadLibrary(Kernel32));
 			CheckError(Kernel32);
 			Libs.Add(User32, LoadLibrary(User32));
@@ -89,7 +89,7 @@ namespace CMDR.Native
 			int error = Marshal.GetLastWin32Error();
 			if (error != 0)
 				Log.LogWin32Error(error, name);
-			Log.SetLastError(0);
+			SetLastError(0);
         }
 		
 		internal static bool FreeLibs()
