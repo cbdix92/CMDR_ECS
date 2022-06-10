@@ -52,6 +52,16 @@ namespace CMDR.Native
 			IntPtr hInstance,
 			IntPtr lpParam
 			);
+		
+		/// <summary>
+		/// The GetMonitorInfo function retrieves information about a display monitor.
+		/// </summary>
+		/// <param name="hMonitor"> A handle to the display monitor of interest. </param>
+		/// <param name="lpmi"> A pointer to a MONITORINFOEX structure that receives information about the specified display monitor. </param>
+		/// <returns> If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. </returns>
+		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmonitorinfow"/> Microsoft Docs </see>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool GetMonitorInfoW(IntPtr hMonitor, [MarshalAs(UnmanagedType.LPStruct)] ref MONITORINFOEXW lpmi);
 
 		/// <summary>
 		/// Registers a window class for subsequent use in calls to the CreateWindow or CreateWindowEx function.
@@ -62,7 +72,7 @@ namespace CMDR.Native
 		/// If the function fails, the return value is zero. </returns>
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerclassexw"/> Microsoft Docs </see>
 		[DllImport(User32, SetLastError = true)]
-		internal static extern ATOM RegisterClassExW([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASSEXA wnd);
+		internal static extern ATOM RegisterClassExW([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASSEXW wnd);
 
 		/// <summary>
 		/// Installs an application-defined hook procedure into a hook chain. You would install a hook procedure to monitor the system for certain types of events.

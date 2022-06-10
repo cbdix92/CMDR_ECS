@@ -61,6 +61,7 @@
     <Compile Include="Native\Delegates.cs" />
     <Compile Include="Native\DLL Imports\KERNEL32.cs" />
     <Compile Include="Native\DLL Imports\USER32.cs" />
+    <Compile Include="Native\Enums\CS.cs" />
     <Compile Include="Native\Enums\KF.cs" />
     <Compile Include="Native\Enums\WH.cs" />
     <Compile Include="Native\Enums\WM.cs" />
@@ -68,8 +69,10 @@
     <Compile Include="Native\Structs\Hook Structures\KBDLLHOOKSTRUCT.cs" />
     <Compile Include="Native\Structs\Hook Structures\MOUSEHOOKSTRUCT.cs" />
     <Compile Include="Native\Structs\Hook Structures\MSLLHOOKSTRUCT.cs" />
+    <Compile Include="Native\Structs\MONITORINFOEXW.cs" />
     <Compile Include="Native\Structs\Point.cs" />
-    <Compile Include="Native\Structs\WNDCLASSEXA.cs" />
+    <Compile Include="Native\Structs\Rect.cs" />
+    <Compile Include="Native\Structs\WNDCLASSEXW.cs" />
     <Compile Include="Native\Window.cs" />
     <Compile Include="OpenGLAbstractions\Mesh.cs" />
     <Compile Include="OpenGLAbstractions\MeshManager.cs" />
