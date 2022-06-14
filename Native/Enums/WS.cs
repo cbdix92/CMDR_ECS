@@ -4,7 +4,7 @@ namespace CMDR.Native
 {
     [Flags]
     /// <see href="https://docs.microsoft.com/en-us/windows/win32/winmsg/window-styles">
-    internal enum WS : uint
+    internal enum WS : ulong
     {
 
     /// <summary> The window has a thin-line border. </summary>

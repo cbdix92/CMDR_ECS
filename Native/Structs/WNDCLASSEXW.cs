@@ -12,7 +12,7 @@ namespace CMDR.Native
 	{
 		public uint cbSize;
 		public uint style;
-		public IntPtr lpfnWndProc;
+		public WNDPROC lpfnWndProc;
 		public int cbClsExtra;
 		public int cbWndExtra;
 		public IntPtr hInstance;
@@ -23,7 +23,7 @@ namespace CMDR.Native
 		public string lpszClassName;
 		public IntPtr hIconSm;
 		
-		internal WNDCLASSEXW(uint cbSize, uint style, IntPtr lpfnWndProc, int cbClsExtra, int cbWndExtra, IntPtr hInstance,
+		internal WNDCLASSEXW(uint cbSize, uint style, WNDPROC lpfnWndProc, int cbClsExtra, int cbWndExtra, IntPtr hInstance,
 			IntPtr hIcon, IntPtr hCursor, IntPtr hbrBackground, string lpszMenuName, string lpszClassName, IntPtr hIconSm)
 		{
 			this.cbSize = cbSize;

@@ -12,13 +12,13 @@ namespace CMDR.Native
 		public uint EXClassStyle { get; private set; }
 
 		public uint ClassStyle { get; private set; }
-		public IntPtr HWND { get; private set; }
+		public IntPtr HWND { get; internal set; }
 		public int StartingPosX;
 		public int StartingPosY;
 		
         private WNDCLASSEXW WNDCLASS;
 		private int _width;
-		private int height;
+		private int _height;
 
 
 
@@ -43,17 +43,18 @@ namespace CMDR.Native
 		
         public Window(int width, int height, string title)
 		{
-			(Width, Height, Title) = (width, height, title)
+            (Width, Height, Title) = (width, height, title);
 		}
 
 		public void SetFlag(uint flag)
 		{
-			
+			// TODO ... 
+            // Set window bit fields here.
 		}
 
-		public void Create(this window)
+		public void Create()
 		{
-			Win.CreateWindow(window);
+			Win.CreateWindow(this);
 		}
 		
 		

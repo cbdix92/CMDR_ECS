@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using GLFW;
 using CMDR.Systems;
+using System.ComponentModel;
 
 
 namespace CMDR.Native
@@ -36,27 +37,27 @@ namespace CMDR.Native
 
 			WNDCLASSEXW wndClass = new WNDCLASSEXW();
 			wndClass.cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEXW));
-			wndClass.style = window.ClassStyle | CS.OWNDC | CS.VREDRAW | CS.HREDRAW;
+			wndClass.style = window.ClassStyle | (uint)(CS.OWNDC | CS.VREDRAW | CS.HREDRAW);
 			wndClass.lpfnWndProc = new WNDPROC(WindowProcedure);
-			wndClass.cbClsExtra = cbClsExtra;
-			wndClass.cbWndExtra = cbWndExtra;
-			wndClass.hInstance = null;
-			//wndClass.hIcon = 
-			//wndClass.hCursor = 
-			//wndClass.hbrBackground = 
-			//wndClass.lpszMenuName = 
-			wndClass.lpszClassName = "CMDR_WINDOW_CLASS"
+            wndClass.cbClsExtra = 0;
+            wndClass.cbWndExtra = 0;
+            wndClass.hInstance = Process.GetCurrentProcess().Handle;
+            //wndClass.hIcon = 
+            //wndClass.hCursor = 
+            //wndClass.hbrBackground = 
+            //wndClass.lpszMenuName = 
+            wndClass.lpszClassName = "CMDR_WINDOW_CLASS";
 			//wndClass.hIconSm =   
 
-			if(RegisterClassEx(wndClass) == 0)
+			if(RegisterClassExW(ref wndClass) == 0)
 			{
 				int error = Marshal.GetLastWin32Error();
-				LogWin32Error(error, "RegisterClass");
-				throw new Win32Exception(error, "See Log!")
+				Log.LogWin32Error(error, "RegisterClass");
+                throw new Win32Exception(error, "See Log!");
 			}
 
-			window.HWND = CreateWindowExW(WS.EX_OVERLAPPEDWINDOW, "CMDR_WINDOW_CLASS", window.Title, window.ClassStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, null, null, null);
-			
+			window.HWND = CreateWindowExW(WS_EX.OVERLAPPEDWINDOW, "CMDR_WINDOW_CLASS", window.Title, (WS)window.ClassStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            return true;
 		}
 
 		internal static IntPtr WindowProcedure(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam)
@@ -64,7 +65,7 @@ namespace CMDR.Native
 			return IntPtr.Zero;
 		}
 
-		inetrnal static bool DestroyWindow(Window window)
+		internal static bool DestroyWindow(Window window)
 		{
 			// TODO ... 
 			// Remove Window here
