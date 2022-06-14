@@ -2,52 +2,59 @@
 
 namespace CMDR.Native
 {
+	
     public sealed class Window
     {
-		private static Window _instance = null;
-		private static readonly object _lock = new object();
 
+		public string Title;
+
+		/// <summary> WNDCLASSEXW.style bitfield settings </summary>
+		public uint EXClassStyle { get; private set; }
+
+		public uint ClassStyle { get; private set; }
+		public IntPtr HWND { get; private set; }
+		public int StartingPosX;
+		public int StartingPosY;
+		
         private WNDCLASSEXW WNDCLASS;
-		
-        private Window()
+		private int _width;
+		private int height;
+
+
+
+
+		public int Width
 		{
-		}
-		
-		public static Window GetWindow
-		{
-			get
+			get => _width;
+			set
 			{
-				lock(_lock)
-				{
-					if(_instance == null)
-						_instance = new Window();
-					return _instance;
-				}
+				(Camera.Width, _width) = (value, value);
+			}
+		}
+
+		public int Height
+		{
+			get => _height;
+			set
+			{
+				(Camera.Height, _height) = (value, value);
 			}
 		}
 		
-		public static Window CreateWindow()
+        public Window(int width, int height, string title)
 		{
-            Window window = GetWindow;
-
-            window.WNDCLASS = WNDCLASSEXW.Create();
-			window.WNDCLASS.style = (uint)CS.OWNDC;
-            window.WNDCLASS.lpfnWndProc = IntPtr.Zero;
-            window.WNDCLASS.cbClsExtra = 0;
-            window.WNDCLASS.cbWndExtra = 0;
-            window.WNDCLASS.hInstance = IntPtr.Zero;
-            window.WNDCLASS.hIcon = IntPtr.Zero;
-            window.WNDCLASS.hCursor = IntPtr.Zero;
-            window.WNDCLASS.hbrBackground = IntPtr.Zero;
-            window.WNDCLASS.lpszMenuName = String.Empty;
-            window.WNDCLASS.lpszClassName = String.Empty;
-            window.WNDCLASS.hIconSm = IntPtr.Zero;
-
-
-            return window;
+			(Width, Height, Title) = (width, height, title)
 		}
-		
-		
+
+		public void SetFlag(uint flag)
+		{
+			
+		}
+
+		public void Create(this window)
+		{
+			Win.CreateWindow(window);
+		}
 		
 		
     }

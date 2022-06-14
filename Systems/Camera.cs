@@ -250,7 +250,7 @@ namespace CMDR
 				if(g.Contains<RenderData>() && CameraRectCheck(transforms[g.Get<Transform>()]))
 				{
 					result[count++] = gameObjects[i];
-				}	
+				}
 			}
 			Array.Resize<SGameObject>(ref result, count);
 

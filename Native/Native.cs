@@ -14,10 +14,62 @@ namespace CMDR.Native
 
 		internal static HookProc KeyboardHook = null;
 		internal static HookProc MouseHook = null;
+
+		internal static Window CurrentWindow = null;
+		internal static WNDPROC WndProc = new WNDPROC(WindowProcedure);
 		
 		internal static Dictionary<string, IntPtr> Libs = new Dictionary<string, IntPtr>();
 
+		internal static bool CreateWindow(Window window)
+		{
+			if(CurrentWindow == null)
+			{
+				CurrentWindow = window;
+			}
+			else
+			{
+				if(!DestroyWindow(CurrentWindow))
+					throw new Win32Exception(Marshal.GetLastWin32Error());
+				CurrentWindow = window;
+			}
 
+
+			WNDCLASSEXW wndClass = new WNDCLASSEXW();
+			wndClass.cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEXW));
+			wndClass.style = window.ClassStyle | CS.OWNDC | CS.VREDRAW | CS.HREDRAW;
+			wndClass.lpfnWndProc = new WNDPROC(WindowProcedure);
+			wndClass.cbClsExtra = cbClsExtra;
+			wndClass.cbWndExtra = cbWndExtra;
+			wndClass.hInstance = null;
+			//wndClass.hIcon = 
+			//wndClass.hCursor = 
+			//wndClass.hbrBackground = 
+			//wndClass.lpszMenuName = 
+			wndClass.lpszClassName = "CMDR_WINDOW_CLASS"
+			//wndClass.hIconSm =   
+
+			if(RegisterClassEx(wndClass) == 0)
+			{
+				int error = Marshal.GetLastWin32Error();
+				LogWin32Error(error, "RegisterClass");
+				throw new Win32Exception(error, "See Log!")
+			}
+
+			window.HWND = CreateWindowExW(WS.EX_OVERLAPPEDWINDOW, "CMDR_WINDOW_CLASS", window.Title, window.ClassStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, null, null, null);
+			
+		}
+
+		internal static IntPtr WindowProcedure(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam)
+		{
+			return IntPtr.Zero;
+		}
+
+		inetrnal static bool DestroyWindow(Window window)
+		{
+			// TODO ... 
+			// Remove Window here
+			return true;
+		}
 		internal static void Start()
         {
 			KeyboardHook = new HookProc(Input.KeyboardCallback);

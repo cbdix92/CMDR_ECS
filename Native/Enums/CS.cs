@@ -2,6 +2,7 @@ using System;
 
 namespace CMDR.Native
 {
+	[Flags]
 	internal enum CS : uint
 	{
 		/// <summary>
