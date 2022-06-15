@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GLFW;
 using CMDR.Systems;
 using System.ComponentModel;
 
@@ -21,6 +20,8 @@ namespace CMDR.Native
 		
 		internal static Dictionary<string, IntPtr> Libs = new Dictionary<string, IntPtr>();
 
+		private static MSG _message;
+
 		internal static bool CreateWindow(Window window)
 		{
 			if(CurrentWindow == null)
@@ -29,8 +30,8 @@ namespace CMDR.Native
 			}
 			else
 			{
-				if(!DestroyWindow(CurrentWindow))
-					throw new Win32Exception(Marshal.GetLastWin32Error());
+				if (!DestroyWindow(CurrentWindow))
+					CheckError("DestroyWindow", true);
 				CurrentWindow = window;
 			}
 
@@ -51,13 +52,15 @@ namespace CMDR.Native
 
 			if(RegisterClassExW(ref wndClass) == 0)
 			{
-				int error = Marshal.GetLastWin32Error();
-				Log.LogWin32Error(error, "RegisterClass");
-                throw new Win32Exception(error, "See Log!");
+				CheckError("RegisterWindow", true);
 			}
 
 			window.HWND = CreateWindowExW(WS_EX.OVERLAPPEDWINDOW, "CMDR_WINDOW_CLASS", window.Title, (WS)window.ClassStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-            return true;
+			
+			if (window.HWND == IntPtr.Zero)
+				CheckError("CreateWindow", true);
+			
+			return true;
 		}
 
 		internal static IntPtr WindowProcedure(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam)
@@ -71,6 +74,42 @@ namespace CMDR.Native
 			// Remove Window here
 			return true;
 		}
+
+		/// <summary>
+		/// Handle Windows message queue.
+		/// </summary>
+		internal static void HandleMessages()
+        {
+			if(GetMessage(ref _message, CurrentWindow.HWND, 0, 0) == -1)
+            {
+				CheckError("GetMessage", true);
+            }
+			TranslateMessage(ref _message);
+			DispatchMessage(ref _message);
+
+        }
+
+		/// <summary>
+		/// Check for Windows errors. If an error is detected it will be logged.
+		/// </summary>
+		/// <param name="name"> Name provided for the log. Typically something to idicate the body of code CheckError was called from.
+		/// This makes finding the point where the error was generated easier to find. </param>
+		/// <param name="exit"> Specify true for hard throw if error is detected, otherwise error will simply be logged. </param>
+		/// <returns> Returns Win32 error code. </returns>
+		private static int CheckError(string name, bool exit)
+        {
+			int error = Marshal.GetLastWin32Error();
+			
+			if (error != 0)
+				Log.LogWin32Error(error, name);
+			
+			if (exit)
+				throw new Win32Exception(error);
+			
+			SetLastError(0);
+			
+			return error;
+        }
 		internal static void Start()
         {
 			KeyboardHook = new HookProc(Input.KeyboardCallback);
@@ -80,54 +119,53 @@ namespace CMDR.Native
 			SetWindowsHookExW(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
 			SetWindowsHookExW(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
         }
-
+		
         #region OLDBUILDER_CODE
-        /*
-		internal unsafe static bool Start()
-		{
-			Assembly assembly = Assembly.GetExecutingAssembly();
-			MethodInfo[] methods = assembly.GetTypes().SelectMany(
-				x => x.GetMethods(BindingFlags.Static | BindingFlags.NonPublic)).Where(
-				y => y.GetCustomAttributes(typeof(BuildInfo), false).Length > 0).ToArray();
+        
+		//internal unsafe static bool Start()
+		//{
+		//	Assembly assembly = Assembly.GetExecutingAssembly();
+		//	MethodInfo[] methods = assembly.GetTypes().SelectMany(
+		//		x => x.GetMethods(BindingFlags.Static | BindingFlags.NonPublic)).Where(
+		//		y => y.GetCustomAttributes(typeof(BuildInfo), false).Length > 0).ToArray();
 
-			LoadLibs();
+		//	LoadLibs();
 			
-			foreach(MethodInfo method in methods)
-			{
+		//	foreach(MethodInfo method in methods)
+		//	{
 				
-				RuntimeHelpers.PrepareMethod(method.MethodHandle);
+		//		RuntimeHelpers.PrepareMethod(method.MethodHandle);
 
-				BuildInfo buildInfo = method.GetCustomAttribute<BuildInfo>();
+		//		BuildInfo buildInfo = method.GetCustomAttribute<BuildInfo>();
 
-				UInt64* location = (UInt64*)(method.MethodHandle.Value.ToPointer());
-				int index = (int)(((*location) >> 32) & 0xff);
+		//		UInt64* location = (UInt64*)(method.MethodHandle.Value.ToPointer());
+		//		int index = (int)(((*location) >> 32) & 0xff);
 				
-				// 64 bit process
-				if(IntPtr.Size == 8)
-				{
-					ulong* source = (ulong*)GetProcFromBuildInfo(buildInfo) + 1;
+		//		// 64 bit process
+		//		if(IntPtr.Size == 8)
+		//		{
+		//			ulong* source = (ulong*)GetProcFromBuildInfo(buildInfo) + 1;
 
-					ulong* classstart = (ulong*)method.DeclaringType.TypeHandle.Value.ToPointer();
-					ulong* target = (ulong*)classstart + index + 10;
-					//ulong* target = (ulong*)method.MethodHandle.GetFunctionPointer() + 1;
-					*target = *source;
-				}
-				// 32 bit process
-				else
-				{
-					uint* source = (uint*)GetProcFromBuildInfo(buildInfo) + 2;
-					uint* classstart = (uint*)method.DeclaringType.TypeHandle.Value.ToPointer();
-					uint* target = (uint*)classstart + index + 10;
-					//int* target = (int*)method.MethodHandle.GetFunctionPointer() + 2;
-					*target = *source;
-				}
+		//			ulong* classstart = (ulong*)method.DeclaringType.TypeHandle.Value.ToPointer();
+		//			ulong* target = (ulong*)classstart + index + 10;
+		//			//ulong* target = (ulong*)method.MethodHandle.GetFunctionPointer() + 1;
+		//			*target = *source;
+		//		}
+		//		// 32 bit process
+		//		else
+		//		{
+		//			uint* source = (uint*)GetProcFromBuildInfo(buildInfo) + 2;
+		//			uint* classstart = (uint*)method.DeclaringType.TypeHandle.Value.ToPointer();
+		//			uint* target = (uint*)classstart + index + 10;
+		//			//int* target = (int*)method.MethodHandle.GetFunctionPointer() + 2;
+		//			*target = *source;
+		//		}
 				
-			}
-			return true;
-		}
-		*/
+		//	}
+		//	return true;
+		//}
+		
         #endregion
-
         internal static void LoadLibs()
 		{
 			SetLastError(0);
@@ -136,15 +174,6 @@ namespace CMDR.Native
 			Libs.Add(User32, LoadLibrary(User32));
 			CheckError(User32);
 		}
-		
-		private static void CheckError(string name)
-        {
-			int error = Marshal.GetLastWin32Error();
-			if (error != 0)
-				Log.LogWin32Error(error, name);
-			SetLastError(0);
-        }
-		
 		internal static bool FreeLibs()
 		{
 			bool result = false;
@@ -153,33 +182,30 @@ namespace CMDR.Native
 			return result;
 		}
 		
-		internal static IntPtr GetProcFromBuildInfo(BuildInfo info)
-		{
-			IntPtr result = Glfw.GetProcAddress(info.Name);
-			int error = Marshal.GetLastWin32Error();
+		//internal static IntPtr GetProcFromBuildInfo(BuildInfo info)
+		//{
+		//	IntPtr result = Glfw.GetProcAddress(info.Name);
+		//	int error = Marshal.GetLastWin32Error();
 
-			if (error == 0)
-            {
-				var pointer = (Int64)result;
-				if(pointer != 0 || pointer != 1 || pointer != 2 || pointer != 3 || pointer != -1)
-					return result;
+		//	if (error == 0)
+  //          {
+		//		var pointer = (Int64)result;
+		//		if(pointer != 0 || pointer != 1 || pointer != 2 || pointer != 3 || pointer != -1)
+		//			return result;
 
-            }
+  //          }
 
-			Log.LogWin32Error(error, info.Name, true);
+		//	Log.LogWin32Error(error, info.Name, true);
 
-			//result = GetProcAddress(Libs[Opengl32], info.Name);
-			error = Marshal.GetLastWin32Error();
-			if (error == 0)
-				return result;
+		//	//result = GetProcAddress(Libs[Opengl32], info.Name);
+		//	error = Marshal.GetLastWin32Error();
+		//	if (error == 0)
+		//		return result;
 
-			Log.LogWin32Error(error, info.Name);
+		//	Log.LogWin32Error(error, info.Name);
 
-			throw new TypeLoadException("Builder Failure! See Log!");
-
-
-
-		}
+		//	throw new TypeLoadException("Builder Failure! See Log!");
+		//}
 	}
 	
 	

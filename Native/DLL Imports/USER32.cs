@@ -49,6 +49,16 @@ namespace CMDR.Native
 			IntPtr hInstance,
 			IntPtr lpParam
 			);
+
+		/// <summary>
+		/// Dispatches a message to a window procedure. It is typically used to dispatch a message retrieved by the GetMessage function.
+		/// </summary>
+		/// <param name="lpMsg"> A pointer to a structure that contains the message. </param>
+		/// <returns> The return value specifies the value returned by the window procedure.
+		/// Although its meaning depends on the message being dispatched, the return value generally is ignored. </returns>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern LRESULT DispatchMessage(ref MSG lpMsg);
+
 		/// <summary>
 		/// The <see cref="GetDC"> function retrieves a handle to a device context (DC) for the client area of a specified window or for the entire screen.
 		/// </summary>
@@ -57,6 +67,14 @@ namespace CMDR.Native
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdc"> MICROSOFT DOCS </see>
 		[DllImport(User32, SetLastError = true)]
 		internal static extern HDC GetDC(HWND hWnd);
+
+		/// <summary>
+		/// Retrieves a message from the calling thread's message queue.
+		/// The function dispatches incoming sent messages until a posted message is available for retrieval.
+		/// </summary>
+		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage"/> MICROSOFT DOCS </see>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern int GetMessage(ref MSG lpMsg, HWND hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
 		
 		/// <summary>
 		/// The GetMonitorInfo function retrieves information about a display monitor.
@@ -151,6 +169,40 @@ namespace CMDR.Native
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw"/> Microsoft Docs </see>
 		[DllImport(User32, SetLastError = true)]
 		internal static extern HHOOK SetWindowsHookExW(WH idHook, HookProc lpfn, IntPtr hmod, uint dwThreadID);
+
+		/// <summary>
+		/// Sets the specified window's show state.
+		/// </summary>
+		/// <param name="hWnd"> A handle to the window. </param>
+		/// <param name="nCmdShow"> Controls how the window is to be shown. </param>
+		/// <returns> If the window was previously visible, the return value is nonzero.
+		/// If the window was previously hidden, the return value is zero. </returns>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool ShowWindow(HWND hWnd, int nCmdShow = 5);
+
+		/// <summary>
+		/// Translates virtual-key messages into character messages.
+		/// The character messages are posted to the calling thread's message queue, to be read the 
+		/// next time the thread calls the GetMessage or PeekMessage function.
+		/// </summary>
+		/// <param name="lpMsg"> A pointer to an MSG structure that contains message information retrieved
+		/// from the calling thread's message queue by using the GetMessage or PeekMessage function. </param>
+		/// <returns>If the message is translated (that is, a character message is posted to the thread's message queue), the return value is nonzero.
+		/// If the message is WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, or WM_SYSKEYUP, the return value is nonzero, regardless of the translation.
+		/// If the message is not translated (that is, a character message is not posted to the thread's message queue), the return value is zero.</returns>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool TranslateMessage(ref MSG lpMsg);
+
+		/// <summary>
+		/// The UpdateWindow function updates the client area of the specified window by sending a WM_PAINT message
+		/// to the window if the window's update region is not empty. The function sends a WM_PAINT message directly
+		/// to the window procedure of the specified window, bypassing the application queue.
+		/// If the update region is empty, no message is sent.
+		/// </summary>
+		/// <param name="hWnd"> Handle to the window to be updated. </param>
+		/// <returns> If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. </returns>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool UpdateWindow(HWND hWnd);
 
 		/// <summary>
 		/// Unregisters a window class, freeing the memory required for the class.

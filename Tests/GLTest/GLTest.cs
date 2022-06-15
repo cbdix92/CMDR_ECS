@@ -101,7 +101,7 @@ namespace GLTest
             gameObject.Use(renderData);
             //Camera.Z = -100f;
 			
-            GameLoop.Time.Start();
+            //GameLoop.Time.Start();
             float counter = 0;
             //Glfw.SetKeyCallback(Display.Window, Keyinput);
 

@@ -1,27 +1,28 @@
 ﻿using System;
+using CMDR.Native;
 
-namespace CMDR.Native
+namespace CMDR
 {
 	
-    public sealed class Window
+    public class Window
     {
 
 		public string Title;
 
 		/// <summary> WNDCLASSEXW.style bitfield settings </summary>
 		public uint EXClassStyle { get; private set; }
-
+		
 		public uint ClassStyle { get; private set; }
+		
 		public IntPtr HWND { get; internal set; }
+		
 		public int StartingPosX;
+		
 		public int StartingPosY;
 		
-        private WNDCLASSEXW WNDCLASS;
 		private int _width;
+		
 		private int _height;
-
-
-
 
 		public int Width
 		{
@@ -56,6 +57,15 @@ namespace CMDR.Native
 		{
 			Win.CreateWindow(this);
 		}
+
+		public virtual void OnMove()
+        {
+
+        }
+		public virtual void OnSize()
+        {
+
+        }
 		
 		
     }

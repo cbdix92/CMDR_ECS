@@ -77,6 +77,7 @@
     <Compile Include="Native\Structs\Hook Structures\MOUSEHOOKSTRUCT.cs" />
     <Compile Include="Native\Structs\Hook Structures\MSLLHOOKSTRUCT.cs" />
     <Compile Include="Native\Structs\MONITORINFOEXW.cs" />
+    <Compile Include="Native\Structs\MSG.cs" />
     <Compile Include="Native\Structs\PIXELFORMATDESCRIPTOR.cs" />
     <Compile Include="Native\Structs\Point.cs" />
     <Compile Include="Native\Structs\RAWINPUTDEVICE.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Native\Structs\RAWINPUTHEADER.cs" />
     <Compile Include="Native\Structs\Rect.cs" />
     <Compile Include="Native\Structs\WNDCLASSEXW.cs" />
-    <Compile Include="Native\Window.cs" />
+    <Compile Include="Window.cs" />
     <Compile Include="OpenGLAbstractions\Mesh.cs" />
     <Compile Include="OpenGLAbstractions\MeshManager.cs" />
     <Compile Include="OpenGLAbstractions\ShaderManager.cs" />
