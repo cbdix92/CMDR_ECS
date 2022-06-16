@@ -56,8 +56,10 @@
     <Compile Include="Data Structures\BoolArray.cs" />
     <Compile Include="Data Structures\Quaternion.cs" />
     <Compile Include="Data Structures\Vector2.cs" />
+    <Compile Include="Data Structures\Vector2UI.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
+    <Compile Include="Initializer.cs" />
     <Compile Include="Native\Delegates.cs" />
     <Compile Include="Native\DLL Imports\GDI32.cs" />
     <Compile Include="Native\DLL Imports\KERNEL32.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Native\Structs\RAWINPUTHEADER.cs" />
     <Compile Include="Native\Structs\Rect.cs" />
     <Compile Include="Native\Structs\WNDCLASSEXW.cs" />
+    <Compile Include="ProjectionTypes.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="OpenGLAbstractions\Mesh.cs" />
     <Compile Include="OpenGLAbstractions\MeshManager.cs" />

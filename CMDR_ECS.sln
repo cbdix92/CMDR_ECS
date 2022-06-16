@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTest", "Tests\GLTest\GLTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Tests\Test\Test.csproj", "{5B88FBDC-4DD9-430C-87DE-F410F0ACDE72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowTest", "..\WindowTest\WindowTest.csproj", "{13D5C05D-6A13-4387-86E7-9C5D8FC4EE07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5B88FBDC-4DD9-430C-87DE-F410F0ACDE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B88FBDC-4DD9-430C-87DE-F410F0ACDE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B88FBDC-4DD9-430C-87DE-F410F0ACDE72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13D5C05D-6A13-4387-86E7-9C5D8FC4EE07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13D5C05D-6A13-4387-86E7-9C5D8FC4EE07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13D5C05D-6A13-4387-86E7-9C5D8FC4EE07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13D5C05D-6A13-4387-86E7-9C5D8FC4EE07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

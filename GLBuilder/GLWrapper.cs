@@ -1,14 +1,14 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using CMDR;
 
 namespace OpenGL
 {
     public static unsafe partial class GL
     {
-        public static void Init()
+		public static void Build()
         {
-			Build();
+			BuildMethods();
+			ShaderManager.LoadDefaults();
 			ClearColor(Color.BabyBlue);
         }
 

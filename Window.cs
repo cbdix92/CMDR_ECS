@@ -19,30 +19,28 @@ namespace CMDR
 		public int StartingPosX;
 		
 		public int StartingPosY;
-		
-		private int _width;
-		
-		private int _height;
 
-		public int Width
+		private Vector2UI _size;
+
+		public uint Width
 		{
-			get => _width;
+			get => _size.X;
 			set
 			{
-				(Camera.Width, _width) = (value, value);
+				(Camera.Width, _size.X) = (value, value);
 			}
 		}
 
-		public int Height
+		public uint Height
 		{
-			get => _height;
+			get => _size.Y;
 			set
 			{
-				(Camera.Height, _height) = (value, value);
+				(Camera.Height, _size.Y) = (value, value);
 			}
 		}
 		
-        public Window(int width, int height, string title)
+        public Window(uint width, uint height, string title)
 		{
             (Width, Height, Title) = (width, height, title);
 		}

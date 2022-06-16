@@ -97,7 +97,6 @@ namespace CMDR
 			Glfw.SetWindowSizeCallback(Window, WindowSizeCallback);
 
             Native.Win.Start();
-            Native.Log.Init();
             GL.Init();
             Render.Init();
             ShaderManager.Init();

@@ -10,12 +10,6 @@ namespace CMDR.Systems
     {
         internal static Scene Scene { get => SceneManager.ActiveScene; }
 		
-		
-		internal unsafe static void Init()
-		{
-
-		}
-		
         internal static void ClearScreen()
         {
 			GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);

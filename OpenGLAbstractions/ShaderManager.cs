@@ -9,6 +9,7 @@ namespace CMDR
 	{
 
 		public static Dictionary<int, Shader> Shaders = new Dictionary<int, Shader>();
+
 		private static readonly Dictionary<int, uint> _vertIDs = new Dictionary<int, uint>();
 		private static readonly Dictionary<int, uint> _fragIDs = new Dictionary<int, uint>();
 
@@ -17,11 +18,19 @@ namespace CMDR
 		private static readonly string _defaultFragName = @"FragDefault.frag";
 
 		private static int _defaultShaderKey;
-		public static void Init()
+		public static void LoadDefaults()
         {
 			string vertPath = Path.Combine(_dir, _defaultVertName);
+			
 			string fragPath = Path.Combine(_dir, _defaultFragName);
+
+			if (Directory.Exists(_dir) == false || File.Exists(vertPath) == false || File.Exists(fragPath) == false)
+            {
+				throw new FileNotFoundException($"Could not find correct default shaders at either {vertPath} or {fragPath}.");
+            }
+			
 			_defaultShaderKey = string.Concat(vertPath, fragPath).GetHashCode();
+
 			Load(vertPath, fragPath);
         }
 

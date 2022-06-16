@@ -5,7 +5,7 @@ namespace OpenGL
 {
     public static partial class GL
     {
-        internal static void Build()
+        private static void BuildMethods()
         {
             #region A
             _activeTexture = Marshal.GetDelegateForFunctionPointer<_activeTextureDelegate>(Glfw.GetProcAddress("glActiveTexture"));
