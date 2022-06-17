@@ -10,12 +10,12 @@ namespace CMDR.Native
     [StructLayout(LayoutKind.Sequential)]
     internal struct MSG
     {
-        IntPtr hwnd;
-        uint message;
-        IntPtr wParam;
-        IntPtr lParam;
-        uint time;
-        Point pt;
-        uint lPrivate;
+        public IntPtr hwnd;
+        public WM message;
+        public IntPtr wParam;
+        public IntPtr lParam;
+        public uint time;
+        public Point pt;
+        public uint lPrivate;
     }
 }

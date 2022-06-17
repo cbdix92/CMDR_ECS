@@ -1,9 +1,7 @@
 using System;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
 using System.Diagnostics;
-using CMDR.Systems;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 
 namespace CMDR.Native
@@ -11,14 +9,9 @@ namespace CMDR.Native
 	
 	internal static partial class Win
 	{
-
-		internal static HookProc KeyboardHook = null;
-		internal static HookProc MouseHook = null;
-
 		internal static Window CurrentWindow = null;
+
 		internal static WNDPROC WndProc = new WNDPROC(WindowProcedure);
-		
-		internal static Dictionary<string, IntPtr> Libs = new Dictionary<string, IntPtr>();
 
 		private static MSG _message;
 
@@ -30,9 +23,8 @@ namespace CMDR.Native
 			}
 			else
 			{
-				if (!DestroyWindow(CurrentWindow))
-					CheckError("DestroyWindow", true);
-				CurrentWindow = window;
+				DestroyWindow(CurrentWindow);
+				throw new Win32Exception("Window already existed. Cannot create more than one window.");
 			}
 
 
@@ -65,28 +57,45 @@ namespace CMDR.Native
 
 		internal static IntPtr WindowProcedure(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam)
 		{
-			return IntPtr.Zero;
+			switch((WM)uMsg)
+            {
+				case WM.QUIT:
+					return IntPtr.Zero;
+				case WM.CLOSE:
+					CurrentWindow.OnClose();
+					return IntPtr.Zero;
+				default:
+					return DefWindowProcW(hWnd, uMsg, wParam, lParam);
+            }
 		}
 
-		internal static bool DestroyWindow(Window window)
+		internal static void DestroyWindow(Window window)
 		{
-			// TODO ... 
-			// Remove Window here
-			return true;
+			PostQuitMessage(0);
+			if (DestroyWindow(window.HWND))
+				CheckError("DestroyWindow", true);
 		}
 
 		/// <summary>
 		/// Handle Windows message queue.
 		/// </summary>
-		internal static void HandleMessages()
+		/// <returns> Returns true if the GameLoop should continue, otherwise returns false. </returns>
+		internal static bool HandleMessages()
         {
-			if(GetMessage(ref _message, CurrentWindow.HWND, 0, 0) == -1)
-            {
-				CheckError("GetMessage", true);
-            }
-			TranslateMessage(ref _message);
-			DispatchMessage(ref _message);
+			bool continueGameLoop = true;
 
+			while(PeekMessageW(ref _message, CurrentWindow.HWND, 0,0, PM.REMOVE))
+            {
+				TranslateMessage(ref _message);
+				
+				DispatchMessage(ref _message);
+				
+				// If WM.CLOSE message is received, the return value will stop the GameLoop.
+				if (_message.message == WM.CLOSE)
+					continueGameLoop = false;
+            }
+
+			return continueGameLoop;
         }
 
 		/// <summary>
@@ -96,31 +105,34 @@ namespace CMDR.Native
 		/// This makes finding the point where the error was generated easier to find. </param>
 		/// <param name="exit"> Specify true for hard throw if error is detected, otherwise error will simply be logged. </param>
 		/// <returns> Returns Win32 error code. </returns>
-		private static int CheckError(string name, bool exit)
+		internal static int CheckError(string name, bool exit)
         {
 			int error = Marshal.GetLastWin32Error();
 			
 			if (error != 0)
+            {
 				Log.LogWin32Error(error, name);
-			
-			if (exit)
-				throw new Win32Exception(error);
+				
+				if (exit)
+					throw new Win32Exception(error);
+            }
 			
 			SetLastError(0);
 			
 			return error;
         }
-		internal static void Start()
-        {
-			KeyboardHook = new HookProc(Input.KeyboardCallback);
-			MouseHook = new HookProc(Input.MouseCallback);
 
-			uint thread = (uint)Process.GetCurrentProcess().Threads[0].Id;
-			SetWindowsHookExW(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
-			SetWindowsHookExW(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
-        }
-		
         #region OLDBUILDER_CODE
+		//internal static void Start()
+  //      {
+		//	KeyboardHook = new HookProc(Input.KeyboardCallback);
+		//	MouseHook = new HookProc(Input.MouseCallback);
+
+		//	uint thread = (uint)Process.GetCurrentProcess().Threads[0].Id;
+		//	SetWindowsHookExW(WH.KEYBOARD, KeyboardHook, IntPtr.Zero, thread);
+		//	SetWindowsHookExW(WH.MOUSE, MouseHook, IntPtr.Zero, thread);
+  //      }
+		
         
 		//internal unsafe static bool Start()
 		//{
@@ -165,22 +177,21 @@ namespace CMDR.Native
 		//	return true;
 		//}
 		
-        #endregion
-        internal static void LoadLibs()
-		{
-			SetLastError(0);
-			Libs.Add(Kernel32, LoadLibrary(Kernel32));
-			CheckError(Kernel32);
-			Libs.Add(User32, LoadLibrary(User32));
-			CheckError(User32);
-		}
-		internal static bool FreeLibs()
-		{
-			bool result = false;
-			foreach(IntPtr hModule in Libs.Values)
-				result |= FreeLibrary(hModule);
-			return result;
-		}
+  //      internal static void LoadLibs()
+		//{
+		//	SetLastError(0);
+		//	Libs.Add(Kernel32, LoadLibrary(Kernel32));
+		//	CheckError(Kernel32);
+		//	Libs.Add(User32, LoadLibrary(User32));
+		//	CheckError(User32);
+		//}
+		//internal static bool FreeLibs()
+		//{
+		//	bool result = false;
+		//	foreach(IntPtr hModule in Libs.Values)
+		//		result |= FreeLibrary(hModule);
+		//	return result;
+		//}
 		
 		//internal static IntPtr GetProcFromBuildInfo(BuildInfo info)
 		//{
@@ -206,6 +217,7 @@ namespace CMDR.Native
 
 		//	throw new TypeLoadException("Builder Failure! See Log!");
 		//}
+        #endregion
 	}
 	
 	

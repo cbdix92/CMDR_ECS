@@ -6,8 +6,9 @@ namespace CMDR
 	
     public class Window
     {
+        #region PUBLIC_MEMBERS
 
-		public string Title;
+        public string Title;
 
 		/// <summary> WNDCLASSEXW.style bitfield settings </summary>
 		public uint EXClassStyle { get; private set; }
@@ -19,8 +20,6 @@ namespace CMDR
 		public int StartingPosX;
 		
 		public int StartingPosY;
-
-		private Vector2UI _size;
 
 		public uint Width
 		{
@@ -39,13 +38,31 @@ namespace CMDR
 				(Camera.Height, _size.Y) = (value, value);
 			}
 		}
-		
-        public Window(uint width, uint height, string title)
+
+		#endregion
+
+		#region INTERNAL_MEMBERS
+
+
+		#endregion
+
+		#region PRIVATE_MEMBERS
+
+		private Vector2UI _size;
+
+		#endregion
+
+		#region CONTRUCTORS
+
+		public Window(uint width, uint height, string title)
 		{
             (Width, Height, Title) = (width, height, title);
 		}
 
-		public void SetFlag(uint flag)
+        #endregion
+
+        #region PUBLIC_METHODS
+        public void SetFlag(uint flag)
 		{
 			// TODO ... 
             // Set window bit fields here.
@@ -56,15 +73,32 @@ namespace CMDR
 			Win.CreateWindow(this);
 		}
 
+		public void Close()
+        {
+			Win.PostMessageW(HWND, (uint)WM.CLOSE, IntPtr.Zero, IntPtr.Zero);
+        }
+
+		#region VIRTUAL_METHODS
+		
 		public virtual void OnMove()
         {
 
         }
+
 		public virtual void OnSize()
         {
 
         }
-		
-		
+
+		public virtual void OnClose()
+        {
+
+        }
+
+        #endregion
+
+        #endregion
+
+
     }
 }

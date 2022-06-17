@@ -22,17 +22,13 @@ namespace CMDR.Systems
             CreateUpdater(100, Physics.Update);
             CreateUpdater(100, Input.Update);
 
-            //while (!Glfw.WindowShouldClose(Display.Window))
-            while(Win.CurrentWindow != null)
+            while(Win.HandleMessages())
             {
                 foreach (Updater updater in Updaters)
                     updater.Update(GameTime);
-                
-                Win.HandleMessages();
-
-                Glfw.PollEvents();
             }
-            Glfw.Terminate();
+
+            Win.DestroyWindow(Win.CurrentWindow);
 
         }
         public static void CreateUpdater(int persecond, UpdateHandler update)

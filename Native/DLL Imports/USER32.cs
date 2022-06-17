@@ -50,6 +50,9 @@ namespace CMDR.Native
 			IntPtr lpParam
 			);
 
+		[DllImport(User32, SetLastError = true)]
+		internal static extern LRESULT DefWindowProcW(HWND hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
 		/// <summary>
 		/// Dispatches a message to a window procedure. It is typically used to dispatch a message retrieved by the GetMessage function.
 		/// </summary>
@@ -58,6 +61,15 @@ namespace CMDR.Native
 		/// Although its meaning depends on the message being dispatched, the return value generally is ignored. </returns>
 		[DllImport(User32, SetLastError = true)]
 		internal static extern LRESULT DispatchMessage(ref MSG lpMsg);
+
+		/// <summary>
+		/// Destroys the specified window. 
+		/// </summary>
+		/// <param name="hWnd"> A handle to the window to be destroyed. </param>
+		/// <returns> If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. </returns>
+		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-destroywindow"/> MICROSOFT DOCS </see>
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool DestroyWindow(HWND hWnd);
 
 		/// <summary>
 		/// The <see cref="GetDC"> function retrieves a handle to a device context (DC) for the client area of a specified window or for the entire screen.
@@ -112,13 +124,6 @@ namespace CMDR.Native
 		[DllImport(User32, SetLastError = true)]
 		internal static extern uint GetRawInputDeviceList(RAWINPUTDEVICELIST[] pRawInputDeviceList, ref uint puiNumDevices, uint cbSize);
 
-
-		[DllImport(User32, SetLastError = true)]
-		internal static extern IntPtr LoadCursorW(IntPtr hInstance, string lpCursorName);
-
-		[DllImport(User32, SetLastError = true)]
-		internal static extern IntPtr LoadImageW(IntPtr hInstance, string name, uint type, int cx, int cy, LR fuLoad);
-
 		/// <summary>
 		/// Retrieves the information about the raw input devices for the current application.
 		/// </summary>
@@ -129,6 +134,21 @@ namespace CMDR.Native
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getregisteredrawinputdevices"> MICROSOFT DOCS </see>
 		[DllImport(User32, SetLastError = true)]
 		internal static extern uint GetRegisteredRawInputDevices(RAWINPUTDEVICE[] pRawInputDevices, ref uint puiNumDevices, uint cbSize);
+
+		[DllImport(User32, SetLastError = true)]
+		internal static extern IntPtr LoadCursorW(IntPtr hInstance, string lpCursorName);
+
+		[DllImport(User32, SetLastError = true)]
+		internal static extern IntPtr LoadImageW(IntPtr hInstance, string name, uint type, int cx, int cy, LR fuLoad);
+
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool PeekMessageW(ref MSG lpMsg, HWND hwnd, uint wMsgFilterMin, uint wMsgFilterMax, PM wRemoveFlag);
+
+		[DllImport(User32, SetLastError = true)]
+		internal static extern bool PostMessageW(HWND hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+		[DllImport(User32, SetLastError = true)]
+		internal static extern void PostQuitMessage(int nExitCode);
 
 		/// <summary>
 		/// Registers a window class for subsequent use in calls to the CreateWindow or CreateWindowEx function.
