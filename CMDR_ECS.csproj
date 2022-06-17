@@ -57,7 +57,6 @@
     <Compile Include="Data Structures\Quaternion.cs" />
     <Compile Include="Data Structures\Vector2.cs" />
     <Compile Include="Data Structures\Vector2UI.cs" />
-    <Compile Include="Display.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="Native\Delegates.cs" />
@@ -103,61 +102,6 @@
     <Compile Include="Native\Log.cs" />
     <Compile Include="GLBuilder\Enums.cs" />
     <Compile Include="GLBuilder\GLWrapper.cs" />
-    <Compile Include="GLFW\CharEventArgs.cs" />
-    <Compile Include="GLFW\ContentScaleEventArgs.cs" />
-    <Compile Include="GLFW\Delegates.cs" />
-    <Compile Include="GLFW\Enums\ClientApi.cs" />
-    <Compile Include="GLFW\Enums\ConnectionStatus.cs" />
-    <Compile Include="GLFW\Enums\Constants.cs" />
-    <Compile Include="GLFW\Enums\ContextApi.cs" />
-    <Compile Include="GLFW\Enums\ContextAttributes.cs" />
-    <Compile Include="GLFW\Enums\CursorMode.cs" />
-    <Compile Include="GLFW\Enums\CursorType.cs" />
-    <Compile Include="GLFW\Enums\ErrorCode.cs" />
-    <Compile Include="GLFW\Enums\GamePadAxis.cs" />
-    <Compile Include="GLFW\Enums\GamePadButton.cs" />
-    <Compile Include="GLFW\Enums\Hat.cs" />
-    <Compile Include="GLFW\Enums\Hint.cs" />
-    <Compile Include="GLFW\Enums\InputMode.cs" />
-    <Compile Include="GLFW\Enums\InputState.cs" />
-    <Compile Include="GLFW\Enums\Joystick.cs" />
-    <Compile Include="GLFW\Enums\Keys.cs" />
-    <Compile Include="GLFW\Enums\ModifierKeys.cs" />
-    <Compile Include="GLFW\Enums\MouseButton.cs" />
-    <Compile Include="GLFW\Enums\Profile.cs" />
-    <Compile Include="GLFW\Enums\ReleaseBehavior.cs" />
-    <Compile Include="GLFW\Enums\Robustness.cs" />
-    <Compile Include="GLFW\Enums\WindowAttribute.cs" />
-    <Compile Include="GLFW\Exception.cs" />
-    <Compile Include="GLFW\FileDropEventArgs.cs" />
-    <Compile Include="GLFW\GameWindow.cs" />
-    <Compile Include="GLFW\Glfw.cs" />
-    <Compile Include="GLFW\JetBrains.Annotations.cs" />
-    <Compile Include="GLFW\KeyEventArgs.cs" />
-    <Compile Include="GLFW\MaximizeEventArgs.cs" />
-    <Compile Include="GLFW\MouseButtonEventArgs.cs" />
-    <Compile Include="GLFW\MouseMoveEventArgs.cs" />
-    <Compile Include="GLFW\Native.cs" />
-    <Compile Include="GLFW\NativeWindow.cs" />
-    <Compile Include="GLFW\SizeChangeEventArgs.cs" />
-    <Compile Include="GLFW\Strings.Designer.cs" />
-    <Compile Include="GLFW\Structs\Cursor.cs" />
-    <Compile Include="GLFW\Structs\EGLContext.cs" />
-    <Compile Include="GLFW\Structs\EGLDisplay.cs" />
-    <Compile Include="GLFW\Structs\EGLSurface.cs" />
-    <Compile Include="GLFW\Structs\GamePadState.cs" />
-    <Compile Include="GLFW\Structs\GammaRamp.cs" />
-    <Compile Include="GLFW\Structs\GammaRampInternal.cs" />
-    <Compile Include="GLFW\Structs\GLXContext.cs" />
-    <Compile Include="GLFW\Structs\HGLRC.cs" />
-    <Compile Include="GLFW\Structs\Image.cs" />
-    <Compile Include="GLFW\Structs\Monitor.cs" />
-    <Compile Include="GLFW\Structs\NSOpenGLContext.cs" />
-    <Compile Include="GLFW\Structs\OSMesaContext.cs" />
-    <Compile Include="GLFW\Structs\VideoMode.cs" />
-    <Compile Include="GLFW\Structs\Window.cs" />
-    <Compile Include="GLFW\Util.cs" />
-    <Compile Include="GLFW\Vulkan.cs" />
     <Compile Include="ImageDecoder\DecoderJPEG.cs" />
     <Compile Include="ImageDecoder\DecoderPNG.cs" />
     <Compile Include="ImageDecoder\enums.cs" />
@@ -199,9 +143,6 @@
     <None Include="Shaders\VertDefault.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GLFW\Strings.resx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

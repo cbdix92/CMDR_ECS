@@ -1,6 +1,4 @@
-﻿using System;
-using GLFW;
-using OpenGL;
+﻿using OpenGL;
 
 using CMDR.Components;
 
@@ -20,7 +18,7 @@ namespace CMDR.Systems
 
             Debugger.Draw(ticks);
 
-			Matrix4 projection = Display.Projection;
+			Matrix4 projection = Camera.Projection;
 			Matrix4 view = Camera.View;
             Vector3 cameraPos = Camera.Pos;
 

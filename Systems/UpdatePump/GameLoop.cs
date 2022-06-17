@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Collections.Generic;
-using GLFW;
 using CMDR.Native;
 
 namespace CMDR.Systems

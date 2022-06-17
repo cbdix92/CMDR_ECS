@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Diagnostics;
-using GLFW;
 using CMDR.Components;
 
 namespace CMDR.Systems

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CMDR.Native;
-using GLFW;
 
 namespace CMDR.Systems
 {
@@ -128,20 +127,15 @@ namespace CMDR.Systems
 			return IntPtr.Zero;
 		}
 
-		internal static void KeyRecorder(GLFW.Window window, Key key, int scanCode, InputState state, ModifierKeys mods)
-        {
-			/// Store a que of key presses that will be processed the next time Input.Update is called.
-			/// Combine action and mods into keyData byte using key mask.
-        }
-
 		public static void Update(long ticks)
         {
 			if(UseMouse)
             {
 				//Glfw.GetCursorPosition(Display.Window, out _mouseX, out _mouseY);
-				
-				if(KeepCenterMouse)
-					Glfw.SetCursorPosition(Display.Window, Display.Center.X, Display.Center.Y);
+
+				if (KeepCenterMouse)
+					return;
+					//Glfw.SetCursorPosition(Display.Window, Display.Center.X, Display.Center.Y);
 
 			}
         }
