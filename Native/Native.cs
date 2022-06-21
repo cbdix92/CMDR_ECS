@@ -30,7 +30,7 @@ namespace CMDR.Native
 
 			WNDCLASSEXW wndClass = new WNDCLASSEXW();
 			wndClass.cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEXW));
-			wndClass.style = window.ClassStyle | (uint)(CS.OWNDC | CS.VREDRAW | CS.HREDRAW);
+			wndClass.style = window.ClassStyle | (uint)CS.OWNDC;
 			wndClass.lpfnWndProc = new WNDPROC(WindowProcedure);
             wndClass.cbClsExtra = 0;
             wndClass.cbWndExtra = 0;
@@ -47,11 +47,12 @@ namespace CMDR.Native
 				CheckError("RegisterWindow", true);
 			}
 
-			window.HWND = CreateWindowExW(WS_EX.OVERLAPPEDWINDOW, "CMDR_WINDOW_CLASS", window.Title, (WS)window.ClassStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+			window.HWND = CreateWindowExW(window.WindowStyleEx, "CMDR_WINDOW_CLASS", window.Title, window.WindowStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
 			
 			if (window.HWND == IntPtr.Zero)
 				CheckError("CreateWindow", true);
 			
+			ShowWindow(windwow.HWND, (int)SW.SHOW);
 			return true;
 		}
 

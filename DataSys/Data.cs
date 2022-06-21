@@ -18,6 +18,7 @@ namespace CMDR
         readonly static IEnumerable _types = Assembly.GetExecutingAssembly().GetTypes().Where(T => T.GetInterfaces().Contains(typeof(IComponent)));
         
         public static HashSet<Type> Types { get; private set; }
+
         internal static void GenerateComponents(out Hashtable output)
         {
             output = new Hashtable();
@@ -32,7 +33,9 @@ namespace CMDR
 
                 if (TComponent.Name == typeof(IComponent<>).Name)
                     continue;
+
                 var TNew = TComponentCollection.MakeGenericType(TComponent);
+                
                 output.Add(TComponent, Activator.CreateInstance(TNew));
 
                 ComponentTotal++;

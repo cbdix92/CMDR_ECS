@@ -10,10 +10,11 @@ namespace CMDR
 
         public string Title;
 
-		/// <summary> WNDCLASSEXW.style bitfield settings </summary>
-		public uint EXClassStyle { get; private set; }
-		
 		public uint ClassStyle { get; private set; }
+
+		public uint WindowStyle { get; private set; }
+		
+		public uint WindowStyleEX { get; private set; }
 		
 		public IntPtr HWND { get; internal set; }
 		
@@ -50,22 +51,40 @@ namespace CMDR
 
 		private Vector2UI _size;
 
+		private uint _classStyleMaster;
+
+		private uint _windowStyleMaster;
+
+		private uint _windowStyleEXMaster;
+
 		#endregion
 
-		#region CONTRUCTORS
+		#region CONSTRUCTORS
 
-		public Window(uint width, uint height, string title)
+		public Window(uint width, uint height, int startingX, int startingY, string title)
 		{
-            (Width, Height, Title) = (width, height, title);
+            (Width, Height, startingX, startingY, Title) = (width, height, StartingPosX, StartingPosY, title);
+			GenerateMasterBitMask();
 		}
 
         #endregion
 
         #region PUBLIC_METHODS
-        public void SetFlag(uint flag)
+
+        public void SetFlag(WindowTarget target, uint flag)
 		{
-			// TODO ... 
-            // Set window bit fields here.
+			switch(target)
+			{
+				case WindowTarget.ClassStyle:
+					ClassStyle |= (flag & ~(_classStyleMaster));
+					break;
+				case WindowTarget.WindowStyle:
+					WindowStyle |= (flag & ~(_windowStyleMaster));
+					break;
+				case WindowTarget.WindowStyleExtended:
+					WindowStyleEX |= (flag & ~(_windowStyleEXMaster));
+					break;
+			}
 		}
 
 		public void Create()
@@ -99,6 +118,29 @@ namespace CMDR
 
         #endregion
 
+		#region PRIVATE_METHODS
+		
+		private void GenerateMasterBitMask()
+		{
+			Type[] types = new Type[]{typeof(ClassStyle), typeof(WindowStyle), typeof(WindowStyleEX) };
+
+			foreach(Type type in types)
+			{
+				uint result = 0;
+				foreach(uint i in Enum.GetValues(type))
+				{
+					result |= i;
+				}
+				if(type == typeof(ClassStyle))
+					_classStyleMaster = result;
+				else if(type == typeof(WindowStyle))
+					_windowStyleMaster = result;
+				else if(type == typeof(WindowStyleEX))
+					_windowStyleEXMaster = result;
+			}
+		}
+
+		#endregion
 
     }
 }

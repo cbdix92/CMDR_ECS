@@ -36,10 +36,10 @@ namespace CMDR.Native
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createwindowexw"/> Microsoft Docs </see>
 		[DllImport(User32, SetLastError = true)]
 		internal static extern HWND CreateWindowExW(
-			WS_EX dwExStyle,
+			uint dwExStyle,
 			string lpClassName,
 			string lpWindowName,
-			WS dwStyle,
+			uint dwStyle,
 			int x,
 			int y,
 			int nWidth,
@@ -198,7 +198,7 @@ namespace CMDR.Native
 		/// <returns> If the window was previously visible, the return value is nonzero.
 		/// If the window was previously hidden, the return value is zero. </returns>
 		[DllImport(User32, SetLastError = true)]
-		internal static extern bool ShowWindow(HWND hWnd, int nCmdShow = 5);
+		internal static extern bool ShowWindow(HWND hWnd, int nCmdShow);
 
 		/// <summary>
 		/// Translates virtual-key messages into character messages.

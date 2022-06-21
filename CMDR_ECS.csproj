@@ -56,6 +56,7 @@
     <Compile Include="Data Structures\BoolArray.cs" />
     <Compile Include="Data Structures\Quaternion.cs" />
     <Compile Include="Data Structures\Vector2.cs" />
+    <Compile Include="Data Structures\Vector2I.cs" />
     <Compile Include="Data Structures\Vector2UI.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
     <Compile Include="Initializer.cs" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="ClassStyle.cs" />
     <None Include="packages.config" />
     <None Include="Shaders\FragDefault.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -144,6 +146,9 @@
     <None Include="Shaders\VertDefault.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="WindowStyleEx.cs" />
+    <Compile Include="WindowStyle.cs" />
+    <Compile Include="WindowTarget.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
