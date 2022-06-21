@@ -47,12 +47,12 @@ namespace CMDR.Native
 				CheckError("RegisterWindow", true);
 			}
 
-			window.HWND = CreateWindowExW(window.WindowStyleEx, "CMDR_WINDOW_CLASS", window.Title, window.WindowStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+			window.HWND = CreateWindowExW(window.WindowStyleEX, "CMDR_WINDOW_CLASS", window.Title, window.WindowStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
 			
 			if (window.HWND == IntPtr.Zero)
 				CheckError("CreateWindow", true);
 			
-			ShowWindow(windwow.HWND, (int)SW.SHOW);
+			ShowWindow(window.HWND, (int)SW.SHOW);
 			return true;
 		}
 

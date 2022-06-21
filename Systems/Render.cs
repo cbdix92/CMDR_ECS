@@ -69,7 +69,7 @@ namespace CMDR.Systems
             // Draw images to internal buffer
             ScreenBuffer(ticks);
             // Draw images to the screen
-            Glfw.SwapBuffers(Display.Window);
+            //Glfw.SwapBuffers(Display.Window);
         }
     }
 }

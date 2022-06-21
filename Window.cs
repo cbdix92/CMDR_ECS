@@ -22,7 +22,7 @@ namespace CMDR
 		
 		public int StartingPosY;
 
-		public uint Width
+		public int Width
 		{
 			get => _size.X;
 			set
@@ -31,7 +31,7 @@ namespace CMDR
 			}
 		}
 
-		public uint Height
+		public int Height
 		{
 			get => _size.Y;
 			set
@@ -49,7 +49,7 @@ namespace CMDR
 
 		#region PRIVATE_MEMBERS
 
-		private Vector2UI _size;
+		private Vector2I _size;
 
 		private uint _classStyleMaster;
 
@@ -61,7 +61,7 @@ namespace CMDR
 
 		#region CONSTRUCTORS
 
-		public Window(uint width, uint height, int startingX, int startingY, string title)
+		public Window(int width, int height, int startingX, int startingY, string title)
 		{
             (Width, Height, startingX, startingY, Title) = (width, height, StartingPosX, StartingPosY, title);
 			GenerateMasterBitMask();

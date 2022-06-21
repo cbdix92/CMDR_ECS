@@ -11,7 +11,7 @@ namespace CMDR.Native
 	internal struct WNDCLASSEXW
 	{
 		public uint cbSize;
-		public CS style;
+		public uint style;
 		public WNDPROC lpfnWndProc;
 		public int cbClsExtra;
 		public int cbWndExtra;

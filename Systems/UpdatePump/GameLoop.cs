@@ -13,7 +13,7 @@ namespace CMDR.Systems
         internal static List<Updater> Updaters = new List<Updater>();
         public static long GameTime => Time.ElapsedTicks;
 
-        internal static void Start()
+        public static void Start()
         {
 
             Time.Start();

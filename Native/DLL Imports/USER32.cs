@@ -159,7 +159,7 @@ namespace CMDR.Native
 		/// If the function fails, the return value is zero. </returns>
 		/// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerclassexw"/> Microsoft Docs </see>
 		[DllImport(User32, SetLastError = true)]
-		internal static extern ATOM RegisterClassExW([MarshalAs(UnmanagedType.LPStruct)][In] ref WNDCLASSEXW wnd);
+		internal static extern ATOM RegisterClassExW(/*[MarshalAs(UnmanagedType.LPStruct)]*/[In] ref WNDCLASSEXW wnd);
 
 		/// <summary>
 		/// Registers the devices that supply the raw input data.

@@ -59,7 +59,6 @@
     <Compile Include="Data Structures\Vector2I.cs" />
     <Compile Include="Data Structures\Vector2UI.cs" />
     <Compile Include="GLBuilder\GLBuild.cs" />
-    <Compile Include="Initializer.cs" />
     <Compile Include="Native\Delegates.cs" />
     <Compile Include="Native\DLL Imports\GDI32.cs" />
     <Compile Include="Native\DLL Imports\KERNEL32.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Native\Enums\PM.cs" />
     <Compile Include="Native\Enums\RIDI.cs" />
     <Compile Include="Native\Enums\RIM.cs" />
+    <Compile Include="Native\Enums\SW.cs" />
     <Compile Include="Native\Enums\WH.cs" />
     <Compile Include="Native\Enums\WM.cs" />
     <Compile Include="Native\Enums\WS.cs" />

@@ -2,7 +2,7 @@ using System;
 
 namespace CMDR.Native
 {
-    internal enum CW : int
+    internal enum SW : int
     {
         /// <summary> Hides the window and activates another window. </summary>
         HIDE = 0,
@@ -26,7 +26,7 @@ namespace CMDR.Native
         SHOW = 5,
         
         /// <summary> Minimizes the specified window and activates the next top-level window in the Z order. </summary>
-        MINIMIZE = 6
+        MINIMIZE = 6,
         
         /// <summary> Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED,
         /// except the window is not activated. </summary>

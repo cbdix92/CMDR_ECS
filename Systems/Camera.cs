@@ -13,7 +13,7 @@ namespace CMDR
 
         public static Vector3 Rotation { get => _rot; }
 
-        public static Vector2UI Size { get => _size; }
+        public static Vector2I Size { get => _size; }
 
         public static uint FOV
         {
@@ -115,7 +115,7 @@ namespace CMDR
         #endregion
 
         #region SIZE
-        public static uint Width
+        public static int Width
         {
             get => _size.X;
             set
@@ -125,7 +125,7 @@ namespace CMDR
             }
         }
 
-        public static uint Height
+        public static int Height
         {
             get => _size.Y;
             set
@@ -201,7 +201,7 @@ namespace CMDR
 
         #region PRIVATE_MEMBERS
 
-        private static Vector2UI _size;
+        private static Vector2I _size;
 
         private static Vector3 _velocity;
 
