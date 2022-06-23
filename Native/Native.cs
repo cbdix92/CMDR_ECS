@@ -11,6 +11,8 @@ namespace CMDR.Native
 	{
 		internal static Window CurrentWindow = null;
 
+		internal static WNDCLASSEXW wndClass = default;
+
 		internal static WNDPROC WndProc = new WNDPROC(WindowProcedure);
 
 		private static MSG _message;
@@ -28,31 +30,45 @@ namespace CMDR.Native
 			}
 
 
-			WNDCLASSEXW wndClass = new WNDCLASSEXW();
+			//wndClass = new WNDCLASSEXW();
 			wndClass.cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEXW));
 			wndClass.style = window.ClassStyle | (uint)CS.OWNDC;
 			wndClass.lpfnWndProc = new WNDPROC(WindowProcedure);
             wndClass.cbClsExtra = 0;
             wndClass.cbWndExtra = 0;
             wndClass.hInstance = Process.GetCurrentProcess().Handle;
-            //wndClass.hIcon = 
-            //wndClass.hCursor = 
-            //wndClass.hbrBackground = 
-            //wndClass.lpszMenuName = 
-            wndClass.lpszClassName = "CMDR_WINDOW_CLASS";
-			//wndClass.hIconSm =   
+			wndClass.hIcon = LoadIconW(IntPtr.Zero, (ushort)IDI.APPLICATION);
+			wndClass.hCursor = LoadCursorW(IntPtr.Zero, (ushort)IDC.ARROW);
+			wndClass.hbrBackground = IntPtr.Zero;
+			wndClass.lpszMenuName = "MENU_NAME";
+			wndClass.lpszClassName = "CMDRWCLASS";
+			wndClass.hIconSm = IntPtr.Zero;
 
-			if(RegisterClassExW(ref wndClass) == 0)
+			if (RegisterClassExW(ref wndClass) == 0)
 			{
 				CheckError("RegisterWindow", true);
 			}
 
-			window.HWND = CreateWindowExW(window.WindowStyleEX, "CMDR_WINDOW_CLASS", window.Title, window.WindowStyle, window.StartingPosX, window.StartingPosY, window.Width, window.Height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+			window.HWND = CreateWindowExW(
+				window.WindowStyleEX,
+				"CMDRWCLASS",
+				window.Title,
+				window.WindowStyle,
+				window.StartingPosX,
+				window.StartingPosY,
+				window.Width,
+				window.Height,
+				IntPtr.Zero,
+				IntPtr.Zero,
+				wndClass.hInstance,
+				IntPtr.Zero
+				);
 			
 			if (window.HWND == IntPtr.Zero)
 				CheckError("CreateWindow", true);
-			
+
 			ShowWindow(window.HWND, (int)SW.SHOW);
+			
 			return true;
 		}
 
@@ -74,7 +90,11 @@ namespace CMDR.Native
 		{
 			PostQuitMessage(0);
 			if (DestroyWindow(window.HWND))
+            {
+				//throw new Win32Exception(Marshal.GetLastWin32Error());
 				CheckError("DestroyWindow", true);
+
+            }
 		}
 
 		/// <summary>

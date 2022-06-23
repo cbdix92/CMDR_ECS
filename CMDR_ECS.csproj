@@ -65,6 +65,8 @@
     <Compile Include="Native\DLL Imports\OPENGL.cs" />
     <Compile Include="Native\DLL Imports\USER32.cs" />
     <Compile Include="Native\Enums\CS.cs" />
+    <Compile Include="Native\Enums\IDC.cs" />
+    <Compile Include="Native\Enums\IDI.cs" />
     <Compile Include="Native\Enums\KF.cs" />
     <Compile Include="Native\Enums\LR.cs" />
     <Compile Include="Native\Enums\PFD.cs" />

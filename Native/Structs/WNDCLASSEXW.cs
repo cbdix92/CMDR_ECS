@@ -19,7 +19,9 @@ namespace CMDR.Native
 		public IntPtr hIcon;
 		public IntPtr hCursor;
 		public IntPtr hbrBackground;
+		[MarshalAs(UnmanagedType.LPStr)]
 		public string lpszMenuName;
+		[MarshalAs(UnmanagedType.LPStr)]
 		public string lpszClassName;
 		public IntPtr hIconSm;
 		

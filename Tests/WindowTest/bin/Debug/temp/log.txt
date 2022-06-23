@@ -1,0 +1,8 @@
+﻿WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class

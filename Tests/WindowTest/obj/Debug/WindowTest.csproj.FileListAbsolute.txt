@@ -1,0 +1,16 @@
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\Shaders\FragDefault.frag
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\Shaders\VertDefault.vert
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\WindowTest.exe.config
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\WindowTest.exe
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\WindowTest.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\CMDR_ECS.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\CMDR_ECS.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\CMDR_ECS.dll.config
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\obj\Debug\WindowTest.csprojAssemblyReference.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\obj\Debug\WindowTest.csproj.CoreCompileInputs.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\obj\Debug\WindowTest.csproj.CopyComplete
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\obj\Debug\WindowTest.exe
+C:\Users\cbdix\Desktop\CMDR_ECS\Tests\WindowTest\obj\Debug\WindowTest.pdb

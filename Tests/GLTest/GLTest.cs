@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CMDR;
 using OpenGL;
-using GLFW;
 using CMDR.Components;
 using CMDR.Systems;
 
@@ -14,7 +13,7 @@ namespace GLTest
     class GLtest
     {
 
-        public static Display Display;
+        //public static Display Display;
 
         #region VERTS
 
@@ -64,7 +63,13 @@ namespace GLTest
 		
         static unsafe void Main(string[] args)
         {
-            Display = new Display(800, 600, "Test title");
+            //Display = new Display(800, 600, "Test title");
+            
+            Window Window = new Window(500, 500, 0, 0, "TestWindow");
+
+            Window.Create();
+
+            GameLoop.Start();
 
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
@@ -112,7 +117,7 @@ namespace GLTest
             GL.BindVertexArray(mesh.VAO);
 
             GL.Enable(GL.DEPTH_TEST);
-            while (!Glfw.WindowShouldClose(Display.Window))
+            while (!true)//!Glfw.WindowShouldClose(Display.Window))
             {
                 break;
                 GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
@@ -136,7 +141,7 @@ namespace GLTest
                 shader.Use();
                 shader.SetUniformMatrix4("model", false, transform.Model);
                 shader.SetUniformMatrix4("view", false, Camera.View);
-                shader.SetUniformMatrix4("projection", false, Display.Projection);
+                //shader.SetUniformMatrix4("projection", false, Display.Projection);
                 shader.SetUniformVec4("color", renderData.Color);
                 
                 shader.SetUniformVec3("lightPos", new Vector3(3f));
@@ -156,12 +161,12 @@ namespace GLTest
                 GL.BindVertexArray(mesh.VAO);
                 GL.DrawArrays(GL.TRIANGLES, 0, mesh.NumVertices);
                 //GL.DrawElements(GL.TRIANGLES, mesh.NumVertices, (void*)0);
-                Glfw.SwapBuffers(Display.Window);
+                //Glfw.SwapBuffers(Display.Window);
                 GL.BindVertexArray(0);
-                Glfw.PollEvents();
+                //Glfw.PollEvents();
             }
-            Display.Start();
-            Glfw.Terminate();
+            //Display.Start();
+            //Glfw.Terminate();
         }
 
         public static float[] GenPixels(int width, int height)
@@ -178,6 +183,7 @@ namespace GLTest
             }
             return pixels;
         }
+        /*
         public static void Keyinput(Window window, Keys key, int scanCode, InputState state, ModifierKeys mods)
         {
             float speed = 1f;
@@ -240,7 +246,9 @@ namespace GLTest
                     Camera.ResetRotation();
                     break;
             }
+       
             //Console.WriteLine(Camera.Z);
         }
+        */
     }
 }

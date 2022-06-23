@@ -18,9 +18,9 @@ namespace CMDR.Systems
 
             Time.Start();
 
-            CreateUpdater(1000, Render.Update);
-            CreateUpdater(100, Physics.Update);
-            CreateUpdater(100, Input.Update);
+            //CreateUpdater(1000, Render.Update);
+            //CreateUpdater(100, Physics.Update);
+            //CreateUpdater(100, Input.Update);
 
             while(Win.HandleMessages())
             {

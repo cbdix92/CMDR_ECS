@@ -71,18 +71,26 @@ namespace CMDR
 
         #region PUBLIC_METHODS
 
-        public void SetFlag(WindowTarget target, uint flag)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="target"> The target bitfield.
+		/// Possible values include <see cref="WindowTarget.ClassStyle"/>,
+		/// <see cref="WindowTarget.WindowStyle"/> and 
+		/// <see cref="WindowTarget.WindowStyleExtended"/>. </param>
+		/// <param name="flags"> The flags to set. </param>
+        public void SetFlag(WindowTarget target, uint flags)
 		{
 			switch(target)
 			{
 				case WindowTarget.ClassStyle:
-					ClassStyle |= (flag & ~(_classStyleMaster));
+					ClassStyle |= (flags & ~(_classStyleMaster));
 					break;
 				case WindowTarget.WindowStyle:
-					WindowStyle |= (flag & ~(_windowStyleMaster));
+					WindowStyle |= (flags & ~(_windowStyleMaster));
 					break;
 				case WindowTarget.WindowStyleExtended:
-					WindowStyleEX |= (flag & ~(_windowStyleEXMaster));
+					WindowStyleEX |= (flags & ~(_windowStyleEXMaster));
 					break;
 			}
 		}
@@ -120,6 +128,11 @@ namespace CMDR
 
 		#region PRIVATE_METHODS
 		
+		/// <summary>
+		/// Generates the master bit mask for ClassStyle, WindowStyle and WindowStyleEX.
+		/// The master bit mask are used to filter out any unused bits that could occur when combining multiple mask.
+		/// <see cref="SetFlag(WindowTarget, uint)"/>
+		/// </summary>
 		private void GenerateMasterBitMask()
 		{
 			Type[] types = new Type[]{typeof(ClassStyle), typeof(WindowStyle), typeof(WindowStyleEX) };

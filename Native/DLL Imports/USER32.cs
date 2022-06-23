@@ -38,6 +38,7 @@ namespace CMDR.Native
 		internal static extern HWND CreateWindowExW(
 			uint dwExStyle,
 			string lpClassName,
+			[MarshalAs(UnmanagedType.LPWStr)]
 			string lpWindowName,
 			uint dwStyle,
 			int x,
@@ -136,7 +137,10 @@ namespace CMDR.Native
 		internal static extern uint GetRegisteredRawInputDevices(RAWINPUTDEVICE[] pRawInputDevices, ref uint puiNumDevices, uint cbSize);
 
 		[DllImport(User32, SetLastError = true)]
-		internal static extern IntPtr LoadCursorW(IntPtr hInstance, string lpCursorName);
+		internal static extern IntPtr LoadCursorW(IntPtr hInstance, ushort lpCursorName);
+
+		[DllImport(User32, SetLastError = true)]
+		internal static extern IntPtr LoadIconW(IntPtr hInstance, ushort lpIconName);
 
 		[DllImport(User32, SetLastError = true)]
 		internal static extern IntPtr LoadImageW(IntPtr hInstance, string name, uint type, int cx, int cy, LR fuLoad);
