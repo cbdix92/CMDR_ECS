@@ -17,23 +17,38 @@ namespace CMDR
 		public uint WindowStyleEX { get; private set; }
 		
 		public IntPtr HWND { get; internal set; }
+
+		public IntPtr HGLRC { get; internal set; }
 		
 		public int StartingPosX;
 		
 		public int StartingPosY;
 
+		public int PixelFormatNumber
+        {
+			get => _pixelFormatNumber;
+
+			internal set => _pixelFormatNumber = value;
+        }
+
+		public IntPtr DC
+        {
+			get => _dc;
+
+			set => _dc = value;
+        }
+
 		public int Width
 		{
 			get => _size.X;
-			set
-			{
-				(Camera.Width, _size.X) = (value, value);
-			}
+
+			set => (Camera.Width, _size.X) = (value, value);
 		}
 
 		public int Height
 		{
 			get => _size.Y;
+
 			set
 			{
 				(Camera.Height, _size.Y) = (value, value);
@@ -57,13 +72,17 @@ namespace CMDR
 
 		private uint _windowStyleEXMaster;
 
+		private int _pixelFormatNumber;
+
+		private IntPtr _dc;
+
 		#endregion
 
 		#region CONSTRUCTORS
-
+		public Window() : this(800, 600, 0, 0, "CMDR") { }
 		public Window(int width, int height, int startingX, int startingY, string title)
 		{
-            (Width, Height, startingX, startingY, Title) = (width, height, StartingPosX, StartingPosY, title);
+            (Width, Height, StartingPosX, StartingPosY, Title) = (width, height, startingX, startingY, title);
 			GenerateMasterBitMask();
 		}
 

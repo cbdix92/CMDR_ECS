@@ -6,3 +6,25 @@ WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.W
 WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
 WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
 WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 6 -> glLoad:False Name:Choose Pixel Format Number: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE 6 -> glLoad:False Name:Choose Pixel Format Number: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE 6 -> glLoad:False Name:Choose Pixel Format Number: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 6 -> glLoad:False Name:Choose Pixel Format Number: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE 6 -> glLoad:False Name:Choose Pixel Format Number: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE 6 -> glLoad:False Name:Choose Pixel Format Number: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE 6 -> glLoad:False Name:PixelFormaNumber is zero: System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+WIN32 ERROR CODE -1073283066 -> glLoad:False Name:Set Pixel Format: System.ComponentModel.Win32Exception (0x80004005): Unknown error (0xc0070006)
+WIN32 ERROR CODE 1400 -> glLoad:False Name:Window Destroy Failed!: System.ComponentModel.Win32Exception (0x80004005): Invalid window handle
+WIN32 ERROR CODE -1073283066 -> glLoad:False Name:Set Pixel Format: System.ComponentModel.Win32Exception (0x80004005): Unknown error (0xc0070006)
+WIN32 ERROR CODE 1400 -> glLoad:False Name:Window Destroy Failed!: System.ComponentModel.Win32Exception (0x80004005): Invalid window handle
+WIN32 ERROR CODE -1073283066 -> glLoad:False Name:Set Pixel Format: System.ComponentModel.Win32Exception (0x80004005): Unknown error (0xc0070006)
+WIN32 ERROR CODE 1400 -> glLoad:False Name:Window Destroy Failed!: System.ComponentModel.Win32Exception (0x80004005): Invalid window handle
+WIN32 ERROR CODE -1073283066 -> glLoad:False Name:Set Pixel Format: System.ComponentModel.Win32Exception (0x80004005): Unknown error (0xc0070006)
+WIN32 ERROR CODE 1400 -> glLoad:False Name:Window Destroy Failed!: System.ComponentModel.Win32Exception (0x80004005): Invalid window handle
+WIN32 ERROR CODE 1407 -> glLoad:False Name:CreateWindow returned null: System.ComponentModel.Win32Exception (0x80004005): Cannot find window class
+WIN32 ERROR CODE 1400 -> glLoad:False Name:Window Destroy Failed!: System.ComponentModel.Win32Exception (0x80004005): Invalid window handle

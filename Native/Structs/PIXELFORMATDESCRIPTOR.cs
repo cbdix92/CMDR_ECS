@@ -3,33 +3,65 @@ using System.Runtime.InteropServices;
 
 namespace CMDR.Native
 {
-    internal struct PIXELFORMATDESCRIPTOR
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct sPIXELFORMATDESCRIPTOR
     {
-        ushort nSize;
-        ushort nVersion;
-        uint swFlags;
-        byte iPixelType;
-        byte cColorBits;
-        byte cRedBits;
-        byte cRedShift;
-        byte cGreenBits;
-        byte cGreenShift;
-        byte cBluebits;
-        byte cBlueShift;
-        byte cAlphaBits;
-        byte cAlphaShift;
-        byte cAccumBits;
-        byte cAccumRedBits;
-        byte cAccumGreenBits;
-        byte cAccumBlueBits;
-        byte cAccumAlphaBits;
-        byte cDepthBits;
-        byte cStencilBits;
-        byte cAuxBuffers;
-        byte iLayerType;
-        byte bReserved;
-        uint dwLayerMask;
-        uint dwVisibleMask;
-        uint dwDamageMask;
+        public ushort nSize;
+        public ushort nVersion;
+        public uint swFlags;
+        public byte iPixelType;
+        public byte cColorBits;
+        public byte cRedBits;
+        public byte cRedShift;
+        public byte cGreenBits;
+        public byte cGreenShift;
+        public byte cBluebits;
+        public byte cBlueShift;
+        public byte cAlphaBits;
+        public byte cAlphaShift;
+        public byte cAccumBits;
+        public byte cAccumRedBits;
+        public byte cAccumGreenBits;
+        public byte cAccumBlueBits;
+        public byte cAccumAlphaBits;
+        public byte cDepthBits;
+        public byte cStencilBits;
+        public byte cAuxBuffers;
+        public byte iLayerType;
+        public byte bReserved;
+        public uint dwLayerMask;
+        public uint dwVisibleMask;
+        public uint dwDamageMask;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal class PIXELFORMATDESCRIPTOR
+    {
+        public ushort nSize;
+        public ushort nVersion;
+        public uint swFlags;
+        public byte iPixelType;
+        public byte cColorBits;
+        public byte cRedBits;
+        public byte cRedShift;
+        public byte cGreenBits;
+        public byte cGreenShift;
+        public byte cBluebits;
+        public byte cBlueShift;
+        public byte cAlphaBits;
+        public byte cAlphaShift;
+        public byte cAccumBits;
+        public byte cAccumRedBits;
+        public byte cAccumGreenBits;
+        public byte cAccumBlueBits;
+        public byte cAccumAlphaBits;
+        public byte cDepthBits;
+        public byte cStencilBits;
+        public byte cAuxBuffers;
+        public byte iLayerType;
+        public byte bReserved;
+        public uint dwLayerMask;
+        public uint dwVisibleMask;
+        public uint dwDamageMask;
     }
 }

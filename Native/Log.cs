@@ -32,6 +32,7 @@ namespace CMDR.Native
             {
                 SR.WriteLine($"WIN32 ERROR CODE {error} -> glLoad:{glLoad} Name:{name}: {new Win32Exception(error)}");
             }
+
             Win.SetLastError(0);
         }
 

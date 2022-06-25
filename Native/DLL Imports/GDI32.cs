@@ -17,7 +17,7 @@ namespace CMDR.Native
         /// If the function fails, the return value is zero. </returns>
         /// <see href="https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat"> MICROSOFT DOCS </see>
         [DllImport(GDI32, SetLastError = true)]
-        internal static extern int ChoosePixelFormat(HDC hdc, ref PIXELFORMATDESCRIPTOR ppfd);
+        internal static extern int ChoosePixelFormat(HDC hdc, [MarshalAs(UnmanagedType.LPStruct)] [In] PIXELFORMATDESCRIPTOR ppfd);
 
         /// <summary>
         /// The SetPixelFormat function sets the pixel format of the specified device context to the format specified by the iPixelFormat index.
@@ -29,7 +29,7 @@ namespace CMDR.Native
         /// The structure has no other effect upon the behavior of the SetPixelFormat function. </param>
         /// <returns> If the function succeeds, the return value is TRUE. If the function fails, the return value is FALSE. </returns>
         /// <see href="https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setpixelformat"> MICROSOFT DOCS </see>
-        [DllImport(GDI32 , SetLastError = true)]
-        internal static extern bool SetPixelFormat(HDC hdc, int format, ref PIXELFORMATDESCRIPTOR ppfd);
+        [DllImport(GDI32, SetLastError = true)]
+        internal static extern bool SetPixelFormat(HDC hdc, int format, [MarshalAs(UnmanagedType.LPStruct)] PIXELFORMATDESCRIPTOR ppfd);
     }
 }

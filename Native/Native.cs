@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using OpenGL;
 
 
 namespace CMDR.Native
@@ -25,8 +26,7 @@ namespace CMDR.Native
 			}
 			else
 			{
-				DestroyWindow(CurrentWindow);
-				throw new Win32Exception("Window already existed. Cannot create more than one window.");
+				CheckError("Window already existed. Cannot create more than one window.", true);
 			}
 
 
@@ -39,7 +39,7 @@ namespace CMDR.Native
             wndClass.hInstance = Process.GetCurrentProcess().Handle;
 			wndClass.hIcon = LoadIconW(IntPtr.Zero, (ushort)IDI.APPLICATION);
 			wndClass.hCursor = LoadCursorW(IntPtr.Zero, (ushort)IDC.ARROW);
-			wndClass.hbrBackground = IntPtr.Zero;
+			wndClass.hbrBackground = IntPtr.Zero; // TODO ... Make Black
 			wndClass.lpszMenuName = "MENU_NAME";
 			wndClass.lpszClassName = "CMDRWCLASS";
 			wndClass.hIconSm = IntPtr.Zero;
@@ -65,17 +65,73 @@ namespace CMDR.Native
 				);
 			
 			if (window.HWND == IntPtr.Zero)
-				CheckError("CreateWindow", true);
-
-			ShowWindow(window.HWND, (int)SW.SHOW);
+				CheckError("CreateWindow returned null", true);
 			
 			return true;
+		}
+
+		internal static void PrepareContext(Window window)
+        {
+			PIXELFORMATDESCRIPTOR pfd = new PIXELFORMATDESCRIPTOR()
+			{
+				nSize = (ushort)Marshal.SizeOf(typeof(PIXELFORMATDESCRIPTOR)),
+				nVersion = 1,
+				swFlags = (uint)(PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER),
+				iPixelType = (byte)PFD.TYPE_RGBA,
+				cColorBits = 32,
+				cRedBits = 0,
+				cRedShift = 0,
+				cGreenBits = 0,
+				cGreenShift = 0,
+				cBluebits = 0,
+				cBlueShift = 0,
+				cAlphaBits = 0,
+				cAlphaShift = 0,
+				cAccumBits = 0,
+				cAccumRedBits = 0,
+				cAccumGreenBits = 0,
+				cAccumBlueBits = 0,
+				cAccumAlphaBits = 0,
+				cDepthBits = 24,
+				cStencilBits = 8,
+				cAuxBuffers = 0,
+				iLayerType = 0,
+				bReserved = 0,
+				dwLayerMask = 0,
+				dwVisibleMask = 0,
+				dwDamageMask = 0
+			};
+
+			window.DC = GetDC(window.HWND);
+
+			if (window.DC == IntPtr.Zero)
+			{
+				CheckError("Device Context is null", true);
+			}
+
+			window.PixelFormatNumber = ChoosePixelFormat(window.DC, pfd);
+
+			if (window.PixelFormatNumber == 0)
+				CheckError("PixelFormaNumber is zero", true);
+
+			if (SetPixelFormat(window.DC, window.PixelFormatNumber, pfd) == false)
+				CheckError("Set Pixel Format", true);
+
+			window.HGLRC = wglCreateContext(window.DC);
+
+			wglMakeCurrent(window.DC, window.HGLRC);
+
+			GL.Build();
 		}
 
 		internal static IntPtr WindowProcedure(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam)
 		{
 			switch((WM)uMsg)
             {
+				case WM.CREATE:
+					PrepareContext(CurrentWindow);
+					ShowWindow(CurrentWindow.HWND, (int)SW.SHOW);
+					return IntPtr.Zero;
 				case WM.QUIT:
 					return IntPtr.Zero;
 				case WM.CLOSE:
@@ -135,7 +191,16 @@ namespace CMDR.Native
 				Log.LogWin32Error(error, name);
 				
 				if (exit)
+                {
+					if(CurrentWindow != null)
+                    {
+						if(DestroyWindow(CurrentWindow.HWND) == false)
+                        {
+							Log.LogWin32Error(Marshal.GetLastWin32Error(), "Window Destroy Failed!");
+                        }
+                    }
 					throw new Win32Exception(error);
+                }
             }
 			
 			SetLastError(0);

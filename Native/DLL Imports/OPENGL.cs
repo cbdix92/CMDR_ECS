@@ -7,7 +7,7 @@ namespace CMDR.Native
 {
     internal static partial class Win
     {
-        const string OpenGL = "opengl.dll";
+        const string OpenGL = "opengl32.dll";
 
         /// <summary>
         /// The wglCreateContext function creates a new OpenGL rendering context, which is suitable for drawing on the device referenced by hdc.

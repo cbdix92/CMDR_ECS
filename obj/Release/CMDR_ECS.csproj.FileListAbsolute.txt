@@ -1,0 +1,13 @@
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Release\CMDR_ECS.csprojAssemblyReference.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Release\CMDR_ECS.csproj.CoreCompileInputs.cache
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\Shaders\FragDefault.frag
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\Shaders\VertDefault.vert
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\CMDR_ECS.dll.config
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\CMDR_ECS.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\CMDR_ECS.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\ICSharpCode.SharpZipLib.pdb
+C:\Users\cbdix\Desktop\CMDR_ECS\bin\Release\ICSharpCode.SharpZipLib.xml
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Release\CMDR_ECS.csproj.CopyComplete
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Release\CMDR_ECS.dll
+C:\Users\cbdix\Desktop\CMDR_ECS\obj\Release\CMDR_ECS.pdb
