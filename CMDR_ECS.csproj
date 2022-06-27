@@ -79,9 +79,11 @@
     <Compile Include="Native\Enums\WM.cs" />
     <Compile Include="Native\Enums\WS.cs" />
     <Compile Include="Native\Enums\WS_EX.cs" />
+    <Compile Include="Native\Structs\GLYPHMETRICSFLOAT.cs" />
     <Compile Include="Native\Structs\Hook Structures\KBDLLHOOKSTRUCT.cs" />
     <Compile Include="Native\Structs\Hook Structures\MOUSEHOOKSTRUCT.cs" />
     <Compile Include="Native\Structs\Hook Structures\MSLLHOOKSTRUCT.cs" />
+    <Compile Include="Native\Structs\LAYERPLANEDESCRIPTOR.cs" />
     <Compile Include="Native\Structs\MONITORINFOEXW.cs" />
     <Compile Include="Native\Structs\MSG.cs" />
     <Compile Include="Native\Structs\PIXELFORMATDESCRIPTOR.cs" />

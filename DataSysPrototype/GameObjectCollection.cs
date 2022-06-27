@@ -4,7 +4,7 @@ using System.Collection.Generic;
 
 namespace CMDR
 {
-    internal protected class GameObjectCollection
+    internal class GameObjectCollection
     {
         #region PUBLIC_MEMBERS
 
@@ -43,7 +43,8 @@ namespace CMDR
 
         #region PUBLIC_METHODS
 
-        public GameObject Add(GameObject gameObject)
+
+        public virtual int Add(GameObject gameObject)
         {
 
             if(Count == _data.Length)
@@ -51,11 +52,27 @@ namespace CMDR
             
             _data[Count] = gameObject;
 
-            return _data[Count++];
+            return Count++;
 
         }
 
-        public void Remove(int id)
+        public GameObject BinarySearch(int id)
+        {
+            return BinarySearch(id, 0, Count - 1);
+        }
+
+        public GameObject BinarySearch(int id, int low, int high)
+        {
+            if(high >= Count)
+                high = Count - 1;
+            
+            if(low < 0)
+                low = 0;
+
+            return BinarySearchInternal(id, low, high);
+        }
+
+        public virtual void Remove(int id)
         {
             // TODO ...
             // Remove all GameObjects components
@@ -77,7 +94,7 @@ namespace CMDR
 
         }
 
-        public GameObject[] ToArray()
+        public virtual GameObject[] ToArray()
         {
             
             ArraySegment<GameObject> _ = new ArraySegment<GameObject>(_data, 0, Count);
@@ -97,6 +114,24 @@ namespace CMDR
             // TODO ... 
             // Tell Components of GameObject the new Parent ID
             
+        }
+
+        private GameObject BinarySearchInternal(int id, int low, int high)
+        {
+            int mid = high / 2;
+
+            if(_data[mid].ID == id)
+            {
+                return _data[mid];
+            }
+            else if(id < mid)
+            {
+                return BinarySearch(id, low, mid - 1);
+            }
+            else
+            {
+                return BinarySearch(id, mid + 1, high);
+            }
         }
 
         #endregion

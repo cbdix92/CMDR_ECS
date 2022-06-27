@@ -10,13 +10,13 @@ namespace CMDR
 
         public readonly Scene Scene;
 
-        public int ID { get; internal set; }
+        public uint ID { get; internal set; }
 
         public ulong Signature { get; internal set; }
 
-        public int ComponentCount { get; private set; }
+        public int ComponentCount { get; internal set; }
 
-        public int[] Components { get; private set; }
+        public Type[] Components { get; internal set; }
 
         #endregion
 
@@ -26,13 +26,13 @@ namespace CMDR
 
         #region INTERNAL_MEMBERS
 
-        internal static GameObject Default = new GameObject(-1, null);
+        internal static GameObject Default = new GameObject(0, null);
 
         #endregion
 
         #region CONTRUCTOR
 
-        public GameObject(int id, Scene scene)
+        public GameObject(uint id, Scene scene)
         {
             (ID, Scene) = (id, scene);
 
@@ -47,7 +47,7 @@ namespace CMDR
 
         }
 
-        public T Get<T>() where T : struct. iComponent<T>
+        public T Get<T>() where T : struct, IComponent<T>
         {
 
         }

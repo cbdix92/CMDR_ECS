@@ -17,10 +17,6 @@ namespace CMDR
 
         #region PRIVATE_MEMBERS
 
-        private readonly object _threadLockComponent;
-
-        private readonly object _threadLockGameObject;
-
         #endregion
 
         #region INTERNAL_MEMBERS
@@ -36,10 +32,6 @@ namespace CMDR
         public Scene()
         {
 
-            _threadLockComponent = new object();
-
-            _threadLockGameObject = new object();
-
             Components = new ComponentTable();
 
             GameObjects = new GameObjectCollection();
@@ -52,36 +44,35 @@ namespace CMDR
 
         #region PUBLIC_METHODS
 
-        public void DestroyComponent<T>(int id) where T : struct, iComponent<T>
+        public void DestroyComponent<T>(int id) where T : struct, IComponent<T>
         {
 
         }
 
-        public void DestroyGameObject(GameObject gameObject)
+        public void DestroyGameObject(int id)
         {
-
+            GameObjects.Remove(id);
         }
 
-        public T GenerateComponent<T>() where T : struct, iComponent<T>
+        public int Add(GameObject gameObject)
         {
-            lock(_threadLockComponent)
-            {
-                
-            }
+            return GameObjects.Add(gameObject);
         }
 
-        public GameObject GenerateGameObject()
+        public T Get<T>(int id) where T : struct, IComponent<T>
         {
-            lock(_threadLockGameObject)
-            {
-                return GameObjects.Add(new GameObject(GameObjects.Count, this));
-            }
-
+            // Return Component<T> of id
         }
 
-        public T Get<T>(int id) where T : struct, iComponent<T>
+        public GameObject Get(int id)
         {
+            return GameObjects[id];
+        }
 
+        public void Pair<T>(T component, ref GameObject gameObject) where T : struct, IComponent<T>
+        {
+            // Pair Component<T> with GameObject
+            // Store Component id and type in GameObject as well as store Component in ComponentTable 
         }
 
         #endregion
