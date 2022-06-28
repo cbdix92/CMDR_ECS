@@ -54,7 +54,7 @@ namespace CMDR
             GameObjects.Remove(id);
         }
 
-        public int Add(GameObject gameObject)
+        public uint Add(GameObject gameObject)
         {
             return GameObjects.Add(gameObject);
         }

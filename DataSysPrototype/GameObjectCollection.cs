@@ -44,7 +44,7 @@ namespace CMDR
         #region PUBLIC_METHODS
 
 
-        public virtual int Add(GameObject gameObject)
+        public virtual uint Add(GameObject gameObject)
         {
 
             if(Count == _data.Length)
