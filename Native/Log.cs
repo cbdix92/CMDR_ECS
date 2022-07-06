@@ -11,22 +11,9 @@ namespace CMDR.Native
     internal static class Log
     {
 
-
-        private static readonly string _tempDir = @"temp\";
-        private static readonly string _dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        private static readonly string _path = Path.Combine(_dir, _tempDir);
-        private static readonly string _logPath = Path.Combine(_path, "log.txt");
-        internal static void CheckPath()
-        {
-            if (Directory.Exists(_path) == false || File.Exists(_logPath) == false)
-            {
-                Directory.CreateDirectory(_path);
-                using (File.CreateText(_logPath)) { }
-            }
-        }
         internal static void LogWin32Error(int error, string name, bool glLoad = false)
         {
-            CheckPath();
+            FileSystem.CheckPath();
 
             using (StreamWriter SR = new StreamWriter(_logPath, true, Encoding.UTF8))
             {
@@ -38,7 +25,7 @@ namespace CMDR.Native
 
         internal static void LogError(string error)
         {
-            CheckPath();
+            FileSystem.CheckPath();
 
             using (StreamWriter SR = new StreamWriter(_logPath, true, Encoding.UTF8))
             {
@@ -53,7 +40,7 @@ namespace CMDR.Native
         /// <param name="name"> Name of the Matrix. </param>
         internal static void LogMatrix4(Matrix4 matrix, string name)
         {
-            CheckPath();
+            FileSystem.CheckPath();
 
             using (StreamWriter sr = new StreamWriter(_logPath, true, Encoding.UTF8))
             {
